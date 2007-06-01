@@ -25,7 +25,7 @@ import org.sakaiproject.user.api.UserDirectoryService;
 import org.sakaiproject.user.api.UserNotDefinedException;
 
 /**
- * This is the implementation of the blog business logic interface
+ * This is the implementation for logic which is external to our app logic
  * @author Sakai App Builder -AZ
  */
 public class ExternalLogicImpl implements ExternalLogic {
