@@ -78,21 +78,26 @@ public class ExternalLogicImpl implements ExternalLogic {
 
 
 	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#getCurrentContext()
+	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#getCurrentLocationId()
 	 */
-	public String getCurrentContext() {
-		return toolManager.getCurrentPlacement().getContext();
+	public String getCurrentLocationId() {
+		try {
+			Site s = (Site) siteService.getSite( toolManager.getCurrentPlacement().getContext() );
+			return s.getReference(); // get the entity reference to the site
+		} catch (IdUnusedException e) {
+			return NO_LOCATION;
+		}
 	}
 
 	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#getContextTitle(java.lang.String)
+	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#getLocationTitle(java.lang.String)
 	 */
-	public String getContextTitle(String context) {
+	public String getLocationTitle(String locationId) {
 		try {
-			Site site = siteService.getSite(context);
+			Site site = siteService.getSite(locationId);
 			return site.getTitle();
 		} catch (IdUnusedException e) {
-			log.warn("Cannot get the info about context: " + context);
+			log.warn("Cannot get the info about locationId: " + locationId);
 			return "----------";
 		}
 	}
@@ -104,9 +109,6 @@ public class ExternalLogicImpl implements ExternalLogic {
 		return sessionManager.getCurrentSessionUserId();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.BlogWowLogic#getCurrentUserDisplayName()
-	 */
 	public String getUserDisplayName(String userId) {
 		try {
 			return userDirectoryService.getUser(userId).getDisplayName();
@@ -124,11 +126,10 @@ public class ExternalLogicImpl implements ExternalLogic {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#isUserAllowedInContext(java.lang.String, java.lang.String, java.lang.String)
+	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#isUserAllowedInLocation(java.lang.String, java.lang.String, java.lang.String)
 	 */
-	public boolean isUserAllowedInContext(String userId, String permission, String context) {
-		String reference = siteService.siteReference(context);
-		if ( securityService.unlock(userId, permission, reference) ) {
+	public boolean isUserAllowedInLocation(String userId, String permission, String locationId) {
+		if ( securityService.unlock(userId, permission, locationId) ) {
 			return true;
 		}
 		return false;

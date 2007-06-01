@@ -22,7 +22,7 @@ public class BlogWowBlog {
 
 	private Long id;
 	private String ownerId; // Sakai userId
-	private String siteId; // Sakai siteId
+	private String location; // Sakai entity reference
 	private String profile;
 	private String imageUrl;
 	private Date dateCreated;
@@ -36,17 +36,17 @@ public class BlogWowBlog {
 	/**
 	 * Minimal constructor
 	 */
-	public BlogWowBlog(String ownerId, String siteId) {
+	public BlogWowBlog(String ownerId, String location) {
 		this.ownerId = ownerId;
-		this.siteId = siteId;
+		this.location = location;
 	}
 
 	/**
 	 * Full constructor
 	 */
-	public BlogWowBlog(String ownerId, String siteId, String profile, String imageUrl, Date dateCreated) {
+	public BlogWowBlog(String ownerId, String location, String profile, String imageUrl, Date dateCreated) {
 		this.ownerId = ownerId;
-		this.siteId = siteId;
+		this.location = location;
 		this.profile = profile;
 		this.imageUrl = imageUrl;
 		this.dateCreated = dateCreated;
@@ -97,12 +97,12 @@ public class BlogWowBlog {
 		this.profile = profile;
 	}
 
-	public String getSiteId() {
-		return siteId;
+	public String getLocation() {
+		return location;
 	}
 
-	public void setSiteId(String siteId) {
-		this.siteId = siteId;
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 

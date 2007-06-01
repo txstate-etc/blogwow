@@ -17,50 +17,52 @@ package org.sakaiproject.blogwow.logic.test;
 import org.sakaiproject.blogwow.logic.ExternalLogic;
 
 /**
- * Stub class for the external logic impl (for testing)
+ * Stub class for the external logic impl (for testing),
+ * also contains test constants
  * 
  * @author Aaron Zeckoski (aaronz@vt.edu)
  */
 public class ExternalLogicStub implements ExternalLogic {
 
 	/**
-	 * current, access level user in CONTEXT 1
+	 * current user, access level user in LOCATION_ID1
 	 */
 	public final static String USER_ID = "user-11111111";
 	public final static String USER_DISPLAY = "Aaron Zeckoski";
 	public final static String ADMIN_USER_ID = "admin";
 	public final static String ADMIN_USER_DISPLAY = "Administrator";
 	/**
-	 * maintain level user in CONTEXT 1
+	 * maintain level user in LOCATION_ID1
 	 */
 	public final static String MAINT_USER_ID = "main-22222222";
 	public final static String MAINT_USER_DISPLAY = "Maint User";
 	public final static String INVALID_USER_ID = "invalid-UUUUUU";
 
 	/**
-	 * current
+	 * current location
 	 */
-	public final static String CONTEXT1 = "testContext1";
-	public final static String CONTEXT1_TITLE = "C1 title";
-	public final static String CONTEXT2 = "testContext2";
-	public final static String CONTEXT2_TITLE = "C2 title";
-	public final static String INVALID_CONTEXT = "invalid-CCCCCCCC";
+	public final static String LOCATION1_ID = "/site/ref-1111111";
+	public final static String LOCATION1_TITLE = "Location 1 title";
+	public final static String LOCATION2_ID = "/site/ref-22222222";
+	public final static String LOCATION2_TITLE = "Location 2 title";
+	public final static String INVALID_LOCATION_ID = "invalid-LLLLLLLL";
+
 
 	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#getCurrentContext()
+	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#getCurrentLocationId()
 	 */
-	public String getCurrentContext() {
-		return CONTEXT1;
+	public String getCurrentLocationId() {
+		return LOCATION1_ID;
 	}
 
 	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#getContextTitle(java.lang.String)
+	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#getLocationTitle(java.lang.String)
 	 */
-	public String getContextTitle(String context) {
-		if (context.equals(CONTEXT1)) {
-			return CONTEXT1_TITLE;
-		} else if (context.equals(CONTEXT2)) {
-			return CONTEXT2_TITLE;
+	public String getLocationTitle(String locationId) {
+		if (locationId.equals(LOCATION1_ID)) {
+			return LOCATION1_TITLE;
+		} else if (locationId.equals(LOCATION2_ID)) {
+			return LOCATION2_TITLE;
 		}
 		return "--------";
 	}
@@ -97,11 +99,11 @@ public class ExternalLogicStub implements ExternalLogic {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#isUserAllowedInContext(java.lang.String, java.lang.String, java.lang.String)
+	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#isUserAllowedInLocation(java.lang.String, java.lang.String, java.lang.String)
 	 */
-	public boolean isUserAllowedInContext(String userId, String permission, String context) {
+	public boolean isUserAllowedInLocation(String userId, String permission, String locationId) {
 		if (userId.equals(USER_ID)) {
-			if (context.equals(CONTEXT1)) {
+			if (locationId.equals(LOCATION1_ID)) {
 				if (permission.equals(BLOG_CREATE) ||
 						permission.equals(BLOG_ENTRY_WRITE) ||
 						permission.equals(BLOG_COMMENTS_ADD) ) {
@@ -109,7 +111,7 @@ public class ExternalLogicStub implements ExternalLogic {
 				}
 			}
 		} else if (userId.equals(MAINT_USER_ID)) {
-			if (context.equals(CONTEXT1)) {
+			if (locationId.equals(LOCATION1_ID)) {
 				return true; // can do anything in context 1
 			}
 		} else if (userId.equals(ADMIN_USER_ID)) {

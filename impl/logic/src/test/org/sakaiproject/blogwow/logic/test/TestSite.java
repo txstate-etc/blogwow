@@ -44,10 +44,12 @@ public class TestSite implements Site {
 	private static final long serialVersionUID = 4761288804996964705L;
 	private String id;
 	private String title = "Title";
+	private String reference = "/site/default";
 
-	public TestSite(String id, String title) {
+	public TestSite(String id, String title, String reference) {
 		this.id = id;
 		this.title = title;
+		this.reference = reference;
 	}
 
 	/* (non-Javadoc)
@@ -458,16 +460,14 @@ public class TestSite implements Site {
 	 * @see org.sakaiproject.entity.api.Entity#getReference()
 	 */
 	public String getReference() {
-		// TODO Auto-generated method stub
-		return null;
+		return reference;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.sakaiproject.entity.api.Entity#getReference(java.lang.String)
 	 */
 	public String getReference(String rootProperty) {
-		// TODO Auto-generated method stub
-		return null;
+		return reference;
 	}
 
 	/* (non-Javadoc)

@@ -18,6 +18,8 @@ package org.sakaiproject.blogwow.logic;
  */
 public interface ExternalLogic {
 
+	public final static String NO_LOCATION = "noLocationAvailable";
+
 	// permissions
 	public final static String BLOG_CREATE = "blogwow.create";
 	public final static String BLOG_ENTRY_WRITE = "blogwow.entry.write";
@@ -38,15 +40,15 @@ public interface ExternalLogic {
 	public String getUserDisplayName(String userId);
 
 	/**
-	 * @return the current sakai context
+	 * @return the current location id of the current user
 	 */
-	public String getCurrentContext();
+	public String getCurrentLocationId();
 
 	/**
-	 * @param context a sakai context
+	 * @param locationId a unique id which represents the current location of the user (entity reference)
 	 * @return the title for the context or "--------" (8 hyphens) if none found
 	 */
-	public String getContextTitle(String context);
+	public String getLocationTitle(String locationId);
 
 	/**
 	 * Check if this user has super admin access
@@ -61,9 +63,9 @@ public interface ExternalLogic {
 	 * 
 	 * @param userId the internal user id (not username)
 	 * @param permission a permission string constant
-	 * @param context the internal unique sakai context (represents a site or group)
+	 * @param locationId a unique id which represents the current location of the user (entity reference)
 	 * @return true if allowed, false otherwise
 	 */
-	public boolean isUserAllowedInContext(String userId, String permission, String context);
+	public boolean isUserAllowedInLocation(String userId, String permission, String locationId);
 
 }

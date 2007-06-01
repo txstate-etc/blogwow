@@ -53,9 +53,9 @@ public class BlogLogicImplTest extends AbstractTransactionalSpringContextTests {
 	// run this before each test starts
 	protected void onSetUpBeforeTransaction() throws Exception {
 		// create test objects
-		blog1 = new BlogWowBlog(ExternalLogicStub.USER_ID, ExternalLogicStub.CONTEXT1, BLOG1_PROFILE, "", new Date());
-		blog2 = new BlogWowBlog(ExternalLogicStub.MAINT_USER_ID, ExternalLogicStub.CONTEXT1, BLOG2_PROFILE, "", new Date());
-		blog3 = new BlogWowBlog(ExternalLogicStub.ADMIN_USER_ID, ExternalLogicStub.CONTEXT2, BLOG3_PROFILE, "", new Date());
+		blog1 = new BlogWowBlog(ExternalLogicStub.USER_ID, ExternalLogicStub.LOCATION1_ID, BLOG1_PROFILE, "", new Date());
+		blog2 = new BlogWowBlog(ExternalLogicStub.MAINT_USER_ID, ExternalLogicStub.LOCATION1_ID, BLOG2_PROFILE, "", new Date());
+		blog3 = new BlogWowBlog(ExternalLogicStub.ADMIN_USER_ID, ExternalLogicStub.LOCATION2_ID, BLOG3_PROFILE, "", new Date());
 	}
 
 	// run this before each test starts and as part of the transaction
@@ -88,22 +88,22 @@ public class BlogLogicImplTest extends AbstractTransactionalSpringContextTests {
 	 * Test method for {@link org.sakaiproject.blogwow.logic.impl.BlogLogicImpl#canWriteBlog(org.sakaiproject.blogwow.model.BlogWowBlog, java.lang.String, java.lang.String)}.
 	 */
 	public void testCanWriteBlog() {
-		assertTrue( logicImpl.canWriteBlog(blog1, ExternalLogicStub.CONTEXT1, ExternalLogicStub.USER_ID) );
-		assertTrue( logicImpl.canWriteBlog(blog2, ExternalLogicStub.CONTEXT1, ExternalLogicStub.MAINT_USER_ID) );
-		assertTrue( logicImpl.canWriteBlog(blog3, ExternalLogicStub.CONTEXT2, ExternalLogicStub.ADMIN_USER_ID) );
+		assertTrue( logicImpl.canWriteBlog(blog1, ExternalLogicStub.LOCATION1_ID, ExternalLogicStub.USER_ID) );
+		assertTrue( logicImpl.canWriteBlog(blog2, ExternalLogicStub.LOCATION1_ID, ExternalLogicStub.MAINT_USER_ID) );
+		assertTrue( logicImpl.canWriteBlog(blog3, ExternalLogicStub.LOCATION2_ID, ExternalLogicStub.ADMIN_USER_ID) );
 
 		// make sure we cannot write in other sites
-		assertFalse( logicImpl.canWriteBlog(blog1, ExternalLogicStub.CONTEXT2, ExternalLogicStub.USER_ID) );
-		assertFalse( logicImpl.canWriteBlog(blog2, ExternalLogicStub.CONTEXT2, ExternalLogicStub.MAINT_USER_ID) );
+		assertFalse( logicImpl.canWriteBlog(blog1, ExternalLogicStub.LOCATION2_ID, ExternalLogicStub.USER_ID) );
+		assertFalse( logicImpl.canWriteBlog(blog2, ExternalLogicStub.LOCATION2_ID, ExternalLogicStub.MAINT_USER_ID) );
 
 		// make sure we cannot write other blogs
-		assertFalse( logicImpl.canWriteBlog(blog2, ExternalLogicStub.CONTEXT1, ExternalLogicStub.USER_ID) );
-		assertFalse( logicImpl.canWriteBlog(blog3, ExternalLogicStub.CONTEXT2, ExternalLogicStub.MAINT_USER_ID) );
+		assertFalse( logicImpl.canWriteBlog(blog2, ExternalLogicStub.LOCATION1_ID, ExternalLogicStub.USER_ID) );
+		assertFalse( logicImpl.canWriteBlog(blog3, ExternalLogicStub.LOCATION2_ID, ExternalLogicStub.MAINT_USER_ID) );
 
 		// make sure admin can write all of them
-		assertTrue( logicImpl.canWriteBlog(blog1, ExternalLogicStub.CONTEXT1, ExternalLogicStub.ADMIN_USER_ID) );
-		assertTrue( logicImpl.canWriteBlog(blog2, ExternalLogicStub.CONTEXT1, ExternalLogicStub.ADMIN_USER_ID) );
-		assertTrue( logicImpl.canWriteBlog(blog3, ExternalLogicStub.CONTEXT2, ExternalLogicStub.ADMIN_USER_ID) );
+		assertTrue( logicImpl.canWriteBlog(blog1, ExternalLogicStub.LOCATION1_ID, ExternalLogicStub.ADMIN_USER_ID) );
+		assertTrue( logicImpl.canWriteBlog(blog2, ExternalLogicStub.LOCATION1_ID, ExternalLogicStub.ADMIN_USER_ID) );
+		assertTrue( logicImpl.canWriteBlog(blog3, ExternalLogicStub.LOCATION2_ID, ExternalLogicStub.ADMIN_USER_ID) );
 	}
 
 	/**
@@ -112,18 +112,18 @@ public class BlogLogicImplTest extends AbstractTransactionalSpringContextTests {
 	public void testGetAllVisibleBlogs() {
 		List l = null;
 
-		l = logicImpl.getAllVisibleBlogs( ExternalLogicStub.CONTEXT1 );
+		l = logicImpl.getAllVisibleBlogs( ExternalLogicStub.LOCATION1_ID );
 		assertNotNull(l);
 		assertEquals(2, l.size());
 		assertTrue( l.contains(blog1) );
 		assertTrue( l.contains(blog2) );
 
-		l = logicImpl.getAllVisibleBlogs( ExternalLogicStub.CONTEXT2 );
+		l = logicImpl.getAllVisibleBlogs( ExternalLogicStub.LOCATION2_ID );
 		assertNotNull(l);
 		assertEquals(1, l.size());
 		assertTrue( l.contains(blog3) );
 
-		l = logicImpl.getAllVisibleBlogs( ExternalLogicStub.INVALID_CONTEXT );
+		l = logicImpl.getAllVisibleBlogs( ExternalLogicStub.INVALID_LOCATION_ID );
 		assertNotNull(l);
 		assertEquals(0, l.size());
 	}
@@ -148,7 +148,7 @@ public class BlogLogicImplTest extends AbstractTransactionalSpringContextTests {
 	 * Test method for {@link org.sakaiproject.blogwow.logic.impl.BlogLogicImpl#saveBlog(org.sakaiproject.blogwow.model.BlogWowBlog)}.
 	 */
 	public void testSaveBlog() {
-		BlogWowBlog blog = new BlogWowBlog(ExternalLogicStub.ADMIN_USER_ID, ExternalLogicStub.CONTEXT1);
+		BlogWowBlog blog = new BlogWowBlog(ExternalLogicStub.ADMIN_USER_ID, ExternalLogicStub.LOCATION1_ID);
 		logicImpl.saveBlog(blog);
 		assertNotNull(blog.getId());
 

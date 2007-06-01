@@ -37,17 +37,17 @@ public interface BlogLogic {
 	/**
 	 * Check if a specified user can write this blog in a specified site
 	 * @param blog to be modified or removed
-	 * @param siteId the Sakai id of the site
-	 * @param userId the Sakai id of the user
+	 * @param locationId a unique id which represents the current location of the user (entity reference)
+	 * @param userId the internal user id (not username)
 	 * @return true if blog can be modified, false otherwise
 	 */
-	public boolean canWriteBlog(BlogWowBlog blog, String siteId, String userId);
+	public boolean canWriteBlog(BlogWowBlog blog, String locationId, String userId);
 
 	/**
 	 * This returns a List of blogs for a specified site
-	 * @param siteId siteId of the site
-	 * @return a List of BlogWowBlog objects
+	 * @param locationId a unique id which represents the current location of the user (entity reference)
+	 * @return a List of {@link BlogWowBlog} objects
 	 */
-	public List getAllVisibleBlogs(String siteId);
+	public List getAllVisibleBlogs(String locationId);
 
 }

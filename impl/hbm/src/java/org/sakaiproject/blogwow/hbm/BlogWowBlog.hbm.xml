@@ -16,7 +16,7 @@
 	    	</generator>
 		</id>
 		<property name="ownerId" type="string" length="255" not-null="true" />
-		<property name="siteId" type="string" length="255" not-null="true" />
+		<property name="location" type="string" length="255" not-null="true" />
 		<property name="profile" type="string" />
 		<property name="imageUrl" type="string" />
 		<property name="dateCreated" type="java.util.Date" />
