@@ -26,21 +26,27 @@ public interface ExternalLogic {
 	public final static String BLOG_COMMENTS_ADD = "blogwow.comments.add";
 
 	/**
-	 * Get the display name for a user by their unique id
-	 * @param userId the current sakai user id (not username)
-	 * @return display name (probably firstname lastname)
-	 */
-	public String getUserDisplayName(String userId);
-
-	/**
 	 * @return the current sakai user id (not username)
 	 */
 	public String getCurrentUserId();
 
 	/**
+	 * Get the display name for a user by their unique id
+	 * @param userId the current sakai user id (not username)
+	 * @return display name (probably firstname lastname) or "----------" (10 hyphens) if none found
+	 */
+	public String getUserDisplayName(String userId);
+
+	/**
 	 * @return the current sakai context
 	 */
 	public String getCurrentContext();
+
+	/**
+	 * @param context a sakai context
+	 * @return the title for the context or "--------" (8 hyphens) if none found
+	 */
+	public String getContextTitle(String context);
 
 	/**
 	 * Check if this user has super admin access

@@ -52,15 +52,17 @@ public class BlogLogicImpl implements BlogLogic {
 	 */
 	public boolean canWriteBlog(BlogWowBlog blog, String siteId, String userId) {
 		log.debug("checking if can write for: " + userId + ", " + siteId + ": and blog=" + blog.getId() );
-		if (blog.getOwnerId().equals( userId ) ) {
-			// owner can always modify an item
+		if (! siteId.equals(blog.getSiteId()) ) {
+			// the siteId must match with the one in the blog
+			return false;
+		} else if (blog.getOwnerId().equals( userId ) ) {
+			// owner can always modify blog
 			return true;
 		} else if ( externalLogic.isUserAdmin(userId) ) {
-			// the system super user can modify any item
+			// the system super user can modify blog
 			return true;
-		} else if ( siteId.equals(blog.getSiteId()) &&
-				externalLogic.isUserAllowedInContext(userId, ExternalLogic.BLOG_ENTRY_WRITE_ANY, siteId) ) {
-			// users with permission in the specified site can modify items from that site
+		} else if ( externalLogic.isUserAllowedInContext(userId, ExternalLogic.BLOG_ENTRY_WRITE_ANY, siteId) ) {
+			// users with permission in the specified site can modify blog from that site
 			return true;
 		}
 		return false;

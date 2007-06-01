@@ -16,6 +16,8 @@ import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.authz.api.FunctionManager;
 import org.sakaiproject.authz.api.SecurityService;
 import org.sakaiproject.blogwow.logic.ExternalLogic;
+import org.sakaiproject.exception.IdUnusedException;
+import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SiteService;
 import org.sakaiproject.tool.api.SessionManager;
 import org.sakaiproject.tool.api.ToolManager;
@@ -76,18 +78,6 @@ public class ExternalLogicImpl implements ExternalLogic {
 
 
 	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.BlogWowLogic#getCurrentUserDisplayName()
-	 */
-	public String getUserDisplayName(String userId) {
-		try {
-			return userDirectoryService.getUser(userId).getDisplayName();
-		} catch (UserNotDefinedException e) {
-			log.error("Cannot get user displayname for id: " + userId);
-		}
-		return userId;
-	}
-
-	/* (non-Javadoc)
 	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#getCurrentContext()
 	 */
 	public String getCurrentContext() {
@@ -95,10 +85,35 @@ public class ExternalLogicImpl implements ExternalLogic {
 	}
 
 	/* (non-Javadoc)
+	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#getContextTitle(java.lang.String)
+	 */
+	public String getContextTitle(String context) {
+		try {
+			Site site = siteService.getSite(context);
+			return site.getTitle();
+		} catch (IdUnusedException e) {
+			log.warn("Cannot get the info about context: " + context);
+			return "----------";
+		}
+	}
+
+	/* (non-Javadoc)
 	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#getCurrentUserId()
 	 */
 	public String getCurrentUserId() {
 		return sessionManager.getCurrentSessionUserId();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.sakaiproject.blogwow.logic.BlogWowLogic#getCurrentUserDisplayName()
+	 */
+	public String getUserDisplayName(String userId) {
+		try {
+			return userDirectoryService.getUser(userId).getDisplayName();
+		} catch (UserNotDefinedException e) {
+			log.warn("Cannot get user displayname for id: " + userId);
+			return "--------";
+		}
 	}
 
 	/* (non-Javadoc)

@@ -62,7 +62,12 @@ public class BlogWowDaoImplTest extends AbstractTransactionalSpringContextTests 
 	 * test name like so: testMethodClassInt (for method(Class, int);
 	 */
 
-
+	/**
+	 * FAKE Test method
+	 */
+	public void testFakePlaceholder() {
+		// This is a placeholder, at least one test method is required or this generates an error
+	}
 
 	/**
 	 * Add anything that supports the unit tests below here
