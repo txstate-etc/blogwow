@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Blog It: My Entries</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link href="/library/skin/tool_base.css" rsf:id="scr=portal-matter" type="text/css" rel="stylesheet" media="all" />
+  <link href="/library/skin/default/tool.css" rsf:id="scr=portal-matter" type="text/css" rel="stylesheet" media="all" />
+  <script type="text/javascript" rsf:id="scr=portal-matter" language="JavaScript" src="/library/js/headscripts.js"></script>
+</head>
+<body>
+<div class="portletBody">
+  <div rsf:id="navIntraTool:" class="navIntraTool">
+  </div>
+  <br/>
+  <h3 rsf:id="add-entry-header">Add a new blog entry (this is also the edit screen)</h3>
+  <div class="tier1">
+    <form rsf:id="edit-blog-entry-form" method="post">
+      <div class="highlightPanel">
+        &nbsp;&nbsp;&nbsp;
+        <span rsf:id="title-label">Title:</span>&nbsp;&nbsp;&nbsp;
+        <input rsf:id="title-input" size="60" name="title" type="text"/><br/>
+        <div rsf:id="blog-text-input:">
+          <textarea rows="10" cols="80" name="something">This should be the FCK editor. </textarea>
+        </div>
+        <p class="instruction">
+          <span rsf:id="privacy-instructions">Choose who can see this entry:</span><br/>
+          <span rsf:id="privacy-radio-holder" />
+          <input rsf:id="instructors-only-radio" type="radio" name="privacy" id="privacy"/>
+          <label for="" rsf:id="instructors-only-label">Only <strong>instructors and I</strong> can see this entry</label><br/>
+          <input rsf:id="all-members-radio" type="radio" name="privacy" id="privacy" checked="true"/>
+          <label for="" rsf:id="all-members-label">All <strong>members of this site</strong> can see this entry</label><br/>
+          <input rsf:id="public-viewable-radio" type="radio" name="privacy" id="privacy"/>
+          <label for="" rsf:id="public-viewable-label">This file is <strong>publicly viewable</strong>.</label><br/>	
+        </p>
+        <p>
+          <input rsf:id="publish-button" type="submit" value="Publish entry"/>
+          <input rsf:id="save-button" type="submit" value="Save work so far"/>
+          <input rsf:id="cancel-button" type="submit" value="Cancel"/>
+        </p>
+      </div>
+    </form>
+  </div>
+  <img src="images/tea.gif" align="right"/>
+</div>
+</body>
+</html>

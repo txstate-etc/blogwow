@@ -25,13 +25,13 @@
 	<!-- Override the default style of user messages -->
 	<bean id="messageTemplateContributor" parent="templateContributorParent">
 		<property name="baseDirectory" value="component-templates/" />
-		<property name="templateNames" value="Messages" />
+		<property name="templateNames" value="Messages,Navbar" />
 	</bean>
 
 	<!-- For security purposes, only beans listed in the comma separated value list
 			may be the target of EL operations coming in over the request -->
 	<bean parent="requestAddressibleParent">
-		<property name="value" value="itemsBean" />
+		<property name="value" value="" />
 	</bean>
 
 	<!-- Control the location of the html templates (default: content/templates/) -->
