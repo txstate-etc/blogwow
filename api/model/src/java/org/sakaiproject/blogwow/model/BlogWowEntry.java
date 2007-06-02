@@ -22,6 +22,7 @@ public class BlogWowEntry {
 	
 	private Long id;
 	private BlogWowBlog blog;
+	private String ownerId; // Sakai userId
 	private String title;
 	private String text;
 	private String privacySetting;
@@ -37,8 +38,9 @@ public class BlogWowEntry {
 	/**
 	 * Minimal constructor
 	 */
-	public BlogWowEntry(BlogWowBlog blog, String title, String text, String privacySetting, Date dateModified) {
+	public BlogWowEntry(BlogWowBlog blog, String ownerId, String title, String text, String privacySetting, Date dateModified) {
 		this.blog = blog;
+		this.ownerId = ownerId;
 		this.title = title;
 		this.text = text;
 		this.privacySetting = privacySetting;
@@ -48,8 +50,9 @@ public class BlogWowEntry {
 	/**
 	 * Full constructor
 	 */
-	public BlogWowEntry(BlogWowBlog blog, String title, String text, String privacySetting, Date dateModified, Date dateCreated) {
+	public BlogWowEntry(BlogWowBlog blog, String ownerId, String title, String text, String privacySetting, Date dateModified, Date dateCreated) {
 		this.blog = blog;
+		this.ownerId = ownerId;
 		this.title = title;
 		this.text = text;
 		this.privacySetting = privacySetting;
@@ -114,6 +117,14 @@ public class BlogWowEntry {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(String ownerId) {
+		this.ownerId = ownerId;
 	}
 
 

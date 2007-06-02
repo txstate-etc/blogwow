@@ -20,15 +20,11 @@ import org.sakaiproject.blogwow.dao.BlogWowDao;
 import org.sakaiproject.blogwow.logic.BlogLogic;
 import org.sakaiproject.blogwow.logic.ExternalLogic;
 import org.sakaiproject.blogwow.model.BlogWowBlog;
+import org.sakaiproject.genericdao.api.finders.ByPropsFinder;
 
 /**
  * This is the implementation of the blog business logic interface
  * @author Sakai App Builder -AZ
- */
-/**
- * 
- * 
- * @author Aaron Zeckoski (aaronz@vt.edu)
  */
 public class BlogLogicImpl implements BlogLogic {
 
@@ -53,49 +49,39 @@ public class BlogLogicImpl implements BlogLogic {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.BlogLogic#canWriteBlog(org.sakaiproject.blogwow.model.BlogWowBlog, java.lang.String, java.lang.String)
-	 */
-	public boolean canWriteBlog(BlogWowBlog blog, String locationId, String userId) {
-		log.warn("checking if can write for: " + userId + ", " + locationId + ": and blog=" + blog.getId() );
-		if (! locationId.equals(blog.getLocation()) ) {
-			// the siteId must match with the one in the blog
-			return false;
-		} else if (blog.getOwnerId().equals( userId ) ) {
-			// owner can always modify blog
-			return true;
-		} else if ( externalLogic.isUserAdmin(userId) ) {
-			// the system super user can modify blog
-			return true;
-		} else if ( externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_WRITE_ANY, locationId) ) {
-			// users with permission in the specified site can modify blog from that site
-			return true;
-		}
-		return false;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.BlogLogic#getAllVisibleBlogs(java.lang.String)
-	 */
-	public List getAllVisibleBlogs(String locationId) {
-		log.debug("Fetching visible blogs for site: " + locationId);
-		// for now this is just all blogs
-		List l = dao.findByProperties(BlogWowBlog.class, 
-				new String[] {"location"}, new Object[] {locationId});
-		return l;
-	}
-
-	/* (non-Javadoc)
 	 * @see org.sakaiproject.blogwow.logic.BlogLogic#getBlogById(java.lang.Long)
 	 */
-	public BlogWowBlog getBlogById(Long id) {
-		return (BlogWowBlog) dao.findById(BlogWowBlog.class, id);
+	public BlogWowBlog getBlogById(Long entryId) {
+		return (BlogWowBlog) dao.findById(BlogWowBlog.class, entryId);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.sakaiproject.blogwow.logic.BlogLogic#getAllVisibleBlogs(java.lang.String, java.lang.String, int, int)
+	 */
+	public List getAllVisibleBlogs(String locationId, String sortProperty, boolean ascending, int start, int limit) {
+		if (sortProperty == null) {
+			sortProperty = "title";
+			ascending = true;
+		}
+
+		if (! ascending) {
+			sortProperty += ByPropsFinder.DESC;
+		}
+
+		List l = dao.findByProperties(BlogWowBlog.class, 
+				new String[] {"location"}, 
+				new Object[] {locationId},
+				new int[] {ByPropsFinder.EQUALS},
+				new String[] {sortProperty},
+				start, limit);
+		return l;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.sakaiproject.blogwow.logic.BlogLogic#saveBlog(org.sakaiproject.blogwow.model.BlogWowBlog)
 	 */
 	public void saveBlog(BlogWowBlog blog) {
-		// set the owner and site to current if they are not set
+		// set the owner and location to current if they are not set
 		if (blog.getOwnerId() == null) {
 			blog.setOwnerId( externalLogic.getCurrentUserId() );
 		}
@@ -105,15 +91,34 @@ public class BlogLogicImpl implements BlogLogic {
 		if (blog.getDateCreated() == null) {
 			blog.setDateCreated( new Date() );
 		}
-		// save item if new OR check if the current user can update the existing item
+		// save blog if new OR check if the current user can update the existing item
 		if ( (blog.getId() == null) || 
-				canWriteBlog(blog, externalLogic.getCurrentLocationId(), externalLogic.getCurrentUserId()) ) {
+				canWriteBlog(blog.getId(), externalLogic.getCurrentLocationId(), externalLogic.getCurrentUserId()) ) {
 			dao.save(blog);
 			log.info("Saving blog: " + blog.getId() + ":" + blog.getProfile());
 		} else {
 			throw new SecurityException("Current user cannot save blog " + 
 					blog.getId() + " because they do not have permission");
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.sakaiproject.blogwow.logic.BlogLogic#canWriteBlog(java.lang.Long, java.lang.String, java.lang.String)
+	 */
+	public boolean canWriteBlog(Long blogId, String locationId, String userId) {
+		BlogWowBlog blog = getBlogById(blogId);
+		if (! locationId.equals(blog.getLocation()) ) {
+			// the location must match with the one in the blog
+			return false;
+		} else if ( externalLogic.isUserAdmin(userId) ) {
+			// the system super user can write
+			return true;
+		} else if ( blog.getOwnerId().equals( userId ) &&
+				externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_CREATE, locationId) ) {
+			// users with permission in the specified location can write for that location
+			return true;
+		}
+		return false;
 	}
 
 }

@@ -1,7 +1,7 @@
 /******************************************************************************
  * ExternalLogic.java - created by Sakai App Builder -AZ
  * 
- * Copyright (c) 2006 Sakai Project/Sakai Foundation
+ * Copyright (c) 2007 Sakai Project/Sakai Foundation
  * Licensed under the Educational Community License version 1.0
  * 
  * A copy of the Educational Community License has been included in this 

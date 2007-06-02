@@ -19,6 +19,7 @@
         <many-to-one name="blog" class="org.sakaiproject.blogwow.model.BlogWowBlog" fetch="join">
         	<column name="blog_id" not-null="true" />
         </many-to-one>
+        <property name="ownerId" type="string" length="255" not-null="true" />
         <property name="title" type="string" length="255" not-null="true" />
 		<property name="text" type="string" not-null="true" />
 		<property name="privacySetting" type="string" length="255" not-null="true" />
