@@ -16,7 +16,10 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Query;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Property;
 import org.sakaiproject.blogwow.dao.BlogWowDao;
+import org.sakaiproject.blogwow.model.BlogWowEntry;
 import org.sakaiproject.blogwow.model.constants.BlogConstants;
 import org.sakaiproject.genericdao.hibernate.HibernateCompleteGenericDao;
 
@@ -55,6 +58,9 @@ public class BlogWowDaoImpl
 		 * 4) entry.owner is userId OR
 		 * 5) (entry.privacy is group AND entry.blog.location is in new location array)
 		 */
+
+		DetachedCriteria dc = DetachedCriteria.forClass(BlogWowEntry.class)
+			.add( Property.forName("blog.id").in(blogIds));
 
 		String hql = "from BlogWowEntry entry where entry.blog.id in " + arrayToInString(blogIds) + 
 			" and (entry.privacySetting = '"+BlogConstants.PRIVACY_PUBLIC+"'";
