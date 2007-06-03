@@ -101,6 +101,7 @@ public class EntryLogicImpl implements EntryLogic {
 
 		List l = new ArrayList();
 		if ( externalLogic.isUserAdmin(userId) ) {
+			// get all entries for a set of blogs
 			l = dao.findByProperties(BlogWowEntry.class, 
 					new String[] {"blog.id"}, 
 					new Object[] {blogIds},
@@ -109,24 +110,22 @@ public class EntryLogicImpl implements EntryLogic {
 					start, limit);
 		} else {
 			List locations = dao.getLocationsForBlogsIds(blogIds);
-			// check current user perms on these locations, remove the ones they do not have full perms in
+			// check current user perms on these locations to form lists of locations related to this users access
+			List readLocations = new ArrayList(); // holds the locations where user has read perms
+			List readAnyLocations = new ArrayList(); // holds the locations where user has read any perms
 			for (Iterator iter = locations.iterator(); iter.hasNext();) {
 				String location = (String) iter.next();
-				if (! externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_READ_ANY, location)) {
-					iter.remove();
+				if (externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_READ_ANY, location)) {
+					readAnyLocations.add(location);
+					readLocations.add(location);
+				} else if (externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_READ, location)) {
+					readLocations.add(location);
 				}
 			}
-			String[] locsArray = (String[]) locations.toArray(new String[] {});
+			String[] readLocsArray = (String[]) readLocations.toArray(new String[] {});
+			String[] readAnyLocsArray = (String[]) readAnyLocations.toArray(new String[] {});
 
-			/*
-			 * rules to determine which entries to get
-			 * 1) entry.id is in blogIds AND
-			 * 2) entry.blog.owner is userId OR
-			 * 3) entry.owner is userId OR
-			 * 4) entry.privacy is public OR
-			 * 5) (entry.privacy is group AND location is in new location array)
-			 */
-			l = dao.getBlogEntries(blogIds, userId, locsArray, sortProperty, ascending, start, limit);
+			l = dao.getBlogPermEntries(blogIds, userId, readLocsArray, readAnyLocsArray, sortProperty, ascending, start, limit);
 		}
 
 		return l;

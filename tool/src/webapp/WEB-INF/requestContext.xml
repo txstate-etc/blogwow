@@ -4,40 +4,52 @@
 
 <beans>
 
+	<!-- list the backing beans here -->
+
 	<!-- rich text evolver bean def -->
 	<bean id="richTextEvolver"
-			class="org.springframework.beans.factory.config.BeanReferenceFactoryBean">
+		class="org.springframework.beans.factory.config.BeanReferenceFactoryBean">
 		<property name="targetBeanName" value="sakaiFCKTextEvolver" />
 	</bean>
-	
+
 	<!-- Renderers -->
-	<bean id="NavbarRenderer" class="org.sakaiproject.blogwow.tool.producers.NavBarRenderer">
+	<bean id="NavbarRenderer"
+		class="org.sakaiproject.blogwow.tool.producers.NavBarRenderer">
 	</bean>
 
 	<!-- list the producer beans here -->
-	<bean class="org.sakaiproject.blogwow.tool.producers.AddEntryProducer">
-	  <property name="navBarRenderer" ref="NavbarRenderer"></property>
-	  <property name="richTextEvolver" ref="richTextEvolver"></property>
-      <property name="messageLocator" ref="messageLocator"></property>
+	<bean
+		class="org.sakaiproject.blogwow.tool.producers.AddEntryProducer">
+		<property name="navBarRenderer" ref="NavbarRenderer"></property>
+		<property name="richTextEvolver" ref="richTextEvolver"></property>
+		<property name="messageLocator" ref="messageLocator"></property>
 	</bean>
+
 	<bean class="org.sakaiproject.blogwow.tool.producers.BlogViewProducer">
 	</bean>
+
 	<bean class="org.sakaiproject.blogwow.tool.producers.CommentsProducer">
 	</bean>
+
 	<bean class="org.sakaiproject.blogwow.tool.producers.HomeProducer">
-	  <property name="navBarRenderer" ref="NavbarRenderer"></property>
+		<property name="navBarRenderer" ref="NavbarRenderer"></property>
 	</bean>
+
 	<bean class="org.sakaiproject.blogwow.tool.producers.MySettingsProducer">
-      <property name="navBarRenderer" ref="NavbarRenderer"></property>
-      <property name="richTextEvolver" ref="richTextEvolver"></property>
+		<property name="navBarRenderer" ref="NavbarRenderer"></property>
+		<property name="richTextEvolver" ref="richTextEvolver"></property>
 	</bean>
+
 	<bean class="org.sakaiproject.blogwow.tool.producers.RemoveProducer">
 	</bean>
+
 	<bean class="org.sakaiproject.blogwow.tool.producers.PermissionsProducer">
-      <property name="sessionManager" ref="org.sakaiproject.tool.api.SessionManager" />
-      <property name="site" ref="sakai-Site" />
-      <property name="messageLocator" ref="messageLocator" />
+		<property name="sessionManager"
+			ref="org.sakaiproject.tool.api.SessionManager" />
+		<property name="site" ref="sakai-Site" />
+		<property name="messageLocator" ref="messageLocator" />
 	</bean>
+
 	<bean class="org.sakaiproject.blogwow.tool.producers.BlogRSSProducer">
 	</bean>
 

@@ -24,6 +24,7 @@ public interface ExternalLogic {
 	public final static String BLOG_CREATE = "blogwow.create";
 	public final static String BLOG_ENTRY_WRITE = "blogwow.entry.write";
 	public final static String BLOG_ENTRY_WRITE_ANY = "blogwow.entry.write.any";
+	public final static String BLOG_ENTRY_READ = "blogwow.entry.read";
 	public final static String BLOG_ENTRY_READ_ANY = "blogwow.entry.read.any";
 	public final static String BLOG_COMMENTS_ADD = "blogwow.comments.add";
 

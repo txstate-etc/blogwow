@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.sakaiproject.blogwow.model.BlogWowBlog;
 import org.sakaiproject.blogwow.model.BlogWowEntry;
+import org.sakaiproject.blogwow.model.constants.BlogConstants;
 import org.sakaiproject.genericdao.api.CompleteGenericDao;
 
 /**
@@ -32,10 +33,13 @@ public interface BlogWowDao extends CompleteGenericDao {
 	public List getLocationsForBlogsIds(Long[] blogIds);
 
 	/**
-	 * Get blog entries efficiently
+	 * Get blog entries efficiently using sakai permissions
 	 * @param blogIds an array of unique ids of {@link BlogWowBlog} which we will return entries from
 	 * @param userId the internal user id (not username), if null then return public entries
-	 * @param locations an array of locationIds which we will return all entries for
+	 * @param readLocations an array of locationIds which we will return all privacy {@link BlogConstants#PRIVACY_GROUP} entries for
+	 * (the user should have read permissions in these locations)
+	 * @param readAnyLocations an array of locationIds which we will return all privacy {@link BlogConstants#PRIVACY_GROUP_LEADER} entries for
+	 * (the user should have read all entries access to these locations)
 	 * @param sortProperty the name of the {@link BlogWowEntry} property to sort on
 	 * or null to sort by default property (dateCreated desc)
 	 * @param ascending sort in ascending order, if false then descending (ignored if sortProperty is null)
@@ -43,7 +47,7 @@ public interface BlogWowDao extends CompleteGenericDao {
 	 * @param limit the maximum number of entries to return, 0 returns as many entries as possible
 	 * @return a list of {@link BlogWowEntry} objects
 	 */
-	public List getBlogEntries(Long[] blogIds, String userId, String[] locations, 
+	public List getBlogPermEntries(Long[] blogIds, String userId, String[] readLocations, String[] readAnyLocations,
 			String sortProperty, boolean ascending, int start, int limit);
 
 }

@@ -19,8 +19,21 @@ package org.sakaiproject.blogwow.model.constants;
  */
 public class BlogConstants {
 
+	/**
+	 * visible to owner only 
+	 */
 	public final static String PRIVACY_PRIVATE = "private";
+	/**
+	 * visible to owner and group leader (instructor) of group related to blog
+	 */
+	public final static String PRIVACY_GROUP_LEADER = "leader";
+	/**
+	 * visible to group related to blog
+	 */
 	public final static String PRIVACY_GROUP = "group";
+	/**
+	 * visible to anyone
+	 */
 	public final static String PRIVACY_PUBLIC = "public";
 
 }

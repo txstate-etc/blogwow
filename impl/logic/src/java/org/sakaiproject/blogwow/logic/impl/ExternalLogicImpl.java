@@ -72,6 +72,7 @@ public class ExternalLogicImpl implements ExternalLogic {
 		functionManager.registerFunction(BLOG_CREATE);
 		functionManager.registerFunction(BLOG_ENTRY_WRITE);
 		functionManager.registerFunction(BLOG_ENTRY_WRITE_ANY);
+		functionManager.registerFunction(BLOG_ENTRY_READ);
 		functionManager.registerFunction(BLOG_ENTRY_READ_ANY);
 		functionManager.registerFunction(BLOG_COMMENTS_ADD);
 	}
