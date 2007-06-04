@@ -17,7 +17,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.blogwow.dao.BlogWowDao;
-import org.sakaiproject.blogwow.logic.test.ExternalLogicStub;
+import org.sakaiproject.blogwow.logic.test.stubs.ExternalLogicStub;
 import org.sakaiproject.blogwow.model.BlogWowBlog;
 import org.sakaiproject.blogwow.model.BlogWowComment;
 import org.sakaiproject.blogwow.model.BlogWowEntry;

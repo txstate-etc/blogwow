@@ -20,6 +20,8 @@ public interface ExternalLogic {
 
 	public final static String NO_LOCATION = "noLocationAvailable";
 
+	public final static String ANON_USER_PREFIX = "anon_";
+
 	// permissions
 	public final static String BLOG_CREATE = "blogwow.create";
 	public final static String BLOG_ENTRY_WRITE = "blogwow.entry.write";

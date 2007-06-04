@@ -11,6 +11,8 @@
 
 package org.sakaiproject.blogwow.logic.impl;
 
+import java.util.Date;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.authz.api.FunctionManager;
@@ -19,8 +21,10 @@ import org.sakaiproject.blogwow.logic.ExternalLogic;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SiteService;
+import org.sakaiproject.tool.api.Session;
 import org.sakaiproject.tool.api.SessionManager;
 import org.sakaiproject.tool.api.ToolManager;
+import org.sakaiproject.user.api.User;
 import org.sakaiproject.user.api.UserDirectoryService;
 import org.sakaiproject.user.api.UserNotDefinedException;
 
@@ -61,6 +65,9 @@ public class ExternalLogicImpl implements ExternalLogic {
 	public void setUserDirectoryService(UserDirectoryService userDirectoryService) {
 		this.userDirectoryService = userDirectoryService;
 	}
+
+
+	private static final String ANON_USER_ATTRIBUTE = "AnonUserAttribute";
 
 
 	/**
@@ -107,16 +114,34 @@ public class ExternalLogicImpl implements ExternalLogic {
 	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#getCurrentUserId()
 	 */
 	public String getCurrentUserId() {
-		return sessionManager.getCurrentSessionUserId();
+		String userId = sessionManager.getCurrentSessionUserId();
+		if (userId == null) {
+			// if no user found then fake like there is one for this session,
+			// we do not want to actually create a user though
+			Session session = sessionManager.getCurrentSession();
+			userId = (String) session.getAttribute(ANON_USER_ATTRIBUTE);
+			if (userId == null) {
+				userId = ANON_USER_PREFIX + new Date().getTime();
+				session.setAttribute(ANON_USER_ATTRIBUTE, userId);
+			}
+		}
+		return userId;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#getUserDisplayName(java.lang.String)
+	 */
 	public String getUserDisplayName(String userId) {
 		try {
-			return userDirectoryService.getUser(userId).getDisplayName();
-		} catch (UserNotDefinedException e) {
-			log.warn("Cannot get user displayname for id: " + userId);
-			return "--------";
+			User user = userDirectoryService.getUser(userId);
+			return user.getDisplayName();
+		} catch(UserNotDefinedException ex) {
+			log.error("Could not get user from userId: " + userId, ex);
 		}
+		if (userId.startsWith(ANON_USER_PREFIX)) {
+			return "Anonymous User";
+		}
+		return "----------";
 	}
 
 	/* (non-Javadoc)

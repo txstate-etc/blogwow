@@ -20,6 +20,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.blogwow.dao.BlogWowDao;
 import org.sakaiproject.blogwow.logic.impl.BlogLogicImpl;
+import org.sakaiproject.blogwow.logic.test.stubs.ExternalLogicStub;
 import org.sakaiproject.blogwow.model.BlogWowBlog;
 import org.springframework.test.AbstractTransactionalSpringContextTests;
 
@@ -104,6 +105,42 @@ public class BlogLogicImplTest extends AbstractTransactionalSpringContextTests {
 		assertTrue( logicImpl.canWriteBlog(blog1.getId(), ExternalLogicStub.LOCATION1_ID, ExternalLogicStub.ADMIN_USER_ID) );
 		assertTrue( logicImpl.canWriteBlog(blog2.getId(), ExternalLogicStub.LOCATION1_ID, ExternalLogicStub.ADMIN_USER_ID) );
 		assertTrue( logicImpl.canWriteBlog(blog3.getId(), ExternalLogicStub.LOCATION2_ID, ExternalLogicStub.ADMIN_USER_ID) );
+	}
+
+	/**
+	 * Test method for {@link org.sakaiproject.blogwow.logic.impl.BlogLogicImpl#getBlogByLocationAndUser(java.lang.String, java.lang.String)}.
+	 */
+	public void testGetBlogByLocationAndUser() {
+		BlogWowBlog blog = null;
+
+		// test getting valid items by id
+		blog = logicImpl.getBlogByLocationAndUser(ExternalLogicStub.LOCATION1_ID, ExternalLogicStub.USER_ID);
+		Assert.assertNotNull(blog);
+		Assert.assertEquals(blog1, blog);
+
+		blog = logicImpl.getBlogByLocationAndUser(ExternalLogicStub.LOCATION1_ID, ExternalLogicStub.MAINT_USER_ID);
+		Assert.assertNotNull(blog);
+		Assert.assertEquals(blog2, blog);
+
+		// test creating a new blog
+		blog = logicImpl.getBlogByLocationAndUser(ExternalLogicStub.LOCATION1_ID, ExternalLogicStub.ADMIN_USER_ID);
+		Assert.assertNotNull(blog);
+		Assert.assertNotNull(blog.getId());
+		Assert.assertEquals(ExternalLogicStub.LOCATION1_ID, blog.getLocation());
+		Assert.assertEquals(ExternalLogicStub.ADMIN_USER_ID, blog.getOwnerId());
+
+		// test cannot create a new blog in location for user
+		blog = logicImpl.getBlogByLocationAndUser(ExternalLogicStub.LOCATION2_ID, ExternalLogicStub.USER_ID);
+		Assert.assertNull(blog);
+
+		// test fails to return invalid user or location blog
+		// TODO - make this part work -AZ
+//		blog = logicImpl.getBlogByLocationAndUser(ExternalLogicStub.INVALID_LOCATION_ID, ExternalLogicStub.ADMIN_USER_ID);
+//		Assert.assertNull(blog);
+//
+//		blog = logicImpl.getBlogByLocationAndUser(ExternalLogicStub.LOCATION2_ID, ExternalLogicStub.INVALID_USER_ID);
+//		Assert.assertNull(blog);
+
 	}
 
 	/**

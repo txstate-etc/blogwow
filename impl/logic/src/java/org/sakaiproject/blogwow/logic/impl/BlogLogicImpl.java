@@ -56,6 +56,57 @@ public class BlogLogicImpl implements BlogLogic {
 	}
 
 	/* (non-Javadoc)
+	 * @see org.sakaiproject.blogwow.logic.BlogLogic#getBlogByLocationAndUser(java.lang.String, java.lang.String)
+	 */
+	public BlogWowBlog getBlogByLocationAndUser(String locationId, String userId) {
+
+		List l = dao.findByProperties(BlogWowBlog.class, 
+				new String[] {"location", "ownerId"}, 
+				new Object[] {locationId, userId}
+			);
+
+		if (l.size() <= 0) {
+			// no blog found, create a new one
+			if (checkCanWriteBlog(locationId, userId)) {
+				String title = externalLogic.getUserDisplayName(userId);
+				BlogWowBlog blog = new BlogWowBlog(userId, locationId, title, null, null, new Date());
+				dao.save(blog);
+				return blog;
+			}
+			return null;
+		} else if (l.size() == 1) {
+			// found existing blog
+			return (BlogWowBlog) l.get(0);
+		} else {
+			throw new IllegalStateException("Found more than one blog for user ("+userId+") in location ("+locationId+"), only one is allowed");
+		}
+
+
+//		BlogWowBlog blog = new BlogWowBlog();
+//	    blog.setLocation(groupref);
+//	    blog.setOwnerId(userid);
+//	    List<BlogWowBlog> blogs = blogWowDao.findByExample(blog);
+//	    
+//	    if (blogs.size() == 0) {
+//	      blog.setDateCreated(new Date());
+//	      blog.setProfile("");
+//	      String title = "";
+//	      try {
+//	        title = userDirectoryService.getUser(userid).getDisplayName();
+//	      } catch (UserNotDefinedException e) {
+//	        e.printStackTrace();
+//	      }
+//	      blog.setTitle(title);
+//	      blog.setImageUrl("");
+//	      blogWowDao.save(blog);
+//	      return blog.getId().toString();
+//	    }
+//	    else {
+//	      return blogs.get(0).getId().toString();
+//	    }
+	}
+
+	/* (non-Javadoc)
 	 * @see org.sakaiproject.blogwow.logic.BlogLogic#getAllVisibleBlogs(java.lang.String, java.lang.String, int, int)
 	 */
 	public List getAllVisibleBlogs(String locationId, String sortProperty, boolean ascending, int start, int limit) {
@@ -115,6 +166,23 @@ public class BlogLogicImpl implements BlogLogic {
 			return true;
 		} else if ( blog.getOwnerId().equals( userId ) &&
 				externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_CREATE, locationId) ) {
+			// users with permission in the specified location can write for that location
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Break out the security check to use it in more than one place
+	 * @param locationId
+	 * @param userId
+	 * @return
+	 */
+	private boolean checkCanWriteBlog(String locationId, String userId) {
+		if ( externalLogic.isUserAdmin(userId) ) {
+			// the system super user can write
+			return true;
+		} else if ( externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_CREATE, locationId) ) {
 			// users with permission in the specified location can write for that location
 			return true;
 		}

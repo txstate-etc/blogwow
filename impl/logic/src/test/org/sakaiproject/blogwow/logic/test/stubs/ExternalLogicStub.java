@@ -12,7 +12,7 @@
  * 
  *****************************************************************************/
 
-package org.sakaiproject.blogwow.logic.test;
+package org.sakaiproject.blogwow.logic.test.stubs;
 
 import org.sakaiproject.blogwow.logic.ExternalLogic;
 

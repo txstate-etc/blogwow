@@ -29,6 +29,15 @@ public interface BlogLogic {
 	public BlogWowBlog getBlogById(Long blogId);
 
 	/**
+	 * Get a blog based on a location and user,
+	 * if none found then one is created for the user (if they have appropriate permissions)
+	 * @param locationId a unique id which represents the current location of the user (entity reference)
+	 * @param userId the internal user id (not username)
+	 * @return a blog or null if cannot create one and none exists
+	 */
+	public BlogWowBlog getBlogByLocationAndUser(String locationId, String userId);
+
+	/**
 	 * Save (Create or Update) a blog (uses the current site)
 	 * @param blog the BlogWowBlog to create or update
 	 */
