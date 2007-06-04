@@ -37,5 +37,12 @@
 		<property name="externalLogic" 
 			ref="org.sakaiproject.blogwow.logic.ExternalLogic" />
 	</bean>
+  
+    <!-- Useful for looking up an individual blog. -->
+    <bean id="org.sakaiproject.blogwow.logic.PersonalBlogFinder"
+      class="org.sakaiproject.blogwow.logic.impl.PersonalBlogFinderImpl">
+      <property name="blogWowDao" ref="org.sakaiproject.blogwow.dao.BlogWowDao"></property>  
+      <property name="userDirectoryService" ref="org.sakaiproject.user.api.UserDirectoryService"></property>
+    </bean>
 
 </beans>

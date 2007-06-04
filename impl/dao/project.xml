@@ -145,6 +145,7 @@
 		<sourceDirectory>src/java</sourceDirectory>
 
 		<!-- unit testing -->
+<!--
 		<unitTestSourceDirectory>src/test</unitTestSourceDirectory> 
 		<unitTest>
 			<includes>
@@ -166,6 +167,7 @@
 				</resource>
             </resources>
 		</unitTest>
+-->
 
 	</build>
 
