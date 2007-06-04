@@ -11,12 +11,20 @@
 
 package org.sakaiproject.blogwow.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Query;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.Junction;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Property;
+import org.hibernate.criterion.Restrictions;
 import org.sakaiproject.blogwow.dao.BlogWowDao;
+import org.sakaiproject.blogwow.model.BlogWowEntry;
 import org.sakaiproject.blogwow.model.constants.BlogConstants;
 import org.sakaiproject.genericdao.hibernate.HibernateCompleteGenericDao;
 
@@ -54,7 +62,9 @@ public class BlogWowDaoImpl
 	/* (non-Javadoc)
 	 * @see org.sakaiproject.blogwow.dao.BlogWowDao#getBlogPermEntries(java.lang.Long[], java.lang.String, java.lang.String[], java.lang.String[], java.lang.String, boolean, int, int)
 	 */
-	public List getBlogPermEntries(Long[] blogIds, String userId, String[] readLocations, String[] readAnyLocations, String sortProperty, boolean ascending, int start, int limit) {
+	public List getBlogPermEntries(Long[] blogIds, String userId, 
+        String[] readLocations, String[] readAnyLocations, String sortProperty, 
+        boolean ascending, int start, int limit) {
 
 		/*
 		 * rules to determine which entries to get
@@ -62,8 +72,8 @@ public class BlogWowDaoImpl
 		 * 2) (entry.privacy is public OR 
 		 * 3) entry.blog.owner is userId OR 
 		 * 4) entry.owner is userId OR
-		 * 5) (entry.privacy is group AND entry.blog.location is in locations))
-		 * 6) (entry.privacy is leader AND entry.blog.location is in leaderLocs))
+		 * 5) (entry.privacy is group AND entry.blog.location is in readLocations))
+		 * 6) (entry.privacy is leader AND entry.blog.location is in readAnyLocations))
 		 */
 
 		if (sortProperty == null) {
@@ -98,28 +108,43 @@ public class BlogWowDaoImpl
 		if (limit > 0) { query.setMaxResults(limit); }
 		return query.list();
 
+//        // Hibernate in list queries generate invalid SQL for empty lists,
+//        // Guard this case explicitly.
+//        if (blogIds == null || blogIds.length == 0) {
+//          return new ArrayList();
+//        }
+//        
+//        DetachedCriteria entry = DetachedCriteria.forClass(BlogWowEntry.class).
+//          createAlias("blog", "ownerblog");
+//        
 //		// Start building up the main "OR" branch with the only non-optional
-//		// criterion, the privay setting.
+//		// criterion, the privacy setting.
 //		Junction disjunction = Expression.disjunction().add(
 //				Property.forName("privacySetting").eq(BlogConstants.PRIVACY_PUBLIC));
 //
 //		if (userId != null) {
-//			disjunction.add(
-//					Property.forName("blog.ownerId").eq(userId))
-//					.add(Property.forName("owner").eq(userId));
+//			disjunction.add(Restrictions.eq("ownerblog.ownerId", userId))
+//                .add(Restrictions.eq("ownerId", userId));
 //		}
 //
-//		if (locations != null && locations.length > 0) {
+//		if (readLocations != null && readLocations.length > 0) {
 //			disjunction.add(
 //				Expression.and(
-//					Property.forName("privacySetting").eq(BlogConstants.PRIVACY_GROUP), 
-//					Property.forName("blog.location").in(locations)));
+//                    Restrictions.eq("privacySetting", BlogConstants.PRIVACY_GROUP),
+//                    Restrictions.in("ownerblog.location", readLocations)));
 //		}
+//        
+//        if (readAnyLocations != null && readAnyLocations.length > 0) {
+//            disjunction.add(
+//                Expression.and(
+//                  Restrictions.eq("privacySetting", BlogConstants.PRIVACY_GROUP_LEADER),
+//                  Restrictions.in("ownerblog.location", readAnyLocations)));
+//        }
 //
-//		// Finish up the top level of the criterion, by selecting the right
-//		// returned class, and also the required blog IDs.
-//		DetachedCriteria dc = DetachedCriteria.forClass(BlogWowEntry.class).add(
-//				Expression.and(Property.forName("blog.id").in(blogIds), disjunction));
+//		// Collect together all the terms onto the root criterion.
+//        
+//		DetachedCriteria dc = entry.add(
+//				Expression.and(Restrictions.in("ownerblog.id", blogIds), disjunction));
 //
 //		if (sortProperty != null && !sortProperty.equals("")) {
 //			dc.addOrder(ascending ? Order.asc(sortProperty) : Order.desc(sortProperty));
