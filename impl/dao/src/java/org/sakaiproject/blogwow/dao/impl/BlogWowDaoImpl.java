@@ -16,7 +16,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Query;
+//import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Junction;
@@ -147,7 +147,11 @@ public class BlogWowDaoImpl
 				Expression.and(Restrictions.in("ownerblog.id", blogIds), disjunction));
 
 		if (sortProperty != null && !sortProperty.equals("")) {
-			dc.addOrder(ascending ? Order.asc(sortProperty) : Order.desc(sortProperty));
+			if (ascending) {
+				dc.addOrder( Order.asc(sortProperty) );
+			} else {
+				dc.addOrder( Order.desc(sortProperty) );
+			}
 		}
 
 		return getHibernateTemplate().findByCriteria(dc, start, limit);
