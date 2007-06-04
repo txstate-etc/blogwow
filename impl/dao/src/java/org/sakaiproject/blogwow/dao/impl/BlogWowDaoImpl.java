@@ -81,76 +81,76 @@ public class BlogWowDaoImpl
 			ascending = false;
 		}
 
-		String hql = "from BlogWowEntry entry where entry.blog.id in " + arrayToInString(blogIds) + 
-			" and (entry.privacySetting = '"+BlogConstants.PRIVACY_PUBLIC+"'";
-		if (userId != null) {
-			hql += " or entry.blog.ownerId = '"+userId+"' or entry.ownerId = '"+userId+"'";
-		}
-		if (readLocations != null && readLocations.length > 0) {
-			hql += " or (entry.privacySetting = '"+BlogConstants.PRIVACY_GROUP+"' and " +
-				"entry.blog.location in " + arrayToInString(readLocations) + ")";
-		}
-		if (readAnyLocations != null && readAnyLocations.length > 0) {
-			hql += " or (entry.privacySetting = '"+BlogConstants.PRIVACY_GROUP_LEADER+"' and " +
-				"entry.blog.location in " + arrayToInString(readAnyLocations) + ")";
-		}
-		hql += ")";
-		if (sortProperty != null && ! sortProperty.equals("")) {
-			if (ascending) {
-				hql += " order by " + sortProperty + " asc";
-			} else {
-				hql += " order by " + sortProperty + " desc";
-			}
-		}
-		System.out.println("HQL=" + hql);
-		Query query = getSession().createQuery(hql);
-		query.setFirstResult(start);
-		if (limit > 0) { query.setMaxResults(limit); }
-		return query.list();
-
-//        // Hibernate in list queries generate invalid SQL for empty lists,
-//        // Guard this case explicitly.
-//        if (blogIds == null || blogIds.length == 0) {
-//          return new ArrayList();
-//        }
-//        
-//        DetachedCriteria entry = DetachedCriteria.forClass(BlogWowEntry.class).
-//          createAlias("blog", "ownerblog");
-//        
-//		// Start building up the main "OR" branch with the only non-optional
-//		// criterion, the privacy setting.
-//		Junction disjunction = Expression.disjunction().add(
-//				Property.forName("privacySetting").eq(BlogConstants.PRIVACY_PUBLIC));
-//
+//		String hql = "from BlogWowEntry entry where entry.blog.id in " + arrayToInString(blogIds) + 
+//			" and (entry.privacySetting = '"+BlogConstants.PRIVACY_PUBLIC+"'";
 //		if (userId != null) {
-//			disjunction.add(Restrictions.eq("ownerblog.ownerId", userId))
-//                .add(Restrictions.eq("ownerId", userId));
+//			hql += " or entry.blog.ownerId = '"+userId+"' or entry.ownerId = '"+userId+"'";
 //		}
-//
 //		if (readLocations != null && readLocations.length > 0) {
-//			disjunction.add(
-//				Expression.and(
-//                    Restrictions.eq("privacySetting", BlogConstants.PRIVACY_GROUP),
-//                    Restrictions.in("ownerblog.location", readLocations)));
+//			hql += " or (entry.privacySetting = '"+BlogConstants.PRIVACY_GROUP+"' and " +
+//				"entry.blog.location in " + arrayToInString(readLocations) + ")";
 //		}
-//        
-//        if (readAnyLocations != null && readAnyLocations.length > 0) {
-//            disjunction.add(
-//                Expression.and(
-//                  Restrictions.eq("privacySetting", BlogConstants.PRIVACY_GROUP_LEADER),
-//                  Restrictions.in("ownerblog.location", readAnyLocations)));
-//        }
-//
-//		// Collect together all the terms onto the root criterion.
-//        
-//		DetachedCriteria dc = entry.add(
-//				Expression.and(Restrictions.in("ownerblog.id", blogIds), disjunction));
-//
-//		if (sortProperty != null && !sortProperty.equals("")) {
-//			dc.addOrder(ascending ? Order.asc(sortProperty) : Order.desc(sortProperty));
+//		if (readAnyLocations != null && readAnyLocations.length > 0) {
+//			hql += " or (entry.privacySetting = '"+BlogConstants.PRIVACY_GROUP_LEADER+"' and " +
+//				"entry.blog.location in " + arrayToInString(readAnyLocations) + ")";
 //		}
-//
-//		return getHibernateTemplate().findByCriteria(dc, start, limit);
+//		hql += ")";
+//		if (sortProperty != null && ! sortProperty.equals("")) {
+//			if (ascending) {
+//				hql += " order by " + sortProperty + " asc";
+//			} else {
+//				hql += " order by " + sortProperty + " desc";
+//			}
+//		}
+//		System.out.println("HQL=" + hql);
+//		Query query = getSession().createQuery(hql);
+//		query.setFirstResult(start);
+//		if (limit > 0) { query.setMaxResults(limit); }
+//		return query.list();
+
+        // Hibernate in list queries generate invalid SQL for empty lists,
+        // Guard this case explicitly.
+        if (blogIds == null || blogIds.length == 0) {
+          return new ArrayList();
+        }
+        
+        DetachedCriteria entry = DetachedCriteria.forClass(BlogWowEntry.class).
+          createAlias("blog", "ownerblog");
+        
+		// Start building up the main "OR" branch with the only non-optional
+		// criterion, the privacy setting.
+		Junction disjunction = Expression.disjunction().add(
+				Property.forName("privacySetting").eq(BlogConstants.PRIVACY_PUBLIC));
+
+		if (userId != null) {
+			disjunction.add(Restrictions.eq("ownerblog.ownerId", userId))
+                .add(Restrictions.eq("ownerId", userId));
+		}
+
+		if (readLocations != null && readLocations.length > 0) {
+			disjunction.add(
+				Expression.and(
+                    Restrictions.eq("privacySetting", BlogConstants.PRIVACY_GROUP),
+                    Restrictions.in("ownerblog.location", readLocations)));
+		}
+        
+        if (readAnyLocations != null && readAnyLocations.length > 0) {
+            disjunction.add(
+                Expression.and(
+                  Restrictions.eq("privacySetting", BlogConstants.PRIVACY_GROUP_LEADER),
+                  Restrictions.in("ownerblog.location", readAnyLocations)));
+        }
+
+		// Collect together all the terms onto the root criterion.
+        
+		DetachedCriteria dc = entry.add(
+				Expression.and(Restrictions.in("ownerblog.id", blogIds), disjunction));
+
+		if (sortProperty != null && !sortProperty.equals("")) {
+			dc.addOrder(ascending ? Order.asc(sortProperty) : Order.desc(sortProperty));
+		}
+
+		return getHibernateTemplate().findByCriteria(dc, start, limit);
 	}
 
 	/**
