@@ -21,7 +21,7 @@
         </many-to-one>
         <property name="ownerId" type="string" length="255" not-null="true" />
         <property name="title" type="string" length="255" not-null="true" />
-		<property name="text" type="string" not-null="true" />
+        <property name="text" not-null="true" type="text" />
 		<property name="privacySetting" type="string" length="255" not-null="true" />
 		<property name="dateModified" type="java.util.Date" not-null="true" />
 		<property name="dateCreated" type="java.util.Date" />
