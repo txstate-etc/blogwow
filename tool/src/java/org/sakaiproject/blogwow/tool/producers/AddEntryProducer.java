@@ -1,5 +1,11 @@
 package org.sakaiproject.blogwow.tool.producers;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.sakaiproject.blogwow.model.constants.BlogConstants;
+import org.sakaiproject.blogwow.tool.params.BlogParams;
+
 import uk.org.ponder.messageutil.MessageLocator;
 import uk.org.ponder.rsf.components.UICommand;
 import uk.org.ponder.rsf.components.UIContainer;
@@ -12,11 +18,19 @@ import uk.org.ponder.rsf.components.UIVerbatim;
 import uk.org.ponder.rsf.components.decorators.DecoratorList;
 import uk.org.ponder.rsf.components.decorators.UILabelTargetDecorator;
 import uk.org.ponder.rsf.evolvers.TextInputEvolver;
+import uk.org.ponder.rsf.flow.jsfnav.NavigationCase;
+import uk.org.ponder.rsf.flow.jsfnav.NavigationCaseReporter;
 import uk.org.ponder.rsf.view.ComponentChecker;
 import uk.org.ponder.rsf.view.ViewComponentProducer;
+import uk.org.ponder.rsf.viewstate.SimpleViewParameters;
 import uk.org.ponder.rsf.viewstate.ViewParameters;
+import uk.org.ponder.rsf.viewstate.ViewParamsReporter;
 
-public class AddEntryProducer implements ViewComponentProducer {
+public class AddEntryProducer implements 
+  ViewComponentProducer,
+  ViewParamsReporter,
+  NavigationCaseReporter
+{
   public static final String VIEWID = "add_entry";
   
   public NavBarRenderer navBarRenderer;
@@ -28,25 +42,40 @@ public class AddEntryProducer implements ViewComponentProducer {
   }
 
   public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
+    BlogParams params = (BlogParams) viewparams;
+    
+    String OTPid;
+    boolean newentry = false;
+    try {
+      OTPid = new Long(params.blogid).toString();
+    } 
+    catch (Exception e) {
+      OTPid = "NEW";
+      newentry = true;
+    }
+    
     navBarRenderer.makeNavBar(tofill, "navIntraTool:", VIEWID);
     
-    // If this is existing, should be: blogwow.add_edit.editheader
-    UIMessage.make(tofill, "add-entry-header", "blogwow.add_edit.addheader");
+    if (newentry)
+      UIMessage.make(tofill, "add-entry-header", "blogwow.add_edit.addheader");
+    else
+      UIMessage.make(tofill, "add-entry-header", "blogwow.add_edit.editheader");
     
     UIForm form = UIForm.make(tofill, "edit-blog-entry-form");
     
     UIMessage.make(form, "title-label", "blogwow.add_edit.title");
-    UIInput.make(form, "title-input", "todo.binding");
+    UIInput.make(form, "title-input", "EntryLocator."+OTPid+".title");
     
-    UIInput blogtext = UIInput.make(form, "blog-text-input:", "todo.binding");
+    UIInput blogtext = UIInput.make(form, "blog-text-input:", "EntryLocator."+OTPid+".text");
     richTextEvolver.evolveTextInput(blogtext);
     
     UIMessage.make(form, "privacy-instructions", "blogwow.add_edit.accesstext");
     
-    String [] privacyRadioValues = new String[] {"instructors_only","all_members","public_viewable"};
+    String [] privacyRadioValues = new String[] {BlogConstants.PRIVACY_GROUP_LEADER,BlogConstants.PRIVACY_GROUP,BlogConstants.PRIVACY_PUBLIC};
     String [] privacyRadioLabelKeys = new String[] {"blogwow.add_edit.private","blogwow.add_edit.sitemembers","blogwow.add_edit.public"};
   
-    UISelect privacyRadios = UISelect.make(form, "privacy-radio-holder", privacyRadioValues, privacyRadioLabelKeys, "todo.binding", null).setMessageKeys();
+    UISelect privacyRadios = UISelect.make(form, "privacy-radio-holder", 
+        privacyRadioValues, privacyRadioLabelKeys, "EntryLocator."+OTPid+".privacySetting", BlogConstants.PRIVACY_PUBLIC).setMessageKeys();
     
     String selectID = privacyRadios.getFullID();
     UISelectChoice instructorsOnlyRadio = UISelectChoice.make(form, "instructors-only-radio", selectID, 0);
@@ -61,9 +90,19 @@ public class AddEntryProducer implements ViewComponentProducer {
     UIVerbatim publicViewableLabel = UIVerbatim.make(form, "public-viewable-label", messageLocator.getMessage("blogwow.add_edit.public"));
     publicViewableLabel.decorators = new DecoratorList(new UILabelTargetDecorator(publicViewableRadio));
     
-    UICommand.make(form, "publish-button", UIMessage.make("blogwow.add_edit.publish"));
-    UICommand.make(form, "save-button", UIMessage.make("blogwow.add_edit.save"));
-    UICommand.make(form, "cancel-button", UIMessage.make("blogwow.add_edit.cancel"));
+    UICommand.make(form, "publish-button", UIMessage.make("blogwow.add_edit.publish"), "EntryLocator.publishAll");
+    UICommand.make(form, "save-button", UIMessage.make("blogwow.add_edit.save"), "EntryLocator.saveAll");
+    UICommand.make(form, "cancel-button", UIMessage.make("blogwow.add_edit.cancel"), "EntryLocator.cancelAll");
+  }
+
+  public ViewParameters getViewParameters() {
+    return new BlogParams();
+  }
+
+  public List reportNavigationCases() {
+    List l = new ArrayList();
+    l.add(new NavigationCase(null, new SimpleViewParameters(HomeProducer.VIEWID)));
+    return l;
   }
 
 }

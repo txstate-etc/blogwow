@@ -15,6 +15,10 @@
 	<!-- Renderers -->
 	<bean id="NavbarRenderer"
 		class="org.sakaiproject.blogwow.tool.producers.NavBarRenderer">
+      <property name="site" ref="sakai-Site"></property>
+      <property name="userid" ref="sakai-UserID"></property>
+     <!--  <property name="blogfinder" ref="org.sakaiproject.blogwow.logic.PersonalBlogFinder"></property> -->
+     <property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic"></property>
 	</bean>
 
 	<!-- list the producer beans here -->
@@ -26,6 +30,10 @@
 	</bean>
 
 	<bean class="org.sakaiproject.blogwow.tool.producers.BlogViewProducer">
+      <property name="navBarRenderer" ref="NavbarRenderer"></property>
+      <property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic"></property>
+      <property name="entryLogic" ref="org.sakaiproject.blogwow.logic.EntryLogic"></property>
+      <property name="userid" ref="sakai-UserID"></property>
 	</bean>
 
 	<bean class="org.sakaiproject.blogwow.tool.producers.CommentsProducer">
@@ -33,14 +41,16 @@
 
 	<bean class="org.sakaiproject.blogwow.tool.producers.HomeProducer">
 		<property name="navBarRenderer" ref="NavbarRenderer"></property>
+      <property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic"></property>
+      <property name="entryLogic" ref="org.sakaiproject.blogwow.logic.EntryLogic"></property>
+      <property name="site" ref="sakai-Site"></property>
+      <property name="userid" ref="sakai-UserID"></property>
 	</bean>
 
 	<bean class="org.sakaiproject.blogwow.tool.producers.MySettingsProducer">
 		<property name="navBarRenderer" ref="NavbarRenderer"></property>
 		<property name="richTextEvolver" ref="richTextEvolver"></property>
-	</bean>
-
-	<bean class="org.sakaiproject.blogwow.tool.producers.RemoveProducer">
+        <property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic"></property>
 	</bean>
 
 	<bean class="org.sakaiproject.blogwow.tool.producers.PermissionsProducer">
@@ -52,5 +62,22 @@
 
 	<bean class="org.sakaiproject.blogwow.tool.producers.BlogRSSProducer">
 	</bean>
+
+  <!-- OTP --> 
+  <bean id="BlogLocator" class="org.sakaiproject.blogwow.tool.otp.BlogLocator">
+    <property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic"></property>
+  </bean>
+  <bean id="EntryLocator" class="org.sakaiproject.blogwow.tool.otp.EntryLocator">
+    <property name="entryLogic" ref="org.sakaiproject.blogwow.logic.EntryLogic"></property>
+    <property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic"></property>
+    <property name="site" ref="sakai-Site"></property>
+    <property name="userid" ref="sakai-UserID"></property>
+  </bean>
+  
+  <!-- Commands -->
+  <bean id="RemoveBlogEntryCmd" 
+    class="org.sakaiproject.blogwow.tool.commands.RemoveEntryCommand">
+    <property name="entryLogic" ref="org.sakaiproject.blogwow.logic.EntryLogic"></property>
+  </bean>
 
 </beans>

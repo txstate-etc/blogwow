@@ -1,5 +1,10 @@
 package org.sakaiproject.blogwow.tool.producers;
 
+import org.sakaiproject.blogwow.logic.BlogLogic;
+import org.sakaiproject.blogwow.model.BlogWowBlog;
+import org.sakaiproject.blogwow.tool.params.BlogParams;
+import org.sakaiproject.site.api.Site;
+
 import uk.org.ponder.rsf.components.UIContainer;
 import uk.org.ponder.rsf.components.UIInternalLink;
 import uk.org.ponder.rsf.components.UIJointContainer;
@@ -9,6 +14,9 @@ import uk.org.ponder.rsf.components.UIOutput;
 import uk.org.ponder.rsf.viewstate.SimpleViewParameters;
 
 public class NavBarRenderer {
+  public Site site;
+  public String userid;
+  public BlogLogic blogLogic;
   
   public void makeNavBar(UIContainer tofill, String divID, String currentViewID) {
     UIJointContainer joint = new UIJointContainer(tofill, divID, "blog-wow-navigation:", ""+1);
@@ -32,8 +40,16 @@ public class NavBarRenderer {
     UILink.make(joint, "item:icon", "../images/cog.png");
     if (currentViewID.equals(MySettingsProducer.VIEWID))
       UIMessage.make(joint, "item:text", "blogwow.navbar.settings");
-    else 
-      UIInternalLink.make(joint, "item:link", UIMessage.make("blogwow.navbar.settings"), new SimpleViewParameters(MySettingsProducer.VIEWID));   
+    else {
+      BlogWowBlog blog = blogLogic.getBlogByLocationAndUser(site.getReference(), userid);
+      if (blog != null) { 
+        String blogId = blog.getId().toString();
+        UIInternalLink.make(joint, "item:link", 
+          UIMessage.make("blogwow.navbar.settings"), 
+          //new BlogParams(MySettingsProducer.VIEWID, blogfinder.getBlogID(site.getReference(), userid)));
+          new BlogParams(MySettingsProducer.VIEWID, blogId));
+      }
+    }
    
     UIOutput.make(joint, "item:separator");
     

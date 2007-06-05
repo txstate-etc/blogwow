@@ -31,7 +31,7 @@
 	<!-- For security purposes, only beans listed in the comma separated value list
 			may be the target of EL operations coming in over the request -->
 	<bean parent="requestAddressibleParent">
-		<property name="value" value="" />
+		<property name="value" value="BlogLocator,EntryLocator,RemoveBlogEntryCmd" />
 	</bean>
 
 	<!-- Control the location of the html templates (default: content/templates/) -->
