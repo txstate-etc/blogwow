@@ -22,9 +22,9 @@ import org.sakaiproject.blogwow.model.BlogWowBlog;
 public interface BlogLogic {
 
 	/**
-	 * Get a blog based on its id
+	 * Get a blog based on its id (blogs are visible to everyone)
 	 * @param blogId the id of a {@link BlogWowBlog} object
-	 * @return a blog or null if not found
+     * @return a blog or null if not found
 	 */
 	public BlogWowBlog getBlogById(Long blogId);
 
@@ -39,12 +39,13 @@ public interface BlogLogic {
 
 	/**
 	 * Save (Create or Update) a blog (uses the current site)
+     * @param locationId a unique id which represents the current location of the user (entity reference)
 	 * @param blog the BlogWowBlog to create or update
 	 */
-	public void saveBlog(BlogWowBlog blog);
+	public void saveBlog(BlogWowBlog blog, String locationId);
 
 	/**
-	 * This returns a List of blogs for a specified site
+	 * This returns a List of blogs for a specified site (all blogs are visible to everyone)
 	 * @param locationId a unique id which represents the current location of the user (entity reference)
 	 * @param sortProperty the name of the {@link BlogWowBlog} property to sort on
 	 * or null to sort by default property (title asc)
@@ -54,6 +55,9 @@ public interface BlogLogic {
 	 * @return a List of {@link BlogWowBlog} objects
 	 */
 	public List<BlogWowBlog> getAllVisibleBlogs(String locationId, String sortProperty, boolean ascending, int start, int limit);
+
+
+	// PERMISSIONS
 
 	/**
 	 * Check if a specified user can write this blog in a specified site

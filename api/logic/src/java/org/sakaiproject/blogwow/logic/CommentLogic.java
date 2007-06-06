@@ -25,23 +25,27 @@ public interface CommentLogic {
 	/**
 	 * Get a blog comment by its unique id
 	 * @param commentId a unique id for a {@link BlogWowComment}
+     * @param locationId a unique id which represents the current location of the user (entity reference)
 	 * @return a blog comment or null if not found
 	 */
-	public BlogWowComment getCommentById(Long commentId);
+	public BlogWowComment getCommentById(Long commentId, String locationId);
 
 	/**
 	 * Create a comment
+     * @param locationId a unique id which represents the current location of the user (entity reference)
 	 * @param comment a blog comment
 	 */
-	public void saveComment(BlogWowComment comment);
+	public void saveComment(BlogWowComment comment, String locationId);
 
 	/**
 	 * Remove a blog comment
+     * @param locationId a unique id which represents the current location of the user (entity reference)
 	 * @param commentId a unique id for a {@link BlogWowComment}
 	 */
-	public void removeComment(Long commentId);
+	public void removeComment(Long commentId, String locationId);
 
 	/**
+     * Gets the comments for an entry (only readable if the entry is readable)
 	 * @param entryId a unique id for a {@link BlogWowEntry}
 	 * @param sortProperty the name of the {@link BlogWowEntry} property to sort on
 	 * or null to sort by default property (dateCreated desc)
@@ -51,6 +55,8 @@ public interface CommentLogic {
 	 * @return a list of {@link BlogWowComment} objects
 	 */
 	public List<BlogWowComment> getComments(Long entryId, String sortProperty, boolean ascending, int start, int limit);
+
+    // PERMISSIONS
 
 	/**
 	 * Check if a user can remove a blog comment

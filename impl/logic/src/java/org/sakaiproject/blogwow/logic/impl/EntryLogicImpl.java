@@ -188,4 +188,22 @@ public class EntryLogicImpl implements EntryLogic {
 		}
 	}
 
+
+    public BlogWowEntry getEntryById(Long entryId, String locationId) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    public void removeEntry(Long entryId, String locationId) {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public void saveEntry(BlogWowEntry entry, String locationId) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

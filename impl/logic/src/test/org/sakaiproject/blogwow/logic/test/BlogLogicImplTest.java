@@ -35,6 +35,7 @@ public class BlogLogicImplTest extends AbstractTransactionalSpringContextTests {
 	protected BlogLogicImpl logicImpl;
 
 	private TestDataPreload tdp = new TestDataPreload();
+    private ExternalLogicStub logicStub = new ExternalLogicStub();
 
 	protected String[] getConfigLocations() {
 		// point to the needed spring config files, must be on the classpath
@@ -61,7 +62,7 @@ public class BlogLogicImplTest extends AbstractTransactionalSpringContextTests {
 		// create and setup the object to be tested
 		logicImpl = new BlogLogicImpl();
 		logicImpl.setDao(dao);
-		logicImpl.setExternalLogic( new ExternalLogicStub() ); // use the stub for testing
+		logicImpl.setExternalLogic( logicStub ); // use the stub for testing
 
 		// preload the DB for testing
 		tdp.preloadTestData(dao);
@@ -183,12 +184,18 @@ public class BlogLogicImplTest extends AbstractTransactionalSpringContextTests {
 	 */
 	public void testSaveBlog() {
 		BlogWowBlog blog = new BlogWowBlog(TestDataPreload.ADMIN_USER_ID, TestDataPreload.LOCATION1_ID, "blog");
-		logicImpl.saveBlog(blog);
+		logicImpl.saveBlog(blog, TestDataPreload.LOCATION1_ID);
 		assertNotNull(blog.getId());
 
 		tdp.blog1.setTitle("my blog");
 		tdp.blog1.setProfile("Changed");
-		logicImpl.saveBlog(tdp.blog1);
-	}
+		logicImpl.saveBlog(tdp.blog1, TestDataPreload.LOCATION1_ID);
+
+        // test that the perms cause failure when invalid owner
+        logicImpl.saveBlog(tdp.blog1, TestDataPreload.LOCATION2_ID);
+
+        logicImpl.saveBlog(tdp.blog2, TestDataPreload.LOCATION1_ID);
+
+    }
 	
 }

@@ -48,12 +48,6 @@ public class BlogLogicImpl implements BlogLogic {
 		log.debug("init");
 	}
 
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.BlogLogic#getBlogById(java.lang.Long)
-	 */
-	public BlogWowBlog getBlogById(Long entryId) {
-		return (BlogWowBlog) dao.findById(BlogWowBlog.class, entryId);
-	}
 
 	/* (non-Javadoc)
 	 * @see org.sakaiproject.blogwow.logic.BlogLogic#getBlogByLocationAndUser(java.lang.String, java.lang.String)
@@ -81,29 +75,6 @@ public class BlogLogicImpl implements BlogLogic {
 			throw new IllegalStateException("Found more than one blog for user ("+userId+") in location ("+locationId+"), only one is allowed");
 		}
 
-
-//		BlogWowBlog blog = new BlogWowBlog();
-//	    blog.setLocation(groupref);
-//	    blog.setOwnerId(userid);
-//	    List<BlogWowBlog> blogs = blogWowDao.findByExample(blog);
-//	    
-//	    if (blogs.size() == 0) {
-//	      blog.setDateCreated(new Date());
-//	      blog.setProfile("");
-//	      String title = "";
-//	      try {
-//	        title = userDirectoryService.getUser(userid).getDisplayName();
-//	      } catch (UserNotDefinedException e) {
-//	        e.printStackTrace();
-//	      }
-//	      blog.setTitle(title);
-//	      blog.setImageUrl("");
-//	      blogWowDao.save(blog);
-//	      return blog.getId().toString();
-//	    }
-//	    else {
-//	      return blogs.get(0).getId().toString();
-//	    }
 	}
 
 	/* (non-Javadoc)
@@ -130,29 +101,33 @@ public class BlogLogicImpl implements BlogLogic {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.BlogLogic#saveBlog(org.sakaiproject.blogwow.model.BlogWowBlog)
+	 * @see org.sakaiproject.blogwow.logic.BlogLogic#getBlogById(java.lang.Long)
 	 */
-	public void saveBlog(BlogWowBlog blog) {
-		// set the owner and location to current if they are not set
-		if (blog.getOwnerId() == null) {
-			blog.setOwnerId( externalLogic.getCurrentUserId() );
-		}
-		if (blog.getLocation() == null) {
-			blog.setLocation( externalLogic.getCurrentLocationId() );
-		}
-		if (blog.getDateCreated() == null) {
-			blog.setDateCreated( new Date() );
-		}
-		// save blog if new OR check if the current user can update the existing item
-		if ( (blog.getId() == null) || 
-				canWriteBlog(blog.getId(), externalLogic.getCurrentLocationId(), externalLogic.getCurrentUserId()) ) {
-			dao.save(blog);
-			log.info("Saving blog: " + blog.getId() + ":" + blog.getProfile());
-		} else {
-			throw new SecurityException("Current user cannot save blog " + 
-					blog.getId() + " because they do not have permission");
-		}
+	public BlogWowBlog getBlogById(Long blogId) {
+	    return (BlogWowBlog) dao.findById(BlogWowBlog.class, blogId);
 	}
+
+    /* (non-Javadoc)
+     * @see org.sakaiproject.blogwow.logic.BlogLogic#saveBlog(org.sakaiproject.blogwow.model.BlogWowBlog, java.lang.String)
+     */
+    public void saveBlog(BlogWowBlog blog, String locationId) {
+        // set the owner to current if not set
+        if (blog.getOwnerId() == null) {
+            blog.setOwnerId( externalLogic.getCurrentUserId() );
+        }
+        if (blog.getDateCreated() == null) {
+            blog.setDateCreated( new Date() );
+        }
+        String currentUserId = externalLogic.getCurrentUserId();
+        if ( (blog.getId() == null && checkCanWriteBlog(locationId, currentUserId)) || 
+                (blog.getId() != null && canWriteBlog(blog.getId(), locationId, currentUserId)) ) {
+            dao.save(blog);
+            log.info("Saved blog: " + blog.getId() + ":" + blog.getProfile());
+        } else {
+            throw new SecurityException("Current user cannot save blog " + 
+                    blog.getId() + ":" + blog.getTitle() + " because they do not have permission");
+        }
+    }
 
 	/* (non-Javadoc)
 	 * @see org.sakaiproject.blogwow.logic.BlogLogic#canWriteBlog(java.lang.Long, java.lang.String, java.lang.String)

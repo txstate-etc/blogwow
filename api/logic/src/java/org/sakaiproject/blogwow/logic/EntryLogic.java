@@ -25,21 +25,24 @@ public interface EntryLogic {
 	/**
 	 * Get a blog entry by its unique id
 	 * @param entryId a unique id for a {@link BlogWowEntry}
+     * @param locationId a unique id which represents the current location of the user (entity reference)
 	 * @return a blog wow entry or null if not found
 	 */
-	public BlogWowEntry getEntryById(Long entryId);
+	public BlogWowEntry getEntryById(Long entryId, String locationId);
 
 	/**
 	 * Create or update a blog entry
+     * @param locationId a unique id which represents the current location of the user (entity reference)
 	 * @param entry a blog entry object
 	 */
-	public void saveEntry(BlogWowEntry entry);
+	public void saveEntry(BlogWowEntry entry, String locationId);
 
 	/**
 	 * Remove a blog entry and all associated comments
+     * @param locationId a unique id which represents the current location of the user (entity reference)
 	 * @param entryId a unique id for a {@link BlogWowEntry}
 	 */
-	public void removeEntry(Long entryId);
+	public void removeEntry(Long entryId, String locationId);
 
 	/**
 	 * Get all blog entries which are visible to a specific user
@@ -66,6 +69,9 @@ public interface EntryLogic {
 	 * @return a list of {@link BlogWowEntry} objects
 	 */
 	public List<BlogWowEntry> getAllVisibleEntries(Long[] blogIds, String userId, String sortProperty, boolean ascending, int start, int limit);
+
+
+	// PERMISSIONS
 
 	/**
 	 * Check if an entry can be updated or removed

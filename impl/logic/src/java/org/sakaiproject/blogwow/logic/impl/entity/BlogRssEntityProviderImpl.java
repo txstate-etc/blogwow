@@ -23,28 +23,28 @@ import org.sakaiproject.entitybroker.entityprovider.capabilities.AutoRegisterEnt
  */
 public class BlogRssEntityProviderImpl implements BlogRssEntityProvider, CoreEntityProvider, AutoRegisterEntityProvider {
 
-	private BlogLogic blogLogic;
-	public void setBlogLogic(BlogLogic blogLogic) {
-		this.blogLogic = blogLogic;
-	}
+    private BlogLogic blogLogic;
+    public void setBlogLogic(BlogLogic blogLogic) {
+        this.blogLogic = blogLogic;
+    }
 
 
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.entitybroker.entityprovider.EntityProvider#getEntityPrefix()
-	 */
-	public String getEntityPrefix() {
-		return ENTITY_PREFIX;
-	}
+    /* (non-Javadoc)
+     * @see org.sakaiproject.entitybroker.entityprovider.EntityProvider#getEntityPrefix()
+     */
+    public String getEntityPrefix() {
+        return ENTITY_PREFIX;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.entitybroker.entityprovider.CoreEntityProvider#entityExists(java.lang.String)
-	 */
-	public boolean entityExists(String id) {
-		BlogWowBlog blog = blogLogic.getBlogById( new Long(id) );
-		if (blog == null) {
-			return false;
-		}
-		return true;
-	}
+    /* (non-Javadoc)
+     * @see org.sakaiproject.entitybroker.entityprovider.CoreEntityProvider#entityExists(java.lang.String)
+     */
+    public boolean entityExists(String id) {
+        BlogWowBlog blog = blogLogic.getBlogById( new Long(id) );
+        if (blog == null) {
+            return false;
+        }
+        return true;
+    }
 
 }
