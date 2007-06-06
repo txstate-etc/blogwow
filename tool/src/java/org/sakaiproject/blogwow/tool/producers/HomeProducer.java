@@ -64,8 +64,9 @@ public class HomeProducer implements
       else {
         UIOutput.make(row, "time-last-updated", "");
       }
+      UIInternalLink.make(row, "rss-link", new BlogParams(BlogRSSProducer.VIEWID, blog.getId().toString()));
     }
     
   }
-
+ 
 }

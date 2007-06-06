@@ -61,6 +61,9 @@
 	</bean>
 
 	<bean class="org.sakaiproject.blogwow.tool.producers.BlogRSSProducer">
+      <property name="entryLogic" ref="org.sakaiproject.blogwow.logic.EntryLogic"></property>
+      <property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic"></property>
+      <property name="userid" ref="sakai-UserID"></property>
 	</bean>
 
   <!-- OTP --> 
