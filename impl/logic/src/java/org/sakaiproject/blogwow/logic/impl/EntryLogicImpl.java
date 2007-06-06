@@ -79,7 +79,7 @@ public class EntryLogicImpl implements EntryLogic {
 	/* (non-Javadoc)
 	 * @see org.sakaiproject.blogwow.logic.EntryLogic#getAllVisibleEntries(java.lang.Long, java.lang.String, java.lang.String, boolean, int, int)
 	 */
-	public List getAllVisibleEntries(Long blogId, String userId, String sortProperty, boolean ascending, int start,
+	public List<BlogWowEntry> getAllVisibleEntries(Long blogId, String userId, String sortProperty, boolean ascending, int start,
 			int limit) {
 		return getAllVisibleEntries(new Long[] {blogId}, userId, sortProperty, ascending, start, limit);
 	}
@@ -87,7 +87,8 @@ public class EntryLogicImpl implements EntryLogic {
 	/* (non-Javadoc)
 	 * @see org.sakaiproject.blogwow.logic.EntryLogic#getAllVisibleEntries(java.lang.Long[], java.lang.String, java.lang.String, boolean, int, int)
 	 */
-	public List getAllVisibleEntries(Long[] blogIds, String userId, String sortProperty, boolean ascending, int start,
+	@SuppressWarnings("unchecked")
+	public List<BlogWowEntry> getAllVisibleEntries(Long[] blogIds, String userId, String sortProperty, boolean ascending, int start,
 			int limit) {
 
 		if (sortProperty == null) {

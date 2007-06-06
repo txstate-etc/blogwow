@@ -56,7 +56,8 @@ public class CommentLogicImpl implements CommentLogic {
 	/* (non-Javadoc)
 	 * @see org.sakaiproject.blogwow.logic.CommentLogic#getComments(java.lang.Long, java.lang.String, boolean, int, int)
 	 */
-	public List getComments(Long entryId, String sortProperty, boolean ascending, int start, int limit) {
+	@SuppressWarnings("unchecked")
+	public List<BlogWowComment> getComments(Long entryId, String sortProperty, boolean ascending, int start, int limit) {
 		if (sortProperty == null) {
 			sortProperty = "dateCreated";
 			ascending = false;

@@ -52,7 +52,7 @@ public interface EntryLogic {
 	 * @param limit the maximum number of entries to return, 0 returns as many entries as possible
 	 * @return a list of {@link BlogWowEntry} objects
 	 */
-	public List getAllVisibleEntries(Long blogId, String userId, String sortProperty, boolean ascending, int start, int limit);
+	public List<BlogWowEntry> getAllVisibleEntries(Long blogId, String userId, String sortProperty, boolean ascending, int start, int limit);
 
 	/**
 	 * Efficiency method which gets all blog entries which are visible to a specific user for an array of blogs
@@ -65,7 +65,7 @@ public interface EntryLogic {
 	 * @param limit the maximum number of entries to return, 0 returns as many entries as possible
 	 * @return a list of {@link BlogWowEntry} objects
 	 */
-	public List getAllVisibleEntries(Long[] blogIds, String userId, String sortProperty, boolean ascending, int start, int limit);
+	public List<BlogWowEntry> getAllVisibleEntries(Long[] blogIds, String userId, String sortProperty, boolean ascending, int start, int limit);
 
 	/**
 	 * Check if an entry can be updated or removed

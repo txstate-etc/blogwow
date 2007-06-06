@@ -50,7 +50,7 @@ public interface CommentLogic {
 	 * @param limit the maximum number of entries to return, 0 returns as many entries as possible
 	 * @return a list of {@link BlogWowComment} objects
 	 */
-	public List getComments(Long entryId, String sortProperty, boolean ascending, int start, int limit);
+	public List<BlogWowComment> getComments(Long entryId, String sortProperty, boolean ascending, int start, int limit);
 
 	/**
 	 * Check if a user can remove a blog comment

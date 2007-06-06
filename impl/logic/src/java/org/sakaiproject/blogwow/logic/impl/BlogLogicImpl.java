@@ -107,9 +107,10 @@ public class BlogLogicImpl implements BlogLogic {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.BlogLogic#getAllVisibleBlogs(java.lang.String, java.lang.String, int, int)
+	 * @see org.sakaiproject.blogwow.logic.BlogLogic#getAllVisibleBlogs(java.lang.String, java.lang.String, boolean, int, int)
 	 */
-	public List getAllVisibleBlogs(String locationId, String sortProperty, boolean ascending, int start, int limit) {
+	@SuppressWarnings("unchecked")
+	public List<BlogWowBlog> getAllVisibleBlogs(String locationId, String sortProperty, boolean ascending, int start, int limit) {
 		if (sortProperty == null) {
 			sortProperty = "title";
 			ascending = true;

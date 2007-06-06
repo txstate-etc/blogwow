@@ -64,7 +64,7 @@ public class MySettingsProducer implements
   }
 
   public List reportNavigationCases() {
-    List l = new ArrayList();
+	  List<NavigationCase> l = new ArrayList<NavigationCase>();
     l.add(new NavigationCase(null, new SimpleViewParameters(HomeProducer.VIEWID)));
     return l;
   }

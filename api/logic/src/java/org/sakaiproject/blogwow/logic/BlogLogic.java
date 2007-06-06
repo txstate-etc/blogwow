@@ -53,7 +53,7 @@ public interface BlogLogic {
 	 * @param limit the maximum number of entries to return, 0 returns as many entries as possible
 	 * @return a List of {@link BlogWowBlog} objects
 	 */
-	public List getAllVisibleBlogs(String locationId, String sortProperty, boolean ascending, int start, int limit);
+	public List<BlogWowBlog> getAllVisibleBlogs(String locationId, String sortProperty, boolean ascending, int start, int limit);
 
 	/**
 	 * Check if a specified user can write this blog in a specified site
