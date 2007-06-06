@@ -101,7 +101,6 @@ public class BlogWowDaoImpl
 		// hql += " order by " + sortProperty + " desc";
 		// }
 		// }
-		// System.out.println("HQL=" + hql);
 		// Query query = getSession().createQuery(hql);
 		// query.setFirstResult(start);
 		// if (limit > 0) { query.setMaxResults(limit); }
@@ -143,7 +142,6 @@ public class BlogWowDaoImpl
 				hql += " order by " + sortProperty + " desc";
 			}
 		}
-		System.out.println("HQL=" + hql);
 		Query query = getSession().createQuery(hql);
 		query.setFirstResult(start);
 		if (limit > 0) {

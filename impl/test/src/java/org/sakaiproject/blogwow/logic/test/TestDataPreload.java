@@ -1,0 +1,91 @@
+/******************************************************************************
+ * TestDataPreload.java - created by Sakai App Builder -AZ
+ * 
+ * Copyright (c) 2006 Sakai Project/Sakai Foundation
+ * Licensed under the Educational Community License version 1.0
+ * 
+ * A copy of the Educational Community License has been included in this 
+ * distribution and is available at: http://www.opensource.org/licenses/ecl1.php
+ * 
+ *****************************************************************************/
+
+package org.sakaiproject.blogwow.logic.test;
+
+import java.util.Date;
+
+import org.sakaiproject.blogwow.model.BlogWowBlog;
+import org.sakaiproject.blogwow.model.BlogWowComment;
+import org.sakaiproject.blogwow.model.BlogWowEntry;
+import org.sakaiproject.blogwow.model.constants.BlogConstants;
+import org.sakaiproject.genericdao.api.GenericDao;
+
+/**
+ * Contains test data for preloading and test constants
+ * @author Sakai App Builder -AZ
+ */
+public class TestDataPreload {
+
+	/**
+	 * current user, access level user in LOCATION_ID1
+	 */
+	public final static String USER_ID = "user-11111111";
+	public final static String USER_DISPLAY = "Aaron Zeckoski";
+	public final static String ADMIN_USER_ID = "admin";
+	public final static String ADMIN_USER_DISPLAY = "Administrator";
+	/**
+	 * maintain level user in LOCATION_ID1
+	 */
+	public final static String MAINT_USER_ID = "main-22222222";
+	public final static String MAINT_USER_DISPLAY = "Maint User";
+	public final static String INVALID_USER_ID = "invalid-UUUUUU";
+
+	/**
+	 * current location
+	 */
+	public final static String LOCATION1_ID = "/site/ref-1111111";
+	public final static String LOCATION1_TITLE = "Location 1 title";
+	public final static String LOCATION2_ID = "/site/ref-22222222";
+	public final static String LOCATION2_TITLE = "Location 2 title";
+	public final static String INVALID_LOCATION_ID = "invalid-LLLLLLLL";
+
+	// testing data objects here
+
+	public BlogWowBlog blog1 = new BlogWowBlog(USER_ID, LOCATION1_ID, "blog1 title", "blog1 profile", null, new Date());
+	public BlogWowBlog blog2 = new BlogWowBlog(MAINT_USER_ID, LOCATION1_ID, "blog2 title", "blog2 profile", null, new Date());
+	public BlogWowBlog blog3 = new BlogWowBlog(ADMIN_USER_ID, LOCATION2_ID, "blog3 title", "blog3 profile", null, new Date());
+
+	public BlogWowEntry entry1_b1 = new BlogWowEntry(blog1, USER_ID, "entry 1", "entry text", BlogConstants.PRIVACY_PUBLIC, new Date(), new Date());
+	public BlogWowEntry entry2_b1 = new BlogWowEntry(blog1, USER_ID, "entry 2", "entry text", BlogConstants.PRIVACY_GROUP, new Date(), new Date());
+	public BlogWowEntry entry3_b1 = new BlogWowEntry(blog1, USER_ID, "entry 3", "entry text", BlogConstants.PRIVACY_GROUP_LEADER, new Date(), new Date());
+	public BlogWowEntry entry4_b1 = new BlogWowEntry(blog1, USER_ID, "entry 4", "entry text", BlogConstants.PRIVACY_PRIVATE, new Date(), new Date());
+	public BlogWowEntry entry5_b2 = new BlogWowEntry(blog2, MAINT_USER_ID, "entry 5", "entry text", BlogConstants.PRIVACY_PUBLIC, new Date(), new Date());
+	public BlogWowEntry entry6_b2 = new BlogWowEntry(blog2, MAINT_USER_ID, "entry 6", "entry text", BlogConstants.PRIVACY_PRIVATE, new Date(), new Date());
+	public BlogWowEntry entry7_b3 = new BlogWowEntry(blog3, ADMIN_USER_ID, "entry 7", "entry text", BlogConstants.PRIVACY_PRIVATE, new Date(), new Date());
+
+	public BlogWowComment comment1_e1_b1 = new BlogWowComment(entry1_b1, MAINT_USER_ID, "comment 1", new Date(), new Date());
+	public BlogWowComment comment2_e1_b1 = new BlogWowComment(entry1_b1, MAINT_USER_ID, "comment 2", new Date(), new Date());
+	public BlogWowComment comment3_e4_b2 = new BlogWowComment(entry5_b2, USER_ID, "comment 3", new Date(), new Date());		
+
+	/**
+	 * Preload a bunch of test data into the database
+	 * @param dao a generic dao
+	 */
+	public void preloadTestData(GenericDao dao) {
+		dao.save(blog1);
+		dao.save(blog2);
+		dao.save(blog3);
+
+		dao.save(entry1_b1);
+		dao.save(entry2_b1);
+		dao.save(entry3_b1);
+		dao.save(entry4_b1);
+		dao.save(entry5_b2);
+		dao.save(entry6_b2);
+		dao.save(entry7_b3);
+
+		dao.save(comment1_e1_b1);
+		dao.save(comment2_e1_b1);
+		dao.save(comment3_e4_b2);
+	}
+
+}

@@ -30,29 +30,26 @@
 	</bean>
 
 	<bean id="org.sakaiproject.blogwow.logic.BlogLogic"
-			class="org.sakaiproject.blogwow.logic.impl.BlogLogicImpl"
-			init-method="init">
-		<property name="dao" 
+		class="org.sakaiproject.blogwow.logic.impl.BlogLogicImpl"
+		init-method="init">
+		<property name="dao"
 			ref="org.sakaiproject.blogwow.dao.BlogWowDao" />
-		<property name="externalLogic" 
+		<property name="externalLogic"
 			ref="org.sakaiproject.blogwow.logic.ExternalLogic" />
 	</bean>
-  
-    <bean id="org.sakaiproject.blogwow.logic.EntryLogic"
-      class="org.sakaiproject.blogwow.logic.impl.EntryLogicImpl" >
-      <property name="dao" 
-        ref="org.sakaiproject.blogwow.dao.BlogWowDao" />
-      <property name="externalLogic" 
-        ref="org.sakaiproject.blogwow.logic.ExternalLogic" />
-    </bean>
-  
-    <!-- Useful for looking up an individual blog. -->
-    <!-- 
-    <bean id="org.sakaiproject.blogwow.logic.PersonalBlogFinder"
-      class="org.sakaiproject.blogwow.logic.impl.PersonalBlogFinderImpl">
-      <property name="blogWowDao" ref="org.sakaiproject.blogwow.dao.BlogWowDao"></property>  
-      <property name="userDirectoryService" ref="org.sakaiproject.user.api.UserDirectoryService"></property>
-    </bean>
-    -->
+
+	<bean id="org.sakaiproject.blogwow.logic.EntryLogic"
+		class="org.sakaiproject.blogwow.logic.impl.EntryLogicImpl">
+		<property name="dao"
+			ref="org.sakaiproject.blogwow.dao.BlogWowDao" />
+		<property name="externalLogic"
+			ref="org.sakaiproject.blogwow.logic.ExternalLogic" />
+	</bean>
+
+	<!-- entity beans -->
+	<bean class="org.sakaiproject.blogwow.logic.impl.entity.BlogRssEntityProviderImpl">
+		<property name="blogLogic"
+			ref="org.sakaiproject.blogwow.logic.BlogLogic" />
+	</bean>
 
 </beans>

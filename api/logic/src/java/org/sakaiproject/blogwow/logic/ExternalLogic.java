@@ -11,6 +11,8 @@
 
 package org.sakaiproject.blogwow.logic;
 
+import org.sakaiproject.blogwow.model.BlogWowBlog;
+
 
 /**
  * This is the interface for logic which is external to our app logic
@@ -70,5 +72,20 @@ public interface ExternalLogic {
 	 * @return true if allowed, false otherwise
 	 */
 	public boolean isUserAllowedInLocation(String userId, String permission, String locationId);
+
+
+	/**
+	 * Get the Full URL to the rss feed to this blog  
+	 * @param blogId the id of a {@link BlogWowBlog} object
+	 * @return the full url for the rss feed
+	 */
+	public String getBlogRssUrl(Long blogId);
+
+	/**
+	 * Get the Full URL to the rss feed for all blogs in a location
+	 * @param locationId a unique id which represents the current location of the user (entity reference)
+	 * @return the full url for the rss feed
+	 */
+	public String getBlogLocationRssUrl(String locationId);
 
 }

@@ -18,6 +18,9 @@ import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.authz.api.FunctionManager;
 import org.sakaiproject.authz.api.SecurityService;
 import org.sakaiproject.blogwow.logic.ExternalLogic;
+import org.sakaiproject.blogwow.logic.entity.BlogRssEntityProvider;
+import org.sakaiproject.entitybroker.EntityBroker;
+import org.sakaiproject.entitybroker.EntityID;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SiteService;
@@ -64,6 +67,11 @@ public class ExternalLogicImpl implements ExternalLogic {
 	private UserDirectoryService userDirectoryService;
 	public void setUserDirectoryService(UserDirectoryService userDirectoryService) {
 		this.userDirectoryService = userDirectoryService;
+	}
+
+	private EntityBroker entityBroker;
+	public void setEntityBroker(EntityBroker entityBroker) {
+		this.entityBroker = entityBroker;
 	}
 
 
@@ -159,6 +167,24 @@ public class ExternalLogicImpl implements ExternalLogic {
 			return true;
 		}
 		return false;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#getBlogRssUrl(java.lang.Long)
+	 */
+	public String getBlogRssUrl(Long blogId) {
+		return entityBroker.getEntityURL( 
+				new EntityID(BlogRssEntityProvider.ENTITY_PREFIX, blogId.toString()).toString()
+			);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#getBlogLocationRssUrl(java.lang.String)
+	 */
+	public String getBlogLocationRssUrl(String locationId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
