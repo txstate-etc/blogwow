@@ -37,6 +37,14 @@
 		<property name="externalLogic"
 			ref="org.sakaiproject.blogwow.logic.ExternalLogic" />
 	</bean>
+  
+    <bean id="org.sakaiproject.blogwow.logic.CommentLogic"
+      class="org.sakaiproject.blogwow.logic.impl.CommentLogicImpl">
+      <property name="dao" 
+        ref="org.sakaiproject.blogwow.dao.BlogWowDao" />
+      <property name="externalLogic" 
+        ref="org.sakaiproject.blogwow.logic.ExternalLogic" />
+    </bean>
 
 	<bean id="org.sakaiproject.blogwow.logic.EntryLogic"
 		class="org.sakaiproject.blogwow.logic.impl.EntryLogicImpl">
