@@ -4,8 +4,6 @@
 
 <beans>
 
-	<!-- list the backing beans here -->
-
 	<!-- rich text evolver bean def -->
 	<bean id="richTextEvolver"
 		class="org.springframework.beans.factory.config.BeanReferenceFactoryBean">
@@ -15,95 +13,79 @@
 	<!-- Renderers -->
 	<bean id="NavbarRenderer"
 		class="org.sakaiproject.blogwow.tool.producers.NavBarRenderer">
-		<property name="site" ref="sakai-Site"></property>
-		<property name="userid" ref="sakai-UserID"></property>
-		<property name="blogLogic"
-			ref="org.sakaiproject.blogwow.logic.BlogLogic">
+		<property name="site" ref="sakai-Site" />
+		<property name="userid" ref="sakai-UserID" />
+		<property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic">
 		</property>
 	</bean>
 
 	<!-- list the producer beans here -->
 	<bean class="org.sakaiproject.blogwow.tool.producers.AddEntryProducer">
-		<property name="navBarRenderer" ref="NavbarRenderer"></property>
-		<property name="richTextEvolver" ref="richTextEvolver"></property>
-		<property name="messageLocator" ref="messageLocator"></property>
+		<property name="navBarRenderer" ref="NavbarRenderer" />
+		<property name="richTextEvolver" ref="richTextEvolver" />
+		<property name="messageLocator" ref="messageLocator" />
 	</bean>
 
 	<bean class="org.sakaiproject.blogwow.tool.producers.BlogViewProducer">
-		<property name="navBarRenderer" ref="NavbarRenderer" />
-		<property name="blogLogic"
-			ref="org.sakaiproject.blogwow.logic.BlogLogic" />
-		<property name="entryLogic"
-			ref="org.sakaiproject.blogwow.logic.EntryLogic" />
-		<property name="userid" ref="sakai-UserID" />
-		<property name="locale" ref="requestLocale" />
-	</bean>
-
-	<bean class="org.sakaiproject.blogwow.tool.producers.CommentsProducer">
+      <property name="navBarRenderer" ref="NavbarRenderer" />
+      <property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic" />
+      <property name="entryLogic" ref="org.sakaiproject.blogwow.logic.EntryLogic" />
+      <property name="commentLogic" ref="org.sakaiproject.blogwow.logic.CommentLogic" />
+      <property name="userid" ref="sakai-UserID" />
+      <property name="locale" ref="requestLocale" />
+      <property name="userDirectoryService" ref="org.sakaiproject.user.api.UserDirectoryService" />
 	</bean>
 
 	<bean class="org.sakaiproject.blogwow.tool.producers.HomeProducer">
-		<property name="navBarRenderer" ref="NavbarRenderer"></property>
-		<property name="blogLogic"
-			ref="org.sakaiproject.blogwow.logic.BlogLogic" />
-		<property name="entryLogic"
-			ref="org.sakaiproject.blogwow.logic.EntryLogic" />
+		<property name="navBarRenderer" ref="NavbarRenderer" />
+		<property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic" />
+		<property name="entryLogic" ref="org.sakaiproject.blogwow.logic.EntryLogic" />
 		<property name="userid" ref="sakai-UserID" />
 		<property name="site" ref="sakai-Site" />
 		<property name="locale" ref="requestLocale" />
+        <property name="mugshotGenerator" ref="MugshotGenerator" />
 	</bean>
 
 	<bean class="org.sakaiproject.blogwow.tool.producers.MySettingsProducer">
-		<property name="navBarRenderer" ref="NavbarRenderer"></property>
-		<property name="richTextEvolver" ref="richTextEvolver"></property>
-		<property name="blogLogic"
-			ref="org.sakaiproject.blogwow.logic.BlogLogic">
-		</property>
+		<property name="navBarRenderer" ref="NavbarRenderer" />
+		<property name="richTextEvolver" ref="richTextEvolver" />
+		<property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic" />
 	</bean>
 
 	<bean class="org.sakaiproject.blogwow.tool.producers.PermissionsProducer">
-		<property name="sessionManager"
-			ref="org.sakaiproject.tool.api.SessionManager" />
+		<property name="sessionManager" ref="org.sakaiproject.tool.api.SessionManager" />
 		<property name="site" ref="sakai-Site" />
 		<property name="messageLocator" ref="messageLocator" />
 	</bean>
 
 	<bean class="org.sakaiproject.blogwow.tool.producers.BlogRSSProducer">
-		<property name="entryLogic"
-			ref="org.sakaiproject.blogwow.logic.EntryLogic">
-		</property>
-		<property name="blogLogic"
-			ref="org.sakaiproject.blogwow.logic.BlogLogic">
-		</property>
-		<property name="userid" ref="sakai-UserID"></property>
+		<property name="entryLogic" ref="org.sakaiproject.blogwow.logic.EntryLogic" />
+		<property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic" />
+		<property name="userid" ref="sakai-UserID" />
 	</bean>
 
 	<!-- OTP -->
-	<bean id="BlogLocator"
-		class="org.sakaiproject.blogwow.tool.otp.BlogLocator">
-		<property name="blogLogic"
-			ref="org.sakaiproject.blogwow.logic.BlogLogic">
-		</property>
+	<bean id="BlogLocator" class="org.sakaiproject.blogwow.tool.otp.BlogLocator">
+		<property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic" />
 	</bean>
 
-	<bean id="EntryLocator"
-		class="org.sakaiproject.blogwow.tool.otp.EntryLocator">
-		<property name="entryLogic"
-			ref="org.sakaiproject.blogwow.logic.EntryLogic">
-		</property>
-		<property name="blogLogic"
-			ref="org.sakaiproject.blogwow.logic.BlogLogic">
-		</property>
-		<property name="site" ref="sakai-Site"></property>
-		<property name="userid" ref="sakai-UserID"></property>
+	<bean id="EntryLocator" class="org.sakaiproject.blogwow.tool.otp.EntryLocator">
+		<property name="entryLogic" ref="org.sakaiproject.blogwow.logic.EntryLogic" />
+		<property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic" />
+		<property name="site" ref="sakai-Site" />
+		<property name="userid" ref="sakai-UserID" />
 	</bean>
+  
+    <bean id="CommentLocator" class="org.sakaiproject.blogwow.tool.otp.CommentLocator">
+        <property name="commentLogic" ref="org.sakaiproject.blogwow.logic.CommentLogic" />
+        <property name="userid" ref="sakai-UserID" />
+    </bean>
 
 	<!-- Commands -->
-	<bean id="RemoveBlogEntryCmd"
-		class="org.sakaiproject.blogwow.tool.commands.RemoveEntryCommand">
-		<property name="entryLogic"
-			ref="org.sakaiproject.blogwow.logic.EntryLogic">
-		</property>
+	<bean id="RemoveBlogEntryCmd" class="org.sakaiproject.blogwow.tool.commands.RemoveEntryCommand">
+		<property name="entryLogic" ref="org.sakaiproject.blogwow.logic.EntryLogic" />
 	</bean>
+  
+    
 
 </beans>
