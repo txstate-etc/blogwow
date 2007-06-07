@@ -146,7 +146,6 @@ public class EntryLogicImpl implements EntryLogic {
                 dao.deleteMixedSet(entitySets);         
             }
         }
-
     }
 
     /* (non-Javadoc)

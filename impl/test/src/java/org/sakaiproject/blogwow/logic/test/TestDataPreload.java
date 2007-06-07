@@ -50,9 +50,9 @@ public class TestDataPreload {
 
 	// testing data objects here
 
-	public BlogWowBlog blog1 = new BlogWowBlog(USER_ID, LOCATION1_ID, "blog1 title", "blog1 profile", null, new Date());
-	public BlogWowBlog blog2 = new BlogWowBlog(MAINT_USER_ID, LOCATION1_ID, "blog2 title", "blog2 profile", null, new Date());
-	public BlogWowBlog blog3 = new BlogWowBlog(ADMIN_USER_ID, LOCATION2_ID, "blog3 title", "blog3 profile", null, new Date());
+	public BlogWowBlog blog1 = new BlogWowBlog(USER_ID, LOCATION1_ID, "blog1 title", "blog1 profile", null, new Date(), null);
+	public BlogWowBlog blog2 = new BlogWowBlog(MAINT_USER_ID, LOCATION1_ID, "blog2 title", "blog2 profile", null, new Date(), null);
+	public BlogWowBlog blog3 = new BlogWowBlog(ADMIN_USER_ID, LOCATION2_ID, "blog3 title", "blog3 profile", null, new Date(), null);
 
 	public BlogWowEntry entry1_b1 = new BlogWowEntry(blog1, USER_ID, "entry 1", "entry text", BlogConstants.PRIVACY_PUBLIC, new Date(), new Date());
 	public BlogWowEntry entry2_b1 = new BlogWowEntry(blog1, USER_ID, "entry 2", "entry text", BlogConstants.PRIVACY_GROUP, new Date(), new Date());

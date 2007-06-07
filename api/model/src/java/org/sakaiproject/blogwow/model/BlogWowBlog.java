@@ -27,8 +27,9 @@ public class BlogWowBlog {
 	private String profile;
 	private String imageUrl;
 	private Date dateCreated;
+    private String icon;
 
-	/**
+    /**
 	 * Default constructor
 	 */
 	public BlogWowBlog() {
@@ -46,13 +47,14 @@ public class BlogWowBlog {
 	/**
 	 * Full constructor
 	 */
-	public BlogWowBlog(String ownerId, String location, String title, String profile, String imageUrl, Date dateCreated) {
+	public BlogWowBlog(String ownerId, String location, String title, String profile, String imageUrl, Date dateCreated, String icon) {
 		this.ownerId = ownerId;
 		this.location = location;
 		this.title = title;
 		this.profile = profile;
 		this.imageUrl = imageUrl;
 		this.dateCreated = dateCreated;
+        this.icon = icon;
 	}
 
 
@@ -116,5 +118,12 @@ public class BlogWowBlog {
 		this.title = title;
 	}
 
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 
 }

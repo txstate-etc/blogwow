@@ -63,7 +63,7 @@ public class BlogLogicImpl implements BlogLogic {
 			// no blog found, create a new one
 			if (checkCanWriteBlog(locationId, userId)) {
 				String title = externalLogic.getUserDisplayName(userId);
-				BlogWowBlog blog = new BlogWowBlog(userId, locationId, title, null, null, new Date());
+				BlogWowBlog blog = new BlogWowBlog(userId, locationId, title, null, null, new Date(), null);
 				dao.save(blog);
 				return blog;
 			}
