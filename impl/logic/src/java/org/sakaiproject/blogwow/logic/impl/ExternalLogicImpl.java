@@ -20,7 +20,7 @@ import org.sakaiproject.authz.api.SecurityService;
 import org.sakaiproject.blogwow.logic.ExternalLogic;
 import org.sakaiproject.blogwow.logic.entity.BlogRssEntityProvider;
 import org.sakaiproject.entitybroker.EntityBroker;
-import org.sakaiproject.entitybroker.EntityID;
+import org.sakaiproject.entitybroker.IdEntityReference;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SiteService;
@@ -175,7 +175,7 @@ public class ExternalLogicImpl implements ExternalLogic {
 	 */
 	public String getBlogRssUrl(Long blogId) {
 		return entityBroker.getEntityURL( 
-				new EntityID(BlogRssEntityProvider.ENTITY_PREFIX, blogId.toString()).toString()
+				new IdEntityReference(BlogRssEntityProvider.ENTITY_PREFIX, blogId.toString()).toString()
 			);
 	}
 

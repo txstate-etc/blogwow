@@ -192,9 +192,19 @@ public class BlogLogicImplTest extends AbstractTransactionalSpringContextTests {
 		logicImpl.saveBlog(tdp.blog1, TestDataPreload.LOCATION1_ID);
 
         // test that the perms cause failure when invalid owner
-        logicImpl.saveBlog(tdp.blog1, TestDataPreload.LOCATION2_ID);
+        try {
+            logicImpl.saveBlog(tdp.blog1, TestDataPreload.LOCATION2_ID);
+            Assert.fail("Should have thrown exception");
+        } catch (SecurityException e) {
+            Assert.assertNotNull(e);
+        }
 
-        logicImpl.saveBlog(tdp.blog2, TestDataPreload.LOCATION1_ID);
+        try {
+            logicImpl.saveBlog(tdp.blog2, TestDataPreload.LOCATION1_ID);
+            Assert.fail("Should have thrown exception");
+        } catch (SecurityException e) {
+            Assert.assertNotNull(e);
+        }
 
     }
 	
