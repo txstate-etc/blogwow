@@ -13,16 +13,27 @@ import uk.org.ponder.rsf.viewstate.SimpleViewParameters;
 public class BlogParams extends SimpleViewParameters {
   public String blogid;
   
+  public String entryid;
+  public boolean showcomments;
+  
   public BlogParams() {}
   public BlogParams(String viewid) {
     this.viewID = viewid;
   }
+  
   public BlogParams(String viewid, String blogid) {
     this.viewID = viewid;
     this.blogid = blogid;
   }
   
+  public BlogParams(String viewid, String blogid, String entryid, boolean showcomments) {
+      this.viewID = viewid;
+      this.blogid = blogid;
+      this.entryid = entryid;
+      this.showcomments = showcomments;
+  }
+  
   public String getParseSpec() {
-    return super.getParseSpec() + ",blogid";
+    return super.getParseSpec() + ",blogid,entryid,showcomments";
   }
 }

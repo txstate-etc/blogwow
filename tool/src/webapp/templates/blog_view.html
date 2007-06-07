@@ -45,74 +45,41 @@
   <div rsf:id="action-items" class="itemAction">
     <a rsf:id="edit-entry-link" href="add_entry.htm">Edit entry</a> | 
     <a rsf:id="remove-entry-link" href="remove.htm">Remove entry</a> | 
-    <a href="comments.htm">22 comments</a> | 
+    <a rsf:id="comments-link" href="comments.htm">22 comments</a> | 
     <a href="comments.htm">Leave a comment</a>
   </div>
   <form rsf:id="remove-entry-form" method="post">
     <input id="" type="submit" style="display:none" value="" rsf:id="remove-command" />
   </form>
+  <div rsf:id="comment-div:">
+    <div rsf:id="comment-header" class="discTria">
+      Says Candy Crabapple at 7.32pm, 24th May 07
+    </div>
+    <p rsf:id="comment-text">
+      Aliquam faucibus, velit eget accumsan interdum, mauris sapien consequat turpis, vel tristique sapien 
+      justo a urna. Etiam tincidunt tortor sit amet lacus. Curabitur imperdiet, nulla ac molestie feugiat, 
+      massa massa faucibus libero, eget convallis ipsum mauris vel ligula. Ut euismod diam sed arcu. Proin quis 
+      lacus. Duis sed erat ac elit commodo consequat. Mauris porttitor urna ac arcu. Suspendisse pretium urna non 
+      turpis. Sed varius lectus sed arcu. Nunc ante metus, placerat eget, sagittis nec, accumsan a, lorem.
+    </p>
+    <!-- I'm not sure if we really need this link here. 
+    <div class="itemAction">
+      <a href="comments.htm">Leave a comment</a>
+    </div>
+    -->
+  </div>
+  <div rsf:id="add-comment-div" >
+    <form rsf:id="add-comment-form" method="post">
+      <h4 rsf:id="add-comment-header">Leave a comment</h4>
+      <textarea rsf:id="comment-text" rows="10" cols="80" >Your blog entry is spiffing rockin' sweet. </textarea>
+      <p>
+        <input rsf:id="publish-button" type="submit" value="Publish comment"/>
+        <input rsf:id="cancel-button" type="submit" value="Cancel"/>
+      </p>
+    </form>
+  </div>
 </div>
 <div rsf:id="blog-entry:empty">There are no blog postings yet</div>
-
-<!-- 
-<div
-	style="margin-right:220px; border:1px solid #cccccc; margin-left:20px; padding:10px; margin-top:20px;">
-<h4>Curabitur imperdiet, nulla ac molestie feugiat, massa massa
-faucibus libero</h4>
-<div style="text-align:right">10.24, 22nd May 07</div>
-<hr class="itemSeparator" align="left" />
-<p>Aliquam faucibus, velit eget accumsan interdum, mauris sapien
-consequat turpis, vel tristique sapien justo a urna. Etiam tincidunt
-tortor sit amet lacus. Curabitur imperdiet, nulla ac molestie feugiat,
-massa massa faucibus libero, eget convallis ipsum mauris vel ligula. Ut
-euismod diam sed arcu. Proin quis lacus. Duis sed erat ac elit commodo
-consequat. Mauris porttitor urna ac arcu. Suspendisse pretium urna non
-turpis. Sed varius lectus sed arcu. Nunc ante metus, placerat eget,
-sagittis nec, accumsan a, lorem.</p>
-<p>Maecenas suscipit. Maecenas euismod purus ut diam. Praesent in
-urna. Quisque bibendum magna eu risus. Aliquam tempor velit id erat. Ut
-eu dolor. Aenean at diam non quam ultrices lacinia. Etiam lacus lectus,
-consequat ac, tempor ullamcorper, tempor sed, magna. Proin porta, risus
-quis interdum fermentum, justo quam tristique purus, sed vestibulum nunc
-ligula non metus. Suspendisse massa. Pellentesque ac lorem. Fusce sit
-amet velit ut erat adipiscing venenatis. Maecenas eu mauris at nulla
-dignissim mattis. Pellentesque vel erat. Proin viverra, ligula id
-sollicitudin volutpat, nisi ipsum consectetuer nulla, in placerat metus
-turpis condimentum sem. Donec pellentesque tellus non erat. Curabitur
-non metus at turpis congue vestibulum. Cum sociis natoque penatibus et
-magnis dis parturient montes, nascetur ridiculus mus.</p>
-<p>Phasellus eu dui. Integer mollis ante nec sem. Nullam placerat
-augue et quam. Duis tellus. Ut ullamcorper orci at metus. Cras mollis,
-justo sed mattis imperdiet, sem libero pulvinar dolor, eu aliquam felis
-velit vitae est. Aenean enim sem, aliquet quis, lacinia id, varius et,
-nisl. In pede nibh, porttitor nec, euismod eu, iaculis ac, arcu. Sed a
-ante. Donec molestie ullamcorper ligula. Quisque pretium. Nunc elit.
-Aliquam et turpis. Morbi odio felis, iaculis et, interdum in, suscipit
-eu, dui.</p>
-</div>
-
-<div
-	style="margin-right:220px; border:1px solid #cccccc; margin-left:20px; padding:10px; margin-top:20px;">
-<h4>Suspendisse pretium urna non turpis!</h4>
-<div style="text-align:right">10.24, 22nd May 07</div>
-<hr class="itemSeparator" align="left" />
-<p>Aliquam faucibus, velit eget accumsan interdum, mauris sapien
-consequat turpis, vel tristique sapien justo a urna. Etiam tincidunt
-tortor sit amet lacus. Curabitur imperdiet, nulla ac molestie feugiat,
-massa massa faucibus libero, eget convallis ipsum mauris vel ligula. Ut
-euismod diam sed arcu. Proin quis lacus. Duis sed erat ac elit commodo
-consequat. Mauris porttitor urna ac arcu. Suspendisse pretium urna non
-turpis. Sed varius lectus sed arcu. Nunc ante metus, placerat eget,
-sagittis nec, accumsan a, lorem. Etiam tincidunt tortor sit amet lacus.
-Curabitur imperdiet, nulla ac molestie feugiat, massa massa faucibus
-libero, eget convallis ipsum mauris vel ligula. Ut euismod diam sed
-arcu. Proin quis lacus. Duis sed erat ac elit commodo consequat. Mauris
-porttitor urna ac arcu. Suspendisse pretium urna non turpis. Sed varius
-lectus sed arcu. Nunc ante metus, placerat eget, sagittis nec, accumsan
-a, lorem.</p>
-</div>
--->
-
 
 <img src="../images/tea.gif" align="right" />
 </div>

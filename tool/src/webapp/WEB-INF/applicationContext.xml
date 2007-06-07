@@ -31,7 +31,7 @@
 	<!-- For security purposes, only beans listed in the comma separated value list
 			may be the target of EL operations coming in over the request -->
 	<bean parent="requestAddressibleParent">
-		<property name="value" value="BlogLocator,EntryLocator,RemoveBlogEntryCmd" />
+		<property name="value" value="BlogLocator,EntryLocator,RemoveBlogEntryCmd,CommentLocator" />
 	</bean>
 
 	<!-- Control the location of the html templates (default: content/templates/) -->
@@ -45,5 +45,17 @@
 	<bean id="componentsTemplateResourceBase" class="java.lang.String">
 		<constructor-arg value="/" />
 	</bean>
+  
+    <bean id="MugshotGenerator" class="org.sakaiproject.blogwow.tool.beans.MugshotGenerator">
+        <property name="mugshotImages">
+          <list>
+            <value>../images/user.png</value>
+            <value>../images/user_gray.png</value>
+            <value>../images/user_green.png</value>
+            <value>../images/user_orange.png</value>
+            <value>../images/user_red.png</value>
+          </list>
+        </property>
+    </bean>
 
 </beans>
