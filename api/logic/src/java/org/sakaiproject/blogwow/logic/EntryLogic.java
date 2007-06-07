@@ -39,8 +39,8 @@ public interface EntryLogic {
 
 	/**
 	 * Remove a blog entry and all associated comments
+     * @param entryId a unique id for a {@link BlogWowEntry}
      * @param locationId a unique id which represents the current location of the user (entity reference)
-	 * @param entryId a unique id for a {@link BlogWowEntry}
 	 */
 	public void removeEntry(Long entryId, String locationId);
 

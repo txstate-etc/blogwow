@@ -30,7 +30,7 @@ public class BlogLocator implements BeanLocator {
 		Collection blogs = blogsmap.values();
 		for(Iterator i = blogs.iterator(); i.hasNext();) {
 			BlogWowBlog blog = (BlogWowBlog) i.next();
-			blogLogic.saveBlog(blog);
+			blogLogic.saveBlog(blog, blog.getLocation());
 		}
 		return "saved";
 	}

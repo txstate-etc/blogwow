@@ -35,7 +35,7 @@ public class EntryLocator implements BeanLocator {
 			togo = entry;
 		}
 		else if (togo == null) {
-			togo = entryLogic.getEntryById(new Long(name));
+			togo = entryLogic.getEntryById(new Long(name), site.getReference());
 			entrymap.put(name, togo);
 		}
 		return togo;
@@ -45,7 +45,7 @@ public class EntryLocator implements BeanLocator {
 		Collection entries = entrymap.values();
 		for (Iterator i = entries.iterator(); i.hasNext();) {
 			BlogWowEntry entry = (BlogWowEntry) i.next();
-			entryLogic.saveEntry(entry);
+			entryLogic.saveEntry(entry, site.getReference());
 		}
 		return "published";
 	}
@@ -55,7 +55,7 @@ public class EntryLocator implements BeanLocator {
 		for (Iterator i = entries.iterator(); i.hasNext();) {
 			BlogWowEntry entry = (BlogWowEntry) i.next();
 			entry.setPrivacySetting(BlogConstants.PRIVACY_PRIVATE);
-			entryLogic.saveEntry(entry);
+			entryLogic.saveEntry(entry, site.getReference());
 		}
 		return "saved";
 	}
@@ -64,7 +64,7 @@ public class EntryLocator implements BeanLocator {
 		Collection entries = entrymap.values();
 		for (Iterator i = entries.iterator(); i.hasNext();) {
 			BlogWowEntry entry = (BlogWowEntry) i.next();
-			entryLogic.removeEntry(entry.getId());
+			entryLogic.removeEntry(entry.getId(), site.getReference());
 		}
 		return "removed";
 	}

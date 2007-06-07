@@ -14,6 +14,7 @@ import org.sakaiproject.blogwow.model.BlogWowBlog;
 import org.sakaiproject.blogwow.model.BlogWowComment;
 import org.sakaiproject.blogwow.model.BlogWowEntry;
 import org.sakaiproject.blogwow.tool.params.BlogParams;
+import org.sakaiproject.site.api.Site;
 import org.sakaiproject.user.api.UserDirectoryService;
 import org.sakaiproject.user.api.UserNotDefinedException;
 
@@ -41,7 +42,6 @@ import uk.org.ponder.rsf.viewstate.ViewParameters;
 import uk.org.ponder.rsf.viewstate.ViewParamsReporter;
 import uk.org.ponder.util.UniversalRuntimeException;
 
-
 public class BlogViewProducer implements ViewComponentProducer,
 ViewParamsReporter, NavigationCaseReporter {
 
@@ -56,6 +56,7 @@ ViewParamsReporter, NavigationCaseReporter {
     public CommentLogic commentLogic;
     public String userid;
     public Locale locale;
+    public Site site;
     public UserDirectoryService userDirectoryService;
 
     public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
@@ -77,7 +78,7 @@ ViewParamsReporter, NavigationCaseReporter {
             entries = entryLogic.getAllVisibleEntries(blog.getId(), userid, null, false, 0, 10);
         }
         else {
-            entries.add(entryLogic.getEntryById(new Long(params.entryid)));
+            entries.add(entryLogic.getEntryById(new Long(params.entryid), site.getReference()));
         }
         
         if (entries.size() <= 0) {

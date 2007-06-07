@@ -47,11 +47,13 @@
             <version>${sakai.version}</version>
         </dependency>
 
+<!--
         <dependency>
             <groupId>sakaiproject</groupId>
             <artifactId>sakai-blogwow-test</artifactId>
             <version>${sakai.version}</version>
         </dependency>
+-->
 
         <!-- generic DAO -->
         <dependency>

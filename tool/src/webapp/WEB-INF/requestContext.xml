@@ -79,11 +79,13 @@
     <bean id="CommentLocator" class="org.sakaiproject.blogwow.tool.otp.CommentLocator">
         <property name="commentLogic" ref="org.sakaiproject.blogwow.logic.CommentLogic" />
         <property name="userid" ref="sakai-UserID" />
+        <property name="site" ref="sakai-Site" />
     </bean>
 
 	<!-- Commands -->
 	<bean id="RemoveBlogEntryCmd" class="org.sakaiproject.blogwow.tool.commands.RemoveEntryCommand">
 		<property name="entryLogic" ref="org.sakaiproject.blogwow.logic.EntryLogic" />
+        <property name="site" ref="sakai-Site" />
 	</bean>
   
     

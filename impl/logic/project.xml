@@ -47,11 +47,13 @@
             <version>${sakai.version}</version>
         </dependency>
 
+<!--
         <dependency>
             <groupId>sakaiproject</groupId>
             <artifactId>sakai-blogwow-test</artifactId>
             <version>${sakai.version}</version>
         </dependency>
+-->
 
         <!-- generic DAO -->
         <dependency>
@@ -203,6 +205,7 @@
 		<sourceDirectory>src/java</sourceDirectory>
 
 		<!-- unit testing -->
+<!--
 		<unitTestSourceDirectory>src/test</unitTestSourceDirectory> 
 		<unitTest>
 			<includes>
@@ -224,6 +227,7 @@
 				</resource>
             </resources>
 		</unitTest>
+-->
 
 	</build>
 

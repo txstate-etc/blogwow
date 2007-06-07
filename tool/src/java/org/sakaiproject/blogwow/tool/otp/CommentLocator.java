@@ -9,12 +9,14 @@ import org.sakaiproject.blogwow.logic.CommentLogic;
 import org.sakaiproject.blogwow.logic.EntryLogic;
 import org.sakaiproject.blogwow.model.BlogWowComment;
 import org.sakaiproject.blogwow.model.BlogWowEntry;
+import org.sakaiproject.site.api.Site;
 
 import uk.org.ponder.beanutil.BeanLocator;
 
 public class CommentLocator implements BeanLocator {
     private CommentLogic commentLogic;
     private String userid;
+    private Site site;
 
     private Map<String, BlogWowComment> commentmap = new HashMap<String, BlogWowComment>();
 
@@ -31,7 +33,7 @@ public class CommentLocator implements BeanLocator {
             togo = comment;
         }
         else if (togo == null) {
-            togo = commentLogic.getCommentById(new Long(name));
+            togo = commentLogic.getCommentById(new Long(name), site.getReference());
             commentmap.put(name, togo);
         }
         return togo;
@@ -44,7 +46,7 @@ public class CommentLocator implements BeanLocator {
             if (key.startsWith("NEW")) {
                 // could do stuff
             }
-            commentLogic.saveComment(comment);
+            commentLogic.saveComment(comment, site.getReference());
         }
         return "published";
     }
@@ -60,6 +62,10 @@ public class CommentLocator implements BeanLocator {
 
     public void setUserid(String userid) {
         this.userid = userid;
+    }
+
+    public void setSite(Site site) {
+        this.site = site;
     }
 
 }
