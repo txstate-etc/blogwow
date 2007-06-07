@@ -51,32 +51,6 @@ public class EntryLogicImpl implements EntryLogic {
 
 
 	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.EntryLogic#canWriteEntry(java.lang.Long, java.lang.String)
-	 */
-	public boolean canWriteEntry(Long entryId, String userId) {
-		if ( externalLogic.isUserAdmin(userId) ) {
-			// the system super user can write
-			return true;
-		}
-
-		BlogWowEntry entry = getEntryById(entryId);
-		BlogWowBlog blog = entry.getBlog();
-		if (blog.getOwnerId().equals( userId ) &&
-				externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_WRITE, blog.getLocation()) ) {
-			// blog owner can write
-			return true;
-		} else if (entry.getOwnerId().equals( userId ) &&
-				externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_WRITE, blog.getLocation()) ) {
-			// entry owner can write
-			return true;
-		} else if ( externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_WRITE_ANY, blog.getLocation()) ) {
-			// users with permission in the specified location can write for that location
-			return true;
-		}
-		return false;
-	}
-
-	/* (non-Javadoc)
 	 * @see org.sakaiproject.blogwow.logic.EntryLogic#getAllVisibleEntries(java.lang.Long, java.lang.String, java.lang.String, boolean, int, int)
 	 */
 	public List<BlogWowEntry> getAllVisibleEntries(Long blogId, String userId, String sortProperty, boolean ascending, int start,
@@ -132,78 +106,99 @@ public class EntryLogicImpl implements EntryLogic {
 		return l;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.EntryLogic#getEntryById(java.lang.Long)
-	 */
-	public BlogWowEntry getEntryById(Long entryId) {
-		return (BlogWowEntry) dao.findById(BlogWowEntry.class, entryId);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.EntryLogic#removeEntry(java.lang.Long)
-	 */
-	@SuppressWarnings("unchecked")
-	public void removeEntry(Long entryId) {
-		BlogWowEntry entry = getEntryById(entryId);
-		List l = dao.findByProperties(BlogWowComment.class, 
-				new String[] {"entry.id"}, 
-				new Object[] {entryId});
-		if (l.size() == 0) {
-			dao.delete(entry);
-		} else {
-			Set[] entitySets = new HashSet[2];
-			entitySets[0] = new HashSet<BlogWowComment>();
-			for (Iterator iter = l.iterator(); iter.hasNext();) {
-				BlogWowComment comment = (BlogWowComment) iter.next();
-				entitySets[0].add(comment);
-			}
-
-			entitySets[1] = new HashSet<BlogWowEntry>();
-			entitySets[1].add(entry);
-
-			dao.deleteMixedSet(entitySets);			
-		}
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.EntryLogic#saveEntry(org.sakaiproject.blogwow.model.BlogWowEntry)
-	 */
-	public void saveEntry(BlogWowEntry entry) {
-		entry.setDateModified(new Date());
-		// set the owner to current if not set
-		if (entry.getOwnerId() == null) {
-			entry.setOwnerId( externalLogic.getCurrentUserId() );
-		}
-		if (entry.getDateCreated() == null) {
-			entry.setDateCreated( new Date() );
-		}
-		// save entry if new OR check if the current user can update the existing item
-		if ( (entry.getId() == null) || 
-				canWriteEntry(entry.getId(), externalLogic.getCurrentUserId()) ) {
-			dao.save(entry);
-			log.info("Saving entry: " + entry.getId() + ":" + entry.getText());
-		} else {
-			throw new SecurityException("Current user cannot save entry " + 
-					entry.getId() + " because they do not have permission");
-		}
-	}
-
-
+    /* (non-Javadoc)
+     * @see org.sakaiproject.blogwow.logic.EntryLogic#getEntryById(java.lang.Long, java.lang.String)
+     */
     public BlogWowEntry getEntryById(Long entryId, String locationId) {
-        // TODO Auto-generated method stub
-        return null;
+        String currentUserId = externalLogic.getCurrentUserId();
+        if (externalLogic.isUserAllowedInLocation(currentUserId, ExternalLogic.BLOG_ENTRY_READ, locationId) ||
+                externalLogic.isUserAllowedInLocation(currentUserId, ExternalLogic.BLOG_ENTRY_READ_ANY, locationId) ) {
+            return (BlogWowEntry) dao.findById(BlogWowEntry.class, entryId);
+        } else {
+            throw new SecurityException("User ("+currentUserId+") cannot access this entry ("+entryId+") in this location ("+locationId+")");
+        }
     }
 
-
+    /* (non-Javadoc)
+     * @see org.sakaiproject.blogwow.logic.EntryLogic#removeEntry(java.lang.Long, java.lang.String)
+     */
+    @SuppressWarnings("unchecked")
     public void removeEntry(Long entryId, String locationId) {
-        // TODO Auto-generated method stub
-        
+        String currentUserId = externalLogic.getCurrentUserId();
+        BlogWowEntry entry = getEntryById(entryId, locationId);
+        if (canWriteEntry(entryId, currentUserId)) {
+            List l = dao.findByProperties(BlogWowComment.class, 
+                    new String[] {"entry.id"}, 
+                    new Object[] {entryId});
+            if (l.size() == 0) {
+                dao.delete(entry);
+            } else {
+                Set[] entitySets = new HashSet[2];
+                entitySets[0] = new HashSet<BlogWowComment>();
+                for (Iterator iter = l.iterator(); iter.hasNext();) {
+                    BlogWowComment comment = (BlogWowComment) iter.next();
+                    entitySets[0].add(comment);
+                }
+
+                entitySets[1] = new HashSet<BlogWowEntry>();
+                entitySets[1].add(entry);
+
+                dao.deleteMixedSet(entitySets);         
+            }
+        }
+
     }
 
-
+    /* (non-Javadoc)
+     * @see org.sakaiproject.blogwow.logic.EntryLogic#saveEntry(org.sakaiproject.blogwow.model.BlogWowEntry, java.lang.String)
+     */
     public void saveEntry(BlogWowEntry entry, String locationId) {
-        // TODO Auto-generated method stub
-        
+        entry.setDateModified(new Date());
+        // set the owner to current if not set
+        if (entry.getOwnerId() == null) {
+            entry.setOwnerId( externalLogic.getCurrentUserId() );
+        }
+        if (entry.getDateCreated() == null) {
+            entry.setDateCreated( new Date() );
+        }
+        // save entry if new OR check if the current user can update the existing item
+        if ( canWriteEntry(entry.getId(), externalLogic.getCurrentUserId()) ) {
+            dao.save(entry);
+            log.info("Saving entry: " + entry.getId() + ":" + entry.getText());
+        } else {
+            throw new SecurityException("Current user cannot save entry " + 
+                    entry.getId() + " because they do not have permission");
+        }
+    }
+
+    /* (non-Javadoc)
+     * @see org.sakaiproject.blogwow.logic.EntryLogic#canWriteEntry(java.lang.Long, java.lang.String)
+     */
+    public boolean canWriteEntry(Long entryId, String userId) {
+        BlogWowEntry entry = (BlogWowEntry) dao.findById(BlogWowEntry.class, entryId);
+        if (entry == null) {
+            throw new IllegalArgumentException("blog entry id is invalid: " + entryId);
+        }
+
+        if ( externalLogic.isUserAdmin(userId) ) {
+            // the system super user can write
+            return true;
+        }
+
+        BlogWowBlog blog = entry.getBlog();
+        if (blog.getOwnerId().equals( userId ) &&
+                externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_WRITE, blog.getLocation()) ) {
+            // blog owner can write
+            return true;
+        } else if (entry.getOwnerId().equals( userId ) &&
+                externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_WRITE, blog.getLocation()) ) {
+            // entry owner can write
+            return true;
+        } else if ( externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_WRITE_ANY, blog.getLocation()) ) {
+            // users with permission in the specified location can write for that location
+            return true;
+        }
+        return false;
     }
 
 }

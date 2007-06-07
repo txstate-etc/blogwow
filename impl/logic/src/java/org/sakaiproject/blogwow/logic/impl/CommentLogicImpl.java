@@ -54,7 +54,7 @@ public class CommentLogicImpl implements CommentLogic {
     public BlogWowComment getCommentById(Long commentId, String locationId) {
         String currentUserId = externalLogic.getCurrentUserId();
         if (externalLogic.isUserAllowedInLocation(currentUserId, ExternalLogic.BLOG_ENTRY_READ, locationId) ||
-                externalLogic.isUserAllowedInLocation(currentUserId, ExternalLogic.BLOG_ENTRY_READ, locationId) ) {
+                externalLogic.isUserAllowedInLocation(currentUserId, ExternalLogic.BLOG_ENTRY_READ_ANY, locationId) ) {
             return (BlogWowComment) dao.findById(BlogWowComment.class, commentId);
         } else {
             throw new SecurityException("User ("+currentUserId+") cannot access this comment ("+commentId+") in this location ("+locationId+")");
@@ -78,13 +78,15 @@ public class CommentLogicImpl implements CommentLogic {
      * @see org.sakaiproject.blogwow.logic.CommentLogic#saveComment(org.sakaiproject.blogwow.model.BlogWowComment, java.lang.String)
      */
     public void saveComment(BlogWowComment comment, String locationId) {
+        String currentUserId = externalLogic.getCurrentUserId();
         comment.setDateCreated( new Date() );
         // set the owner to current if not set
         if (comment.getOwnerId() == null) {
             comment.setOwnerId( externalLogic.getCurrentUserId() );
         }
         // save comment if new only
-        if ( comment.getId() == null ) {
+        if ( comment.getId() == null &&
+                canAddComment(comment.getEntry().getId(), currentUserId)) {
             dao.save(comment);
             log.info("Saving comment: " + comment.getId() + ":" + comment.getText());
         } else {
