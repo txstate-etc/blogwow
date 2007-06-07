@@ -21,12 +21,32 @@ import org.sakaiproject.blogwow.logic.test.TestDataPreload;
  */
 public class ExternalLogicStub implements ExternalLogic {
 
+    /**
+     * represents the current user userId, can be changed to simulate multiple users 
+     */
+    public String currentUserId;
+    /**
+     * represents the current location, can be changed to simulate multiple locations 
+     */
+    public String currentLocationId;
 
-	/* (non-Javadoc)
+    /**
+     * Reset the current user and location to defaults
+     */
+    public void setDefaults() {
+        currentUserId = TestDataPreload.USER_ID;
+        currentLocationId = TestDataPreload.LOCATION1_ID;
+    }
+
+	public ExternalLogicStub() {
+        setDefaults();
+    }
+
+    /* (non-Javadoc)
 	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#getCurrentLocationId()
 	 */
 	public String getCurrentLocationId() {
-		return TestDataPreload.LOCATION1_ID;
+		return currentLocationId;
 	}
 
 	/* (non-Javadoc)
@@ -45,7 +65,7 @@ public class ExternalLogicStub implements ExternalLogic {
 	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#getCurrentUserId()
 	 */
 	public String getCurrentUserId() {
-		return TestDataPreload.USER_ID;
+		return currentUserId;
 	}
 
 	/* (non-Javadoc)
@@ -54,6 +74,8 @@ public class ExternalLogicStub implements ExternalLogic {
 	public String getUserDisplayName(String userId) {
 		if (userId.equals(TestDataPreload.USER_ID)) {
 			return TestDataPreload.USER_DISPLAY;
+        } else if (userId.equals(TestDataPreload.ACCESS_USER_ID)) {
+            return TestDataPreload.ACCESS_USER_DISPLAY;
 		} else if (userId.equals(TestDataPreload.MAINT_USER_ID)) {
 			return TestDataPreload.MAINT_USER_DISPLAY;
 		} else if (userId.equals(TestDataPreload.ADMIN_USER_ID)) {
@@ -80,13 +102,23 @@ public class ExternalLogicStub implements ExternalLogic {
 			if (locationId.equals(TestDataPreload.LOCATION1_ID)) {
 				if (permission.equals(BLOG_CREATE) ||
 						permission.equals(BLOG_ENTRY_WRITE) ||
+                        permission.equals(BLOG_ENTRY_READ) ||
 						permission.equals(BLOG_COMMENTS_ADD) ) {
 					return true;
 				}
 			}
+        } else if (userId.equals(TestDataPreload.ACCESS_USER_ID)) {
+                if (locationId.equals(TestDataPreload.LOCATION1_ID)) {
+                    if (permission.equals(BLOG_CREATE) ||
+                            permission.equals(BLOG_ENTRY_WRITE) ||
+                            permission.equals(BLOG_ENTRY_READ) ||
+                            permission.equals(BLOG_COMMENTS_ADD) ) {
+                        return true;
+                    }
+                }
 		} else if (userId.equals(TestDataPreload.MAINT_USER_ID)) {
 			if (locationId.equals(TestDataPreload.LOCATION1_ID)) {
-				return true; // can do anything in context 1
+				return true; // can do anything in loc 1 (assume they have all permissions checked)
 			}
 		} else if (userId.equals(TestDataPreload.ADMIN_USER_ID)) {
 			// admin can do anything in any context

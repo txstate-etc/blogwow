@@ -29,6 +29,7 @@ import org.sakaiproject.blogwow.logic.ExternalLogic;
 import org.sakaiproject.blogwow.model.BlogWowBlog;
 import org.sakaiproject.blogwow.model.BlogWowComment;
 import org.sakaiproject.blogwow.model.BlogWowEntry;
+import org.sakaiproject.blogwow.model.constants.BlogConstants;
 import org.sakaiproject.genericdao.api.finders.ByPropsFinder;
 
 /**
@@ -111,12 +112,24 @@ public class EntryLogicImpl implements EntryLogic {
      */
     public BlogWowEntry getEntryById(Long entryId, String locationId) {
         String currentUserId = externalLogic.getCurrentUserId();
-        if (externalLogic.isUserAllowedInLocation(currentUserId, ExternalLogic.BLOG_ENTRY_READ, locationId) ||
-                externalLogic.isUserAllowedInLocation(currentUserId, ExternalLogic.BLOG_ENTRY_READ_ANY, locationId) ) {
-            return (BlogWowEntry) dao.findById(BlogWowEntry.class, entryId);
-        } else {
-            throw new SecurityException("User ("+currentUserId+") cannot access this entry ("+entryId+") in this location ("+locationId+")");
+        BlogWowEntry entry = (BlogWowEntry) dao.findById(BlogWowEntry.class, entryId);
+        if (entry == null) {
+            // entry not found
+            return null;
+        } else if (entry.getOwnerId().equals(currentUserId)) {
+            // owner can access from anywhere
+            return entry;
+        } else if ( locationId.equals(entry.getBlog().getLocation()) ) {
+            if ( BlogConstants.PRIVACY_GROUP.equals(entry.getPrivacySetting()) &&
+                    externalLogic.isUserAllowedInLocation(currentUserId, ExternalLogic.BLOG_ENTRY_READ, locationId) ) {
+                return entry;
+            } else if ( (BlogConstants.PRIVACY_GROUP.equals(entry.getPrivacySetting()) ||
+                    BlogConstants.PRIVACY_GROUP_LEADER.equals(entry.getPrivacySetting()) ) &&
+                        externalLogic.isUserAllowedInLocation(currentUserId, ExternalLogic.BLOG_ENTRY_READ_ANY, locationId) ) {
+                return entry;
+            }
         }
+        throw new SecurityException("User ("+currentUserId+") cannot access this entry ("+entryId+") in this location ("+locationId+")");
     }
 
     /* (non-Javadoc)

@@ -30,14 +30,25 @@ public class TestDataPreload {
 	 */
 	public final static String USER_ID = "user-11111111";
 	public final static String USER_DISPLAY = "Aaron Zeckoski";
-	public final static String ADMIN_USER_ID = "admin";
-	public final static String ADMIN_USER_DISPLAY = "Administrator";
+    /**
+     * access level user in LOCATION1_ID
+     */
+    public final static String ACCESS_USER_ID = "access-2222222";
+    public final static String ACCESS_USER_DISPLAY = "Regular User";
 	/**
-	 * maintain level user in LOCATION_ID1
+	 * maintain level user in LOCATION1_ID
 	 */
-	public final static String MAINT_USER_ID = "main-22222222";
+	public final static String MAINT_USER_ID = "maint-33333333";
 	public final static String MAINT_USER_DISPLAY = "Maint User";
-	public final static String INVALID_USER_ID = "invalid-UUUUUU";
+    /**
+     * super admin user 
+     */
+    public final static String ADMIN_USER_ID = "admin";
+    public final static String ADMIN_USER_DISPLAY = "Administrator";
+    /**
+     * Invalid user (also can be used to simulate the anonymous user) 
+     */
+    public final static String INVALID_USER_ID = "invalid-UUUUUU";
 
 	/**
 	 * current location
@@ -64,7 +75,9 @@ public class TestDataPreload {
 
 	public BlogWowComment comment1_e1_b1 = new BlogWowComment(entry1_b1, MAINT_USER_ID, "comment 1", new Date(), new Date());
 	public BlogWowComment comment2_e1_b1 = new BlogWowComment(entry1_b1, MAINT_USER_ID, "comment 2", new Date(), new Date());
-	public BlogWowComment comment3_e4_b2 = new BlogWowComment(entry5_b2, USER_ID, "comment 3", new Date(), new Date());		
+    public BlogWowComment comment3_e1_b1 = new BlogWowComment(entry1_b1, ACCESS_USER_ID, "comment 3", new Date(), new Date());
+	public BlogWowComment comment4_e5_b2 = new BlogWowComment(entry5_b2, USER_ID, "comment 4", new Date(), new Date());
+    public BlogWowComment comment5_e5_b2 = new BlogWowComment(entry5_b2, ACCESS_USER_ID, "comment 5", new Date(), new Date());
 
 	/**
 	 * Preload a bunch of test data into the database
@@ -85,7 +98,9 @@ public class TestDataPreload {
 
 		dao.save(comment1_e1_b1);
 		dao.save(comment2_e1_b1);
-		dao.save(comment3_e4_b2);
+        dao.save(comment3_e1_b1);
+        dao.save(comment4_e5_b2);
+        dao.save(comment5_e5_b2);
 	}
 
 }
