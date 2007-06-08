@@ -185,8 +185,8 @@ public class EntryLogicImpl implements EntryLogic {
         if (entry.getDateCreated() == null) {
             entry.setDateCreated(new Date());
         }
-        // save entry if new OR check if the current user can update the existing item
-        if (canWriteEntry(entry.getId(), externalLogic.getCurrentUserId())) {
+        // check if the current user can save or update the existing item
+        if (checkWriteEntry(entry, externalLogic.getCurrentUserId())) {
             dao.save(entry);
             log.info("Saving entry: " + entry.getId() + ":" + entry.getText());
         } else {
@@ -205,12 +205,24 @@ public class EntryLogicImpl implements EntryLogic {
             throw new IllegalArgumentException("blog entry id is invalid: " + entryId);
         }
 
+        if ( checkWriteEntry(entry, userId) ) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param entry
+     * @param userId
+     * @return
+     */
+    private boolean checkWriteEntry(BlogWowEntry entry, String userId) {
         if (externalLogic.isUserAdmin(userId)) {
             // the system super user can write
             return true;
         }
 
-        BlogWowBlog blog = entry.getBlog();
+        BlogWowBlog blog = (BlogWowBlog) dao.findById(BlogWowBlog.class, entry.getBlog().getId() );
         if (blog.getOwnerId().equals(userId)
                 && externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_WRITE, blog.getLocation())) {
             // blog owner can write
