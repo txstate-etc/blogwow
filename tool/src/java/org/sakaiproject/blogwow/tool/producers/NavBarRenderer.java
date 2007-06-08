@@ -22,24 +22,29 @@ public class NavBarRenderer {
         UIJointContainer joint = new UIJointContainer(tofill, divID, "blog-wow-navigation:", ""+1);
 
         UILink.make(joint, "item:icon", "../images/page_white_edit.png");
-        if (currentViewID.equals(AddEntryProducer.VIEWID))
+        if (currentViewID.equals(AddEntryProducer.VIEWID)) {
             UIMessage.make(joint, "item:text", "blogwow.navbar.add");
-        else
+        }
+        else {
             UIInternalLink.make(joint, "item:link", UIMessage.make("blogwow.navbar.add"), new SimpleViewParameters(AddEntryProducer.VIEWID));
+        }
 
         UIOutput.make(joint, "item:separator");
 
         UILink.make(joint, "item:icon", "../images/page_white_edit.png");
-        if (currentViewID.equals(HomeProducer.VIEWID))
+        if (currentViewID.equals(HomeProducer.VIEWID)) {
             UIMessage.make(joint, "item:text", "blogwow.navbar.bloglist");
-        else
+        }
+        else {
             UIInternalLink.make(joint, "item:link", UIMessage.make("blogwow.navbar.bloglist"), new SimpleViewParameters(HomeProducer.VIEWID));
+        }
 
         UIOutput.make(joint, "item:separator");
 
         UILink.make(joint, "item:icon", "../images/cog.png");
-        if (currentViewID.equals(MySettingsProducer.VIEWID))
+        if (currentViewID.equals(MySettingsProducer.VIEWID)) {
             UIMessage.make(joint, "item:text", "blogwow.navbar.settings");
+        }
         else {
             BlogWowBlog blog = blogLogic.getBlogByLocationAndUser(site.getReference(), userid);
             if (blog != null) { 

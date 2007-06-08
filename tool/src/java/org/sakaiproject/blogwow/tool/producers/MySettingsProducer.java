@@ -21,52 +21,64 @@ import uk.org.ponder.rsf.viewstate.ViewParameters;
 import uk.org.ponder.rsf.viewstate.ViewParamsReporter;
 
 public class MySettingsProducer implements 
-  ViewComponentProducer,
-  ViewParamsReporter,
-  NavigationCaseReporter
+ViewComponentProducer,
+ViewParamsReporter,
+NavigationCaseReporter
 {
-  public static final String VIEWID = "my_settings";
-  
-  public NavBarRenderer navBarRenderer;
-  public TextInputEvolver richTextEvolver;
-  public BlogLogic blogLogic;
-  
-  public String getViewID() {
-    return VIEWID;
-  }
+    public static final String VIEWID = "my_settings";
 
-  public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
-    BlogParams params = (BlogParams) viewparams;
-    String blogid = params.blogid;
-    
-    navBarRenderer.makeNavBar(tofill, "navIntraTool:", VIEWID);
-    
-    UIMessage.make(tofill, "my-settings-header", "blogwow.settings.settingsheader");
-    
-    UIForm form = UIForm.make(tofill, "my-settings-form");
-    
-    UIMessage.make(form, "my-blog-profile", "blogwow.settings.profile");
-    
-    UIInput profiletext = UIInput.make(form, "profile-text-input:", "BlogLocator."+blogid+".profile");
-    richTextEvolver.evolveTextInput(profiletext);
-    
-    UIMessage.make(form, "picture-url-label", "blogwow.settings.pictureURLtext");
-    UIInput.make(form, "picture-url-input", "BlogLocator."+blogid+".imageUrl");
-    
-    UICommand.make(form, "change-settings-button", 
-        UIMessage.make("blogwow.settings.save"), "BlogLocator.saveAll");
-    UICommand.make(form, "cancel-settings-button", 
-        UIMessage.make("blogwow.settings.cancel"), "BlogLocator.cancelAll");
-  }
+    private NavBarRenderer navBarRenderer;
+    private TextInputEvolver richTextEvolver;
+    private BlogLogic blogLogic;
 
-  public ViewParameters getViewParameters() {
-    return new BlogParams();
-  }
+    public String getViewID() {
+        return VIEWID;
+    }
 
-  public List reportNavigationCases() {
-	  List<NavigationCase> l = new ArrayList<NavigationCase>();
-    l.add(new NavigationCase(null, new SimpleViewParameters(HomeProducer.VIEWID)));
-    return l;
-  }
+    public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
+        BlogParams params = (BlogParams) viewparams;
+        String blogid = params.blogid;
+
+        navBarRenderer.makeNavBar(tofill, "navIntraTool:", VIEWID);
+
+        UIMessage.make(tofill, "my-settings-header", "blogwow.settings.settingsheader");
+
+        UIForm form = UIForm.make(tofill, "my-settings-form");
+
+        UIMessage.make(form, "my-blog-profile", "blogwow.settings.profile");
+
+        UIInput profiletext = UIInput.make(form, "profile-text-input:", "BlogLocator."+blogid+".profile");
+        richTextEvolver.evolveTextInput(profiletext);
+
+        UIMessage.make(form, "picture-url-label", "blogwow.settings.pictureURLtext");
+        UIInput.make(form, "picture-url-input", "BlogLocator."+blogid+".imageUrl");
+
+        UICommand.make(form, "change-settings-button", 
+                UIMessage.make("blogwow.settings.save"), "BlogLocator.saveAll");
+        UICommand.make(form, "cancel-settings-button", 
+                UIMessage.make("blogwow.settings.cancel"), "BlogLocator.cancelAll");
+    }
+
+    public ViewParameters getViewParameters() {
+        return new BlogParams();
+    }
+
+    public List reportNavigationCases() {
+        List<NavigationCase> l = new ArrayList<NavigationCase>();
+        l.add(new NavigationCase(null, new SimpleViewParameters(HomeProducer.VIEWID)));
+        return l;
+    }
+
+    public void setBlogLogic(BlogLogic blogLogic) {
+        this.blogLogic = blogLogic;
+    }
+
+    public void setNavBarRenderer(NavBarRenderer navBarRenderer) {
+        this.navBarRenderer = navBarRenderer;
+    }
+
+    public void setRichTextEvolver(TextInputEvolver richTextEvolver) {
+        this.richTextEvolver = richTextEvolver;
+    }
 
 }

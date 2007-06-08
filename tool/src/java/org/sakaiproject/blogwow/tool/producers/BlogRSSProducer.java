@@ -20,52 +20,64 @@ import uk.org.ponder.rsf.viewstate.ViewParameters;
 import uk.org.ponder.rsf.viewstate.ViewParamsReporter;
 
 public class BlogRSSProducer implements 
-  ViewComponentProducer, 
-  ViewParamsReporter,
-  ContentTypeReporter
+ViewComponentProducer, 
+ViewParamsReporter,
+ContentTypeReporter
 {
-  public static final String VIEWID = "blog_rss";
-  
-  public BlogLogic blogLogic;
-  public EntryLogic entryLogic;
-  public String userid;
-  
-  public String getViewID() {
-    return VIEWID;
-  }
+    public static final String VIEWID = "blog_rss";
 
-  public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
-    BlogParams params = (BlogParams) viewparams;
-    
-    BlogWowBlog blog = blogLogic.getBlogById(new Long(params.blogid));
-    
-    UIOutput.make(tofill, "channel-title", blog.getTitle());
-    
-    List<BlogWowEntry> entries = entryLogic.getAllVisibleEntries(new Long(params.blogid), userid, null, true, 0, 10);
-    
-    for (int i = 0; i < entries.size(); i++) {
-      BlogWowEntry entry = entries.get(i);
-      UIBranchContainer rssitem = UIBranchContainer.make(tofill, "item:", i+"");
-      UIOutput.make(rssitem, "item-title", entry.getTitle());
-      UIOutput.make(rssitem, "creator", entry.getOwnerId());
-      
-      String desc = "<![CDATA[" 
-        + ( entry.getText().length() < 200 
-          ? entry.getText().substring(0, entry.getText().length())
-          : entry.getText().substring(0, 200)) 
-        + "]]>";
-      String content = "<![CDATA[" + entry.getText() + "]]>";
-      UIVerbatim.make(rssitem, "description", desc);
-      UIVerbatim.make(rssitem, "content" ,content);
+    private BlogLogic blogLogic;
+    private EntryLogic entryLogic;
+    private String userid;
+
+    public String getViewID() {
+        return VIEWID;
     }
-  }
 
-  public ViewParameters getViewParameters() {
-    return new BlogParams();
-  }
+    public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
+        BlogParams params = (BlogParams) viewparams;
 
-  public String getContentType() {
-    return ContentTypeInfoRegistry.RSS_2;
-  }
+        BlogWowBlog blog = blogLogic.getBlogById(new Long(params.blogid));
+
+        UIOutput.make(tofill, "channel-title", blog.getTitle());
+
+        List<BlogWowEntry> entries = entryLogic.getAllVisibleEntries(new Long(params.blogid), userid, null, true, 0, 10);
+
+        for (int i = 0; i < entries.size(); i++) {
+            BlogWowEntry entry = entries.get(i);
+            UIBranchContainer rssitem = UIBranchContainer.make(tofill, "item:", i+"");
+            UIOutput.make(rssitem, "item-title", entry.getTitle());
+            UIOutput.make(rssitem, "creator", entry.getOwnerId());
+
+            String desc = "<![CDATA[" 
+                + ( entry.getText().length() < 200 
+                        ? entry.getText().substring(0, entry.getText().length())
+                                : entry.getText().substring(0, 200)) 
+                                + "]]>";
+            String content = "<![CDATA[" + entry.getText() + "]]>";
+            UIVerbatim.make(rssitem, "description", desc);
+            UIVerbatim.make(rssitem, "content" ,content);
+        }
+    }
+
+    public ViewParameters getViewParameters() {
+        return new BlogParams();
+    }
+
+    public String getContentType() {
+        return ContentTypeInfoRegistry.RSS_2;
+    }
+
+    public void setBlogLogic(BlogLogic blogLogic) {
+        this.blogLogic = blogLogic;
+    }
+
+    public void setEntryLogic(EntryLogic entryLogic) {
+        this.entryLogic = entryLogic;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
 
 }

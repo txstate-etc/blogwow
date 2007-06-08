@@ -24,9 +24,9 @@ public class PermissionsProducer implements ViewComponentProducer {
 	public static final String VIEWID = "Permissions";
 
 	// Injection
-	public SessionManager sessionManager;
-	public Site site;
-	public MessageLocator messageLocator;
+    private SessionManager sessionManager;
+    private Site site;
+    private MessageLocator messageLocator;
 
 	public String getViewID() {
 		return VIEWID;
@@ -52,5 +52,17 @@ public class PermissionsProducer implements ViewComponentProducer {
 		l.add(new NavigationCase(null, new SimpleViewParameters(HomeProducer.VIEWID)));
 		return l;
 	}
+
+    public void setMessageLocator(MessageLocator messageLocator) {
+        this.messageLocator = messageLocator;
+    }
+
+    public void setSessionManager(SessionManager sessionManager) {
+        this.sessionManager = sessionManager;
+    }
+
+    public void setSite(Site site) {
+        this.site = site;
+    }
 
 }
