@@ -27,82 +27,94 @@ import uk.org.ponder.rsf.viewstate.ViewParameters;
 import uk.org.ponder.rsf.viewstate.ViewParamsReporter;
 
 public class AddEntryProducer implements 
-  ViewComponentProducer,
-  ViewParamsReporter,
-  NavigationCaseReporter
+ViewComponentProducer,
+ViewParamsReporter,
+NavigationCaseReporter
 {
-  public static final String VIEWID = "add_entry";
-  
-  public NavBarRenderer navBarRenderer;
-  public TextInputEvolver richTextEvolver;
-  public MessageLocator messageLocator;
-  
-  public String getViewID() {
-    return VIEWID;
-  }
+    public static final String VIEWID = "add_entry";
 
-  public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
-    BlogParams params = (BlogParams) viewparams;
-    
-    String OTPid;
-    boolean newentry = false;
-    try {
-      OTPid = new Long(params.blogid).toString();
-    } 
-    catch (Exception e) {
-      OTPid = "NEW";
-      newentry = true;
+    private NavBarRenderer navBarRenderer;
+    private TextInputEvolver richTextEvolver;
+    private MessageLocator messageLocator;
+
+    public String getViewID() {
+        return VIEWID;
     }
-    
-    navBarRenderer.makeNavBar(tofill, "navIntraTool:", VIEWID);
-    
-    if (newentry)
-      UIMessage.make(tofill, "add-entry-header", "blogwow.add_edit.addheader");
-    else
-      UIMessage.make(tofill, "add-entry-header", "blogwow.add_edit.editheader");
-    
-    UIForm form = UIForm.make(tofill, "edit-blog-entry-form");
-    
-    UIMessage.make(form, "title-label", "blogwow.add_edit.title");
-    UIInput.make(form, "title-input", "EntryLocator."+OTPid+".title");
-    
-    UIInput blogtext = UIInput.make(form, "blog-text-input:", "EntryLocator."+OTPid+".text");
-    richTextEvolver.evolveTextInput(blogtext);
-    
-    UIMessage.make(form, "privacy-instructions", "blogwow.add_edit.accesstext");
-    
-    String [] privacyRadioValues = new String[] {BlogConstants.PRIVACY_GROUP_LEADER,BlogConstants.PRIVACY_GROUP,BlogConstants.PRIVACY_PUBLIC};
-    String [] privacyRadioLabelKeys = new String[] {"blogwow.add_edit.private","blogwow.add_edit.sitemembers","blogwow.add_edit.public"};
-  
-    UISelect privacyRadios = UISelect.make(form, "privacy-radio-holder", 
-        privacyRadioValues, privacyRadioLabelKeys, "EntryLocator."+OTPid+".privacySetting", BlogConstants.PRIVACY_PUBLIC).setMessageKeys();
-    
-    String selectID = privacyRadios.getFullID();
-    UISelectChoice instructorsOnlyRadio = UISelectChoice.make(form, "instructors-only-radio", selectID, 0);
-    UIVerbatim instructorsOnlyLabel = UIVerbatim.make(form, "instructors-only-label", messageLocator.getMessage("blogwow.add_edit.private"));
-    instructorsOnlyLabel.decorators = new DecoratorList(new UILabelTargetDecorator(instructorsOnlyRadio));
-    
-    UISelectChoice allMembersRadio = UISelectChoice.make(form, "all-members-radio", selectID, 1);
-    UIVerbatim allMembersLabel = UIVerbatim.make(form, "all-members-label", messageLocator.getMessage("blogwow.add_edit.sitemembers"));
-    allMembersLabel.decorators = new DecoratorList(new UILabelTargetDecorator(allMembersRadio));
-    
-    UISelectChoice publicViewableRadio = UISelectChoice.make(form, "public-viewable-radio", selectID, 2);
-    UIVerbatim publicViewableLabel = UIVerbatim.make(form, "public-viewable-label", messageLocator.getMessage("blogwow.add_edit.public"));
-    publicViewableLabel.decorators = new DecoratorList(new UILabelTargetDecorator(publicViewableRadio));
-    
-    UICommand.make(form, "publish-button", UIMessage.make("blogwow.add_edit.publish"), "EntryLocator.publishAll");
-    UICommand.make(form, "save-button", UIMessage.make("blogwow.add_edit.save"), "EntryLocator.saveAll");
-    UICommand.make(form, "cancel-button", UIMessage.make("blogwow.add_edit.cancel"), "EntryLocator.cancelAll");
-  }
 
-  public ViewParameters getViewParameters() {
-    return new BlogParams();
-  }
+    public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
+        BlogParams params = (BlogParams) viewparams;
 
-  public List reportNavigationCases() {
-    List<NavigationCase> l = new ArrayList<NavigationCase>();
-    l.add(new NavigationCase(null, new SimpleViewParameters(HomeProducer.VIEWID)));
-    return l;
-  }
+        String OTPid;
+        boolean newentry = false;
+        try {
+            OTPid = new Long(params.blogid).toString();
+        } 
+        catch (Exception e) {
+            OTPid = "NEW";
+            newentry = true;
+        }
+
+        navBarRenderer.makeNavBar(tofill, "navIntraTool:", VIEWID);
+
+        if (newentry)
+            UIMessage.make(tofill, "add-entry-header", "blogwow.add_edit.addheader");
+        else
+            UIMessage.make(tofill, "add-entry-header", "blogwow.add_edit.editheader");
+
+        UIForm form = UIForm.make(tofill, "edit-blog-entry-form");
+
+        UIMessage.make(form, "title-label", "blogwow.add_edit.title");
+        UIInput.make(form, "title-input", "EntryLocator."+OTPid+".title");
+
+        UIInput blogtext = UIInput.make(form, "blog-text-input:", "EntryLocator."+OTPid+".text");
+        richTextEvolver.evolveTextInput(blogtext);
+
+        UIMessage.make(form, "privacy-instructions", "blogwow.add_edit.accesstext");
+
+        String [] privacyRadioValues = new String[] {BlogConstants.PRIVACY_GROUP_LEADER,BlogConstants.PRIVACY_GROUP,BlogConstants.PRIVACY_PUBLIC};
+        String [] privacyRadioLabelKeys = new String[] {"blogwow.add_edit.private","blogwow.add_edit.sitemembers","blogwow.add_edit.public"};
+
+        UISelect privacyRadios = UISelect.make(form, "privacy-radio-holder", 
+                privacyRadioValues, privacyRadioLabelKeys, "EntryLocator."+OTPid+".privacySetting", BlogConstants.PRIVACY_PUBLIC).setMessageKeys();
+
+        String selectID = privacyRadios.getFullID();
+        UISelectChoice instructorsOnlyRadio = UISelectChoice.make(form, "instructors-only-radio", selectID, 0);
+        UIVerbatim instructorsOnlyLabel = UIVerbatim.make(form, "instructors-only-label", messageLocator.getMessage("blogwow.add_edit.private"));
+        instructorsOnlyLabel.decorators = new DecoratorList(new UILabelTargetDecorator(instructorsOnlyRadio));
+
+        UISelectChoice allMembersRadio = UISelectChoice.make(form, "all-members-radio", selectID, 1);
+        UIVerbatim allMembersLabel = UIVerbatim.make(form, "all-members-label", messageLocator.getMessage("blogwow.add_edit.sitemembers"));
+        allMembersLabel.decorators = new DecoratorList(new UILabelTargetDecorator(allMembersRadio));
+
+        UISelectChoice publicViewableRadio = UISelectChoice.make(form, "public-viewable-radio", selectID, 2);
+        UIVerbatim publicViewableLabel = UIVerbatim.make(form, "public-viewable-label", messageLocator.getMessage("blogwow.add_edit.public"));
+        publicViewableLabel.decorators = new DecoratorList(new UILabelTargetDecorator(publicViewableRadio));
+
+        UICommand.make(form, "publish-button", UIMessage.make("blogwow.add_edit.publish"), "EntryLocator.publishAll");
+        UICommand.make(form, "save-button", UIMessage.make("blogwow.add_edit.save"), "EntryLocator.saveAll");
+        UICommand.make(form, "cancel-button", UIMessage.make("blogwow.add_edit.cancel"), "EntryLocator.cancelAll");
+    }
+
+    public ViewParameters getViewParameters() {
+        return new BlogParams();
+    }
+
+    public List reportNavigationCases() {
+        List<NavigationCase> l = new ArrayList<NavigationCase>();
+        l.add(new NavigationCase(null, new SimpleViewParameters(HomeProducer.VIEWID)));
+        return l;
+    }
+
+    public void setMessageLocator(MessageLocator messageLocator) {
+        this.messageLocator = messageLocator;
+    }
+
+    public void setNavBarRenderer(NavBarRenderer navBarRenderer) {
+        this.navBarRenderer = navBarRenderer;
+    }
+
+    public void setRichTextEvolver(TextInputEvolver richTextEvolver) {
+        this.richTextEvolver = richTextEvolver;
+    }
 
 }

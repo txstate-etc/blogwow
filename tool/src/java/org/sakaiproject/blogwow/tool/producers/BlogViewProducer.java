@@ -50,14 +50,14 @@ ViewParamsReporter, NavigationCaseReporter {
         return VIEWID;
     }
 
-    public NavBarRenderer navBarRenderer;
-    public BlogLogic blogLogic;
-    public EntryLogic entryLogic;
-    public CommentLogic commentLogic;
-    public String userid;
-    public Locale locale;
-    public Site site;
-    public UserDirectoryService userDirectoryService;
+    private NavBarRenderer navBarRenderer;
+    private BlogLogic blogLogic;
+    private EntryLogic entryLogic;
+    private CommentLogic commentLogic;
+    private String userid;
+    private Locale locale;
+    private Site site;
+    private UserDirectoryService userDirectoryService;
 
     public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
 
@@ -153,6 +153,38 @@ ViewParamsReporter, NavigationCaseReporter {
         List<NavigationCase> l = new ArrayList<NavigationCase>();
         l.add(new NavigationCase(null,new SimpleViewParameters(HomeProducer.VIEWID)));
         return l;
+    }
+
+    public void setBlogLogic(BlogLogic blogLogic) {
+        this.blogLogic = blogLogic;
+    }
+
+    public void setCommentLogic(CommentLogic commentLogic) {
+        this.commentLogic = commentLogic;
+    }
+
+    public void setEntryLogic(EntryLogic entryLogic) {
+        this.entryLogic = entryLogic;
+    }
+
+    public void setLocale(Locale locale) {
+        this.locale = locale;
+    }
+
+    public void setNavBarRenderer(NavBarRenderer navBarRenderer) {
+        this.navBarRenderer = navBarRenderer;
+    }
+
+    public void setSite(Site site) {
+        this.site = site;
+    }
+
+    public void setUserDirectoryService(UserDirectoryService userDirectoryService) {
+        this.userDirectoryService = userDirectoryService;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
 }

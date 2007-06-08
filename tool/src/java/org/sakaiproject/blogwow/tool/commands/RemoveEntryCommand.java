@@ -9,7 +9,6 @@ public class RemoveEntryCommand {
   
   public String entryId;
   
-  
   public String execute() {
     Long id = new Long(entryId);
     entryLogic.removeEntry(id, site.getReference());

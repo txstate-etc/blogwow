@@ -33,6 +33,7 @@
       <property name="commentLogic" ref="org.sakaiproject.blogwow.logic.CommentLogic" />
       <property name="userid" ref="sakai-UserID" />
       <property name="locale" ref="requestLocale" />
+      <property name="site" ref="sakai-Site" />
       <property name="userDirectoryService" ref="org.sakaiproject.user.api.UserDirectoryService" />
 	</bean>
 
