@@ -19,113 +19,120 @@ import java.util.Date;
  * @author Sakai App Builder -AZ
  */
 public class BlogWowEntry {
-	
-	private Long id;
-	private BlogWowBlog blog;
-	private String ownerId; // Sakai userId
-	private String title;
-	private String text;
-	private String privacySetting;
-	private Date dateModified;
-	private Date dateCreated;
 
-	/**
-	 * Default constructor
-	 */
-	public BlogWowEntry() {
-	}
+    private Long id;
 
-	/**
-	 * Minimal constructor
-	 */
-	public BlogWowEntry(BlogWowBlog blog, String ownerId, String title, String text, String privacySetting, Date dateModified) {
-		this.blog = blog;
-		this.ownerId = ownerId;
-		this.title = title;
-		this.text = text;
-		this.privacySetting = privacySetting;
-		this.dateModified = dateModified;
-	}
+    private BlogWowBlog blog;
 
-	/**
-	 * Full constructor
-	 */
-	public BlogWowEntry(BlogWowBlog blog, String ownerId, String title, String text, String privacySetting, Date dateModified, Date dateCreated) {
-		this.blog = blog;
-		this.ownerId = ownerId;
-		this.title = title;
-		this.text = text;
-		this.privacySetting = privacySetting;
-		this.dateModified = dateModified;
-		this.dateCreated = dateCreated;
-	}
+    private String ownerId; // Sakai userId
 
-	/**
-	 * Getters and Setters
-	 */
-	public BlogWowBlog getBlog() {
-		return blog;
-	}
+    private String title;
 
-	public void setBlog(BlogWowBlog blog) {
-		this.blog = blog;
-	}
+    private String text;
 
-	public Date getDateCreated() {
-		return dateCreated;
-	}
+    private String privacySetting;
 
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
-	}
+    private Date dateModified;
 
-	public Date getDateModified() {
-		return dateModified;
-	}
+    private Date dateCreated;
 
-	public void setDateModified(Date dateModified) {
-		this.dateModified = dateModified;
-	}
+    /**
+     * Default constructor
+     */
+    public BlogWowEntry() {
+    }
 
-	public Long getId() {
-		return id;
-	}
+    /**
+     * Minimal constructor
+     */
+    public BlogWowEntry(BlogWowBlog blog, String ownerId, String title, String text, String privacySetting, Date dateModified) {
+        this.blog = blog;
+        this.ownerId = ownerId;
+        this.title = title;
+        this.text = text;
+        this.privacySetting = privacySetting;
+        this.dateModified = dateModified;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * Full constructor
+     */
+    public BlogWowEntry(BlogWowBlog blog, String ownerId, String title, String text, String privacySetting, Date dateModified,
+            Date dateCreated) {
+        this.blog = blog;
+        this.ownerId = ownerId;
+        this.title = title;
+        this.text = text;
+        this.privacySetting = privacySetting;
+        this.dateModified = dateModified;
+        this.dateCreated = dateCreated;
+    }
 
-	public String getPrivacySetting() {
-		return privacySetting;
-	}
+    /**
+     * Getters and Setters
+     */
+    public BlogWowBlog getBlog() {
+        return blog;
+    }
 
-	public void setPrivacySetting(String privacySetting) {
-		this.privacySetting = privacySetting;
-	}
+    public void setBlog(BlogWowBlog blog) {
+        this.blog = blog;
+    }
 
-	public String getText() {
-		return text;
-	}
+    public Date getDateCreated() {
+        return dateCreated;
+    }
 
-	public void setText(String text) {
-		this.text = text;
-	}
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public Date getDateModified() {
+        return dateModified;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public void setDateModified(Date dateModified) {
+        this.dateModified = dateModified;
+    }
 
-	public String getOwnerId() {
-		return ownerId;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setOwnerId(String ownerId) {
-		this.ownerId = ownerId;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public String getPrivacySetting() {
+        return privacySetting;
+    }
+
+    public void setPrivacySetting(String privacySetting) {
+        this.privacySetting = privacySetting;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
 
 }

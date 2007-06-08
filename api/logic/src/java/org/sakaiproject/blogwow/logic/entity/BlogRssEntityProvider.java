@@ -15,8 +15,9 @@ import org.sakaiproject.entitybroker.entityprovider.EntityProvider;
 
 /**
  * This is the interface for the blog app Logic
+ * 
  * @author Sakai App Builder -AZ
  */
 public interface BlogRssEntityProvider extends EntityProvider {
-	public final static String ENTITY_PREFIX = "blog-rss";
+    public final static String ENTITY_PREFIX = "blog-rss";
 }

@@ -12,28 +12,30 @@
 package org.sakaiproject.blogwow.model.constants;
 
 /**
- * Stores constants for use throughout the blog services, logic layer, and dao layer
- * Render constants should not be stored here
+ * Stores constants for use throughout the blog services, logic layer, and dao layer Render constants should not be stored here
  * 
  * @author Sakai App Builder -AZ
  */
 public class BlogConstants {
 
-	/**
-	 * visible to owner only 
-	 */
-	public final static String PRIVACY_PRIVATE = "private";
-	/**
-	 * visible to owner and group leader (instructor) of group related to blog
-	 */
-	public final static String PRIVACY_GROUP_LEADER = "leader";
-	/**
-	 * visible to group related to blog
-	 */
-	public final static String PRIVACY_GROUP = "group";
-	/**
-	 * visible to anyone
-	 */
-	public final static String PRIVACY_PUBLIC = "public";
+    /**
+     * visible to owner only
+     */
+    public final static String PRIVACY_PRIVATE = "private";
+
+    /**
+     * visible to owner and group leader (instructor) of group related to blog
+     */
+    public final static String PRIVACY_GROUP_LEADER = "leader";
+
+    /**
+     * visible to group related to blog
+     */
+    public final static String PRIVACY_GROUP = "group";
+
+    /**
+     * visible to anyone
+     */
+    public final static String PRIVACY_PUBLIC = "public";
 
 }

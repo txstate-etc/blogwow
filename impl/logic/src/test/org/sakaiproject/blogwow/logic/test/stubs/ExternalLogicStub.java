@@ -14,19 +14,20 @@ package org.sakaiproject.blogwow.logic.test.stubs;
 import org.sakaiproject.blogwow.logic.ExternalLogic;
 import org.sakaiproject.blogwow.logic.test.TestDataPreload;
 
-
 /**
  * Stub class for the external logic impl (for testing)
+ * 
  * @author Sakai App Builder -AZ
  */
 public class ExternalLogicStub implements ExternalLogic {
 
     /**
-     * represents the current user userId, can be changed to simulate multiple users 
+     * represents the current user userId, can be changed to simulate multiple users
      */
     public String currentUserId;
+
     /**
-     * represents the current location, can be changed to simulate multiple locations 
+     * represents the current location, can be changed to simulate multiple locations
      */
     public String currentLocationId;
 
@@ -38,107 +39,119 @@ public class ExternalLogicStub implements ExternalLogic {
         currentLocationId = TestDataPreload.LOCATION1_ID;
     }
 
-	public ExternalLogicStub() {
+    public ExternalLogicStub() {
         setDefaults();
     }
 
-    /* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#getCurrentLocationId()
-	 */
-	public String getCurrentLocationId() {
-		return currentLocationId;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.sakaiproject.blogwow.logic.ExternalLogic#getCurrentLocationId()
+     */
+    public String getCurrentLocationId() {
+        return currentLocationId;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#getLocationTitle(java.lang.String)
-	 */
-	public String getLocationTitle(String locationId) {
-		if (locationId.equals(TestDataPreload.LOCATION1_ID)) {
-			return TestDataPreload.LOCATION1_TITLE;
-		} else if (locationId.equals(TestDataPreload.LOCATION2_ID)) {
-			return TestDataPreload.LOCATION2_TITLE;
-		}
-		return "--------";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.sakaiproject.blogwow.logic.ExternalLogic#getLocationTitle(java.lang.String)
+     */
+    public String getLocationTitle(String locationId) {
+        if (locationId.equals(TestDataPreload.LOCATION1_ID)) {
+            return TestDataPreload.LOCATION1_TITLE;
+        } else if (locationId.equals(TestDataPreload.LOCATION2_ID)) {
+            return TestDataPreload.LOCATION2_TITLE;
+        }
+        return "--------";
+    }
 
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#getCurrentUserId()
-	 */
-	public String getCurrentUserId() {
-		return currentUserId;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.sakaiproject.blogwow.logic.ExternalLogic#getCurrentUserId()
+     */
+    public String getCurrentUserId() {
+        return currentUserId;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#getUserDisplayName(java.lang.String)
-	 */
-	public String getUserDisplayName(String userId) {
-		if (userId.equals(TestDataPreload.USER_ID)) {
-			return TestDataPreload.USER_DISPLAY;
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.sakaiproject.blogwow.logic.ExternalLogic#getUserDisplayName(java.lang.String)
+     */
+    public String getUserDisplayName(String userId) {
+        if (userId.equals(TestDataPreload.USER_ID)) {
+            return TestDataPreload.USER_DISPLAY;
         } else if (userId.equals(TestDataPreload.ACCESS_USER_ID)) {
             return TestDataPreload.ACCESS_USER_DISPLAY;
-		} else if (userId.equals(TestDataPreload.MAINT_USER_ID)) {
-			return TestDataPreload.MAINT_USER_DISPLAY;
-		} else if (userId.equals(TestDataPreload.ADMIN_USER_ID)) {
-			return TestDataPreload.ADMIN_USER_DISPLAY;
-		}
-		return "----------";
-	}
+        } else if (userId.equals(TestDataPreload.MAINT_USER_ID)) {
+            return TestDataPreload.MAINT_USER_DISPLAY;
+        } else if (userId.equals(TestDataPreload.ADMIN_USER_ID)) {
+            return TestDataPreload.ADMIN_USER_DISPLAY;
+        }
+        return "----------";
+    }
 
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#isUserAdmin(java.lang.String)
-	 */
-	public boolean isUserAdmin(String userId) {
-		if (userId.equals(TestDataPreload.ADMIN_USER_ID)) {
-			return true;
-		}
-		return false;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.sakaiproject.blogwow.logic.ExternalLogic#isUserAdmin(java.lang.String)
+     */
+    public boolean isUserAdmin(String userId) {
+        if (userId.equals(TestDataPreload.ADMIN_USER_ID)) {
+            return true;
+        }
+        return false;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#isUserAllowedInLocation(java.lang.String, java.lang.String, java.lang.String)
-	 */
-	public boolean isUserAllowedInLocation(String userId, String permission, String locationId) {
-		if (userId.equals(TestDataPreload.USER_ID)) {
-			if (locationId.equals(TestDataPreload.LOCATION1_ID)) {
-				if (permission.equals(BLOG_CREATE) ||
-						permission.equals(BLOG_ENTRY_WRITE) ||
-                        permission.equals(BLOG_ENTRY_READ) ||
-						permission.equals(BLOG_COMMENTS_ADD) ) {
-					return true;
-				}
-			}
-        } else if (userId.equals(TestDataPreload.ACCESS_USER_ID)) {
-                if (locationId.equals(TestDataPreload.LOCATION1_ID)) {
-                    if (permission.equals(BLOG_CREATE) ||
-                            permission.equals(BLOG_ENTRY_WRITE) ||
-                            permission.equals(BLOG_ENTRY_READ) ||
-                            permission.equals(BLOG_COMMENTS_ADD) ) {
-                        return true;
-                    }
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.sakaiproject.blogwow.logic.ExternalLogic#isUserAllowedInLocation(java.lang.String, java.lang.String, java.lang.String)
+     */
+    public boolean isUserAllowedInLocation(String userId, String permission, String locationId) {
+        if (userId.equals(TestDataPreload.USER_ID)) {
+            if (locationId.equals(TestDataPreload.LOCATION1_ID)) {
+                if (permission.equals(BLOG_CREATE) || permission.equals(BLOG_ENTRY_WRITE) || permission.equals(BLOG_ENTRY_READ)
+                        || permission.equals(BLOG_COMMENTS_ADD)) {
+                    return true;
                 }
-		} else if (userId.equals(TestDataPreload.MAINT_USER_ID)) {
-			if (locationId.equals(TestDataPreload.LOCATION1_ID)) {
-				return true; // can do anything in loc 1 (assume they have all permissions checked)
-			}
-		} else if (userId.equals(TestDataPreload.ADMIN_USER_ID)) {
-			// admin can do anything in any context
-			return true;
-		}
-		return false;
-	}
+            }
+        } else if (userId.equals(TestDataPreload.ACCESS_USER_ID)) {
+            if (locationId.equals(TestDataPreload.LOCATION1_ID)) {
+                if (permission.equals(BLOG_CREATE) || permission.equals(BLOG_ENTRY_WRITE) || permission.equals(BLOG_ENTRY_READ)
+                        || permission.equals(BLOG_COMMENTS_ADD)) {
+                    return true;
+                }
+            }
+        } else if (userId.equals(TestDataPreload.MAINT_USER_ID)) {
+            if (locationId.equals(TestDataPreload.LOCATION1_ID)) {
+                return true; // can do anything in loc 1 (assume they have all permissions checked)
+            }
+        } else if (userId.equals(TestDataPreload.ADMIN_USER_ID)) {
+            // admin can do anything in any context
+            return true;
+        }
+        return false;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#getBlogLocationRssUrl(java.lang.String)
-	 */
-	public String getBlogLocationRssUrl(String locationId) {
-		return "http://server:8080/direct/bloglocrss/123/";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.sakaiproject.blogwow.logic.ExternalLogic#getBlogLocationRssUrl(java.lang.String)
+     */
+    public String getBlogLocationRssUrl(String locationId) {
+        return "http://server:8080/direct/bloglocrss/123/";
+    }
 
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.ExternalLogic#getBlogRssUrl(java.lang.Long)
-	 */
-	public String getBlogRssUrl(Long blogId) {
-		return "http://server:8080/direct/blogrss/123/";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.sakaiproject.blogwow.logic.ExternalLogic#getBlogRssUrl(java.lang.Long)
+     */
+    public String getBlogRssUrl(Long blogId) {
+        return "http://server:8080/direct/blogrss/123/";
+    }
 
 }

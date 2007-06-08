@@ -21,140 +21,138 @@ import org.springframework.test.AbstractTransactionalSpringContextTests;
 
 /**
  * Testing for the specialized DAO methods (do not test the Generic Dao methods)
+ * 
  * @author Sakai App Builder -AZ
  */
 public class BlogWowDaoImplTest extends AbstractTransactionalSpringContextTests {
 
-	private static Log log = LogFactory.getLog(BlogWowDaoImplTest.class);
+    private static Log log = LogFactory.getLog(BlogWowDaoImplTest.class);
 
-	protected BlogWowDao dao;
+    protected BlogWowDao dao;
 
-	private TestDataPreload tdp = new TestDataPreload();
-	
-	protected String[] getConfigLocations() {
-		// point to the needed spring config files, must be on the classpath
-		// (add component/src/webapp/WEB-INF to the build path in Eclipse),
-		// they also need to be referenced in the project.xml file
-		return new String[] {"hibernate-test.xml", "spring-hibernate.xml"};
-	}
+    private TestDataPreload tdp = new TestDataPreload();
 
-	// run this before each test starts
-	protected void onSetUpBeforeTransaction() throws Exception {
-	}
+    protected String[] getConfigLocations() {
+        // point to the needed spring config files, must be on the classpath
+        // (add component/src/webapp/WEB-INF to the build path in Eclipse),
+        // they also need to be referenced in the project.xml file
+        return new String[] { "hibernate-test.xml", "spring-hibernate.xml" };
+    }
 
-	// run this before each test starts and as part of the transaction
-	protected void onSetUpInTransaction() {
-		// load the spring created dao class bean from the Spring Application Context
-		dao = (BlogWowDao) applicationContext.
-			getBean("org.sakaiproject.blogwow.dao.BlogWowDao");
-		if (dao == null) {
-			log.error("onSetUpInTransaction: DAO could not be retrieved from spring context");
-		}
+    // run this before each test starts
+    protected void onSetUpBeforeTransaction() throws Exception {
+    }
 
-		// init the class if needed
+    // run this before each test starts and as part of the transaction
+    protected void onSetUpInTransaction() {
+        // load the spring created dao class bean from the Spring Application Context
+        dao = (BlogWowDao) applicationContext.getBean("org.sakaiproject.blogwow.dao.BlogWowDao");
+        if (dao == null) {
+            log.error("onSetUpInTransaction: DAO could not be retrieved from spring context");
+        }
 
-		// check the preloaded data
+        // init the class if needed
 
-		// preload data if desired
-		tdp.preloadTestData(dao);
-	}
+        // check the preloaded data
 
+        // preload data if desired
+        tdp.preloadTestData(dao);
+    }
 
-	/**
-	 * ADD unit tests below here, use testMethod as the name of the unit test,
-	 * Note that if a method is overloaded you should include the arguments in the
-	 * test name like so: testMethodClassInt (for method(Class, int);
-	 */
+    /**
+     * ADD unit tests below here, use testMethod as the name of the unit test, Note that if a method is overloaded you should include the
+     * arguments in the test name like so: testMethodClassInt (for method(Class, int);
+     */
 
-	/**
-	 * Test method for {@link org.sakaiproject.blogwow.dao.impl.BlogWowDaoImpl#getLocationsForBlogsIds(java.lang.Long[])}.
-	 */
-	public void testGetLocationsForBlogsIds() {
-		List locs = null;
+    /**
+     * Test method for {@link org.sakaiproject.blogwow.dao.impl.BlogWowDaoImpl#getLocationsForBlogsIds(java.lang.Long[])}.
+     */
+    public void testGetLocationsForBlogsIds() {
+        List locs = null;
 
-		locs = dao.getLocationsForBlogsIds(new Long[] {tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId()});
-		assertNotNull(locs);
-		assertEquals(2, locs.size());
-		assertTrue(locs.contains(TestDataPreload.LOCATION1_ID));
-		assertTrue(locs.contains(TestDataPreload.LOCATION2_ID));
+        locs = dao.getLocationsForBlogsIds(new Long[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() });
+        assertNotNull(locs);
+        assertEquals(2, locs.size());
+        assertTrue(locs.contains(TestDataPreload.LOCATION1_ID));
+        assertTrue(locs.contains(TestDataPreload.LOCATION2_ID));
 
-		locs = dao.getLocationsForBlogsIds(new Long[] {tdp.blog1.getId()});
-		assertNotNull(locs);
-		assertEquals(1, locs.size());
-		assertTrue(locs.contains(TestDataPreload.LOCATION1_ID));
+        locs = dao.getLocationsForBlogsIds(new Long[] { tdp.blog1.getId() });
+        assertNotNull(locs);
+        assertEquals(1, locs.size());
+        assertTrue(locs.contains(TestDataPreload.LOCATION1_ID));
 
-		locs = dao.getLocationsForBlogsIds(new Long[] {tdp.blog3.getId()});
-		assertNotNull(locs);
-		assertEquals(1, locs.size());
-		assertTrue(locs.contains(TestDataPreload.LOCATION2_ID));
+        locs = dao.getLocationsForBlogsIds(new Long[] { tdp.blog3.getId() });
+        assertNotNull(locs);
+        assertEquals(1, locs.size());
+        assertTrue(locs.contains(TestDataPreload.LOCATION2_ID));
 
-		locs = dao.getLocationsForBlogsIds(new Long[] {});
-		assertNotNull(locs);
-		assertEquals(0, locs.size());
-	}
+        locs = dao.getLocationsForBlogsIds(new Long[] {});
+        assertNotNull(locs);
+        assertEquals(0, locs.size());
+    }
 
-	/**
-	 * Test method for {@link org.sakaiproject.blogwow.dao.impl.BlogWowDaoImpl#getBlogPermEntries(Long[], String, String[], String[], String, boolean, int, int)}.
-	 */
-	public void testGetBlogPermEntries() {
-		List entries = null;
+    /**
+     * Test method for
+     * {@link org.sakaiproject.blogwow.dao.impl.BlogWowDaoImpl#getBlogPermEntries(Long[], String, String[], String[], String, boolean, int, int)}.
+     */
+    public void testGetBlogPermEntries() {
+        List entries = null;
 
-		// get all public entries
-		entries = dao.getBlogPermEntries(new Long[] {tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId()}, 
-				null, null, null, null, false, 0, 0);
-		assertNotNull(entries);
-		assertEquals(2, entries.size());
-		assertTrue(entries.contains(tdp.entry1_b1));
-		assertTrue(entries.contains(tdp.entry5_b2));
+        // get all public entries
+        entries = dao.getBlogPermEntries(new Long[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() }, null, null, null, null,
+                false, 0, 0);
+        assertNotNull(entries);
+        assertEquals(2, entries.size());
+        assertTrue(entries.contains(tdp.entry1_b1));
+        assertTrue(entries.contains(tdp.entry5_b2));
 
-		// get only blog 1 public entries
-		entries = dao.getBlogPermEntries(new Long[] {tdp.blog1.getId()}, 
-				null, null, null, null, false, 0, 0);
-		assertNotNull(entries);
-		assertEquals(1, entries.size());
-		assertTrue(entries.contains(tdp.entry1_b1));
+        // get only blog 1 public entries
+        entries = dao.getBlogPermEntries(new Long[] { tdp.blog1.getId() }, null, null, null, null, false, 0, 0);
+        assertNotNull(entries);
+        assertEquals(1, entries.size());
+        assertTrue(entries.contains(tdp.entry1_b1));
 
-		// get all entries for user
-		entries = dao.getBlogPermEntries(new Long[] {tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId()}, 
-				TestDataPreload.USER_ID, new String[] {TestDataPreload.LOCATION1_ID}, null, null, false, 0, 0);
-		assertNotNull(entries);
-		assertEquals(5, entries.size());
-		assertTrue(entries.contains(tdp.entry1_b1));
-		assertTrue(entries.contains(tdp.entry2_b1));
-		assertTrue(entries.contains(tdp.entry3_b1));
-		assertTrue(entries.contains(tdp.entry4_b1));
-		assertTrue(entries.contains(tdp.entry5_b2));
+        // get all entries for user
+        entries = dao.getBlogPermEntries(new Long[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() }, TestDataPreload.USER_ID,
+                new String[] { TestDataPreload.LOCATION1_ID }, null, null, false, 0, 0);
+        assertNotNull(entries);
+        assertEquals(5, entries.size());
+        assertTrue(entries.contains(tdp.entry1_b1));
+        assertTrue(entries.contains(tdp.entry2_b1));
+        assertTrue(entries.contains(tdp.entry3_b1));
+        assertTrue(entries.contains(tdp.entry4_b1));
+        assertTrue(entries.contains(tdp.entry5_b2));
 
-		// get all entries for maint user
-		entries = dao.getBlogPermEntries(new Long[] {tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId()}, 
-				TestDataPreload.MAINT_USER_ID, new String[] {TestDataPreload.LOCATION1_ID}, 
-				new String[] {TestDataPreload.LOCATION1_ID}, null, false, 0, 0);
-		assertNotNull(entries);
-		assertEquals(5, entries.size());
-		assertTrue(entries.contains(tdp.entry1_b1));
-		assertTrue(entries.contains(tdp.entry2_b1));
-		assertTrue(entries.contains(tdp.entry3_b1));
-		assertTrue(entries.contains(tdp.entry5_b2));
-		assertTrue(entries.contains(tdp.entry6_b2));
+        // get all entries for maint user
+        entries = dao.getBlogPermEntries(new Long[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() },
+                TestDataPreload.MAINT_USER_ID, new String[] { TestDataPreload.LOCATION1_ID },
+                new String[] { TestDataPreload.LOCATION1_ID }, null, false, 0, 0);
+        assertNotNull(entries);
+        assertEquals(5, entries.size());
+        assertTrue(entries.contains(tdp.entry1_b1));
+        assertTrue(entries.contains(tdp.entry2_b1));
+        assertTrue(entries.contains(tdp.entry3_b1));
+        assertTrue(entries.contains(tdp.entry5_b2));
+        assertTrue(entries.contains(tdp.entry6_b2));
 
-		// get all entries for user with limits
-		entries = dao.getBlogPermEntries(new Long[] {tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId()}, 
-				TestDataPreload.USER_ID, new String[] {TestDataPreload.LOCATION1_ID}, null, null, false, 3, 0);
-		assertNotNull(entries);
-		assertEquals(2, entries.size());
-		assertTrue(entries.contains(tdp.entry2_b1));
-		assertTrue(entries.contains(tdp.entry1_b1));
+        // get all entries for user with limits
+        entries = dao.getBlogPermEntries(new Long[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() }, TestDataPreload.USER_ID,
+                new String[] { TestDataPreload.LOCATION1_ID }, null, null, false, 3, 0);
+        assertNotNull(entries);
+        assertEquals(2, entries.size());
+        assertTrue(entries.contains(tdp.entry2_b1));
+        assertTrue(entries.contains(tdp.entry1_b1));
 
-		entries = dao.getBlogPermEntries(new Long[] {tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId()}, 
-				TestDataPreload.USER_ID, new String[] {TestDataPreload.LOCATION1_ID}, null, null, false, 2, 2);
-		assertNotNull(entries);
-		assertEquals(2, entries.size());
-		assertTrue(entries.contains(tdp.entry3_b1));
-		assertTrue(entries.contains(tdp.entry2_b1));
+        entries = dao.getBlogPermEntries(new Long[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() }, TestDataPreload.USER_ID,
+                new String[] { TestDataPreload.LOCATION1_ID }, null, null, false, 2, 2);
+        assertNotNull(entries);
+        assertEquals(2, entries.size());
+        assertTrue(entries.contains(tdp.entry3_b1));
+        assertTrue(entries.contains(tdp.entry2_b1));
 
-	}
+    }
 
-	/**
-	 * Add anything that supports the unit tests below here
-	 */
+    /**
+     * Add anything that supports the unit tests below here
+     */
 }

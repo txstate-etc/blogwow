@@ -20,146 +20,156 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
- * Test class for the Sakai User object<br/>
- * This has to be here since I cannot create a User object in Sakai for some 
- * reason... sure would be nice if I could though -AZ
+ * Test class for the Sakai User object<br/> This has to be here since I cannot create a User object in Sakai for some reason... sure would
+ * be nice if I could though -AZ
+ * 
  * @author Sakai App Builder -AZ
  */
 public class TestUser implements User {
-	private String userId;
-	private String userEid = "fakeEid";
-	private String displayName = "Fake DisplayName";
+    private String userId;
 
-	/**
-	 * Construct an empty test user with an id set
-	 * @param userId a id string
-	 */
-	public TestUser(String userId) {
-		this.userId = userId;
-	}
+    private String userEid = "fakeEid";
 
-	/**
-	 * Construct an empty test user with an id and eid set
-	 * @param userId a id string
-	 * @param userEid a username string
-	 */
-	public TestUser(String userId, String userEid) {
-		this.userId = userId;
-		this.userEid = userEid;
-	}
+    private String displayName = "Fake DisplayName";
 
-	/**
-	 * Construct an empty test user with an id and eid set
-	 * @param userId a id string
-	 * @param userEid a username string
-	 * @param displayName a user display name
-	 */
-	public TestUser(String userId, String userEid, String displayName) {
-		this.userId = userId;
-		this.userEid = userEid;
-		this.displayName = displayName;
-	}
+    /**
+     * Construct an empty test user with an id set
+     * 
+     * @param userId
+     *            a id string
+     */
+    public TestUser(String userId) {
+        this.userId = userId;
+    }
 
+    /**
+     * Construct an empty test user with an id and eid set
+     * 
+     * @param userId
+     *            a id string
+     * @param userEid
+     *            a username string
+     */
+    public TestUser(String userId, String userEid) {
+        this.userId = userId;
+        this.userEid = userEid;
+    }
 
-	public boolean checkPassword(String pw) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    /**
+     * Construct an empty test user with an id and eid set
+     * 
+     * @param userId
+     *            a id string
+     * @param userEid
+     *            a username string
+     * @param displayName
+     *            a user display name
+     */
+    public TestUser(String userId, String userEid, String displayName) {
+        this.userId = userId;
+        this.userEid = userEid;
+        this.displayName = displayName;
+    }
 
-	public User getCreatedBy() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public boolean checkPassword(String pw) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 
-	public String getDisplayId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public User getCreatedBy() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	public String getDisplayName() {
-		return this.displayName;
-	}
+    public String getDisplayId() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	public String getEid() {
-		return this.userEid;
-	}
+    public String getDisplayName() {
+        return this.displayName;
+    }
 
-	public String getEmail() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public String getEid() {
+        return this.userEid;
+    }
 
-	public String getFirstName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public String getEmail() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	public String getLastName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public String getFirstName() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	public User getModifiedBy() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public String getLastName() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	public String getSortName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public User getModifiedBy() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public String getSortName() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	public String getId() {
-		return userId;
-	}
+    public String getType() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	public ResourceProperties getProperties() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public String getId() {
+        return userId;
+    }
 
-	public String getReference() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public ResourceProperties getProperties() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	public String getReference(String rootProperty) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public String getReference() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	public String getUrl() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public String getReference(String rootProperty) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	public String getUrl(String rootProperty) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public String getUrl() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	public Element toXml(Document doc, Stack stack) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public String getUrl(String rootProperty) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	public int compareTo(Object arg0) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    public Element toXml(Document doc, Stack stack) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	public Time getCreatedTime() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public int compareTo(Object arg0) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 
-	public Time getModifiedTime() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public Time getCreatedTime() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public Time getModifiedTime() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

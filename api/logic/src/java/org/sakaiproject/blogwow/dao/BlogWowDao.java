@@ -19,35 +19,45 @@ import org.sakaiproject.blogwow.model.constants.BlogConstants;
 import org.sakaiproject.genericdao.api.CompleteGenericDao;
 
 /**
- * This is a specialized DAO that allows the developer to extend
- * the functionality of the generic dao package
+ * This is a specialized DAO that allows the developer to extend the functionality of the generic dao package
+ * 
  * @author Sakai App Builder -AZ
  */
 public interface BlogWowDao extends CompleteGenericDao {
 
-	/**
-	 * Get a list of unique locations from an array of blogIds
-	 * @param blogIds an array of unique ids of {@link BlogWowBlog}
-	 * @return a list of unique {@link String}s which represent locations
-	 */
-	public List getLocationsForBlogsIds(Long[] blogIds);
+    /**
+     * Get a list of unique locations from an array of blogIds
+     * 
+     * @param blogIds
+     *            an array of unique ids of {@link BlogWowBlog}
+     * @return a list of unique {@link String}s which represent locations
+     */
+    public List getLocationsForBlogsIds(Long[] blogIds);
 
-	/**
-	 * Get blog entries efficiently using sakai permissions
-	 * @param blogIds an array of unique ids of {@link BlogWowBlog} which we will return entries from
-	 * @param userId the internal user id (not username), if null then return public entries
-	 * @param readLocations an array of locationIds which we will return all privacy {@link BlogConstants#PRIVACY_GROUP} entries for
-	 * (the user should have read permissions in these locations)
-	 * @param readAnyLocations an array of locationIds which we will return all privacy {@link BlogConstants#PRIVACY_GROUP_LEADER} entries for
-	 * (the user should have read all entries access to these locations)
-	 * @param sortProperty the name of the {@link BlogWowEntry} property to sort on
-	 * or null to sort by default property (dateCreated desc)
-	 * @param ascending sort in ascending order, if false then descending (ignored if sortProperty is null)
-	 * @param start the entry number to start on (based on current sort rules), first entry is 0
-	 * @param limit the maximum number of entries to return, 0 returns as many entries as possible
-	 * @return a list of {@link BlogWowEntry} objects
-	 */
-	public List getBlogPermEntries(Long[] blogIds, String userId, String[] readLocations, String[] readAnyLocations,
-			String sortProperty, boolean ascending, int start, int limit);
+    /**
+     * Get blog entries efficiently using sakai permissions
+     * 
+     * @param blogIds
+     *            an array of unique ids of {@link BlogWowBlog} which we will return entries from
+     * @param userId
+     *            the internal user id (not username), if null then return public entries
+     * @param readLocations
+     *            an array of locationIds which we will return all privacy {@link BlogConstants#PRIVACY_GROUP} entries for (the user should
+     *            have read permissions in these locations)
+     * @param readAnyLocations
+     *            an array of locationIds which we will return all privacy {@link BlogConstants#PRIVACY_GROUP_LEADER} entries for (the user
+     *            should have read all entries access to these locations)
+     * @param sortProperty
+     *            the name of the {@link BlogWowEntry} property to sort on or null to sort by default property (dateCreated desc)
+     * @param ascending
+     *            sort in ascending order, if false then descending (ignored if sortProperty is null)
+     * @param start
+     *            the entry number to start on (based on current sort rules), first entry is 0
+     * @param limit
+     *            the maximum number of entries to return, 0 returns as many entries as possible
+     * @return a list of {@link BlogWowEntry} objects
+     */
+    public List getBlogPermEntries(Long[] blogIds, String userId, String[] readLocations, String[] readAnyLocations, String sortProperty,
+            boolean ascending, int start, int limit);
 
 }

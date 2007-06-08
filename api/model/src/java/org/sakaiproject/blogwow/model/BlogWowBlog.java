@@ -20,103 +20,109 @@ import java.util.Date;
  */
 public class BlogWowBlog {
 
-	private Long id;
-	private String ownerId; // Sakai userId
-	private String location; // Sakai entity reference
-	private String title;
-	private String profile;
-	private String imageUrl;
-	private Date dateCreated;
+    private Long id;
+
+    private String ownerId; // Sakai userId
+
+    private String location; // Sakai entity reference
+
+    private String title;
+
+    private String profile;
+
+    private String imageUrl;
+
+    private Date dateCreated;
+
     private String icon;
 
     /**
-	 * Default constructor
-	 */
-	public BlogWowBlog() {
-	}
+     * Default constructor
+     */
+    public BlogWowBlog() {
+    }
 
-	/**
-	 * Minimal constructor
-	 */
-	public BlogWowBlog(String ownerId, String location, String title) {
-		this.ownerId = ownerId;
-		this.location = location;
-		this.title = title;
-	}
+    /**
+     * Minimal constructor
+     */
+    public BlogWowBlog(String ownerId, String location, String title) {
+        this.ownerId = ownerId;
+        this.location = location;
+        this.title = title;
+    }
 
-	/**
-	 * Full constructor
-	 */
-	public BlogWowBlog(String ownerId, String location, String title, String profile, String imageUrl, Date dateCreated, String icon) {
-		this.ownerId = ownerId;
-		this.location = location;
-		this.title = title;
-		this.profile = profile;
-		this.imageUrl = imageUrl;
-		this.dateCreated = dateCreated;
+    /**
+     * Full constructor
+     */
+    public BlogWowBlog(String ownerId, String location, String title, String profile, String imageUrl, Date dateCreated, String icon) {
+        this.ownerId = ownerId;
+        this.location = location;
+        this.title = title;
+        this.profile = profile;
+        this.imageUrl = imageUrl;
+        this.dateCreated = dateCreated;
         this.icon = icon;
-	}
+    }
 
+    /**
+     * Getters and Setters
+     */
 
-	/**
-	 * Getters and Setters
-	 */
+    public Date getDateCreated() {
+        return dateCreated;
+    }
 
-	public Date getDateCreated() {
-		return dateCreated;
-	}
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
 
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
-	public String getImageUrl() {
-		return imageUrl;
-	}
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
+    public String getOwnerId() {
+        return ownerId;
+    }
 
-	public String getOwnerId() {
-		return ownerId;
-	}
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
 
-	public void setOwnerId(String ownerId) {
-		this.ownerId = ownerId;
-	}
+    public String getProfile() {
+        return profile;
+    }
 
-	public String getProfile() {
-		return profile;
-	}
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
 
-	public void setProfile(String profile) {
-		this.profile = profile;
-	}
+    public String getLocation() {
+        return location;
+    }
 
-	public String getLocation() {
-		return location;
-	}
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
-	public void setLocation(String location) {
-		this.location = location;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getIcon() {
         return icon;

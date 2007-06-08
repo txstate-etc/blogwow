@@ -19,91 +19,95 @@ import java.util.Date;
  * @author Sakai App Builder -AZ
  */
 public class BlogWowComment {
-	
-	private Long id;
-	private BlogWowEntry entry;
-	private String ownerId; // Sakai userId
-	private String text;
-	private Date dateModified;
-	private Date dateCreated;
 
-	/**
-	 * Default constructor
-	 */
-	public BlogWowComment() {
-	}
+    private Long id;
 
-	/**
-	 * Minimal constructor
-	 */
-	public BlogWowComment(BlogWowEntry entry, String ownerId, String text, Date dateModified) {
-		this.entry = entry;
-		this.ownerId = ownerId;
-		this.text = text;
-		this.dateModified = dateModified;
-	}
+    private BlogWowEntry entry;
 
-	/**
-	 * Full constructor
-	 */
-	public BlogWowComment(BlogWowEntry entry, String ownerId, String text, Date dateModified, Date dateCreated) {
-		this.entry = entry;
-		this.ownerId = ownerId;
-		this.text = text;
-		this.dateModified = dateModified;
-		this.dateCreated = dateCreated;
-	}
+    private String ownerId; // Sakai userId
 
-	/**
-	 * Getters and Setters
-	 */
-	public Date getDateCreated() {
-		return dateCreated;
-	}
+    private String text;
 
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
-	}
+    private Date dateModified;
 
-	public Date getDateModified() {
-		return dateModified;
-	}
+    private Date dateCreated;
 
-	public void setDateModified(Date dateModified) {
-		this.dateModified = dateModified;
-	}
+    /**
+     * Default constructor
+     */
+    public BlogWowComment() {
+    }
 
-	public BlogWowEntry getEntry() {
-		return entry;
-	}
+    /**
+     * Minimal constructor
+     */
+    public BlogWowComment(BlogWowEntry entry, String ownerId, String text, Date dateModified) {
+        this.entry = entry;
+        this.ownerId = ownerId;
+        this.text = text;
+        this.dateModified = dateModified;
+    }
 
-	public void setEntry(BlogWowEntry entry) {
-		this.entry = entry;
-	}
+    /**
+     * Full constructor
+     */
+    public BlogWowComment(BlogWowEntry entry, String ownerId, String text, Date dateModified, Date dateCreated) {
+        this.entry = entry;
+        this.ownerId = ownerId;
+        this.text = text;
+        this.dateModified = dateModified;
+        this.dateCreated = dateCreated;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    /**
+     * Getters and Setters
+     */
+    public Date getDateCreated() {
+        return dateCreated;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
 
-	public String getText() {
-		return text;
-	}
+    public Date getDateModified() {
+        return dateModified;
+    }
 
-	public void setText(String text) {
-		this.text = text;
-	}
+    public void setDateModified(Date dateModified) {
+        this.dateModified = dateModified;
+    }
 
-	public String getOwnerId() {
-		return ownerId;
-	}
+    public BlogWowEntry getEntry() {
+        return entry;
+    }
 
-	public void setOwnerId(String ownerId) {
-		this.ownerId = ownerId;
-	}
+    public void setEntry(BlogWowEntry entry) {
+        this.entry = entry;
+    }
 
-	
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
+
 }

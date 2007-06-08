@@ -34,80 +34,85 @@ import org.sakaiproject.genericdao.api.finders.ByPropsFinder;
 
 /**
  * Implementation
+ * 
  * @author Sakai App Builder -AZ
  */
 public class EntryLogicImpl implements EntryLogic {
 
-	private static Log log = LogFactory.getLog(EntryLogicImpl.class);
+    private static Log log = LogFactory.getLog(EntryLogicImpl.class);
 
-	private ExternalLogic externalLogic;
-	public void setExternalLogic(ExternalLogic externalLogic) {
-		this.externalLogic = externalLogic;
-	}
+    private ExternalLogic externalLogic;
 
-	private BlogWowDao dao;
-	public void setDao(BlogWowDao dao) {
-		this.dao = dao;
-	}
+    public void setExternalLogic(ExternalLogic externalLogic) {
+        this.externalLogic = externalLogic;
+    }
 
+    private BlogWowDao dao;
 
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.EntryLogic#getAllVisibleEntries(java.lang.Long, java.lang.String, java.lang.String, boolean, int, int)
-	 */
-	public List<BlogWowEntry> getAllVisibleEntries(Long blogId, String userId, String sortProperty, boolean ascending, int start,
-			int limit) {
-		return getAllVisibleEntries(new Long[] {blogId}, userId, sortProperty, ascending, start, limit);
-	}
+    public void setDao(BlogWowDao dao) {
+        this.dao = dao;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.blogwow.logic.EntryLogic#getAllVisibleEntries(java.lang.Long[], java.lang.String, java.lang.String, boolean, int, int)
-	 */
-	@SuppressWarnings("unchecked")
-	public List<BlogWowEntry> getAllVisibleEntries(Long[] blogIds, String userId, String sortProperty, boolean ascending, int start,
-			int limit) {
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.sakaiproject.blogwow.logic.EntryLogic#getAllVisibleEntries(java.lang.Long, java.lang.String, java.lang.String, boolean, int,
+     *      int)
+     */
+    public List<BlogWowEntry> getAllVisibleEntries(Long blogId, String userId, String sortProperty, boolean ascending, int start, int limit) {
+        return getAllVisibleEntries(new Long[] { blogId }, userId, sortProperty, ascending, start, limit);
+    }
 
-		if (sortProperty == null) {
-			sortProperty = "dateCreated";
-			ascending = false;
-		}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.sakaiproject.blogwow.logic.EntryLogic#getAllVisibleEntries(java.lang.Long[], java.lang.String, java.lang.String, boolean,
+     *      int, int)
+     */
+    @SuppressWarnings("unchecked")
+    public List<BlogWowEntry> getAllVisibleEntries(Long[] blogIds, String userId, String sortProperty, boolean ascending, int start,
+            int limit) {
 
-		if (! ascending) {
-			sortProperty += ByPropsFinder.DESC;
-		}
+        if (sortProperty == null) {
+            sortProperty = "dateCreated";
+            ascending = false;
+        }
 
-		List l = new ArrayList();
-		if ( externalLogic.isUserAdmin(userId) ) {
-			// get all entries for a set of blogs
-			l = dao.findByProperties(BlogWowEntry.class, 
-					new String[] {"blog.id"}, 
-					new Object[] {blogIds},
-					new int[] {ByPropsFinder.EQUALS},
-					new String[] {sortProperty},
-					start, limit);
-		} else {
-			List locations = dao.getLocationsForBlogsIds(blogIds);
-			// check current user perms on these locations to form lists of locations related to this users access
-			List<String> readLocations = new ArrayList<String>(); // holds the locations where user has read perms
-			List<String> readAnyLocations = new ArrayList<String>(); // holds the locations where user has read any perms
-			for (Iterator iter = locations.iterator(); iter.hasNext();) {
-				String location = (String) iter.next();
-				if (externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_READ_ANY, location)) {
-					readAnyLocations.add(location);
-					readLocations.add(location);
-				} else if (externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_READ, location)) {
-					readLocations.add(location);
-				}
-			}
-			String[] readLocsArray = (String[]) readLocations.toArray(new String[] {});
-			String[] readAnyLocsArray = (String[]) readAnyLocations.toArray(new String[] {});
+        if (!ascending) {
+            sortProperty += ByPropsFinder.DESC;
+        }
 
-			l = dao.getBlogPermEntries(blogIds, userId, readLocsArray, readAnyLocsArray, sortProperty, ascending, start, limit);
-		}
+        List l = new ArrayList();
+        if (externalLogic.isUserAdmin(userId)) {
+            // get all entries for a set of blogs
+            l = dao.findByProperties(BlogWowEntry.class, new String[] { "blog.id" }, new Object[] { blogIds },
+                    new int[] { ByPropsFinder.EQUALS }, new String[] { sortProperty }, start, limit);
+        } else {
+            List locations = dao.getLocationsForBlogsIds(blogIds);
+            // check current user perms on these locations to form lists of locations related to this users access
+            List<String> readLocations = new ArrayList<String>(); // holds the locations where user has read perms
+            List<String> readAnyLocations = new ArrayList<String>(); // holds the locations where user has read any perms
+            for (Iterator iter = locations.iterator(); iter.hasNext();) {
+                String location = (String) iter.next();
+                if (externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_READ_ANY, location)) {
+                    readAnyLocations.add(location);
+                    readLocations.add(location);
+                } else if (externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_READ, location)) {
+                    readLocations.add(location);
+                }
+            }
+            String[] readLocsArray = (String[]) readLocations.toArray(new String[] {});
+            String[] readAnyLocsArray = (String[]) readAnyLocations.toArray(new String[] {});
 
-		return l;
-	}
+            l = dao.getBlogPermEntries(blogIds, userId, readLocsArray, readAnyLocsArray, sortProperty, ascending, start, limit);
+        }
 
-    /* (non-Javadoc)
+        return l;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.sakaiproject.blogwow.logic.EntryLogic#getEntryById(java.lang.Long, java.lang.String)
      */
     public BlogWowEntry getEntryById(Long entryId, String locationId) {
@@ -119,20 +124,25 @@ public class EntryLogicImpl implements EntryLogic {
         } else if (entry.getOwnerId().equals(currentUserId)) {
             // owner can access from anywhere
             return entry;
-        } else if ( locationId.equals(entry.getBlog().getLocation()) ) {
-            if ( BlogConstants.PRIVACY_GROUP.equals(entry.getPrivacySetting()) &&
-                    externalLogic.isUserAllowedInLocation(currentUserId, ExternalLogic.BLOG_ENTRY_READ, locationId) ) {
+        } else if (BlogConstants.PRIVACY_PUBLIC.equals(entry.getPrivacySetting())) {
+            return entry;
+        } else if (locationId.equals(entry.getBlog().getLocation())) {
+            if (BlogConstants.PRIVACY_GROUP.equals(entry.getPrivacySetting())
+                    && externalLogic.isUserAllowedInLocation(currentUserId, ExternalLogic.BLOG_ENTRY_READ, locationId)) {
                 return entry;
-            } else if ( (BlogConstants.PRIVACY_GROUP.equals(entry.getPrivacySetting()) ||
-                    BlogConstants.PRIVACY_GROUP_LEADER.equals(entry.getPrivacySetting()) ) &&
-                        externalLogic.isUserAllowedInLocation(currentUserId, ExternalLogic.BLOG_ENTRY_READ_ANY, locationId) ) {
+            } else if ((BlogConstants.PRIVACY_GROUP.equals(entry.getPrivacySetting()) || BlogConstants.PRIVACY_GROUP_LEADER.equals(entry
+                    .getPrivacySetting()))
+                    && externalLogic.isUserAllowedInLocation(currentUserId, ExternalLogic.BLOG_ENTRY_READ_ANY, locationId)) {
                 return entry;
             }
         }
-        throw new SecurityException("User ("+currentUserId+") cannot access this entry ("+entryId+") in this location ("+locationId+")");
+        throw new SecurityException("User (" + currentUserId + ") cannot access this entry (" + entryId + ") in this location ("
+                + locationId + ")");
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.sakaiproject.blogwow.logic.EntryLogic#removeEntry(java.lang.Long, java.lang.String)
      */
     @SuppressWarnings("unchecked")
@@ -140,9 +150,7 @@ public class EntryLogicImpl implements EntryLogic {
         String currentUserId = externalLogic.getCurrentUserId();
         BlogWowEntry entry = getEntryById(entryId, locationId);
         if (canWriteEntry(entryId, currentUserId)) {
-            List l = dao.findByProperties(BlogWowComment.class, 
-                    new String[] {"entry.id"}, 
-                    new Object[] {entryId});
+            List l = dao.findByProperties(BlogWowComment.class, new String[] { "entry.id" }, new Object[] { entryId });
             if (l.size() == 0) {
                 dao.delete(entry);
             } else {
@@ -156,34 +164,39 @@ public class EntryLogicImpl implements EntryLogic {
                 entitySets[1] = new HashSet<BlogWowEntry>();
                 entitySets[1].add(entry);
 
-                dao.deleteMixedSet(entitySets);         
+                dao.deleteMixedSet(entitySets);
             }
+        } else {
+            throw new SecurityException(currentUserId + " cannot remove this entry (" + entryId + ") in location: " + locationId);
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.sakaiproject.blogwow.logic.EntryLogic#saveEntry(org.sakaiproject.blogwow.model.BlogWowEntry, java.lang.String)
      */
     public void saveEntry(BlogWowEntry entry, String locationId) {
         entry.setDateModified(new Date());
         // set the owner to current if not set
         if (entry.getOwnerId() == null) {
-            entry.setOwnerId( externalLogic.getCurrentUserId() );
+            entry.setOwnerId(externalLogic.getCurrentUserId());
         }
         if (entry.getDateCreated() == null) {
-            entry.setDateCreated( new Date() );
+            entry.setDateCreated(new Date());
         }
         // save entry if new OR check if the current user can update the existing item
-        if ( canWriteEntry(entry.getId(), externalLogic.getCurrentUserId()) ) {
+        if (canWriteEntry(entry.getId(), externalLogic.getCurrentUserId())) {
             dao.save(entry);
             log.info("Saving entry: " + entry.getId() + ":" + entry.getText());
         } else {
-            throw new SecurityException("Current user cannot save entry " + 
-                    entry.getId() + " because they do not have permission");
+            throw new SecurityException("Current user cannot save entry " + entry.getId() + " because they do not have permission");
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.sakaiproject.blogwow.logic.EntryLogic#canWriteEntry(java.lang.Long, java.lang.String)
      */
     public boolean canWriteEntry(Long entryId, String userId) {
@@ -192,21 +205,21 @@ public class EntryLogicImpl implements EntryLogic {
             throw new IllegalArgumentException("blog entry id is invalid: " + entryId);
         }
 
-        if ( externalLogic.isUserAdmin(userId) ) {
+        if (externalLogic.isUserAdmin(userId)) {
             // the system super user can write
             return true;
         }
 
         BlogWowBlog blog = entry.getBlog();
-        if (blog.getOwnerId().equals( userId ) &&
-                externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_WRITE, blog.getLocation()) ) {
+        if (blog.getOwnerId().equals(userId)
+                && externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_WRITE, blog.getLocation())) {
             // blog owner can write
             return true;
-        } else if (entry.getOwnerId().equals( userId ) &&
-                externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_WRITE, blog.getLocation()) ) {
+        } else if (entry.getOwnerId().equals(userId)
+                && externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_WRITE, blog.getLocation())) {
             // entry owner can write
             return true;
-        } else if ( externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_WRITE_ANY, blog.getLocation()) ) {
+        } else if (externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_WRITE_ANY, blog.getLocation())) {
             // users with permission in the specified location can write for that location
             return true;
         }

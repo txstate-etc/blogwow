@@ -18,60 +18,82 @@ import org.sakaiproject.blogwow.model.BlogWowEntry;
 
 /**
  * Logic for handling blog comments
+ * 
  * @author Sakai App Builder -AZ
  */
 public interface CommentLogic {
 
-	/**
-	 * Get a blog comment by its unique id
-	 * @param commentId a unique id for a {@link BlogWowComment}
-     * @param locationId a unique id which represents the current location of the user (entity reference)
-	 * @return a blog comment or null if not found
-	 */
-	public BlogWowComment getCommentById(Long commentId, String locationId);
+    /**
+     * Get a blog comment by its unique id
+     * 
+     * @param commentId
+     *            a unique id for a {@link BlogWowComment}
+     * @param locationId
+     *            a unique id which represents the current location of the user (entity reference)
+     * @return a blog comment or null if not found
+     */
+    public BlogWowComment getCommentById(Long commentId, String locationId);
 
-	/**
-	 * Create a comment
-     * @param locationId a unique id which represents the current location of the user (entity reference)
-	 * @param comment a blog comment
-	 */
-	public void saveComment(BlogWowComment comment, String locationId);
+    /**
+     * Create a comment if the current user is allowed to and it is new (changing existing comments is not allowed)
+     * 
+     * @param comment
+     *            a blog comment
+     * @param locationId
+     *            a unique id which represents the current location of the user (entity reference)
+     */
+    public void saveComment(BlogWowComment comment, String locationId);
 
-	/**
-	 * Remove a blog comment
-     * @param locationId a unique id which represents the current location of the user (entity reference)
-	 * @param commentId a unique id for a {@link BlogWowComment}
-	 */
-	public void removeComment(Long commentId, String locationId);
+    /**
+     * Remove a blog comment if the current user is allowed to
+     * 
+     * @see #canRemoveComment(Long, String)
+     * @param commentId
+     *            a unique id for a {@link BlogWowComment}
+     * @param locationId
+     *            a unique id which represents the current location of the user (entity reference)
+     */
+    public void removeComment(Long commentId, String locationId);
 
-	/**
+    /**
      * Gets the comments for an entry (only readable if the entry is readable)
-	 * @param entryId a unique id for a {@link BlogWowEntry}
-	 * @param sortProperty the name of the {@link BlogWowEntry} property to sort on
-	 * or null to sort by default property (dateCreated desc)
-	 * @param ascending sort in ascending order, if false then descending (ignored if sortProperty is null)
-	 * @param start the entry number to start on (based on current sort rules), first entry is 0
-	 * @param limit the maximum number of entries to return, 0 returns as many entries as possible
-	 * @return a list of {@link BlogWowComment} objects
-	 */
-	public List<BlogWowComment> getComments(Long entryId, String sortProperty, boolean ascending, int start, int limit);
+     * 
+     * @param entryId
+     *            a unique id for a {@link BlogWowEntry}
+     * @param sortProperty
+     *            the name of the {@link BlogWowEntry} property to sort on or null to sort by default property (dateCreated desc)
+     * @param ascending
+     *            sort in ascending order, if false then descending (ignored if sortProperty is null)
+     * @param start
+     *            the entry number to start on (based on current sort rules), first entry is 0
+     * @param limit
+     *            the maximum number of entries to return, 0 returns as many entries as possible
+     * @return a list of {@link BlogWowComment} objects
+     */
+    public List<BlogWowComment> getComments(Long entryId, String sortProperty, boolean ascending, int start, int limit);
 
     // PERMISSIONS
 
-	/**
-	 * Check if a user can remove a blog comment
-	 * @param commentId a unique id for a {@link BlogWowComment}
-	 * @param userId the internal user id (not username)
-	 * @return true if the user can remove this comment, false otherwise
-	 */
-	public boolean canRemoveComment(Long commentId, String userId);
+    /**
+     * Check if a user can remove a blog comment, only super admins and users with the remove any permission are allowed
+     * 
+     * @param commentId
+     *            a unique id for a {@link BlogWowComment}
+     * @param userId
+     *            the internal user id (not username)
+     * @return true if the user can remove this comment, false otherwise
+     */
+    public boolean canRemoveComment(Long commentId, String userId);
 
-	/**
-	 * Check if a user can add a comment to a blog
-	 * @param entryId a unique id for a {@link BlogWowEntry}
-	 * @param userId the internal user id (not username)
-	 * @return true if they can add a comment, false otherwise
-	 */
-	public boolean canAddComment(Long entryId, String userId);
+    /**
+     * Check if a user can add a comment to a blog, owners can always add comments to their blogs and anyone with the add comment permission
+     * 
+     * @param entryId
+     *            a unique id for a {@link BlogWowEntry}
+     * @param userId
+     *            the internal user id (not username)
+     * @return true if they can add a comment, false otherwise
+     */
+    public boolean canAddComment(Long entryId, String userId);
 
 }
