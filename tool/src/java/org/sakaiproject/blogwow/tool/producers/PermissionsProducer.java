@@ -14,12 +14,14 @@ import uk.org.ponder.rsf.components.UICommand;
 import uk.org.ponder.rsf.components.UIContainer;
 import uk.org.ponder.rsf.components.UIOutput;
 import uk.org.ponder.rsf.flow.jsfnav.NavigationCase;
+import uk.org.ponder.rsf.flow.jsfnav.NavigationCaseReporter;
 import uk.org.ponder.rsf.view.ComponentChecker;
 import uk.org.ponder.rsf.view.ViewComponentProducer;
 import uk.org.ponder.rsf.viewstate.SimpleViewParameters;
 import uk.org.ponder.rsf.viewstate.ViewParameters;
+import uk.org.ponder.rsf.viewstate.ViewParamsReporter;
 
-public class PermissionsProducer implements ViewComponentProducer {
+public class PermissionsProducer implements ViewComponentProducer, ViewParamsReporter, NavigationCaseReporter {
 	public static final String HELPER = "sakai.permissions.helper";
 	public static final String VIEWID = "Permissions";
 
