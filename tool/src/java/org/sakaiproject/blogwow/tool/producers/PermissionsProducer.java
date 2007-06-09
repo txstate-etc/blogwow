@@ -21,6 +21,9 @@ import uk.org.ponder.rsf.viewstate.SimpleViewParameters;
 import uk.org.ponder.rsf.viewstate.ViewParameters;
 import uk.org.ponder.rsf.viewstate.ViewParamsReporter;
 
+/* This producer is responsible for calling the Permissions helper from Sakai.
+ * 
+ */
 public class PermissionsProducer implements ViewComponentProducer, ViewParamsReporter, NavigationCaseReporter {
 	public static final String HELPER = "sakai.permissions.helper";
 	public static final String VIEWID = "Permissions";

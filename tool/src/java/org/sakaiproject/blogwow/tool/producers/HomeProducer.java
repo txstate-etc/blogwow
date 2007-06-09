@@ -7,6 +7,7 @@ import java.util.Locale;
 
 import org.sakaiproject.blogwow.logic.BlogLogic;
 import org.sakaiproject.blogwow.logic.EntryLogic;
+import org.sakaiproject.blogwow.logic.ExternalLogic;
 import org.sakaiproject.blogwow.model.BlogWowBlog;
 import org.sakaiproject.blogwow.model.BlogWowEntry;
 import org.sakaiproject.blogwow.tool.beans.MugshotGenerator;
@@ -38,6 +39,7 @@ DefaultView
     private String userid;
     private Locale locale;
     private MugshotGenerator mugshotGenerator;
+    private ExternalLogic externalLogic;
 
     public String getViewID() {
         return VIEWID;
@@ -78,7 +80,8 @@ DefaultView
                 // TODO - why is this here? -AZ
                 UIOutput.make(row, "time-last-updated", "");
             }
-            UIInternalLink.make(row, "rss-link", new BlogParams(BlogRSSProducer.VIEWID, blog.getId().toString()));
+            // UIInternalLink.make(row, "rss-link", new BlogParams(BlogRSSProducer.VIEWID, blog.getId().toString()));
+            UILink.make(row, "rss-link", externalLogic.getBlogRssUrl(blog.getId()));
         }
 
     }
@@ -109,6 +112,10 @@ DefaultView
 
     public void setUserid(String userid) {
         this.userid = userid;
+    }
+
+    public void setExternalLogic(ExternalLogic externalLogic) {
+        this.externalLogic = externalLogic;
     }
 
 }

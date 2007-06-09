@@ -46,6 +46,6 @@ public class BlogParams extends SimpleViewParameters {
   }
   
   public String getParseSpec() {
-    return super.getParseSpec() + ",blogid,entryid,showcomments";
+    return super.getParseSpec() + ",blogid,entryid,showcomments,addcomment";
   }
 }

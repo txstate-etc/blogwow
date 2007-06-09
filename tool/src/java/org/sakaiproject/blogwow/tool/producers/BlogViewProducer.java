@@ -138,7 +138,7 @@ ViewParamsReporter, NavigationCaseReporter {
             }
             
             // Render Leave Comment if comments are visible
-            if (params.showcomments) {
+            if (params.addcomment) {
                 UIOutput.make(entrydiv, "add-comment-div");
                 UIForm addCommentForm = UIForm.make(entrydiv, "add-comment-form");
                 UIMessage.make(entrydiv, "add-comment-header", "blogwow.comments.addcommenttitle");

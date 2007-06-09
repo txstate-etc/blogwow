@@ -45,6 +45,7 @@
 		<property name="site" ref="sakai-Site" />
 		<property name="locale" ref="requestLocale" />
         <property name="mugshotGenerator" ref="MugshotGenerator" />
+        <property name="externalLogic" ref="org.sakaiproject.blogwow.logic.ExternalLogic" />
 	</bean>
 
 	<bean class="org.sakaiproject.blogwow.tool.producers.MySettingsProducer">
