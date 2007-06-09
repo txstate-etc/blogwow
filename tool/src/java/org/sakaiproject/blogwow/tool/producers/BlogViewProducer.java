@@ -142,11 +142,17 @@ ViewParamsReporter, NavigationCaseReporter {
                 UIOutput.make(entrydiv, "add-comment-div");
                 UIForm addCommentForm = UIForm.make(entrydiv, "add-comment-form");
                 UIMessage.make(entrydiv, "add-comment-header", "blogwow.comments.addcommenttitle");
-                UIInput.make(addCommentForm, "comment-text", "CommentLocator.NEW.text", "");
+                UIInput commentInput = UIInput.make(addCommentForm, "comment-text", "CommentLocator.NEW.text", "");
                 UICommand publishButton = UICommand.make(addCommentForm, "publish-button", UIMessage.make("blogwow.comments.submit"), "CommentLocator.publishAll");
                 publishButton.parameters = new ParameterList(new UIELBinding("CommentLocator.NEW.entry", new ELReference("EntryLocator."+entry.getId())));
                 
                 UICommand.make(addCommentForm, "cancel-button", UIMessage.make("blogwow.comments.cancel"), "CommentLocator.cancelAll");
+            
+                //TODO ack! Inline Java Script
+                UIVerbatim.make(entrydiv, "scoll-here-script", 
+                        "document.getElementById('"+commentInput.getFullID()+"').scrollIntoView(true);");
+                UIVerbatim.make(entrydiv, "scoll-here-script", 
+                        "document.getElementById('"+commentInput.getFullID()+"').focus();");
             }
         }
     }

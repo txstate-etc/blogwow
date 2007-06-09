@@ -71,12 +71,13 @@
   <div rsf:id="add-comment-div" >
     <form rsf:id="add-comment-form" method="post">
       <h4 rsf:id="add-comment-header">Leave a comment</h4>
-      <textarea rsf:id="comment-text" rows="10" cols="80" >Your blog entry is spiffing rockin' sweet. </textarea>
+      <textarea id="" rsf:id="comment-text" rows="10" cols="80" >Your blog entry is spiffing rockin' sweet. </textarea>
       <p>
         <input rsf:id="publish-button" type="submit" value="Publish comment"/>
         <input rsf:id="cancel-button" type="submit" value="Cancel"/>
       </p>
     </form>
+    <script rsf:id="scoll-here-script">this.div.scrollIntoView(true);</script>
   </div>
 </div>
 <div rsf:id="blog-entry:empty">There are no blog postings yet</div>
