@@ -15,6 +15,7 @@ public class BlogParams extends SimpleViewParameters {
   
   public String entryid;
   public boolean showcomments;
+  public boolean addcomment;
   
   public BlogParams() {}
   public BlogParams(String viewid) {
@@ -24,6 +25,8 @@ public class BlogParams extends SimpleViewParameters {
   public BlogParams(String viewid, String blogid) {
     this.viewID = viewid;
     this.blogid = blogid;
+    this.showcomments = false;
+    this.addcomment = false;
   }
   
   public BlogParams(String viewid, String blogid, String entryid, boolean showcomments) {
@@ -31,6 +34,15 @@ public class BlogParams extends SimpleViewParameters {
       this.blogid = blogid;
       this.entryid = entryid;
       this.showcomments = showcomments;
+      this.addcomment = false;
+  }
+  
+  public BlogParams(String viewid, String blogid, String entryid, boolean showcomments, boolean addcomment) {
+      this.viewID = viewid;
+      this.blogid = blogid;
+      this.entryid = entryid;
+      this.showcomments = showcomments;
+      this.addcomment = addcomment;
   }
   
   public String getParseSpec() {

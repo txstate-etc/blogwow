@@ -72,6 +72,11 @@ ViewParamsReporter, NavigationCaseReporter {
 
         UIOutput.make(tofill, "blog-title", blog.getTitle());
         UIVerbatim.make(tofill, "profile-verbatim-text", blog.getProfile());
+        String profileImageUrl = blog.getIcon();
+        if (profileImageUrl == null || profileImageUrl.equals("")) {
+            profileImageUrl = "../images/sakaiger-600.png";
+        }
+        UILink.make(tofill, "profile-image", profileImageUrl);
 
         List<BlogWowEntry> entries = new ArrayList<BlogWowEntry>();
         if (params.entryid == null) {
@@ -113,7 +118,8 @@ ViewParamsReporter, NavigationCaseReporter {
             List<BlogWowComment> comments = commentLogic.getComments(entry.getId(), null, true, 0, 10000);
             UIInternalLink.make(entrydiv, "comments-link", UIMessage.make("blogwow.blogview.comments", new Object[] {(comments.size()+"")}),
                     new BlogParams(BlogViewProducer.VIEWID, blog.getId().toString(), entry.getId().toString(), true));
-            
+            UIInternalLink.make(entrydiv, "add-comment-link", UIMessage.make("blogwow.blogview.addcomment"), 
+                    new BlogParams(BlogViewProducer.VIEWID, blog.getId().toString(), entry.getId().toString(), true, true));
         
             // Render Comments if they are visible
             if (params.showcomments) {
