@@ -18,6 +18,7 @@ import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.authz.api.FunctionManager;
 import org.sakaiproject.authz.api.SecurityService;
 import org.sakaiproject.blogwow.logic.ExternalLogic;
+import org.sakaiproject.blogwow.logic.entity.BlogGroupRssEntityProvider;
 import org.sakaiproject.blogwow.logic.entity.BlogRssEntityProvider;
 import org.sakaiproject.entitybroker.EntityBroker;
 import org.sakaiproject.entitybroker.IdEntityReference;
@@ -41,43 +42,36 @@ public class ExternalLogicImpl implements ExternalLogic {
     private static Log log = LogFactory.getLog(ExternalLogicImpl.class);
 
     private FunctionManager functionManager;
-
     public void setFunctionManager(FunctionManager functionManager) {
         this.functionManager = functionManager;
     }
 
     private ToolManager toolManager;
-
     public void setToolManager(ToolManager toolManager) {
         this.toolManager = toolManager;
     }
 
     private SecurityService securityService;
-
     public void setSecurityService(SecurityService securityService) {
         this.securityService = securityService;
     }
 
     private SessionManager sessionManager;
-
     public void setSessionManager(SessionManager sessionManager) {
         this.sessionManager = sessionManager;
     }
 
     private SiteService siteService;
-
     public void setSiteService(SiteService siteService) {
         this.siteService = siteService;
     }
 
     private UserDirectoryService userDirectoryService;
-
     public void setUserDirectoryService(UserDirectoryService userDirectoryService) {
         this.userDirectoryService = userDirectoryService;
     }
 
     private EntityBroker entityBroker;
-
     public void setEntityBroker(EntityBroker entityBroker) {
         this.entityBroker = entityBroker;
     }
@@ -99,11 +93,6 @@ public class ExternalLogicImpl implements ExternalLogic {
         functionManager.registerFunction(BLOG_COMMENTS_REMOVE_ANY);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.sakaiproject.blogwow.logic.ExternalLogic#getCurrentLocationId()
-     */
     public String getCurrentLocationId() {
         try {
             Site s = (Site) siteService.getSite(toolManager.getCurrentPlacement().getContext());
@@ -113,11 +102,6 @@ public class ExternalLogicImpl implements ExternalLogic {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.sakaiproject.blogwow.logic.ExternalLogic#getLocationTitle(java.lang.String)
-     */
     public String getLocationTitle(String locationId) {
         try {
             Site site = siteService.getSite(locationId);
@@ -128,11 +112,6 @@ public class ExternalLogicImpl implements ExternalLogic {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.sakaiproject.blogwow.logic.ExternalLogic#getCurrentUserId()
-     */
     public String getCurrentUserId() {
         String userId = sessionManager.getCurrentSessionUserId();
         if (userId == null) {
@@ -148,11 +127,6 @@ public class ExternalLogicImpl implements ExternalLogic {
         return userId;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.sakaiproject.blogwow.logic.ExternalLogic#getUserDisplayName(java.lang.String)
-     */
     public String getUserDisplayName(String userId) {
         try {
             User user = userDirectoryService.getUser(userId);
@@ -166,20 +140,10 @@ public class ExternalLogicImpl implements ExternalLogic {
         return "----------";
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.sakaiproject.blogwow.logic.ExternalLogic#isUserAdmin(java.lang.String)
-     */
     public boolean isUserAdmin(String userId) {
         return securityService.isSuperUser(userId);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.sakaiproject.blogwow.logic.ExternalLogic#isUserAllowedInLocation(java.lang.String, java.lang.String, java.lang.String)
-     */
     public boolean isUserAllowedInLocation(String userId, String permission, String locationId) {
         if (securityService.unlock(userId, permission, locationId)) {
             return true;
@@ -187,23 +151,14 @@ public class ExternalLogicImpl implements ExternalLogic {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.sakaiproject.blogwow.logic.ExternalLogic#getBlogRssUrl(java.lang.Long)
-     */
     public String getBlogRssUrl(Long blogId) {
-        return entityBroker.getEntityURL(new IdEntityReference(BlogRssEntityProvider.ENTITY_PREFIX, blogId.toString()).toString());
+        return entityBroker.getEntityURL(
+                new IdEntityReference(BlogRssEntityProvider.ENTITY_PREFIX, blogId.toString()).toString());
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.sakaiproject.blogwow.logic.ExternalLogic#getBlogLocationRssUrl(java.lang.String)
-     */
     public String getBlogLocationRssUrl(String locationId) {
-        // TODO Auto-generated method stub
-        return null;
+        return entityBroker.getEntityURL(
+                new IdEntityReference(BlogGroupRssEntityProvider.ENTITY_PREFIX, locationId).toString());
     }
 
 }

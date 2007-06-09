@@ -1,5 +1,5 @@
 /******************************************************************************
- * BlogRssEntityProviderImpl.java - created by Sakai App Builder -AZ
+ * BlogGroupRssEntityProviderImpl.java - created by Sakai App Builder -AZ
  * 
  * Copyright (c) 2007 Sakai Project/Sakai Foundation
  * Licensed under the Educational Community License version 1.0
@@ -13,7 +13,7 @@ package org.sakaiproject.blogwow.logic.impl.entity;
 
 import org.sakaiproject.blogwow.logic.BlogLogic;
 import org.sakaiproject.blogwow.logic.entity.BlogRssEntityProvider;
-import org.sakaiproject.blogwow.model.BlogWowBlog;
+import org.sakaiproject.entitybroker.EntityBroker;
 import org.sakaiproject.entitybroker.entityprovider.CoreEntityProvider;
 import org.sakaiproject.entitybroker.entityprovider.capabilities.AutoRegisterEntityProvider;
 
@@ -22,13 +22,18 @@ import org.sakaiproject.entitybroker.entityprovider.capabilities.AutoRegisterEnt
  * 
  * @author Sakai App Builder -AZ
  */
-public class BlogRssEntityProviderImpl implements BlogRssEntityProvider, CoreEntityProvider, AutoRegisterEntityProvider {
+public class BlogGroupRssEntityProviderImpl implements BlogRssEntityProvider, CoreEntityProvider, AutoRegisterEntityProvider {
 
     private BlogLogic blogLogic;
-
     public void setBlogLogic(BlogLogic blogLogic) {
         this.blogLogic = blogLogic;
     }
+
+    private EntityBroker entityBroker;
+    public void setEntityBroker(EntityBroker entityBroker) {
+        this.entityBroker = entityBroker;
+    }
+
 
     /*
      * (non-Javadoc)
@@ -43,11 +48,16 @@ public class BlogRssEntityProviderImpl implements BlogRssEntityProvider, CoreEnt
      * @see org.sakaiproject.entitybroker.entityprovider.CoreEntityProvider#entityExists(java.lang.String)
      */
     public boolean entityExists(String id) {
-        BlogWowBlog blog = blogLogic.getBlogById(new Long(id));
-        if (blog == null) {
-            return false;
+        // entity is real if there are any blogs in this location (id should be an entity ref)
+        String locationId = id;
+        if (entityBroker.entityExists(locationId)) {
+            // entity container is real, check for number of blogs
+            if (blogLogic.getAllVisibleBlogs(locationId, null, false, 0, 1).size() > 0) {
+                // there is at least one visible blog here
+                return true;
+            }
         }
-        return true;
+        return false;
     }
 
 }

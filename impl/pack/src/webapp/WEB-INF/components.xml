@@ -19,6 +19,7 @@
       <property name="siteService" ref="org.sakaiproject.site.api.SiteService" />
       <property name="toolManager" ref="org.sakaiproject.tool.api.ToolManager" />
       <property name="userDirectoryService" ref="org.sakaiproject.user.api.UserDirectoryService" />
+	  <property name="entityBroker" ref="org.sakaiproject.entitybroker.EntityBroker" />
    </bean>
 
    <bean id="org.sakaiproject.blogwow.logic.BlogLogic" class="org.sakaiproject.blogwow.logic.impl.BlogLogicImpl" init-method="init">
@@ -40,6 +41,11 @@
    <!-- entity beans -->
    <bean class="org.sakaiproject.blogwow.logic.impl.entity.BlogRssEntityProviderImpl">
       <property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic" />
+   </bean>
+
+   <bean class="org.sakaiproject.blogwow.logic.impl.entity.BlogGroupRssEntityProviderImpl">
+      <property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic" />
+	  <property name="entityBroker" ref="org.sakaiproject.entitybroker.EntityBroker" />
    </bean>
 
 </beans>

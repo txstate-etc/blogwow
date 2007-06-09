@@ -100,7 +100,7 @@ public interface ExternalLogic {
      * Get the Full URL to the rss feed for all blogs in a location
      * 
      * @param locationId
-     *            a unique id which represents the current location of the user (entity reference)
+     *            a unique id which represents a location in the system (entity reference)
      * @return the full url for the rss feed
      */
     public String getBlogLocationRssUrl(String locationId);

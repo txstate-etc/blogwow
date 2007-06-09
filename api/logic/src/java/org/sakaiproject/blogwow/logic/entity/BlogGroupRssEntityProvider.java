@@ -1,5 +1,5 @@
 /******************************************************************************
- * BlogRssEntityProvider.java - created by Sakai App Builder -AZ
+ * BlogGroupRssEntityProvider.java - created by Sakai App Builder -AZ
  * 
  * Copyright (c) 2007 Sakai Project/Sakai Foundation
  * Licensed under the Educational Community License version 1.0
@@ -14,10 +14,10 @@ package org.sakaiproject.blogwow.logic.entity;
 import org.sakaiproject.entitybroker.entityprovider.EntityProvider;
 
 /**
- * Provider for blog rss entities
+ * Provider for blog groups (all blogs related to an entity) rss entities
  * 
  * @author Sakai App Builder -AZ
  */
-public interface BlogRssEntityProvider extends EntityProvider {
-    public final static String ENTITY_PREFIX = "blog-rss";
+public interface BlogGroupRssEntityProvider extends EntityProvider {
+    public final static String ENTITY_PREFIX = "bloggroup-rss";
 }
