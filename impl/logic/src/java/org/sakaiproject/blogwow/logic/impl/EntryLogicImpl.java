@@ -1,14 +1,11 @@
 /******************************************************************************
- * EntryLogicImpl.java - created by aaronz on Jun 2, 2007
+ * EntryLogicImpl.java - created by Sakai App Builder -AZ
  * 
- * Copyright (c) 2007 Centre for Academic Research in Educational Technologies
+ * Copyright (c) 2006 Sakai Project/Sakai Foundation
  * Licensed under the Educational Community License version 1.0
  * 
  * A copy of the Educational Community License has been included in this 
  * distribution and is available at: http://www.opensource.org/licenses/ecl1.php
- * 
- * Contributors:
- * Aaron Zeckoski (aaronz@vt.edu) - primary
  * 
  *****************************************************************************/
 

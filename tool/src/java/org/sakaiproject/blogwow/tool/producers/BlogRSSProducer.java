@@ -1,12 +1,14 @@
 package org.sakaiproject.blogwow.tool.producers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.sakaiproject.blogwow.logic.BlogLogic;
 import org.sakaiproject.blogwow.logic.EntryLogic;
+import org.sakaiproject.blogwow.logic.ExternalLogic;
 import org.sakaiproject.blogwow.model.BlogWowBlog;
 import org.sakaiproject.blogwow.model.BlogWowEntry;
-import org.sakaiproject.blogwow.tool.params.BlogParams;
+import org.sakaiproject.blogwow.tool.params.BlogRssViewParams;
 
 import uk.org.ponder.rsf.components.UIBranchContainer;
 import uk.org.ponder.rsf.components.UIContainer;
@@ -25,23 +27,37 @@ ViewParamsReporter,
 ContentTypeReporter
 {
     public static final String VIEWID = "blog_rss";
-
-    private BlogLogic blogLogic;
-    private EntryLogic entryLogic;
-    private String userid;
-
     public String getViewID() {
         return VIEWID;
     }
 
+    private BlogLogic blogLogic;
+    private EntryLogic entryLogic;
+    private ExternalLogic externalLogic;
+
+
     public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
-        BlogParams params = (BlogParams) viewparams;
+        String currentUserId = externalLogic.getCurrentUserId();
 
-        BlogWowBlog blog = blogLogic.getBlogById(new Long(params.blogid));
+        BlogRssViewParams params = (BlogRssViewParams) viewparams;
+        Long blogId = params.blogId;
+        String locationId = params.locationId;
 
-        UIOutput.make(tofill, "channel-title", blog.getTitle());
-
-        List<BlogWowEntry> entries = entryLogic.getAllVisibleEntries(new Long(params.blogid), userid, null, true, 0, 10);
+        List<BlogWowEntry> entries = new ArrayList<BlogWowEntry>();
+        // get the entries for a single blog or a group of blogs depending on what is passed in
+        if (blogId != null) {
+            BlogWowBlog blog = blogLogic.getBlogById( blogId );
+            UIOutput.make(tofill, "channel-title", blog.getTitle());
+            entries = entryLogic.getAllVisibleEntries(blogId, currentUserId, null, true, 0, 10);                        
+        } else if (locationId != null) {
+            UIOutput.make(tofill, "channel-title", externalLogic.getLocationTitle(locationId));
+            List<BlogWowBlog> blogs = blogLogic.getAllVisibleBlogs(locationId, null, true, 0, 10);
+            Long[] blogIds = new Long[blogs.size()];
+            for (int i=0; i<blogs.size(); i++) {
+                blogIds[i] = ((BlogWowBlog)blogs.get(i)).getId();
+            }
+            entries = entryLogic.getAllVisibleEntries(blogIds, currentUserId, null, true, 0, 10);                        
+        }
 
         for (int i = 0; i < entries.size(); i++) {
             BlogWowEntry entry = entries.get(i);
@@ -61,8 +77,9 @@ ContentTypeReporter
     }
 
     public ViewParameters getViewParameters() {
-        return new BlogParams();
+        return new BlogRssViewParams();
     }
+
 
     public String getContentType() {
         return ContentTypeInfoRegistry.RSS_2;
@@ -76,8 +93,8 @@ ContentTypeReporter
         this.entryLogic = entryLogic;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setExternalLogic(ExternalLogic externalLogic) {
+        this.externalLogic = externalLogic;
     }
 
 }
