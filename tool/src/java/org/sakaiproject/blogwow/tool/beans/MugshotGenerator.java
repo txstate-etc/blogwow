@@ -11,8 +11,10 @@ public class MugshotGenerator {
 
   private Random generator = new Random();
   
-  public String getMugshotUrl() {
+  public String getMugshotUrl(String userid) {
+      //int mugshot = userid.hashCode() % mugshotImages.size();
       return mugshotImages.get(generator.nextInt( mugshotImages.size() ));
+      //return mugshotImages.get(mugshot);
   }
     
 }

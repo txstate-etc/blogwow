@@ -68,8 +68,8 @@ DefaultView
 
         for (int i = 0; i < blogs.size(); i++) {
             UIBranchContainer row = UIBranchContainer.make(blogsTable, "row:", i+"");
-            UILink.make(row, "user-icon", mugshotGenerator.getMugshotUrl());
             BlogWowBlog blog = blogs.get(i);
+            UILink.make(row, "user-icon", mugshotGenerator.getMugshotUrl(blog.getOwnerId()));
             UIInternalLink.make(row, "blog-title-link", blog.getTitle(), new BlogParams(BlogViewProducer.VIEWID, blog.getId().toString()));
             List<BlogWowEntry> entries = entryLogic.getAllVisibleEntries(blog.getId(), userid, null, true, 0, 1000);
             UIOutput.make(row, "number-of-entries", entries.size()+"");
