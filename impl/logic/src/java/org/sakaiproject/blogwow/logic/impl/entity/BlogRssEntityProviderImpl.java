@@ -18,7 +18,7 @@ import org.sakaiproject.entitybroker.entityprovider.CoreEntityProvider;
 import org.sakaiproject.entitybroker.entityprovider.capabilities.AutoRegisterEntityProvider;
 
 /**
- * This is the interface for the blog app Logic
+ * Implementation of the provider for single blog rss
  * 
  * @author Sakai App Builder -AZ
  */

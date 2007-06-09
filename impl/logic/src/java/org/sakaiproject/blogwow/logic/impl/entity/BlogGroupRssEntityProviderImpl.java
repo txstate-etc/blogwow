@@ -12,17 +12,17 @@
 package org.sakaiproject.blogwow.logic.impl.entity;
 
 import org.sakaiproject.blogwow.logic.BlogLogic;
-import org.sakaiproject.blogwow.logic.entity.BlogRssEntityProvider;
+import org.sakaiproject.blogwow.logic.entity.BlogGroupRssEntityProvider;
 import org.sakaiproject.entitybroker.EntityBroker;
 import org.sakaiproject.entitybroker.entityprovider.CoreEntityProvider;
 import org.sakaiproject.entitybroker.entityprovider.capabilities.AutoRegisterEntityProvider;
 
 /**
- * This is the interface for the blog app Logic
+ * Implementation of the provider for group of blogs rss
  * 
  * @author Sakai App Builder -AZ
  */
-public class BlogGroupRssEntityProviderImpl implements BlogRssEntityProvider, CoreEntityProvider, AutoRegisterEntityProvider {
+public class BlogGroupRssEntityProviderImpl implements BlogGroupRssEntityProvider, CoreEntityProvider, AutoRegisterEntityProvider {
 
     private BlogLogic blogLogic;
     public void setBlogLogic(BlogLogic blogLogic) {
