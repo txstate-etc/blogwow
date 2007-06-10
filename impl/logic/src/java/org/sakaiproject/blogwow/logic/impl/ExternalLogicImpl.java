@@ -11,6 +11,7 @@
 
 package org.sakaiproject.blogwow.logic.impl;
 
+import java.net.URLEncoder;
 import java.util.Date;
 
 import org.apache.commons.logging.Log;
@@ -159,8 +160,16 @@ public class ExternalLogicImpl implements ExternalLogic {
     }
 
     public String getBlogLocationRssUrl(String locationId) {
+        String encodedlocation;
+        try {
+            encodedlocation = URLEncoder.encode(locationId, "UTF-8");
+        }
+        catch (Exception e) {
+            throw new IllegalArgumentException(e);
+        }
         return entityBroker.getEntityURL(
-                new IdEntityReference(BlogGroupRssEntityProvider.ENTITY_PREFIX, locationId).toString());
+                new IdEntityReference(BlogGroupRssEntityProvider.ENTITY_PREFIX, 
+                        encodedlocation).toString());
     }
 
 }

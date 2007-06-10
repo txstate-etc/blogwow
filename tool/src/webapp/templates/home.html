@@ -27,21 +27,18 @@
 <h3 rsf:id="all-blogs-header">All the blogs</h3>
 <div class="tier1">
   <div align="right">
-    <img src="../images/rss.gif" /> 
-    <a rsf:id="all-blog-rss" href="">RSS for all bloggers</a>
+    <a rsf:id="all-blog-rss" href="#"> 
+      <img src="../images/rss.gif" /> RSS for all bloggers</a>
   </div>
 <div align="center">
 <table rsf:id="blog-list-table:" width="80%" class="listHier lines" cellspacing="0" border="0"
 	summary="Tabled list of bloggers in the site. Table headers have links to sort their column. Column 1 is an icon; column 2 lists the names of the bloggers; column 3 is the number of entries in each blog; column 4 is the time that the blog was last updated; column 5 offers an RSS feed for that particular blog.">
 	<tr>
 		<th id="icon" style="border:none" width="30"></th>
-		<th id="blogger" style="border:none">
-          <a href="#">Blogger</a> 
-          <img src="../images/down_arrow.gif" />
+		<th id="blogger" style="border:none" rsf:id="blogger">Blogger
         </th>
-		<th id="entries" style="border:none"><a href="#">Entries</a></th>
-		<th id="last_updated" style="border:none">
-          <a href="#">Last Updated</a>
+		<th id="entries" style="border:none" rsf:id="entries">Entries</th>
+		<th id="last_updated" style="border:none" rsf:id="last-updated">Last Updated
         </th>
 		<th id="rss" style="border:none" width="30"></th>
 	</tr>

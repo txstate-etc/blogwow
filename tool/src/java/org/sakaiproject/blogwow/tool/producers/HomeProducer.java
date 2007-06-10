@@ -21,7 +21,6 @@ import uk.org.ponder.rsf.components.UIOutput;
 import uk.org.ponder.rsf.view.ComponentChecker;
 import uk.org.ponder.rsf.view.DefaultView;
 import uk.org.ponder.rsf.view.ViewComponentProducer;
-import uk.org.ponder.rsf.viewstate.SimpleViewParameters;
 import uk.org.ponder.rsf.viewstate.ViewParameters;
 
 public class HomeProducer implements ViewComponentProducer, DefaultView {
@@ -46,16 +45,20 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
 
         UIMessage.make(tofill, "page-title", "blogwow.homepage.title");
 
-        // use a date which is related to the current users locale
-        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
-
         navBarRenderer.makeNavBar(tofill, "navIntraTool:", VIEW_ID);
+        
+        UIMessage.make(tofill, "blogger", "blogwow.homepage.nameheader");
+        UIMessage.make(tofill, "entries", "blogwow.homepage.entryheader");
+        UIMessage.make(tofill, "last-updated", "blogwow.homepage.lastupdated");
 
         BlogWowBlog myblog = blogLogic.getBlogByLocationAndUser(locationId, currentUserId );
         UIInternalLink.make(tofill, "my-blog-link", 
                 UIMessage.make("blogwow.homepage.userbloglink"), 
                 new SimpleBlogParams(BlogViewProducer.VIEW_ID, myblog.getId().toString()));
 
+        // use a date which is related to the current users locale
+        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+        
         List<BlogWowEntry> myentries = entryLogic.getAllVisibleEntries(myblog.getId(), currentUserId, null, true, 0, 1);
         if (myentries.size() > 0) {
             UIMessage.make(tofill, "last-blogged-date", "blogwow.homepage.userlastblogged", 
@@ -64,7 +67,9 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
 
         UIMessage.make(tofill, "all-blogs-header", "blogwow.homepage.listofblogs");
 
-        UIInternalLink.make(tofill, "all-blog-rss", UIMessage.make("blogwow.homepage.RSStext"), new SimpleViewParameters(BlogRSSProducer.VIEW_ID));
+        // This needs more work due to URL-encoding of path segments
+//        UILink.make(tofill, "all-blog-rss", UIMessage.make("blogwow.homepage.RSStext"), 
+//                externalLogic.getBlogLocationRssUrl(locationId));
 
         List<BlogWowBlog> blogs = blogLogic.getAllVisibleBlogs(locationId, null, true, 0, 0);
         UIBranchContainer blogsTable = UIBranchContainer.make(tofill, "blog-list-table:");

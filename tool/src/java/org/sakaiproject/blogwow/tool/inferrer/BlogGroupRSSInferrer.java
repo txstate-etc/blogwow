@@ -11,6 +11,9 @@
 
 package org.sakaiproject.blogwow.tool.inferrer;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 import org.sakaiproject.blogwow.logic.entity.BlogGroupRssEntityProvider;
 import org.sakaiproject.blogwow.tool.params.BlogRssViewParams;
 import org.sakaiproject.blogwow.tool.producers.BlogRSSProducer;
@@ -32,8 +35,15 @@ public class BlogGroupRSSInferrer implements EntityViewParamsInferrer {
     }
 
     public ViewParameters inferDefaultViewParameters(String reference) {
+        String decoded = null;
         IdEntityReference ref = new IdEntityReference(reference);
-        return new BlogRssViewParams(BlogRSSProducer.VIEW_ID, null, ref.id);
+        try {
+            decoded = URLDecoder.decode(ref.id, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+           throw new IllegalArgumentException(e);
+        }
+        return new BlogRssViewParams(BlogRSSProducer.VIEW_ID, null, 
+                decoded);
     }
 
 }
