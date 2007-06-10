@@ -78,7 +78,7 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
         else {
             UIVerbatim.make(tofill, "profile-verbatim-text", profileText);
         }
-        String profileImageUrl = blog.getIcon();
+        String profileImageUrl = blog.getImageUrl();
         if (profileImageUrl == null || profileImageUrl.equals("")) {
             profileImageUrl = "../images/sakaiger-600.png";
         }
