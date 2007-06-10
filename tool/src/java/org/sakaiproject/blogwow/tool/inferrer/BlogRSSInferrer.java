@@ -33,7 +33,7 @@ public class BlogRSSInferrer implements EntityViewParamsInferrer {
 
     public ViewParameters inferDefaultViewParameters(String reference) {
         IdEntityReference ref = new IdEntityReference(reference);
-        return new BlogRssViewParams(BlogRSSProducer.VIEWID, new Long(ref.id) );
+        return new BlogRssViewParams(BlogRSSProducer.VIEWID, ref.id, null );
     }
 
 }
