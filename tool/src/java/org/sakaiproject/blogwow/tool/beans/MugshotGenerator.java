@@ -1,20 +1,22 @@
 package org.sakaiproject.blogwow.tool.beans;
 
 import java.util.List;
-import java.util.Random;
+
+/** Generates a random (but stable) mugshot for a user based on their id - 
+ * for visual variety.
+ * @author Antranig Basman (amb26@ponder.org.uk)
+ *
+ */
 
 public class MugshotGenerator {
   private List<String> mugshotImages;
   public void setMugshotImages(List<String> images) {
       this.mugshotImages = images;
   }
-
-  private Random generator = new Random();
   
   public String getMugshotUrl(String userid) {
-      //int mugshot = userid.hashCode() % mugshotImages.size();
-      return mugshotImages.get(generator.nextInt( mugshotImages.size() ));
-      //return mugshotImages.get(mugshot);
+      int mugshot = Math.abs(userid.hashCode()) % mugshotImages.size();
+      return mugshotImages.get(mugshot);
   }
     
 }
