@@ -11,6 +11,7 @@ import org.sakaiproject.blogwow.model.BlogWowBlog;
 import uk.org.ponder.beanutil.BeanLocator;
 
 public class BlogLocator implements BeanLocator {
+
 	private BlogLogic blogLogic;
 
 	private Map<String, BlogWowBlog> blogsmap = new HashMap<String, BlogWowBlog>();
