@@ -49,7 +49,6 @@
    <bean class="org.sakaiproject.blogwow.tool.producers.MySettingsProducer">
       <property name="navBarRenderer" ref="NavbarRenderer" />
       <property name="richTextEvolver" ref="richTextEvolver" />
-      <property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic" />
    </bean>
 
    <bean class="org.sakaiproject.blogwow.tool.producers.PermissionsProducer">

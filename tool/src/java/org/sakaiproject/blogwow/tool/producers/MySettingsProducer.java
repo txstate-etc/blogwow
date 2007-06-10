@@ -3,7 +3,6 @@ package org.sakaiproject.blogwow.tool.producers;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.sakaiproject.blogwow.logic.BlogLogic;
 import org.sakaiproject.blogwow.tool.params.BlogParams;
 
 import uk.org.ponder.rsf.components.UICommand;
@@ -20,24 +19,22 @@ import uk.org.ponder.rsf.viewstate.SimpleViewParameters;
 import uk.org.ponder.rsf.viewstate.ViewParameters;
 import uk.org.ponder.rsf.viewstate.ViewParamsReporter;
 
-public class MySettingsProducer implements 
-ViewComponentProducer,
-ViewParamsReporter,
-NavigationCaseReporter
-{
+public class MySettingsProducer implements ViewComponentProducer, ViewParamsReporter, NavigationCaseReporter {
+
     public static final String VIEWID = "my_settings";
-
-    private NavBarRenderer navBarRenderer;
-    private TextInputEvolver richTextEvolver;
-    private BlogLogic blogLogic;
-
     public String getViewID() {
         return VIEWID;
     }
 
+    private NavBarRenderer navBarRenderer;
+    private TextInputEvolver richTextEvolver;
+
+
     public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
         BlogParams params = (BlogParams) viewparams;
         String blogid = params.blogid;
+        String blogLocator = "BlogLocator";
+        String blogOTP = blogLocator + "." + blogid;
 
         navBarRenderer.makeNavBar(tofill, "navIntraTool:", VIEWID);
 
@@ -46,17 +43,15 @@ NavigationCaseReporter
         UIForm form = UIForm.make(tofill, "my-settings-form");
 
         UIMessage.make(form, "my-blog-profile", "blogwow.settings.profile");
-
-        UIInput profiletext = UIInput.make(form, "profile-text-input:", "BlogLocator."+blogid+".profile");
+        UIInput profiletext = UIInput.make(form, "profile-text-input:", blogOTP + ".profile");
         richTextEvolver.evolveTextInput(profiletext);
 
         UIMessage.make(form, "picture-url-label", "blogwow.settings.pictureURLtext");
-        UIInput.make(form, "picture-url-input", "BlogLocator."+blogid+".imageUrl");
+        UIInput.make(form, "picture-url-input", blogOTP + ".imageUrl");
 
-        UICommand.make(form, "change-settings-button", 
-                UIMessage.make("blogwow.settings.save"), "BlogLocator.saveAll");
-        UICommand.make(form, "cancel-settings-button", 
-                UIMessage.make("blogwow.settings.cancel"), "BlogLocator.cancelAll");
+        UICommand.make(form, "change-settings-button", UIMessage.make("blogwow.settings.save"), blogLocator + ".saveAll");
+        // this cancel button does nothing except send the user to the default navigation case
+        UICommand.make(form, "cancel-settings-button", UIMessage.make("blogwow.settings.cancel"));
     }
 
     public ViewParameters getViewParameters() {
@@ -65,12 +60,9 @@ NavigationCaseReporter
 
     public List reportNavigationCases() {
         List<NavigationCase> l = new ArrayList<NavigationCase>();
+        // first arg null defines the default navigation case
         l.add(new NavigationCase(null, new SimpleViewParameters(HomeProducer.VIEWID)));
         return l;
-    }
-
-    public void setBlogLogic(BlogLogic blogLogic) {
-        this.blogLogic = blogLogic;
     }
 
     public void setNavBarRenderer(NavBarRenderer navBarRenderer) {

@@ -36,11 +36,6 @@ public class BlogLocator implements BeanLocator {
 		return "saved";
 	}
 
-	public String cancelAll() {
-		blogsmap.clear();
-		return "canceled";
-	}
-
 	public void setBlogLogic(BlogLogic blogLogic) {
 		this.blogLogic = blogLogic;
 	}
