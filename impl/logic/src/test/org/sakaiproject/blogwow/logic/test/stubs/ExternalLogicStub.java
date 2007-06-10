@@ -150,7 +150,7 @@ public class ExternalLogicStub implements ExternalLogic {
      * 
      * @see org.sakaiproject.blogwow.logic.ExternalLogic#getBlogRssUrl(java.lang.Long)
      */
-    public String getBlogRssUrl(Long blogId) {
+    public String getBlogRssUrl(String blogId) {
         return "http://server:8080/direct/blogrss/123/";
     }
 
