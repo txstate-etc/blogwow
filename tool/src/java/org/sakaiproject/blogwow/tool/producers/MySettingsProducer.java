@@ -33,6 +33,7 @@ public class MySettingsProducer implements ViewComponentProducer, ViewParamsRepo
     public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
         BlogParams params = (BlogParams) viewparams;
         String blogid = params.blogid;
+
         String blogLocator = "BlogLocator";
         String blogOTP = blogLocator + "." + blogid;
 

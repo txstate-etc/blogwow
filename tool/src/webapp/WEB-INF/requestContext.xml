@@ -29,21 +29,17 @@
       <property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic" />
       <property name="entryLogic" ref="org.sakaiproject.blogwow.logic.EntryLogic" />
       <property name="commentLogic" ref="org.sakaiproject.blogwow.logic.CommentLogic" />
-      <property name="userid" ref="sakai-UserID" />
-      <property name="locale" ref="requestLocale" />
-      <property name="site" ref="sakai-Site" />
       <property name="externalLogic" ref="org.sakaiproject.blogwow.logic.ExternalLogic" />
+      <property name="locale" ref="requestLocale" />
    </bean>
 
    <bean class="org.sakaiproject.blogwow.tool.producers.HomeProducer">
       <property name="navBarRenderer" ref="NavbarRenderer" />
       <property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic" />
       <property name="entryLogic" ref="org.sakaiproject.blogwow.logic.EntryLogic" />
-      <property name="userid" ref="sakai-UserID" />
-      <property name="site" ref="sakai-Site" />
-      <property name="locale" ref="requestLocale" />
-      <property name="mugshotGenerator" ref="MugshotGenerator" />
       <property name="externalLogic" ref="org.sakaiproject.blogwow.logic.ExternalLogic" />
+      <property name="mugshotGenerator" ref="MugshotGenerator" />
+      <property name="locale" ref="requestLocale" />
    </bean>
 
    <bean class="org.sakaiproject.blogwow.tool.producers.MySettingsProducer">
@@ -66,6 +62,7 @@
 
    <!-- OTP -->
    <bean id="BlogLocator" class="org.sakaiproject.blogwow.tool.otp.BlogLocator">
+      <property name="externalLogic" ref="org.sakaiproject.blogwow.logic.ExternalLogic" />
       <property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic" />
    </bean>
 

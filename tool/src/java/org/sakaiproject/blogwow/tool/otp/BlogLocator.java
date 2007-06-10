@@ -24,7 +24,7 @@ public class BlogLocator implements BeanLocator {
         BlogWowBlog togo = delivered.get(name);
         if (togo == null) {
             if (name.startsWith(NEW_PREFIX)) {
-                // create the new blog object at the current location with the current user
+                // create the new object
                 togo = new BlogWowBlog(externalLogic.getCurrentLocationId(), externalLogic.getCurrentLocationId(), null);
             } else {
                 togo = blogLogic.getBlogById(new Long(name));
@@ -50,5 +50,9 @@ public class BlogLocator implements BeanLocator {
 	public void setBlogLogic(BlogLogic blogLogic) {
 		this.blogLogic = blogLogic;
 	}
+
+    public void setExternalLogic(ExternalLogic externalLogic) {
+        this.externalLogic = externalLogic;
+    }
 
 }

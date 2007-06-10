@@ -16,43 +16,46 @@ import uk.org.ponder.beanutil.BeanLocator;
 
 public class EntryLocator implements BeanLocator {
 
+    public static final String NEW_PREFIX = "new ";
+    public static String NEW_1 = NEW_PREFIX + "1";
+
     private ExternalLogic externalLogic;
 	private EntryLogic entryLogic;
 	private BlogLogic blogLogic;
 
-	private Map<String, BlogWowEntry> entrymap = new HashMap<String, BlogWowEntry>();
+	private Map<String, BlogWowEntry> delivered = new HashMap<String, BlogWowEntry>();
 
 	public Object locateBean(String name) {
         String locationId = externalLogic.getCurrentLocationId();
-		BlogWowEntry togo = entrymap.get(name);
-		if (togo == null && name.startsWith("NEW")) {
-			BlogWowEntry entry = new BlogWowEntry();
-			BlogWowBlog blog = blogLogic.getBlogByLocationAndUser(locationId, externalLogic.getCurrentUserId());
-			entry.setBlog(blog);
-			entry.setText("");
-			entry.setTitle("");
-			entry.setPrivacySetting(BlogConstants.PRIVACY_PUBLIC);
-			entrymap.put(name, entry);
-			togo = entry;
-		}
-		else if (togo == null) {
-			togo = entryLogic.getEntryById(new Long(name), locationId);
-			entrymap.put(name, togo);
-		}
-		return togo;
+        String currentUserId = externalLogic.getCurrentLocationId();
+        BlogWowEntry togo = delivered.get(name);
+        if (togo == null) {
+            if (name.startsWith(NEW_PREFIX)) {
+                // create the new object
+                BlogWowBlog blog = blogLogic.getBlogByLocationAndUser(locationId, currentUserId);
+                togo = new BlogWowEntry(blog, currentUserId, null, null, BlogConstants.PRIVACY_PUBLIC, null);
+            } else {
+                togo = entryLogic.getEntryById(new Long(name), locationId);
+            }
+            delivered.put(name, togo);
+        }
+        return togo;
 	}
 
 	public String publishAll() {
-		Collection entries = entrymap.values();
-		for (Iterator i = entries.iterator(); i.hasNext();) {
-			BlogWowEntry entry = (BlogWowEntry) i.next();
-			entryLogic.saveEntry(entry, externalLogic.getCurrentLocationId());
-		}
-		return "published";
+        for (Iterator it = delivered.keySet().iterator(); it.hasNext();) {
+            String key = (String) it.next();
+            BlogWowEntry entry = delivered.get(key);
+            if (key.startsWith(NEW_PREFIX)) {
+                // could do stuff here
+            }
+            entryLogic.saveEntry(entry, externalLogic.getCurrentLocationId());
+        }
+        return "published";
 	}
 
 	public String saveAll() {
-		Collection entries = entrymap.values();
+		Collection entries = delivered.values();
 		for (Iterator i = entries.iterator(); i.hasNext();) {
 			BlogWowEntry entry = (BlogWowEntry) i.next();
 			entry.setPrivacySetting(BlogConstants.PRIVACY_PRIVATE);
@@ -62,17 +65,12 @@ public class EntryLocator implements BeanLocator {
 	}
 
 	public String removeAll() {
-		Collection entries = entrymap.values();
+		Collection entries = delivered.values();
 		for (Iterator i = entries.iterator(); i.hasNext();) {
 			BlogWowEntry entry = (BlogWowEntry) i.next();
 			entryLogic.removeEntry(entry.getId(), externalLogic.getCurrentLocationId());
 		}
 		return "removed";
-	}
-
-	public String cancelAll() {
-		entrymap.clear();
-		return "canceled";
 	}
 
 

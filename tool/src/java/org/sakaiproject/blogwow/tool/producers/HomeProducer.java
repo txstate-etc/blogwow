@@ -26,28 +26,34 @@ import uk.org.ponder.rsf.view.ViewComponentProducer;
 import uk.org.ponder.rsf.viewstate.SimpleViewParameters;
 import uk.org.ponder.rsf.viewstate.ViewParameters;
 
-public class HomeProducer implements
-ViewComponentProducer,
-DefaultView
-{
+public class HomeProducer implements ViewComponentProducer, DefaultView {
+
     public static final String VIEWID = "home";
-
-    private NavBarRenderer navBarRenderer;
-    private BlogLogic blogLogic;
-    private EntryLogic entryLogic;
-    private Site site;
-    private String userid;
-    private Locale locale;
-    private MugshotGenerator mugshotGenerator;
-    private ExternalLogic externalLogic;
-
     public String getViewID() {
         return VIEWID;
     }
 
+    private NavBarRenderer navBarRenderer;
+
+    private BlogLogic blogLogic;
+
+    private EntryLogic entryLogic;
+
+    private Site site;
+
+    private String userid;
+
+    private Locale locale;
+
+    private MugshotGenerator mugshotGenerator;
+
+    private ExternalLogic externalLogic;
+
+
+
     public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
 
-        //use a date which is related to the current users locale
+        // use a date which is related to the current users locale
         DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
 
         navBarRenderer.makeNavBar(tofill, "navIntraTool:", VIEWID);
@@ -56,8 +62,9 @@ DefaultView
         UIInternalLink.make(tofill, "my-blog-link", UIMessage.make("blogwow.homepage.userbloglink"), new BlogParams(BlogViewProducer.VIEWID, myblog.getId().toString()));
 
         List<BlogWowEntry> myentries = entryLogic.getAllVisibleEntries(myblog.getId(), userid, null, true, 0, 1);
-        if (myentries.size() > 0)  
-            UIMessage.make(tofill, "last-blogged-date", "blogwow.homepage.userlastblogged", new Object[] { df.format( myentries.get(0).getDateModified() ) }); // TODO - real date in here
+        if (myentries.size() > 0) {
+            UIMessage.make(tofill, "last-blogged-date", "blogwow.homepage.userlastblogged", new Object[] { df.format( myentries.get(0).getDateModified() ) });
+        }
 
         UIMessage.make(tofill, "all-blogs-header", "blogwow.homepage.listofblogs");
 
