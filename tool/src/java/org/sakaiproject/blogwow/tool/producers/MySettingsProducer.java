@@ -3,7 +3,7 @@ package org.sakaiproject.blogwow.tool.producers;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.sakaiproject.blogwow.tool.params.BlogParams;
+import org.sakaiproject.blogwow.tool.params.SimpleBlogParams;
 
 import uk.org.ponder.rsf.components.UICommand;
 import uk.org.ponder.rsf.components.UIContainer;
@@ -31,7 +31,7 @@ public class MySettingsProducer implements ViewComponentProducer, ViewParamsRepo
 
 
     public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
-        BlogParams params = (BlogParams) viewparams;
+        SimpleBlogParams params = (SimpleBlogParams) viewparams;
         String blogid = params.blogid;
 
         String blogLocator = "BlogLocator";
@@ -56,7 +56,7 @@ public class MySettingsProducer implements ViewComponentProducer, ViewParamsRepo
     }
 
     public ViewParameters getViewParameters() {
-        return new BlogParams();
+        return new SimpleBlogParams();
     }
 
     public List reportNavigationCases() {

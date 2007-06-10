@@ -57,10 +57,10 @@ public class CommentLogicImpl implements CommentLogic {
      * 
      * @see org.sakaiproject.blogwow.logic.CommentLogic#getCommentById(java.lang.Long, java.lang.String)
      */
-    public BlogWowComment getCommentById(Long commentId, String locationId) {
+    public BlogWowComment getCommentById(String commentId, String locationId) {
         String currentUserId = externalLogic.getCurrentUserId();
         BlogWowComment comment = (BlogWowComment) dao.findById(BlogWowComment.class, commentId);
-        Long entryId = comment.getEntry().getId();
+        String entryId = comment.getEntry().getId();
         if (entryLogic.getEntryById(entryId, locationId) != null) {
             return comment;
         } else {
@@ -74,7 +74,7 @@ public class CommentLogicImpl implements CommentLogic {
      * 
      * @see org.sakaiproject.blogwow.logic.CommentLogic#removeComment(java.lang.Long, java.lang.String)
      */
-    public void removeComment(Long commentId, String locationId) {
+    public void removeComment(String commentId, String locationId) {
         String currentUserId = externalLogic.getCurrentUserId();
         BlogWowComment comment = getCommentById(commentId, locationId);
         if (canRemoveComment(commentId, currentUserId)) {
@@ -118,7 +118,7 @@ public class CommentLogicImpl implements CommentLogic {
      * @see org.sakaiproject.blogwow.logic.CommentLogic#getComments(java.lang.Long, java.lang.String, boolean, int, int)
      */
     @SuppressWarnings("unchecked")
-    public List<BlogWowComment> getComments(Long entryId, String sortProperty, boolean ascending, int start, int limit) {
+    public List<BlogWowComment> getComments(String entryId, String sortProperty, boolean ascending, int start, int limit) {
         BlogWowEntry entry = (BlogWowEntry) dao.findById(BlogWowEntry.class, entryId);
         if (entry == null) {
             throw new IllegalArgumentException("entry id is invalid (" + entryId + "), cannot find related entry object");
@@ -150,7 +150,7 @@ public class CommentLogicImpl implements CommentLogic {
      * 
      * @see org.sakaiproject.blogwow.logic.CommentLogic#canRemoveComment(java.lang.Long, java.lang.String)
      */
-    public boolean canRemoveComment(Long commentId, String userId) {
+    public boolean canRemoveComment(String commentId, String userId) {
         log.debug("commentId: " + commentId + ", userId: " + userId);
         if (externalLogic.isUserAdmin(userId)) {
             // the system super user can remove comments
@@ -169,7 +169,7 @@ public class CommentLogicImpl implements CommentLogic {
      * 
      * @see org.sakaiproject.blogwow.logic.CommentLogic#canAddComment(java.lang.Long, java.lang.String)
      */
-    public boolean canAddComment(Long entryId, String userId) {
+    public boolean canAddComment(String entryId, String userId) {
         log.debug("entryId: " + entryId + ", userId: " + userId);
         if (externalLogic.isUserAdmin(userId)) {
             // the system super user can write
@@ -177,7 +177,6 @@ public class CommentLogicImpl implements CommentLogic {
         }
 
         BlogWowEntry entry = (BlogWowEntry) dao.findById(BlogWowEntry.class, entryId);
-        ;
         BlogWowBlog blog = entry.getBlog();
         if (blog.getOwnerId().equals(userId) || entry.getOwnerId().equals(userId)) {
             // blog and entry owner can add comments

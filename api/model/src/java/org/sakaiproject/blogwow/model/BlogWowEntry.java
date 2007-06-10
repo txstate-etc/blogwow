@@ -20,7 +20,7 @@ import java.util.Date;
  */
 public class BlogWowEntry {
 
-    private Long id;
+    private String id;
 
     private BlogWowBlog blog;
 
@@ -95,11 +95,11 @@ public class BlogWowEntry {
         this.dateModified = dateModified;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

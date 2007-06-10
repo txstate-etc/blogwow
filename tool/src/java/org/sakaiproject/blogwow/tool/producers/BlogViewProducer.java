@@ -16,6 +16,7 @@ import org.sakaiproject.blogwow.model.BlogWowComment;
 import org.sakaiproject.blogwow.model.BlogWowEntry;
 import org.sakaiproject.blogwow.tool.otp.CommentLocator;
 import org.sakaiproject.blogwow.tool.params.BlogParams;
+import org.sakaiproject.blogwow.tool.params.SimpleBlogParams;
 
 import uk.org.ponder.rsf.components.ELReference;
 import uk.org.ponder.rsf.components.ParameterList;
@@ -66,7 +67,7 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
 
         navBarRenderer.makeNavBar(tofill, "navIntraTool:", VIEWID);
 
-        BlogWowBlog blog = blogLogic.getBlogById(new Long(params.blogid));
+        BlogWowBlog blog = blogLogic.getBlogById(params.blogid);
 
         UIOutput.make(tofill, "blog-title", blog.getTitle());
         UIVerbatim.make(tofill, "profile-verbatim-text", blog.getProfile());
@@ -80,7 +81,7 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
         if (params.entryid == null) {
             entries = entryLogic.getAllVisibleEntries(blog.getId(), currentUserId, null, false, 0, 10);
         } else {
-            entries.add(entryLogic.getEntryById(new Long(params.entryid), externalLogic.getCurrentLocationId()));
+            entries.add(entryLogic.getEntryById(params.entryid, externalLogic.getCurrentLocationId()));
         }
 
         if (entries.size() <= 0) {
@@ -97,8 +98,9 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
 
             UIOutput.make(entrydiv, "action-items");
             if (entryLogic.canWriteEntry(entry.getId(), currentUserId)) {
-                UIInternalLink.make(entrydiv, "edit-entry-link", UIMessage.make("blogwow.blogview.edit"), new BlogParams(
-                        AddEntryProducer.VIEWID, entry.getId().toString()));
+                UIInternalLink.make(entrydiv, "edit-entry-link", UIMessage.make("blogwow.blogview.edit"), 
+                        new SimpleBlogParams(
+                        AddEntryProducer.VIEWID, entry.getId()));
 
                 UIForm removeform = UIForm.make(entrydiv, "remove-entry-form");
 

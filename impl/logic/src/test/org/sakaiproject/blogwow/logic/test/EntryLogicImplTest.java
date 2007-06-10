@@ -194,7 +194,7 @@ public class EntryLogicImplTest extends AbstractTransactionalSpringContextTests 
         List l = null;
 
         // get all entries
-        l = logicImpl.getAllVisibleEntries(new Long[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() },
+        l = logicImpl.getAllVisibleEntries(new String[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() },
                 TestDataPreload.ADMIN_USER_ID, null, false, 0, 0);
         assertNotNull(l);
         assertEquals(7, l.size());
@@ -206,7 +206,7 @@ public class EntryLogicImplTest extends AbstractTransactionalSpringContextTests 
         assertTrue(l.contains(tdp.entry6_b2));
         assertTrue(l.contains(tdp.entry7_b3));
 
-        l = logicImpl.getAllVisibleEntries(new Long[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() },
+        l = logicImpl.getAllVisibleEntries(new String[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() },
                 TestDataPreload.MAINT_USER_ID, null, false, 0, 0);
         assertNotNull(l);
         assertEquals(5, l.size());
@@ -218,7 +218,7 @@ public class EntryLogicImplTest extends AbstractTransactionalSpringContextTests 
         assertTrue(l.contains(tdp.entry6_b2));
         assertTrue(!l.contains(tdp.entry7_b3));
 
-        l = logicImpl.getAllVisibleEntries(new Long[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() }, TestDataPreload.USER_ID,
+        l = logicImpl.getAllVisibleEntries(new String[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() }, TestDataPreload.USER_ID,
                 null, false, 0, 0);
         assertNotNull(l);
         assertEquals(5, l.size());
@@ -230,7 +230,7 @@ public class EntryLogicImplTest extends AbstractTransactionalSpringContextTests 
         assertTrue(!l.contains(tdp.entry6_b2));
         assertTrue(!l.contains(tdp.entry7_b3));
 
-        l = logicImpl.getAllVisibleEntries(new Long[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() },
+        l = logicImpl.getAllVisibleEntries(new String[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() },
                 TestDataPreload.ACCESS_USER_ID, null, false, 0, 0);
         assertNotNull(l);
         assertEquals(3, l.size());
@@ -242,7 +242,7 @@ public class EntryLogicImplTest extends AbstractTransactionalSpringContextTests 
         assertTrue(!l.contains(tdp.entry6_b2));
         assertTrue(!l.contains(tdp.entry7_b3));
 
-        l = logicImpl.getAllVisibleEntries(new Long[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() },
+        l = logicImpl.getAllVisibleEntries(new String[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() },
                 TestDataPreload.INVALID_USER_ID, null, false, 0, 0);
         assertNotNull(l);
         assertEquals(2, l.size());
@@ -273,7 +273,7 @@ public class EntryLogicImplTest extends AbstractTransactionalSpringContextTests 
         Assert.assertEquals(tdp.entry2_b1, entry);
 
         // test get entry by invalid id returns null
-        entry = logicImpl.getEntryById(new Long(-1), TestDataPreload.LOCATION1_ID);
+        entry = logicImpl.getEntryById("thingummy", TestDataPreload.LOCATION1_ID);
         Assert.assertNull(entry);
 
         // test get entry with perms fails (USER_ID)

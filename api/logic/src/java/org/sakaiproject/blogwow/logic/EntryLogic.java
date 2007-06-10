@@ -32,7 +32,7 @@ public interface EntryLogic {
      *            a unique id which represents the current location of the user (entity reference)
      * @return a blog wow entry or null if not found
      */
-    public BlogWowEntry getEntryById(Long entryId, String locationId);
+    public BlogWowEntry getEntryById(String entryId, String locationId);
 
     /**
      * Create or update a blog entry
@@ -52,7 +52,7 @@ public interface EntryLogic {
      * @param locationId
      *            a unique id which represents the current location of the user (entity reference)
      */
-    public void removeEntry(Long entryId, String locationId);
+    public void removeEntry(String entryId, String locationId);
 
     /**
      * Get all blog entries which are visible to a specific user
@@ -71,7 +71,7 @@ public interface EntryLogic {
      *            the maximum number of entries to return, 0 returns as many entries as possible
      * @return a list of {@link BlogWowEntry} objects
      */
-    public List<BlogWowEntry> getAllVisibleEntries(Long blogId, String userId, String sortProperty, boolean ascending, int start, int limit);
+    public List<BlogWowEntry> getAllVisibleEntries(String blogId, String userId, String sortProperty, boolean ascending, int start, int limit);
 
     /**
      * Efficiency method which gets all blog entries which are visible to a specific user for an array of blogs
@@ -90,7 +90,7 @@ public interface EntryLogic {
      *            the maximum number of entries to return, 0 returns as many entries as possible
      * @return a list of {@link BlogWowEntry} objects
      */
-    public List<BlogWowEntry> getAllVisibleEntries(Long[] blogIds, String userId, String sortProperty, boolean ascending, int start,
+    public List<BlogWowEntry> getAllVisibleEntries(String[] blogIds, String userId, String sortProperty, boolean ascending, int start,
             int limit);
 
     // PERMISSIONS
@@ -104,6 +104,6 @@ public interface EntryLogic {
      *            the internal user id (not username)
      * @return true if this entry can be udpated or removed by this user, false otherwise
      */
-    public boolean canWriteEntry(Long entryId, String userId);
+    public boolean canWriteEntry(String entryId, String userId);
 
 }

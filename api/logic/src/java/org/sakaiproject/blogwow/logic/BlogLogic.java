@@ -29,7 +29,7 @@ public interface BlogLogic {
      *            the id of a {@link BlogWowBlog} object
      * @return a blog or null if not found
      */
-    public BlogWowBlog getBlogById(Long blogId);
+    public BlogWowBlog getBlogById(String blogId);
 
     /**
      * Get a blog based on a location and user, if none found then one is created for the user (if they have appropriate permissions)
@@ -82,6 +82,6 @@ public interface BlogLogic {
      *            the internal user id (not username)
      * @return true if blog can be modified, false otherwise
      */
-    public boolean canWriteBlog(Long blogId, String locationId, String userId);
+    public boolean canWriteBlog(String blogId, String locationId, String userId);
 
 }

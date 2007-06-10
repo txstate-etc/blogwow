@@ -56,8 +56,8 @@ public class EntryLogicImpl implements EntryLogic {
      * @see org.sakaiproject.blogwow.logic.EntryLogic#getAllVisibleEntries(java.lang.Long, java.lang.String, java.lang.String, boolean, int,
      *      int)
      */
-    public List<BlogWowEntry> getAllVisibleEntries(Long blogId, String userId, String sortProperty, boolean ascending, int start, int limit) {
-        return getAllVisibleEntries(new Long[] { blogId }, userId, sortProperty, ascending, start, limit);
+    public List<BlogWowEntry> getAllVisibleEntries(String blogId, String userId, String sortProperty, boolean ascending, int start, int limit) {
+        return getAllVisibleEntries(new String[] { blogId }, userId, sortProperty, ascending, start, limit);
     }
 
     /*
@@ -67,7 +67,7 @@ public class EntryLogicImpl implements EntryLogic {
      *      int, int)
      */
     @SuppressWarnings("unchecked")
-    public List<BlogWowEntry> getAllVisibleEntries(Long[] blogIds, String userId, String sortProperty, boolean ascending, int start,
+    public List<BlogWowEntry> getAllVisibleEntries(String[] blogIds, String userId, String sortProperty, boolean ascending, int start,
             int limit) {
 
         if (sortProperty == null) {
@@ -98,8 +98,8 @@ public class EntryLogicImpl implements EntryLogic {
                     readLocations.add(location);
                 }
             }
-            String[] readLocsArray = (String[]) readLocations.toArray(new String[] {});
-            String[] readAnyLocsArray = (String[]) readAnyLocations.toArray(new String[] {});
+            String[] readLocsArray = readLocations.toArray(new String[] {});
+            String[] readAnyLocsArray = readAnyLocations.toArray(new String[] {});
 
             l = dao.getBlogPermEntries(blogIds, userId, readLocsArray, readAnyLocsArray, sortProperty, ascending, start, limit);
         }
@@ -112,7 +112,7 @@ public class EntryLogicImpl implements EntryLogic {
      * 
      * @see org.sakaiproject.blogwow.logic.EntryLogic#getEntryById(java.lang.Long, java.lang.String)
      */
-    public BlogWowEntry getEntryById(Long entryId, String locationId) {
+    public BlogWowEntry getEntryById(String entryId, String locationId) {
         String currentUserId = externalLogic.getCurrentUserId();
         BlogWowEntry entry = (BlogWowEntry) dao.findById(BlogWowEntry.class, entryId);
         if (entry == null) {
@@ -142,8 +142,8 @@ public class EntryLogicImpl implements EntryLogic {
      * 
      * @see org.sakaiproject.blogwow.logic.EntryLogic#removeEntry(java.lang.Long, java.lang.String)
      */
-    @SuppressWarnings("unchecked")
-    public void removeEntry(Long entryId, String locationId) {
+    // Note: This method *should* execute in a transaction, although note that our logic API currently does no guarding of its own
+    public void removeEntry(String entryId, String locationId) {
         String currentUserId = externalLogic.getCurrentUserId();
         BlogWowEntry entry = getEntryById(entryId, locationId);
         if (canWriteEntry(entryId, currentUserId)) {
@@ -151,17 +151,12 @@ public class EntryLogicImpl implements EntryLogic {
             if (l.size() == 0) {
                 dao.delete(entry);
             } else {
-                Set[] entitySets = new HashSet[2];
-                entitySets[0] = new HashSet<BlogWowComment>();
+                Set<BlogWowComment> comset = new HashSet<BlogWowComment>();
                 for (Iterator iter = l.iterator(); iter.hasNext();) {
                     BlogWowComment comment = (BlogWowComment) iter.next();
-                    entitySets[0].add(comment);
+                    comset.add(comment);
                 }
-
-                entitySets[1] = new HashSet<BlogWowEntry>();
-                entitySets[1].add(entry);
-
-                dao.deleteMixedSet(entitySets);
+                dao.delete(entry);
             }
         } else {
             throw new SecurityException(currentUserId + " cannot remove this entry (" + entryId + ") in location: " + locationId);
@@ -196,7 +191,7 @@ public class EntryLogicImpl implements EntryLogic {
      * 
      * @see org.sakaiproject.blogwow.logic.EntryLogic#canWriteEntry(java.lang.Long, java.lang.String)
      */
-    public boolean canWriteEntry(Long entryId, String userId) {
+    public boolean canWriteEntry(String entryId, String userId) {
         BlogWowEntry entry = (BlogWowEntry) dao.findById(BlogWowEntry.class, entryId);
         if (entry == null) {
             throw new IllegalArgumentException("blog entry id is invalid: " + entryId);

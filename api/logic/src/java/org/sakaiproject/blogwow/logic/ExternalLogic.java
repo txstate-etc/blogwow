@@ -94,7 +94,7 @@ public interface ExternalLogic {
      *            the id of a {@link BlogWowBlog} object
      * @return the full url for the rss feed
      */
-    public String getBlogRssUrl(Long blogId);
+    public String getBlogRssUrl(String blogId);
 
     /**
      * Get the Full URL to the rss feed for all blogs in a location

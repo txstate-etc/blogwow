@@ -9,10 +9,8 @@
    <class name="org.sakaiproject.blogwow.model.BlogWowBlog" table="blogwow_BLOG">
 
       <!-- create the primary key id, using native is typically the best way -->
-      <id name="id" type="long">
-         <generator class="native">
-            <param name="sequence">blogwow_BLOG_ID_SEQ</param>
-         </generator>
+      <id name="id" type="string">
+         <generator class="uuid.hex"/>
       </id>
       <property name="ownerId" type="string" length="255" not-null="true" />
       <property name="location" type="string" length="255" not-null="true" />

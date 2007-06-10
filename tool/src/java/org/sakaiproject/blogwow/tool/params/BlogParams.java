@@ -1,7 +1,5 @@
 package org.sakaiproject.blogwow.tool.params;
 
-import uk.org.ponder.rsf.viewstate.SimpleViewParameters;
-
 /*
  * These view parameters specify what you need to pull up a single
  * blog. The location of the blog and the owner's userId.
@@ -10,25 +8,14 @@ import uk.org.ponder.rsf.viewstate.SimpleViewParameters;
  *   /site/chem101 or
  *   /user/userid
  */
-public class BlogParams extends SimpleViewParameters {
-  public String blogid;
+public class BlogParams extends BlogEntryParams {
   
-  public String entryid;
   public boolean showcomments;
   public boolean addcomment;
   
   public BlogParams() {}
-  public BlogParams(String viewid) {
-    this.viewID = viewid;
-  }
-  
-  public BlogParams(String viewid, String blogid) {
-    this.viewID = viewid;
-    this.blogid = blogid;
-    this.showcomments = false;
-    this.addcomment = false;
-  }
-  
+
+ 
   public BlogParams(String viewid, String blogid, String entryid, boolean showcomments) {
       this.viewID = viewid;
       this.blogid = blogid;
@@ -43,9 +30,5 @@ public class BlogParams extends SimpleViewParameters {
       this.entryid = entryid;
       this.showcomments = showcomments;
       this.addcomment = addcomment;
-  }
-  
-  public String getParseSpec() {
-    return super.getParseSpec() + ",blogid,entryid,showcomments,addcomment";
   }
 }

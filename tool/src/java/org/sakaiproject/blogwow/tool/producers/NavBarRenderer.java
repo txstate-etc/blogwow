@@ -2,7 +2,7 @@ package org.sakaiproject.blogwow.tool.producers;
 
 import org.sakaiproject.blogwow.logic.BlogLogic;
 import org.sakaiproject.blogwow.model.BlogWowBlog;
-import org.sakaiproject.blogwow.tool.params.BlogParams;
+import org.sakaiproject.blogwow.tool.params.SimpleBlogParams;
 import org.sakaiproject.site.api.Site;
 
 import uk.org.ponder.rsf.components.UIContainer;
@@ -52,7 +52,7 @@ public class NavBarRenderer {
                 UIInternalLink.make(joint, "item:link", 
                         UIMessage.make("blogwow.navbar.settings"), 
                         //new BlogParams(MySettingsProducer.VIEWID, blogfinder.getBlogID(site.getReference(), userid)));
-                        new BlogParams(MySettingsProducer.VIEWID, blogId));
+                        new SimpleBlogParams(MySettingsProducer.VIEWID, blogId));
             }
         }
 

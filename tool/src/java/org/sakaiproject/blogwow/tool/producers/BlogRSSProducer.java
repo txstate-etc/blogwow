@@ -40,7 +40,7 @@ ContentTypeReporter
         String currentUserId = externalLogic.getCurrentUserId();
 
         BlogRssViewParams params = (BlogRssViewParams) viewparams;
-        Long blogId = params.blogId;
+        String blogId = params.blogId;
         String locationId = params.locationId;
 
         List<BlogWowEntry> entries = new ArrayList<BlogWowEntry>();
@@ -52,9 +52,9 @@ ContentTypeReporter
         } else if (locationId != null) {
             UIOutput.make(tofill, "channel-title", externalLogic.getLocationTitle(locationId));
             List<BlogWowBlog> blogs = blogLogic.getAllVisibleBlogs(locationId, null, true, 0, 10);
-            Long[] blogIds = new Long[blogs.size()];
+            String[] blogIds = new String[blogs.size()];
             for (int i=0; i<blogs.size(); i++) {
-                blogIds[i] = ((BlogWowBlog)blogs.get(i)).getId();
+                blogIds[i] = (blogs.get(i)).getId();
             }
             entries = entryLogic.getAllVisibleEntries(blogIds, currentUserId, null, true, 0, 10);                        
         }

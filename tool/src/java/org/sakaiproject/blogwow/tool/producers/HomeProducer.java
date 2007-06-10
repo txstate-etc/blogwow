@@ -10,7 +10,7 @@ import org.sakaiproject.blogwow.logic.ExternalLogic;
 import org.sakaiproject.blogwow.model.BlogWowBlog;
 import org.sakaiproject.blogwow.model.BlogWowEntry;
 import org.sakaiproject.blogwow.tool.beans.MugshotGenerator;
-import org.sakaiproject.blogwow.tool.params.BlogParams;
+import org.sakaiproject.blogwow.tool.params.SimpleBlogParams;
 
 import uk.org.ponder.rsf.components.UIBranchContainer;
 import uk.org.ponder.rsf.components.UIContainer;
@@ -50,7 +50,9 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
         navBarRenderer.makeNavBar(tofill, "navIntraTool:", VIEWID);
 
         BlogWowBlog myblog = blogLogic.getBlogByLocationAndUser(locationId, currentUserId );
-        UIInternalLink.make(tofill, "my-blog-link", UIMessage.make("blogwow.homepage.userbloglink"), new BlogParams(BlogViewProducer.VIEWID, myblog.getId().toString()));
+        UIInternalLink.make(tofill, "my-blog-link", 
+                UIMessage.make("blogwow.homepage.userbloglink"), 
+                new SimpleBlogParams(BlogViewProducer.VIEWID, myblog.getId().toString()));
 
         List<BlogWowEntry> myentries = entryLogic.getAllVisibleEntries(myblog.getId(), currentUserId, null, true, 0, 1);
         if (myentries.size() > 0) {
@@ -69,7 +71,8 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
             UIBranchContainer row = UIBranchContainer.make(blogsTable, "row:", i+"");
             BlogWowBlog blog = blogs.get(i);
             UILink.make(row, "user-icon", mugshotGenerator.getMugshotUrl(blog.getOwnerId()));
-            UIInternalLink.make(row, "blog-title-link", blog.getTitle(), new BlogParams(BlogViewProducer.VIEWID, blog.getId().toString()));
+            UIInternalLink.make(row, "blog-title-link", blog.getTitle(), 
+                    new SimpleBlogParams(BlogViewProducer.VIEWID, blog.getId().toString()));
             List<BlogWowEntry> entries = entryLogic.getAllVisibleEntries(blog.getId(), currentUserId, null, true, 0, 1000);
             UIOutput.make(row, "number-of-entries", entries.size()+"");
             if (entries.size() > 0) {

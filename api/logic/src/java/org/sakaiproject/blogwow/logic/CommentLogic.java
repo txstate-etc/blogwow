@@ -32,7 +32,7 @@ public interface CommentLogic {
      *            a unique id which represents the current location of the user (entity reference)
      * @return a blog comment or null if not found
      */
-    public BlogWowComment getCommentById(Long commentId, String locationId);
+    public BlogWowComment getCommentById(String commentId, String locationId);
 
     /**
      * Create a comment if the current user is allowed to and it is new (changing existing comments is not allowed)
@@ -53,7 +53,7 @@ public interface CommentLogic {
      * @param locationId
      *            a unique id which represents the current location of the user (entity reference)
      */
-    public void removeComment(Long commentId, String locationId);
+    public void removeComment(String commentId, String locationId);
 
     /**
      * Gets the comments for an entry (only readable if the entry is readable)
@@ -70,7 +70,7 @@ public interface CommentLogic {
      *            the maximum number of entries to return, 0 returns as many entries as possible
      * @return a list of {@link BlogWowComment} objects
      */
-    public List<BlogWowComment> getComments(Long entryId, String sortProperty, boolean ascending, int start, int limit);
+    public List<BlogWowComment> getComments(String entryId, String sortProperty, boolean ascending, int start, int limit);
 
     // PERMISSIONS
 
@@ -83,7 +83,7 @@ public interface CommentLogic {
      *            the internal user id (not username)
      * @return true if the user can remove this comment, false otherwise
      */
-    public boolean canRemoveComment(Long commentId, String userId);
+    public boolean canRemoveComment(String commentId, String userId);
 
     /**
      * Check if a user can add a comment to a blog, owners can always add comments to their blogs and anyone with the add comment permission
@@ -94,6 +94,6 @@ public interface CommentLogic {
      *            the internal user id (not username)
      * @return true if they can add a comment, false otherwise
      */
-    public boolean canAddComment(Long entryId, String userId);
+    public boolean canAddComment(String entryId, String userId);
 
 }

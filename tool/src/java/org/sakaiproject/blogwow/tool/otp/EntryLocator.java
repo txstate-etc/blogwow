@@ -35,7 +35,7 @@ public class EntryLocator implements BeanLocator {
                 BlogWowBlog blog = blogLogic.getBlogByLocationAndUser(locationId, currentUserId);
                 togo = new BlogWowEntry(blog, currentUserId, null, null, BlogConstants.PRIVACY_PUBLIC, null);
             } else {
-                togo = entryLogic.getEntryById(new Long(name), locationId);
+                togo = entryLogic.getEntryById(name, locationId);
             }
             delivered.put(name, togo);
         }

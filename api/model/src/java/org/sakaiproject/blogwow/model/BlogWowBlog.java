@@ -20,7 +20,7 @@ import java.util.Date;
  */
 public class BlogWowBlog {
 
-    private Long id;
+    private String id;
 
     private String ownerId; // Sakai userId
 
@@ -76,11 +76,11 @@ public class BlogWowBlog {
         this.dateCreated = dateCreated;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

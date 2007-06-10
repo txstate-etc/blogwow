@@ -9,10 +9,8 @@
    <class name="org.sakaiproject.blogwow.model.BlogWowEntry" table="blogwow_ENTRY">
 
       <!-- create the primary key id, using native is typically the best way -->
-      <id name="id" type="long">
-         <generator class="native">
-            <param name="sequence">blogwow_ENTRY_ID_SEQ</param>
-         </generator>
+      <id name="id" type="string">
+         <generator class="uuid.hex"/>
       </id>
       <!-- linkage to the blog -->
       <many-to-one name="blog" class="org.sakaiproject.blogwow.model.BlogWowBlog" fetch="join">

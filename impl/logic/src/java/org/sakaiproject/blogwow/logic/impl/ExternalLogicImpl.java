@@ -95,7 +95,7 @@ public class ExternalLogicImpl implements ExternalLogic {
 
     public String getCurrentLocationId() {
         try {
-            Site s = (Site) siteService.getSite(toolManager.getCurrentPlacement().getContext());
+            Site s = siteService.getSite(toolManager.getCurrentPlacement().getContext());
             return s.getReference(); // get the entity reference to the site
         } catch (IdUnusedException e) {
             return NO_LOCATION;
@@ -151,9 +151,9 @@ public class ExternalLogicImpl implements ExternalLogic {
         return false;
     }
 
-    public String getBlogRssUrl(Long blogId) {
+    public String getBlogRssUrl(String blogId) {
         return entityBroker.getEntityURL(
-                new IdEntityReference(BlogRssEntityProvider.ENTITY_PREFIX, blogId.toString()).toString());
+                new IdEntityReference(BlogRssEntityProvider.ENTITY_PREFIX, blogId).toString());
     }
 
     public String getBlogLocationRssUrl(String locationId) {

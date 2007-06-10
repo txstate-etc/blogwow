@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.sakaiproject.blogwow.model.constants.BlogConstants;
 import org.sakaiproject.blogwow.tool.otp.EntryLocator;
-import org.sakaiproject.blogwow.tool.params.BlogParams;
+import org.sakaiproject.blogwow.tool.params.BlogEntryParams;
 
 import uk.org.ponder.messageutil.MessageLocator;
 import uk.org.ponder.rsf.components.UICommand;
@@ -40,7 +40,7 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
 
 
     public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
-        BlogParams params = (BlogParams) viewparams;
+        BlogEntryParams params = (BlogEntryParams) viewparams;
 
         String entryLocator = "EntryLocator";
         String entryOTP = null;
@@ -104,7 +104,7 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
     }
 
     public ViewParameters getViewParameters() {
-        return new BlogParams();
+        return new BlogEntryParams();
     }
 
     public List reportNavigationCases() {

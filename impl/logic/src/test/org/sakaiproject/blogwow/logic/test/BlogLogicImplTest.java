@@ -177,7 +177,7 @@ public class BlogLogicImplTest extends AbstractTransactionalSpringContextTests {
         Assert.assertEquals(tdp.blog1, blog);
 
         // test get eval by invalid id returns null
-        blog = logicImpl.getBlogById(new Long(-1));
+        blog = logicImpl.getBlogById("Thingummy");
         Assert.assertNull(blog);
     }
 

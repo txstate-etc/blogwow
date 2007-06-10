@@ -104,7 +104,7 @@ public class BlogLogicImpl implements BlogLogic {
      * 
      * @see org.sakaiproject.blogwow.logic.BlogLogic#getBlogById(java.lang.Long)
      */
-    public BlogWowBlog getBlogById(Long blogId) {
+    public BlogWowBlog getBlogById(String blogId) {
         return (BlogWowBlog) dao.findById(BlogWowBlog.class, blogId);
     }
 
@@ -137,7 +137,7 @@ public class BlogLogicImpl implements BlogLogic {
      * 
      * @see org.sakaiproject.blogwow.logic.BlogLogic#canWriteBlog(java.lang.Long, java.lang.String, java.lang.String)
      */
-    public boolean canWriteBlog(Long blogId, String locationId, String userId) {
+    public boolean canWriteBlog(String blogId, String locationId, String userId) {
         BlogWowBlog blog = getBlogById(blogId);
         if (!locationId.equals(blog.getLocation())) {
             // the location must match with the one in the blog

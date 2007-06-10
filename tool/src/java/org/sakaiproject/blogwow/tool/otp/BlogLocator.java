@@ -27,7 +27,7 @@ public class BlogLocator implements BeanLocator {
                 // create the new object
                 togo = new BlogWowBlog(externalLogic.getCurrentLocationId(), externalLogic.getCurrentLocationId(), null);
             } else {
-                togo = blogLogic.getBlogById(new Long(name));
+                togo = blogLogic.getBlogById(name);
             }
             delivered.put(name, togo);
         }

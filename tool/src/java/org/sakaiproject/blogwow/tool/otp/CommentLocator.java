@@ -28,7 +28,7 @@ public class CommentLocator implements BeanLocator {
                 // create the new object
                 togo = new BlogWowComment(null, externalLogic.getCurrentLocationId(), null, new Date());
             } else {
-                togo = commentLogic.getCommentById(new Long(name), externalLogic.getCurrentLocationId());
+                togo = commentLogic.getCommentById(name, externalLogic.getCurrentLocationId());
             }
             delivered.put(name, togo);
         }

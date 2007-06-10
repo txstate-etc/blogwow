@@ -20,7 +20,7 @@ import uk.org.ponder.rsf.viewstate.SimpleViewParameters;
  */
 public class BlogRssViewParams extends SimpleViewParameters {
 
-    public Long blogId;
+    public String blogId;
     public String locationId;
 
     public BlogRssViewParams() {
@@ -31,18 +31,12 @@ public class BlogRssViewParams extends SimpleViewParameters {
      * @param viewid
      * @param blogId
      */
-    public BlogRssViewParams(String viewid, Long blogId) {
+    public BlogRssViewParams(String viewid, String blogId, String locationId) {
         this.viewID = viewid;
+        if (blogId != null && locationId != null) {
+            throw new IllegalArgumentException("At most one of blogId and locationId can be set");
+        }
         this.blogId = blogId;
-    }
-
-    /**
-     * Used for RSS for a group of blogs related to a location
-     * @param viewid
-     * @param locationId
-     */
-    public BlogRssViewParams(String viewid, String locationId) {
-        this.viewID = viewid;
         this.locationId = locationId;
     }
 

@@ -32,7 +32,7 @@ public interface BlogWowDao extends CompleteGenericDao {
      *            an array of unique ids of {@link BlogWowBlog}
      * @return a list of unique {@link String}s which represent locations
      */
-    public List getLocationsForBlogsIds(Long[] blogIds);
+    public List getLocationsForBlogsIds(String[] blogIds);
 
     /**
      * Get blog entries efficiently using sakai permissions
@@ -57,7 +57,7 @@ public interface BlogWowDao extends CompleteGenericDao {
      *            the maximum number of entries to return, 0 returns as many entries as possible
      * @return a list of {@link BlogWowEntry} objects
      */
-    public List getBlogPermEntries(Long[] blogIds, String userId, String[] readLocations, String[] readAnyLocations, String sortProperty,
+    public List getBlogPermEntries(String[] blogIds, String userId, String[] readLocations, String[] readAnyLocations, String sortProperty,
             boolean ascending, int start, int limit);
 
 }

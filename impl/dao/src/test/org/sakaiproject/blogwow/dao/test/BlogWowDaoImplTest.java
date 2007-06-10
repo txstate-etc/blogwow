@@ -65,41 +65,41 @@ public class BlogWowDaoImplTest extends AbstractTransactionalSpringContextTests 
      */
 
     /**
-     * Test method for {@link org.sakaiproject.blogwow.dao.impl.BlogWowDaoImpl#getLocationsForBlogsIds(java.lang.Long[])}.
+     * Test method for {@link org.sakaiproject.blogwow.dao.impl.BlogWowDaoImpl#getLocationsForBlogsIds(java.lang.String[])}.
      */
     public void testGetLocationsForBlogsIds() {
         List locs = null;
 
-        locs = dao.getLocationsForBlogsIds(new Long[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() });
+        locs = dao.getLocationsForBlogsIds(new String[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() });
         assertNotNull(locs);
         assertEquals(2, locs.size());
         assertTrue(locs.contains(TestDataPreload.LOCATION1_ID));
         assertTrue(locs.contains(TestDataPreload.LOCATION2_ID));
 
-        locs = dao.getLocationsForBlogsIds(new Long[] { tdp.blog1.getId() });
+        locs = dao.getLocationsForBlogsIds(new String[] { tdp.blog1.getId() });
         assertNotNull(locs);
         assertEquals(1, locs.size());
         assertTrue(locs.contains(TestDataPreload.LOCATION1_ID));
 
-        locs = dao.getLocationsForBlogsIds(new Long[] { tdp.blog3.getId() });
+        locs = dao.getLocationsForBlogsIds(new String[] { tdp.blog3.getId() });
         assertNotNull(locs);
         assertEquals(1, locs.size());
         assertTrue(locs.contains(TestDataPreload.LOCATION2_ID));
 
-        locs = dao.getLocationsForBlogsIds(new Long[] {});
+        locs = dao.getLocationsForBlogsIds(new String[] {});
         assertNotNull(locs);
         assertEquals(0, locs.size());
     }
 
     /**
      * Test method for
-     * {@link org.sakaiproject.blogwow.dao.impl.BlogWowDaoImpl#getBlogPermEntries(Long[], String, String[], String[], String, boolean, int, int)}.
+     * {@link org.sakaiproject.blogwow.dao.impl.BlogWowDaoImpl#getBlogPermEntries(String[], String, String[], String[], String, boolean, int, int)}.
      */
     public void testGetBlogPermEntries() {
         List entries = null;
 
         // get all public entries
-        entries = dao.getBlogPermEntries(new Long[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() }, null, null, null, null,
+        entries = dao.getBlogPermEntries(new String[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() }, null, null, null, null,
                 false, 0, 0);
         assertNotNull(entries);
         assertEquals(2, entries.size());
@@ -107,13 +107,13 @@ public class BlogWowDaoImplTest extends AbstractTransactionalSpringContextTests 
         assertTrue(entries.contains(tdp.entry5_b2));
 
         // get only blog 1 public entries
-        entries = dao.getBlogPermEntries(new Long[] { tdp.blog1.getId() }, null, null, null, null, false, 0, 0);
+        entries = dao.getBlogPermEntries(new String[] { tdp.blog1.getId() }, null, null, null, null, false, 0, 0);
         assertNotNull(entries);
         assertEquals(1, entries.size());
         assertTrue(entries.contains(tdp.entry1_b1));
 
         // get all entries for user
-        entries = dao.getBlogPermEntries(new Long[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() }, TestDataPreload.USER_ID,
+        entries = dao.getBlogPermEntries(new String[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() }, TestDataPreload.USER_ID,
                 new String[] { TestDataPreload.LOCATION1_ID }, null, null, false, 0, 0);
         assertNotNull(entries);
         assertEquals(5, entries.size());
@@ -124,7 +124,7 @@ public class BlogWowDaoImplTest extends AbstractTransactionalSpringContextTests 
         assertTrue(entries.contains(tdp.entry5_b2));
 
         // get all entries for maint user
-        entries = dao.getBlogPermEntries(new Long[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() },
+        entries = dao.getBlogPermEntries(new String[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() },
                 TestDataPreload.MAINT_USER_ID, new String[] { TestDataPreload.LOCATION1_ID },
                 new String[] { TestDataPreload.LOCATION1_ID }, null, false, 0, 0);
         assertNotNull(entries);
@@ -136,14 +136,14 @@ public class BlogWowDaoImplTest extends AbstractTransactionalSpringContextTests 
         assertTrue(entries.contains(tdp.entry6_b2));
 
         // get all entries for user with limits
-        entries = dao.getBlogPermEntries(new Long[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() }, TestDataPreload.USER_ID,
+        entries = dao.getBlogPermEntries(new String[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() }, TestDataPreload.USER_ID,
                 new String[] { TestDataPreload.LOCATION1_ID }, null, null, false, 3, 0);
         assertNotNull(entries);
         assertEquals(2, entries.size());
         assertTrue(entries.contains(tdp.entry2_b1));
         assertTrue(entries.contains(tdp.entry1_b1));
 
-        entries = dao.getBlogPermEntries(new Long[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() }, TestDataPreload.USER_ID,
+        entries = dao.getBlogPermEntries(new String[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() }, TestDataPreload.USER_ID,
                 new String[] { TestDataPreload.LOCATION1_ID }, null, null, false, 2, 2);
         assertNotNull(entries);
         assertEquals(2, entries.size());

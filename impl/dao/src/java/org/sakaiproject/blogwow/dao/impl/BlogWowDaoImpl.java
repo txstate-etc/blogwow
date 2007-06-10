@@ -42,7 +42,7 @@ public class BlogWowDaoImpl extends HibernateCompleteGenericDao implements BlogW
      * 
      * @see org.sakaiproject.blogwow.dao.BlogWowDao#getLocationsForBlogsIds(java.lang.Long[])
      */
-    public List getLocationsForBlogsIds(Long[] blogIds) {
+    public List getLocationsForBlogsIds(String[] blogIds) {
         String hql = "select distinct blog.location from BlogWowBlog blog where blog.id in " + arrayToInString(blogIds)
                 + " order by blog.location";
         return getHibernateTemplate().find(hql);
@@ -62,7 +62,8 @@ public class BlogWowDaoImpl extends HibernateCompleteGenericDao implements BlogW
      * @see org.sakaiproject.blogwow.dao.BlogWowDao#getBlogPermEntries(java.lang.Long[], java.lang.String, java.lang.String[],
      *      java.lang.String[], java.lang.String, boolean, int, int)
      */
-    public List getBlogPermEntries(Long[] blogIds, String userId, String[] readLocations, String[] readAnyLocations, String sortProperty,
+    public List getBlogPermEntries(String[] blogIds, String userId, 
+            String[] readLocations, String[] readAnyLocations, String sortProperty,
             boolean ascending, int start, int limit) {
 
         // * rules to determine which entries to get
@@ -208,7 +209,7 @@ public class BlogWowDaoImpl extends HibernateCompleteGenericDao implements BlogW
             }
         }
     }
-
+    
     /**
      * Turn an array into a string like "('item1','item2','item3')"
      * 
