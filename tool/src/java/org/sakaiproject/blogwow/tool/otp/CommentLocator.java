@@ -26,7 +26,7 @@ public class CommentLocator implements BeanLocator {
         if (togo == null) {
             if (name.startsWith(NEW_PREFIX)) {
                 // create the new object
-                togo = new BlogWowComment(null, externalLogic.getCurrentLocationId(), null, new Date());
+                togo = new BlogWowComment(null, externalLogic.getCurrentUserId(), null, new Date(), new Date());
             } else {
                 togo = commentLogic.getCommentById(name, externalLogic.getCurrentLocationId());
             }

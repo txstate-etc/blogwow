@@ -55,6 +55,8 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
 
     public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
 
+        UIMessage.make(tofill, "page-title", "blogwow.blogview.title");
+
         String entryLocator = "EntryLocator";
         String commentLocator = "CommentLocator";
         String currentUserId = externalLogic.getCurrentUserId();
@@ -116,12 +118,12 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
                 removelink.decorators = new DecoratorList(new UIFreeAttributeDecorator(attr));
             }
 
-            List<BlogWowComment> comments = commentLogic.getComments(entry.getId(), null, true, 0, 10000);
+            List<BlogWowComment> comments = commentLogic.getComments(entry.getId(), null, true, 0, 0);
             UIInternalLink.make(entrydiv, "comments-link", UIMessage.make("blogwow.blogview.comments",
-                    new Object[] { (comments.size() + "") }), new BlogParams(BlogViewProducer.VIEW_ID, blog.getId().toString(), entry
-                            .getId().toString(), true));
+                    new Object[] { (comments.size() + "") }), 
+                    new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(), entry.getId(), true));
             UIInternalLink.make(entrydiv, "add-comment-link", UIMessage.make("blogwow.blogview.addcomment"), new BlogParams(
-                    BlogViewProducer.VIEW_ID, blog.getId().toString(), entry.getId().toString(), true, true));
+                    BlogViewProducer.VIEW_ID, blog.getId(), entry.getId(), true, true));
 
             // Render Comments if they are visible
             if (params.showcomments) {
@@ -130,8 +132,8 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
                     UIBranchContainer commentdiv = UIBranchContainer.make(entrydiv, "comment-div:", j + "");
                     String username = externalLogic.getUserDisplayName(comment.getOwnerId());
 
-                    UIMessage.make(commentdiv, "comment-header", "blogwow.comments.commentstitle", new Object[] { username,
-                            comment.getDateCreated() });
+                    UIMessage.make(commentdiv, "comment-header", "blogwow.comments.commentstitle", 
+                            new Object[] { username, df.format(comment.getDateCreated()) });
                     UIOutput.make(commentdiv, "comment-text", comment.getText());
                 }
             }

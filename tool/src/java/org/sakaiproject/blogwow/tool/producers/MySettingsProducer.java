@@ -31,6 +31,9 @@ public class MySettingsProducer implements ViewComponentProducer, ViewParamsRepo
 
 
     public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
+
+        UIMessage.make(tofill, "page-title", "blogwow.settings.title");
+
         SimpleBlogParams params = (SimpleBlogParams) viewparams;
         String blogid = params.blogid;
 

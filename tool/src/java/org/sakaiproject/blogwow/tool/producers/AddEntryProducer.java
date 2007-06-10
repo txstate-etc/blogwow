@@ -43,6 +43,9 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
 
 
     public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
+
+        UIMessage.make(tofill, "page-title", "blogwow.add_edit.title");
+
         BlogEntryParams params = (BlogEntryParams) viewparams;
 
         String entryLocator = "EntryLocator";

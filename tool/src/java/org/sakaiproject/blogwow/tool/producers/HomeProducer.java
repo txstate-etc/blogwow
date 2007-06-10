@@ -44,6 +44,8 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
         String currentUserId = externalLogic.getCurrentUserId();
         String locationId = externalLogic.getCurrentLocationId();
 
+        UIMessage.make(tofill, "page-title", "blogwow.homepage.title");
+
         // use a date which is related to the current users locale
         DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
 
