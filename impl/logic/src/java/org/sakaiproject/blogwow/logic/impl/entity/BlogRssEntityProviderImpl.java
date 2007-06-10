@@ -43,7 +43,7 @@ public class BlogRssEntityProviderImpl implements BlogRssEntityProvider, CoreEnt
      * @see org.sakaiproject.entitybroker.entityprovider.CoreEntityProvider#entityExists(java.lang.String)
      */
     public boolean entityExists(String id) {
-        BlogWowBlog blog = blogLogic.getBlogById(new Long(id));
+        BlogWowBlog blog = blogLogic.getBlogById(id);
         if (blog == null) {
             return false;
         }
