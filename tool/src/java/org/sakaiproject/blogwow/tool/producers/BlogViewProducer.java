@@ -71,7 +71,13 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
         BlogWowBlog blog = blogLogic.getBlogById(params.blogid);
 
         UIOutput.make(tofill, "blog-title", blog.getTitle());
-        UIVerbatim.make(tofill, "profile-verbatim-text", blog.getProfile());
+        String profileText = blog.getProfile();
+        if (profileText == null || profileText.equals("")) {
+            UIMessage.make(tofill, "profile-verbatim-text", "blogwow.blogview.noprofile");
+        }
+        else {
+            UIVerbatim.make(tofill, "profile-verbatim-text", profileText);
+        }
         String profileImageUrl = blog.getIcon();
         if (profileImageUrl == null || profileImageUrl.equals("")) {
             profileImageUrl = "../images/sakaiger-600.png";
