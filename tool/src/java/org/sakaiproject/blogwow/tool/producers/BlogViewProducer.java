@@ -10,6 +10,7 @@ import java.util.Map;
 import org.sakaiproject.blogwow.logic.BlogLogic;
 import org.sakaiproject.blogwow.logic.CommentLogic;
 import org.sakaiproject.blogwow.logic.EntryLogic;
+import org.sakaiproject.blogwow.logic.ExternalLogic;
 import org.sakaiproject.blogwow.model.BlogWowBlog;
 import org.sakaiproject.blogwow.model.BlogWowComment;
 import org.sakaiproject.blogwow.model.BlogWowEntry;
@@ -57,7 +58,7 @@ ViewParamsReporter, NavigationCaseReporter {
     private String userid;
     private Locale locale;
     private Site site;
-    private UserDirectoryService userDirectoryService;
+    private ExternalLogic externalLogic;
 
     public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
 
@@ -126,12 +127,8 @@ ViewParamsReporter, NavigationCaseReporter {
                 for (int j = 0; j < comments.size(); j++) {
                     BlogWowComment comment = comments.get(j);
                     UIBranchContainer commentdiv = UIBranchContainer.make(entrydiv, "comment-div:", j+"");
-                    String username = "";
-                    try {
-                        username = userDirectoryService.getUser(comment.getOwnerId()).getDisplayName();
-                    } catch (UserNotDefinedException e) {
-                        throw UniversalRuntimeException.accumulate(e);
-                    }
+                    String username = externalLogic.getUserDisplayName(comment.getOwnerId());
+                    
                     UIMessage.make(commentdiv, "comment-header", "blogwow.comments.commentstitle", new Object[]{username, comment.getDateCreated()});
                     UIOutput.make(commentdiv, "comment-text", comment.getText());
                 }
@@ -191,8 +188,8 @@ ViewParamsReporter, NavigationCaseReporter {
         this.site = site;
     }
 
-    public void setUserDirectoryService(UserDirectoryService userDirectoryService) {
-        this.userDirectoryService = userDirectoryService;
+    public void setExternalLogic(ExternalLogic externalLogic) {
+        this.externalLogic = externalLogic;
     }
 
     public void setUserid(String userid) {

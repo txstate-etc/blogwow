@@ -32,7 +32,7 @@
       <property name="userid" ref="sakai-UserID" />
       <property name="locale" ref="requestLocale" />
       <property name="site" ref="sakai-Site" />
-      <property name="userDirectoryService" ref="org.sakaiproject.user.api.UserDirectoryService" />
+      <property name="externalLogic" ref="org.sakaiproject.blogwow.logic.ExternalLogic" />
    </bean>
 
    <bean class="org.sakaiproject.blogwow.tool.producers.HomeProducer">
