@@ -6,6 +6,7 @@ import java.util.List;
 import org.sakaiproject.blogwow.model.constants.BlogConstants;
 import org.sakaiproject.blogwow.tool.otp.EntryLocator;
 import org.sakaiproject.blogwow.tool.params.BlogEntryParams;
+import org.sakaiproject.blogwow.tool.params.SimpleBlogParams;
 
 import uk.org.ponder.messageutil.MessageLocator;
 import uk.org.ponder.rsf.components.UICommand;
@@ -19,6 +20,8 @@ import uk.org.ponder.rsf.components.UIVerbatim;
 import uk.org.ponder.rsf.components.decorators.DecoratorList;
 import uk.org.ponder.rsf.components.decorators.UILabelTargetDecorator;
 import uk.org.ponder.rsf.evolvers.TextInputEvolver;
+import uk.org.ponder.rsf.flow.ARIResult;
+import uk.org.ponder.rsf.flow.ActionResultInterceptor;
 import uk.org.ponder.rsf.flow.jsfnav.NavigationCase;
 import uk.org.ponder.rsf.flow.jsfnav.NavigationCaseReporter;
 import uk.org.ponder.rsf.view.ComponentChecker;
@@ -27,11 +30,11 @@ import uk.org.ponder.rsf.viewstate.SimpleViewParameters;
 import uk.org.ponder.rsf.viewstate.ViewParameters;
 import uk.org.ponder.rsf.viewstate.ViewParamsReporter;
 
-public class AddEntryProducer implements ViewComponentProducer, ViewParamsReporter, NavigationCaseReporter {
+public class AddEntryProducer implements ViewComponentProducer, ViewParamsReporter, NavigationCaseReporter, ActionResultInterceptor {
 
-    public static final String VIEWID = "add_entry";
+    public static final String VIEW_ID = "add_entry";
     public String getViewID() {
-        return VIEWID;
+        return VIEW_ID;
     }
 
     private NavBarRenderer navBarRenderer;
@@ -52,7 +55,7 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
             entryOTP = entryLocator + "." + params.entryid;
         }
 
-        navBarRenderer.makeNavBar(tofill, "navIntraTool:", VIEWID);
+        navBarRenderer.makeNavBar(tofill, "navIntraTool:", VIEW_ID);
 
         if (newentry) {
             UIMessage.make(tofill, "add-entry-header", "blogwow.add_edit.addheader");
@@ -77,7 +80,7 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
         String[] privacyRadioLabelKeys = new String[] { 
                 "blogwow.add_edit.private", 
                 "blogwow.add_edit.sitemembers",
-                "blogwow.add_edit.public" };
+        "blogwow.add_edit.public" };
 
         UISelect privacyRadios = UISelect.make(form, "privacy-radio-holder", privacyRadioValues, privacyRadioLabelKeys,
                 entryOTP + ".privacySetting", BlogConstants.PRIVACY_PUBLIC).setMessageKeys();
@@ -109,9 +112,18 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
 
     public List reportNavigationCases() {
         List<NavigationCase> l = new ArrayList<NavigationCase>();
-        l.add(new NavigationCase(null, new SimpleViewParameters(HomeProducer.VIEWID)));
+        l.add(new NavigationCase(null, new SimpleViewParameters(HomeProducer.VIEW_ID)));
         return l;
     }
+
+    public void interceptActionResult(ARIResult result, ViewParameters incoming, Object actionReturn) {
+        BlogEntryParams bep = (BlogEntryParams) incoming;
+        if (bep.blogid != null) {
+            result.resultingView = new SimpleBlogParams(BlogViewProducer.VIEW_ID, bep.blogid);
+        }    
+    }
+
+
 
     public void setMessageLocator(MessageLocator messageLocator) {
         this.messageLocator = messageLocator;

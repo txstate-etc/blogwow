@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.sakaiproject.authz.api.PermissionsHelper;
-import org.sakaiproject.site.api.Site;
+import org.sakaiproject.blogwow.logic.ExternalLogic;
 import org.sakaiproject.tool.api.SessionManager;
 import org.sakaiproject.tool.api.ToolSession;
 
@@ -25,38 +25,43 @@ import uk.org.ponder.rsf.viewstate.ViewParamsReporter;
  * 
  */
 public class PermissionsProducer implements ViewComponentProducer, ViewParamsReporter, NavigationCaseReporter {
-	public static final String HELPER = "sakai.permissions.helper";
-	public static final String VIEWID = "Permissions";
 
-	// Injection
+    public static final String VIEW_ID = "Permissions";
+    public String getViewID() {
+        return VIEW_ID;
+    }
+
+    // Injection
     private SessionManager sessionManager;
-    private Site site;
+    private ExternalLogic externalLogic;
     private MessageLocator messageLocator;
 
-	public String getViewID() {
-		return VIEWID;
-	}
+    private final String HELPER = "sakai.permissions.helper";
 
-	public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
-		ToolSession session = sessionManager.getCurrentToolSession();
+    public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
+        String locationId = externalLogic.getCurrentLocationId();
+        ToolSession session = sessionManager.getCurrentToolSession();
 
-		session.setAttribute(PermissionsHelper.TARGET_REF, site.getReference());
-		session.setAttribute(PermissionsHelper.DESCRIPTION, "Set mail permissions for " +  site.getTitle());
-		session.setAttribute(PermissionsHelper.PREFIX, "blogwow.");
+        session.setAttribute(PermissionsHelper.TARGET_REF, locationId);
+        session.setAttribute(PermissionsHelper.DESCRIPTION, 
+                messageLocator.getMessage("blogwow.permissions.header", externalLogic.getLocationTitle(locationId)) );
+        session.setAttribute(PermissionsHelper.PREFIX, "blogwow.");
 
-		UIOutput.make(tofill, HelperViewParameters.HELPER_ID, HELPER);
-		UICommand.make(tofill, HelperViewParameters.POST_HELPER_BINDING, "", null);
-	}
+        UIOutput.make(tofill, HelperViewParameters.HELPER_ID, HELPER);
+        UICommand.make(tofill, HelperViewParameters.POST_HELPER_BINDING, "", null);
+    }
 
-	public ViewParameters getViewParameters() {
-		return new HelperViewParameters();
-	}
+    public ViewParameters getViewParameters() {
+        return new HelperViewParameters();
+    }
 
-	public List reportNavigationCases() {
-		List<NavigationCase> l = new ArrayList<NavigationCase>();
-		l.add(new NavigationCase(null, new SimpleViewParameters(HomeProducer.VIEWID)));
-		return l;
-	}
+    public List reportNavigationCases() {
+        List<NavigationCase> l = new ArrayList<NavigationCase>();
+        // default navigation case
+        l.add(new NavigationCase(null, new SimpleViewParameters(HomeProducer.VIEW_ID)));
+        return l;
+    }
+
 
     public void setMessageLocator(MessageLocator messageLocator) {
         this.messageLocator = messageLocator;
@@ -66,8 +71,8 @@ public class PermissionsProducer implements ViewComponentProducer, ViewParamsRep
         this.sessionManager = sessionManager;
     }
 
-    public void setSite(Site site) {
-        this.site = site;
+    public void setExternalLogic(ExternalLogic externalLogic) {
+        this.externalLogic = externalLogic;
     }
 
 }

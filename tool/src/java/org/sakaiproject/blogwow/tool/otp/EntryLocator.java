@@ -12,27 +12,30 @@ import org.sakaiproject.blogwow.model.BlogWowBlog;
 import org.sakaiproject.blogwow.model.BlogWowEntry;
 import org.sakaiproject.blogwow.model.constants.BlogConstants;
 
-import uk.org.ponder.beanutil.BeanLocator;
+import uk.org.ponder.beanutil.WriteableBeanLocator;
 
-public class EntryLocator implements BeanLocator {
+public class EntryLocator implements WriteableBeanLocator {
 
     public static final String NEW_PREFIX = "new ";
     public static String NEW_1 = NEW_PREFIX + "1";
 
     private ExternalLogic externalLogic;
-	private EntryLogic entryLogic;
-	private BlogLogic blogLogic;
+    private EntryLogic entryLogic;
+    private BlogLogic blogLogic;
 
-	private Map<String, BlogWowEntry> delivered = new HashMap<String, BlogWowEntry>();
+    private Map<String, BlogWowEntry> delivered = new HashMap<String, BlogWowEntry>();
 
-	public Object locateBean(String name) {
+    public Object locateBean(String name) {
         String locationId = externalLogic.getCurrentLocationId();
-        String currentUserId = externalLogic.getCurrentLocationId();
+        String currentUserId = externalLogic.getCurrentUserId();
         BlogWowEntry togo = delivered.get(name);
         if (togo == null) {
             if (name.startsWith(NEW_PREFIX)) {
                 // create the new object
                 BlogWowBlog blog = blogLogic.getBlogByLocationAndUser(locationId, currentUserId);
+                if (blog == null) {
+                    throw new IllegalStateException("Could not get blog for the current user ("+currentUserId+") and location ("+locationId+")");
+                }
                 togo = new BlogWowEntry(blog, currentUserId, null, null, BlogConstants.PRIVACY_PUBLIC, null);
             } else {
                 togo = entryLogic.getEntryById(name, locationId);
@@ -40,9 +43,9 @@ public class EntryLocator implements BeanLocator {
             delivered.put(name, togo);
         }
         return togo;
-	}
+    }
 
-	public String publishAll() {
+    public String publishAll() {
         for (Iterator it = delivered.keySet().iterator(); it.hasNext();) {
             String key = (String) it.next();
             BlogWowEntry entry = delivered.get(key);
@@ -52,26 +55,37 @@ public class EntryLocator implements BeanLocator {
             entryLogic.saveEntry(entry, externalLogic.getCurrentLocationId());
         }
         return "published";
-	}
+    }
 
-	public String saveAll() {
-		Collection entries = delivered.values();
-		for (Iterator i = entries.iterator(); i.hasNext();) {
-			BlogWowEntry entry = (BlogWowEntry) i.next();
-			entry.setPrivacySetting(BlogConstants.PRIVACY_PRIVATE);
-			entryLogic.saveEntry(entry, externalLogic.getCurrentLocationId());
-		}
-		return "saved";
-	}
+    public String saveAll() {
+        Collection entries = delivered.values();
+        for (Iterator i = entries.iterator(); i.hasNext();) {
+            BlogWowEntry entry = (BlogWowEntry) i.next();
+            entry.setPrivacySetting(BlogConstants.PRIVACY_PRIVATE);
+            entryLogic.saveEntry(entry, externalLogic.getCurrentLocationId());
+        }
+        return "saved";
+    }
 
-	public String removeAll() {
-		Collection entries = delivered.values();
-		for (Iterator i = entries.iterator(); i.hasNext();) {
-			BlogWowEntry entry = (BlogWowEntry) i.next();
-			entryLogic.removeEntry(entry.getId(), externalLogic.getCurrentLocationId());
-		}
-		return "removed";
-	}
+    public String removeAll() {
+        Collection entries = delivered.values();
+        for (Iterator i = entries.iterator(); i.hasNext();) {
+            BlogWowEntry entry = (BlogWowEntry) i.next();
+            entryLogic.removeEntry(entry.getId(), externalLogic.getCurrentLocationId());
+        }
+        return "removed";
+    }
+
+    public boolean remove(String beanname) {
+        entryLogic.removeEntry(beanname, externalLogic.getCurrentLocationId());
+        delivered.remove(beanname);
+        return true;
+    }
+
+    public void set(String beanname, Object toset) {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
 
 
     public void setBlogLogic(BlogLogic blogLogic) {

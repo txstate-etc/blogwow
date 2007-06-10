@@ -26,9 +26,9 @@ import uk.org.ponder.rsf.viewstate.ViewParameters;
 
 public class HomeProducer implements ViewComponentProducer, DefaultView {
 
-    public static final String VIEWID = "home";
+    public static final String VIEW_ID = "home";
     public String getViewID() {
-        return VIEWID;
+        return VIEW_ID;
     }
 
     private NavBarRenderer navBarRenderer;
@@ -47,12 +47,12 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
         // use a date which is related to the current users locale
         DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
 
-        navBarRenderer.makeNavBar(tofill, "navIntraTool:", VIEWID);
+        navBarRenderer.makeNavBar(tofill, "navIntraTool:", VIEW_ID);
 
         BlogWowBlog myblog = blogLogic.getBlogByLocationAndUser(locationId, currentUserId );
         UIInternalLink.make(tofill, "my-blog-link", 
                 UIMessage.make("blogwow.homepage.userbloglink"), 
-                new SimpleBlogParams(BlogViewProducer.VIEWID, myblog.getId().toString()));
+                new SimpleBlogParams(BlogViewProducer.VIEW_ID, myblog.getId().toString()));
 
         List<BlogWowEntry> myentries = entryLogic.getAllVisibleEntries(myblog.getId(), currentUserId, null, true, 0, 1);
         if (myentries.size() > 0) {
@@ -62,7 +62,7 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
 
         UIMessage.make(tofill, "all-blogs-header", "blogwow.homepage.listofblogs");
 
-        UIInternalLink.make(tofill, "all-blog-rss", UIMessage.make("blogwow.homepage.RSStext"), new SimpleViewParameters(BlogRSSProducer.VIEWID));
+        UIInternalLink.make(tofill, "all-blog-rss", UIMessage.make("blogwow.homepage.RSStext"), new SimpleViewParameters(BlogRSSProducer.VIEW_ID));
 
         List<BlogWowBlog> blogs = blogLogic.getAllVisibleBlogs(locationId, null, true, 0, 0);
         UIBranchContainer blogsTable = UIBranchContainer.make(tofill, "blog-list-table:");
@@ -72,7 +72,7 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
             BlogWowBlog blog = blogs.get(i);
             UILink.make(row, "user-icon", mugshotGenerator.getMugshotUrl(blog.getOwnerId()));
             UIInternalLink.make(row, "blog-title-link", blog.getTitle(), 
-                    new SimpleBlogParams(BlogViewProducer.VIEWID, blog.getId().toString()));
+                    new SimpleBlogParams(BlogViewProducer.VIEW_ID, blog.getId().toString()));
             List<BlogWowEntry> entries = entryLogic.getAllVisibleEntries(blog.getId(), currentUserId, null, true, 0, 1000);
             UIOutput.make(row, "number-of-entries", entries.size()+"");
             if (entries.size() > 0) {

@@ -39,33 +39,20 @@ public class EntryLogicImpl implements EntryLogic {
     private static Log log = LogFactory.getLog(EntryLogicImpl.class);
 
     private ExternalLogic externalLogic;
-
     public void setExternalLogic(ExternalLogic externalLogic) {
         this.externalLogic = externalLogic;
     }
 
     private BlogWowDao dao;
-
     public void setDao(BlogWowDao dao) {
         this.dao = dao;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.sakaiproject.blogwow.logic.EntryLogic#getAllVisibleEntries(java.lang.Long, java.lang.String, java.lang.String, boolean, int,
-     *      int)
-     */
+
     public List<BlogWowEntry> getAllVisibleEntries(String blogId, String userId, String sortProperty, boolean ascending, int start, int limit) {
         return getAllVisibleEntries(new String[] { blogId }, userId, sortProperty, ascending, start, limit);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.sakaiproject.blogwow.logic.EntryLogic#getAllVisibleEntries(java.lang.Long[], java.lang.String, java.lang.String, boolean,
-     *      int, int)
-     */
     @SuppressWarnings("unchecked")
     public List<BlogWowEntry> getAllVisibleEntries(String[] blogIds, String userId, String sortProperty, boolean ascending, int start,
             int limit) {
@@ -109,7 +96,6 @@ public class EntryLogicImpl implements EntryLogic {
 
     /*
      * (non-Javadoc)
-     * 
      * @see org.sakaiproject.blogwow.logic.EntryLogic#getEntryById(java.lang.Long, java.lang.String)
      */
     public BlogWowEntry getEntryById(String entryId, String locationId) {
@@ -137,12 +123,9 @@ public class EntryLogicImpl implements EntryLogic {
                 + locationId + ")");
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.sakaiproject.blogwow.logic.EntryLogic#removeEntry(java.lang.Long, java.lang.String)
+    /* (non-Javadoc)
+     * @see org.sakaiproject.blogwow.logic.EntryLogic#removeEntry(java.lang.String, java.lang.String)
      */
-    // Note: This method *should* execute in a transaction, although note that our logic API currently does no guarding of its own
     public void removeEntry(String entryId, String locationId) {
         String currentUserId = externalLogic.getCurrentUserId();
         BlogWowEntry entry = getEntryById(entryId, locationId);
@@ -156,6 +139,7 @@ public class EntryLogicImpl implements EntryLogic {
                     BlogWowComment comment = (BlogWowComment) iter.next();
                     comset.add(comment);
                 }
+                dao.deleteSet(comset); // remove all comments first
                 dao.delete(entry);
             }
         } else {
@@ -165,7 +149,6 @@ public class EntryLogicImpl implements EntryLogic {
 
     /*
      * (non-Javadoc)
-     * 
      * @see org.sakaiproject.blogwow.logic.EntryLogic#saveEntry(org.sakaiproject.blogwow.model.BlogWowEntry, java.lang.String)
      */
     public void saveEntry(BlogWowEntry entry, String locationId) {
@@ -188,7 +171,6 @@ public class EntryLogicImpl implements EntryLogic {
 
     /*
      * (non-Javadoc)
-     * 
      * @see org.sakaiproject.blogwow.logic.EntryLogic#canWriteEntry(java.lang.Long, java.lang.String)
      */
     public boolean canWriteEntry(String entryId, String userId) {

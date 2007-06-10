@@ -104,10 +104,12 @@ public class ExternalLogicImpl implements ExternalLogic {
 
     public String getLocationTitle(String locationId) {
         try {
-            Site site = siteService.getSite(locationId);
+            // try to get the site object based on the entity reference (which is the evalGroupId)
+            Site site = (Site) entityBroker.fetchEntity(locationId);
             return site.getTitle();
-        } catch (IdUnusedException e) {
-            log.warn("Cannot get the info about locationId: " + locationId);
+        } catch (Exception e) {
+            // invalid site reference
+            log.debug("Could not get sakai site from evalGroupId:" + locationId);
             return "----------";
         }
     }

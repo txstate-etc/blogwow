@@ -21,9 +21,9 @@ import uk.org.ponder.rsf.viewstate.ViewParamsReporter;
 
 public class MySettingsProducer implements ViewComponentProducer, ViewParamsReporter, NavigationCaseReporter {
 
-    public static final String VIEWID = "my_settings";
+    public static final String VIEW_ID = "my_settings";
     public String getViewID() {
-        return VIEWID;
+        return VIEW_ID;
     }
 
     private NavBarRenderer navBarRenderer;
@@ -37,7 +37,7 @@ public class MySettingsProducer implements ViewComponentProducer, ViewParamsRepo
         String blogLocator = "BlogLocator";
         String blogOTP = blogLocator + "." + blogid;
 
-        navBarRenderer.makeNavBar(tofill, "navIntraTool:", VIEWID);
+        navBarRenderer.makeNavBar(tofill, "navIntraTool:", VIEW_ID);
 
         UIMessage.make(tofill, "my-settings-header", "blogwow.settings.settingsheader");
 
@@ -62,7 +62,7 @@ public class MySettingsProducer implements ViewComponentProducer, ViewParamsRepo
     public List reportNavigationCases() {
         List<NavigationCase> l = new ArrayList<NavigationCase>();
         // first arg null defines the default navigation case
-        l.add(new NavigationCase(null, new SimpleViewParameters(HomeProducer.VIEWID)));
+        l.add(new NavigationCase(null, new SimpleViewParameters(HomeProducer.VIEW_ID)));
         return l;
     }
 

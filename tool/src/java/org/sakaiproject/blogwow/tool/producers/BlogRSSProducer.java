@@ -26,9 +26,9 @@ ViewComponentProducer,
 ViewParamsReporter,
 ContentTypeReporter
 {
-    public static final String VIEWID = "blog_rss";
+    public static final String VIEW_ID = "blog_rss";
     public String getViewID() {
-        return VIEWID;
+        return VIEW_ID;
     }
 
     private BlogLogic blogLogic;

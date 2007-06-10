@@ -11,9 +11,8 @@
 
    <!-- Renderers -->
    <bean id="NavbarRenderer" class="org.sakaiproject.blogwow.tool.producers.NavBarRenderer">
-      <property name="site" ref="sakai-Site" />
-      <property name="userid" ref="sakai-UserID" />
-      <property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic"></property>
+      <property name="externalLogic" ref="org.sakaiproject.blogwow.logic.ExternalLogic" />
+      <property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic" />
    </bean>
 
 
@@ -49,7 +48,7 @@
 
    <bean class="org.sakaiproject.blogwow.tool.producers.PermissionsProducer">
       <property name="sessionManager" ref="org.sakaiproject.tool.api.SessionManager" />
-      <property name="site" ref="sakai-Site" />
+      <property name="externalLogic" ref="org.sakaiproject.blogwow.logic.ExternalLogic" />
       <property name="messageLocator" ref="messageLocator" />
    </bean>
 
