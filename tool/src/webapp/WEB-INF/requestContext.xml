@@ -76,11 +76,4 @@
       <property name="commentLogic" ref="org.sakaiproject.blogwow.logic.CommentLogic" />
    </bean>
 
-
-   <!-- Commands -->
-   <bean id="RemoveBlogEntryCmd" class="org.sakaiproject.blogwow.tool.commands.RemoveEntryCommand">
-      <property name="entryLogic" ref="org.sakaiproject.blogwow.logic.EntryLogic" />
-      <property name="site" ref="sakai-Site" />
-   </bean>
-
 </beans>
