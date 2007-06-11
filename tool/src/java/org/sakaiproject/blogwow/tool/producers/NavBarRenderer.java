@@ -6,6 +6,7 @@ import org.sakaiproject.blogwow.model.BlogWowBlog;
 import org.sakaiproject.blogwow.tool.params.BlogEntryParams;
 import org.sakaiproject.blogwow.tool.params.SimpleBlogParams;
 
+import uk.org.ponder.rsf.components.UIBranchContainer;
 import uk.org.ponder.rsf.components.UIContainer;
 import uk.org.ponder.rsf.components.UIInternalLink;
 import uk.org.ponder.rsf.components.UIJointContainer;
@@ -25,42 +26,44 @@ public class NavBarRenderer {
         UIJointContainer joint = new UIJointContainer(tofill, divID, "blog-wow-navigation:", ""+1);
 
         if (blog != null) {
-            UILink.make(joint, "item:icon", "../images/page_white_edit.png");
+            UIBranchContainer cell = UIBranchContainer.make(joint, "navigation-cell:", "1");
+            UILink.make(cell, "item-icon", "../images/page_white_edit.png");
             if (currentViewID.equals(AddEntryProducer.VIEW_ID)) {
-                UIMessage.make(joint, "item:text", "blogwow.navbar.add");
+                UIMessage.make(cell, "item-text", "blogwow.navbar.add");
             } else {
                 // user cannot create blog so no add entry link
-                UIInternalLink.make(joint, "item:link", UIMessage.make("blogwow.navbar.add"), 
+                UIInternalLink.make(cell, "item-link", UIMessage.make("blogwow.navbar.add"), 
                         new BlogEntryParams(AddEntryProducer.VIEW_ID, blog.getId(), null));               
             }
-            UIOutput.make(joint, "item:separator");
+            UIOutput.make(cell, "item-separator");
         }
-
-        UILink.make(joint, "item:icon", "../images/page_white_edit.png");
+        UIBranchContainer cell = UIBranchContainer.make(joint, "navigation-cell:", "2");
+        UILink.make(cell, "item-icon", "../images/page_white_edit.png");
         if (currentViewID.equals(HomeProducer.VIEW_ID)) {
-            UIMessage.make(joint, "item:text", "blogwow.navbar.bloglist");
+            UIMessage.make(cell, "item-text", "blogwow.navbar.bloglist");
         } else {
-            UIInternalLink.make(joint, "item:link", UIMessage.make("blogwow.navbar.bloglist"), new SimpleViewParameters(HomeProducer.VIEW_ID));
+            UIInternalLink.make(cell, "item-link", UIMessage.make("blogwow.navbar.bloglist"), new SimpleViewParameters(HomeProducer.VIEW_ID));
         }
-        UIOutput.make(joint, "item:separator");
+        UIOutput.make(cell, "item-separator");
 
         if (blog != null) {
-            UILink.make(joint, "item:icon", "../images/cog.png");
+            cell = UIBranchContainer.make(joint, "navigation-cell:", "3");
+            UILink.make(cell, "item-icon", "../images/cog.png");
             if (currentViewID.equals(MySettingsProducer.VIEW_ID)) {
-                UIMessage.make(joint, "item:text", "blogwow.navbar.settings");
+                UIMessage.make(cell, "item-text", "blogwow.navbar.settings");
             } else {
-                UIInternalLink.make(joint, "item:link", 
+                UIInternalLink.make(cell, "item-link", 
                         UIMessage.make("blogwow.navbar.settings"), 
                             new SimpleBlogParams(MySettingsProducer.VIEW_ID, blog.getId()));
             }
-            UIOutput.make(joint, "item:separator");
+            UIOutput.make(cell, "item-separator");
         }
-
-        UILink.make(joint, "item:icon", "../images/group_gear.png");
+        cell = UIBranchContainer.make(joint, "navigation-cell:", "4");
+        UILink.make(cell, "item-icon", "../images/group_gear.png");
         if (currentViewID.equals(PermissionsProducer.VIEW_ID))
-            UIMessage.make(joint, "item:text", "blogwow.navbar.permissions");
+            UIMessage.make(cell, "item-text", "blogwow.navbar.permissions");
         else
-            UIInternalLink.make(joint, "item:link", UIMessage.make("blogwow.navbar.permissions"), new SimpleViewParameters(PermissionsProducer.VIEW_ID));  
+            UIInternalLink.make(cell, "item-link", UIMessage.make("blogwow.navbar.permissions"), new SimpleViewParameters(PermissionsProducer.VIEW_ID));  
 
     }
 
