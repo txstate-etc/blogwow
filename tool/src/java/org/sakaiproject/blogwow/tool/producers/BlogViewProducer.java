@@ -107,7 +107,7 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
 
             UIOutput.make(entrydiv, "action-items");
             if (entryLogic.canWriteEntry(entry.getId(), currentUserId)) {
-                UIInternalLink.make(entrydiv, "edit-entry-link", UIMessage.make("blogwow.blogview.edit"), 
+                UIInternalLink.make(entrydiv, "entry-link:", UIMessage.make("blogwow.blogview.edit-entry"), 
                         new BlogEntryParams(AddEntryProducer.VIEW_ID, blog.getId(), entry.getId()));
 
                 // remove the entry using a OTP deletion binding
@@ -116,7 +116,8 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
                 removeCommand.parameters.add(new UIDeletionBinding(entryOTP));
 
                 // create a fake link that submits the form
-                UILink removelink = UILink.make(entrydiv, "remove-entry-link", "");
+                UILink removelink = UILink.make(entrydiv, "entry-link:", 
+                        UIMessage.make("blogwow.blogview.remove-entry"), null);
                 Map<String, String> attr = new HashMap<String, String>();
 
                 // TODO ack! Inline Java Script
@@ -125,10 +126,10 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
             }
 
             List<BlogWowComment> comments = commentLogic.getComments(entry.getId(), null, true, 0, 0);
-            UIInternalLink.make(entrydiv, "comments-link", UIMessage.make("blogwow.blogview.comments",
+            UIInternalLink.make(entrydiv, "entry-link:", UIMessage.make("blogwow.blogview.comments",
                     new Object[] { (comments.size() + "") }), 
                     new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(), entry.getId(), true));
-            UIInternalLink.make(entrydiv, "add-comment-link", UIMessage.make("blogwow.blogview.addcomment"), new BlogParams(
+            UIInternalLink.make(entrydiv, "entry-link:", UIMessage.make("blogwow.blogview.add-comment"), new BlogParams(
                     BlogViewProducer.VIEW_ID, blog.getId(), entry.getId(), true, true));
 
             // Render Comments if they are visible
