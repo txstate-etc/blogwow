@@ -24,10 +24,9 @@ public class BlogLocator implements BeanLocator {
         BlogWowBlog togo = delivered.get(name);
         if (togo == null) {
             if (name.startsWith(NEW_PREFIX)) {
-                // create the new object (default title to the current user display name
+                // create the new object
                 String currentUserId = externalLogic.getCurrentUserId();
-                togo = new BlogWowBlog(currentUserId, externalLogic.getCurrentLocationId(), 
-                        externalLogic.getUserDisplayName(currentUserId) );
+                togo = new BlogWowBlog(currentUserId, externalLogic.getCurrentLocationId(), null );
             } else {
                 togo = blogLogic.getBlogById(name);
             }
