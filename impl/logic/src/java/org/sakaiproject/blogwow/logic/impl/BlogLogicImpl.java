@@ -21,6 +21,7 @@ import org.sakaiproject.blogwow.logic.BlogLogic;
 import org.sakaiproject.blogwow.logic.ExternalLogic;
 import org.sakaiproject.blogwow.model.BlogWowBlog;
 import org.sakaiproject.genericdao.api.finders.ByPropsFinder;
+import org.sakaiproject.util.FormattedText;
 
 /**
  * This is the implementation of the blog business logic interface
@@ -174,6 +175,10 @@ public class BlogLogicImpl implements BlogLogic {
         }
         if (blog.getTitle() == null || "".equals(blog.getTitle())) {
             blog.setTitle( externalLogic.getUserDisplayName(userId) );
+        }
+        if (blog.getProfile() != null && blog.getProfile().length() > 0) {
+            // clean up the blog profile
+            blog.setProfile( externalLogic.cleanupUserStrings(blog.getProfile()) );            
         }
         dao.save(blog);
     }

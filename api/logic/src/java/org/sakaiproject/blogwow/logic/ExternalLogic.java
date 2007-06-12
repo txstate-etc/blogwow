@@ -105,4 +105,12 @@ public interface ExternalLogic {
      */
     public String getBlogLocationRssUrl(String locationId);
 
+    /**
+     * Cleans up the users submitted strings to protect us from XSS
+     * 
+     * @param userSubmittedString any string from the user which could be dangerous
+     * @return a cleaned up string which is now safe
+     */
+    public String cleanupUserStrings(String userSubmittedString);
+
 }

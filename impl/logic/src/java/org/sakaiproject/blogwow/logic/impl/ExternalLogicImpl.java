@@ -32,6 +32,7 @@ import org.sakaiproject.tool.api.ToolManager;
 import org.sakaiproject.user.api.User;
 import org.sakaiproject.user.api.UserDirectoryService;
 import org.sakaiproject.user.api.UserNotDefinedException;
+import org.sakaiproject.util.FormattedText;
 
 /**
  * This is the implementation for logic which is external to our app logic
@@ -170,6 +171,11 @@ public class ExternalLogicImpl implements ExternalLogic {
         return entityBroker.getEntityURL(
                 new IdEntityReference(BlogGroupRssEntityProvider.ENTITY_PREFIX, 
                         encodedlocation).toString());
+    }
+
+    public String cleanupUserStrings(String userSubmittedString) {
+        // clean up the string
+        return FormattedText.processFormattedText(userSubmittedString, new StringBuffer(), true, false);            
     }
 
 }

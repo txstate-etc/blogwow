@@ -160,6 +160,10 @@ public class EntryLogicImpl implements EntryLogic {
         if (entry.getDateCreated() == null) {
             entry.setDateCreated(new Date());
         }
+        if (entry.getText() != null && entry.getText().length() > 0) {
+            // clean up the blog entry
+            entry.setText( externalLogic.cleanupUserStrings(entry.getText()) );            
+        }
         // check if the current user can save or update the existing item
         if (checkWriteEntry(entry, externalLogic.getCurrentUserId())) {
             dao.save(entry);
