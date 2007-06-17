@@ -21,7 +21,6 @@ import org.sakaiproject.blogwow.logic.BlogLogic;
 import org.sakaiproject.blogwow.logic.ExternalLogic;
 import org.sakaiproject.blogwow.model.BlogWowBlog;
 import org.sakaiproject.genericdao.api.finders.ByPropsFinder;
-import org.sakaiproject.util.FormattedText;
 
 /**
  * This is the implementation of the blog business logic interface
@@ -59,7 +58,7 @@ public class BlogLogicImpl implements BlogLogic {
 
         if (l.size() <= 0) {
             // no blog found, create a new one
-            if (checkCanWriteBlog(locationId, userId)) {
+            if (canWriteBlog(null, locationId, userId)) {
                 BlogWowBlog blog = new BlogWowBlog(userId, locationId, null, null, null, new Date(), null);
                 saveUserBlog(blog, locationId, userId);
                 return blog;
@@ -112,8 +111,8 @@ public class BlogLogicImpl implements BlogLogic {
     public void saveBlog(BlogWowBlog blog, String locationId) {
         // set the owner to current if not set
         String currentUserId = externalLogic.getCurrentUserId();
-        if ((blog.getId() == null && checkCanWriteBlog(locationId, currentUserId))
-                || (blog.getId() != null && canWriteBlog(blog.getId(), locationId, currentUserId))) {
+        // this check depends that the id of a non-persistent blog is null
+        if (canWriteBlog(blog.getId(), locationId, currentUserId)) {
             saveUserBlog(blog, locationId, currentUserId);
             log.info("Saved blog: " + blog.getId() + ":" + blog.getProfile());
         } else {
@@ -128,34 +127,16 @@ public class BlogLogicImpl implements BlogLogic {
      * @see org.sakaiproject.blogwow.logic.BlogLogic#canWriteBlog(java.lang.Long, java.lang.String, java.lang.String)
      */
     public boolean canWriteBlog(String blogId, String locationId, String userId) {
-        BlogWowBlog blog = getBlogById(blogId);
-        if (!locationId.equals(blog.getLocation())) {
-            // the location must match with the one in the blog
-            return false;
-        } else if (externalLogic.isUserAdmin(userId)) {
-            // the system super user can write
-            return true;
-        } else if (blog.getOwnerId().equals(userId) && externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_CREATE, locationId)) {
-            // users with permission in the specified location can write for that location
+        if (externalLogic.isUserAdmin(userId)) {
             return true;
         }
-        return false;
-    }
-
-    /**
-     * Break out the security check to use it in more than one place
-     * 
-     * @param locationId
-     * @param userId
-     * @return
-     */
-    private boolean checkCanWriteBlog(String locationId, String userId) {
-        if (externalLogic.isUserAdmin(userId)) {
-            // the system super user can write
-            return true;
-        } else if (externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_CREATE, locationId)) {
-            // users with permission in the specified location can write for that location
-            return true;
+        BlogWowBlog blog = blogId == null? null : getBlogById(blogId);
+        if (blog != null && !locationId.equals(blog.getLocation())) {
+            // the location must match with the one in the blog, if there is one
+            return false;
+        }
+        if (externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_CREATE, locationId)) {
+            return (blog == null || blog.getOwnerId().equals(userId));
         }
         return false;
     }

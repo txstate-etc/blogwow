@@ -72,10 +72,12 @@ public interface BlogLogic {
     // PERMISSIONS
 
     /**
-     * Check if a specified user can write this blog in a specified site
+     * Check if a specified user can write this blog in a specified site. If the user
+     * is superadmin, this check will always succeed.
      * 
      * @param blogId
-     *            the id of a {@link BlogWowBlog} object
+     *            the id of a {@link BlogWowBlog} object, or <code>null</code> if the check is
+     *            that the user can create a new blog in this site.
      * @param locationId
      *            a unique id which represents the current location of the user (entity reference)
      * @param userId
