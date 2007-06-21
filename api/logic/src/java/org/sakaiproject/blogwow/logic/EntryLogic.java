@@ -33,6 +33,13 @@ public interface EntryLogic {
      * @return a blog wow entry or null if not found
      */
     public BlogWowEntry getEntryById(String entryId, String locationId);
+    
+    /**
+     * Checks if an entry is real based on an entry id
+     * @param entryId a unique id for a {@link BlogWowEntry}
+     * @return true if this is an existing entry, false otherwise
+     */
+    public boolean entryExists(String entryId);
 
     /**
      * Create or update a blog entry

@@ -48,4 +48,8 @@
 	  <property name="entityBroker" ref="org.sakaiproject.entitybroker.EntityBroker" />
    </bean>
 
+   <bean class="org.sakaiproject.blogwow.logic.impl.entity.BlogEntryEntityProviderImpl">
+      <property name="entryLogic" ref="org.sakaiproject.blogwow.logic.EntryLogic" />
+   </bean>
+
 </beans>

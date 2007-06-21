@@ -189,6 +189,18 @@ public class EntryLogicImpl implements EntryLogic {
         return false;
     }
 
+    /* (non-Javadoc)
+     * @see org.sakaiproject.blogwow.logic.EntryLogic#entryExists(java.lang.String)
+     */
+    public boolean entryExists(String entryId) {
+        BlogWowEntry entry = (BlogWowEntry) dao.findById(BlogWowEntry.class, entryId);
+        if (entry != null) {
+            return true;
+        }
+        return false;
+    }
+
+
     /**
      * @param entry
      * @param userId
@@ -215,5 +227,6 @@ public class EntryLogicImpl implements EntryLogic {
         }
         return false;
     }
+
 
 }

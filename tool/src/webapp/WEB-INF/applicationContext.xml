@@ -49,6 +49,10 @@
 
    <bean class="org.sakaiproject.blogwow.tool.inferrer.BlogGroupRSSInferrer" />
 
+   <bean class="org.sakaiproject.blogwow.tool.inferrer.BlogEntryInferrer">
+      <property name="entryLogic" ref="org.sakaiproject.blogwow.logic.EntryLogic" />
+   </bean>
+
 
    <bean id="MugshotGenerator" class="org.sakaiproject.blogwow.tool.beans.MugshotGenerator">
       <property name="mugshotImages">
