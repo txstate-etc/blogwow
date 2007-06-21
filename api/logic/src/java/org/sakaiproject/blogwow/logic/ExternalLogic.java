@@ -12,6 +12,7 @@
 package org.sakaiproject.blogwow.logic;
 
 import org.sakaiproject.blogwow.model.BlogWowBlog;
+import org.sakaiproject.blogwow.model.BlogWowEntry;
 
 /**
  * This is the interface for logic which is external to our app logic
@@ -104,6 +105,13 @@ public interface ExternalLogic {
      * @return the full url for the rss feed
      */
     public String getBlogLocationRssUrl(String locationId);
+
+    /**
+     * Get the Full URL to an entry
+     * @param entryId the id of a {@link BlogWowEntry} object
+     * @return the full url to the 
+     */
+    public String getBlogEntryUrl(String entryId);
 
     /**
      * Cleans up the users submitted strings to protect us from XSS

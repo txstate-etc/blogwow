@@ -19,6 +19,7 @@ import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.authz.api.FunctionManager;
 import org.sakaiproject.authz.api.SecurityService;
 import org.sakaiproject.blogwow.logic.ExternalLogic;
+import org.sakaiproject.blogwow.logic.entity.BlogEntryEntityProvider;
 import org.sakaiproject.blogwow.logic.entity.BlogGroupRssEntityProvider;
 import org.sakaiproject.blogwow.logic.entity.BlogRssEntityProvider;
 import org.sakaiproject.entitybroker.EntityBroker;
@@ -176,6 +177,11 @@ public class ExternalLogicImpl implements ExternalLogic {
     public String cleanupUserStrings(String userSubmittedString) {
         // clean up the string
         return FormattedText.processFormattedText(userSubmittedString, new StringBuffer(), true, false);            
+    }
+
+    public String getBlogEntryUrl(String entryId) {
+        return entityBroker.getEntityURL(
+                new IdEntityReference(BlogEntryEntityProvider.ENTITY_PREFIX, entryId).toString());
     }
 
 }
