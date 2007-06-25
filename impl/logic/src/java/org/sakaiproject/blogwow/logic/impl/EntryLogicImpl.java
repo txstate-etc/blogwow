@@ -62,12 +62,11 @@ public class EntryLogicImpl implements EntryLogic {
             ascending = false;
         }
 
-        if (!ascending) {
-            sortProperty += ByPropsFinder.DESC;
-        }
-
         List l = new ArrayList();
         if (externalLogic.isUserAdmin(userId)) {
+            if (!ascending) {
+                sortProperty += ByPropsFinder.DESC;
+            }
             // get all entries for a set of blogs
             l = dao.findByProperties(BlogWowEntry.class, new String[] { "blog.id" }, new Object[] { blogIds },
                     new int[] { ByPropsFinder.EQUALS }, new String[] { sortProperty }, start, limit);

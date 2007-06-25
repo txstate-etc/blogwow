@@ -43,7 +43,7 @@ public class BlogWowDaoImpl extends HibernateCompleteGenericDao implements BlogW
      * @see org.sakaiproject.blogwow.dao.BlogWowDao#getLocationsForBlogsIds(java.lang.Long[])
      */
     public List getLocationsForBlogsIds(String[] blogIds) {
-        String hql = "select distinct blog.location from BlogWowBlog blog where blog.id in " + arrayToInString(blogIds)
+        String hql = "select distinct blog.location from BlogWowBlog as blog where blog.id in " + arrayToInString(blogIds)
                 + " order by blog.location";
         return getHibernateTemplate().find(hql);
 
@@ -116,7 +116,11 @@ public class BlogWowDaoImpl extends HibernateCompleteGenericDao implements BlogW
         }
 
         Map<String, Object> params = new HashMap<String, Object>();
-        String hql = "from BlogWowEntry entry where entry.blog.id in (:blogIds) " + "and (entry.privacySetting = :privacyPublic";
+        // hibernate 3 syntax
+//        String hql = "select entry from BlogWowEntry as entry join entry.blog as eblog with eblog.id in (:blogIds) " + 
+//            " where (entry.privacySetting = :privacyPublic";
+        String hql = "select entry from BlogWowEntry as entry join entry.blog as eblog where eblog.id in (:blogIds) " + 
+            " and (entry.privacySetting = :privacyPublic";
         params.put("privacyPublic", BlogConstants.PRIVACY_PUBLIC);
         params.put("blogIds", blogIds);
         if (userId != null) {
@@ -136,9 +140,9 @@ public class BlogWowDaoImpl extends HibernateCompleteGenericDao implements BlogW
         hql += ")";
         if (sortProperty != null && !sortProperty.equals("")) {
             if (ascending) {
-                hql += " order by " + sortProperty + " asc";
+                hql += " order by entry." + sortProperty + " asc";
             } else {
-                hql += " order by " + sortProperty + " desc";
+                hql += " order by entry." + sortProperty + " desc";
             }
         }
         Query query = getSession().createQuery(hql);

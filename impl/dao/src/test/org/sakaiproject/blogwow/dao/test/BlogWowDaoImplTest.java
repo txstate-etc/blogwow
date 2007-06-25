@@ -17,6 +17,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.blogwow.dao.BlogWowDao;
 import org.sakaiproject.blogwow.logic.test.TestDataPreload;
+import org.sakaiproject.blogwow.model.BlogWowEntry;
 import org.springframework.test.AbstractTransactionalSpringContextTests;
 
 /**
@@ -103,6 +104,7 @@ public class BlogWowDaoImplTest extends AbstractTransactionalSpringContextTests 
                 false, 0, 0);
         assertNotNull(entries);
         assertEquals(2, entries.size());
+        assertTrue( entries.get(0) instanceof BlogWowEntry );
         assertTrue(entries.contains(tdp.entry1_b1));
         assertTrue(entries.contains(tdp.entry5_b2));
 
