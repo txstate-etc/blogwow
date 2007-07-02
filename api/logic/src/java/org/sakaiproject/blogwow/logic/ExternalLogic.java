@@ -109,9 +109,16 @@ public interface ExternalLogic {
     /**
      * Get the Full URL to an entry
      * @param entryId the id of a {@link BlogWowEntry} object
-     * @return the full url to the 
+     * @return the full url to the entry
      */
     public String getBlogEntryUrl(String entryId);
+
+    /**
+     * Get the Full URL to a blog
+     * @param blogId the id of a {@link BlogWowBlog} object
+     * @return the full url to the blog
+     */
+    public String getBlogUrl(String blogId);
 
     /**
      * Cleans up the users submitted strings to protect us from XSS

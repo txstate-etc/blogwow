@@ -52,4 +52,8 @@
       <property name="entryLogic" ref="org.sakaiproject.blogwow.logic.EntryLogic" />
    </bean>
 
+   <bean class="org.sakaiproject.blogwow.logic.impl.entity.BlogEntityProviderImpl">
+      <property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic" />
+   </bean>
+
 </beans>

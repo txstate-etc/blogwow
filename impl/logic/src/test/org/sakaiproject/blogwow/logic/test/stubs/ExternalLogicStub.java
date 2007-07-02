@@ -163,4 +163,8 @@ public class ExternalLogicStub implements ExternalLogic {
         return "http://server:8080/direct/blogentry/123/";
     }
 
+    public String getBlogUrl(String blogId) {
+        return "http://server:8080/direct/blog/123/";
+    }
+
 }

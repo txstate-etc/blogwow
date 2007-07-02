@@ -6,20 +6,20 @@
   >
   <channel>
     <title rsf:id="channel-title">steve2</title>
-    <link>http://githens.org/blog2</link>
+    <link rsf:id="channel_link">blog_view.html</link>
     <description></description>
-    <pubDate>Mon, 28 May 2007 13:20:13 +0000</pubDate>
-    <generator>http://wordpress.org/?v=2.0.5</generator>
+    <pubDate rsf:id="channel_publish_date">Mon, 28 May 2007 13:20:13 +0000</pubDate>
+    <generator>http://confluence.sakaiproject.org/confluence/display/BW/</generator>
     <language>en</language>
       
     <item rsf:id="item:">
       <title rsf:id="item-title">a pretty big deal</title>
-      <link>http://githens.org/blog2/?p=68</link>
-      <comments>http://githens.org/blog2/?p=68#comments</comments>
-      <pubDate>Mon, 28 May 2007 13:17:00 +0000</pubDate>
+      <link rsf:id="item_link">blog_view.html</link>
+      <comments rsf:id="item_link">comments.html</comments>
+      <pubDate rsf:id="item_publish_date">Mon, 28 May 2007 13:17:00 +0000</pubDate>
       <dc:creator rsf:id="creator">githens</dc:creator>
       <category>Uncategorized</category>
-      <guid isPermaLink="false">http://githens.org/blog2/?p=68</guid>
+      <guid rsf:id="item_link" isPermaLink="false">http://githens.org/blog2/?p=68</guid>
       <description rsf:id="description">
         <![CDATA[There is a good chance I might by a Dell sometime this summer now that they
          are shipping systems with Ubuntu Linux and all the hardware configured.

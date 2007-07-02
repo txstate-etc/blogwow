@@ -1,6 +1,8 @@
 package org.sakaiproject.blogwow.tool.producers;
 
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.sakaiproject.blogwow.logic.BlogLogic;
@@ -12,6 +14,7 @@ import org.sakaiproject.blogwow.tool.params.BlogRssViewParams;
 
 import uk.org.ponder.rsf.components.UIBranchContainer;
 import uk.org.ponder.rsf.components.UIContainer;
+import uk.org.ponder.rsf.components.UILink;
 import uk.org.ponder.rsf.components.UIOutput;
 import uk.org.ponder.rsf.components.UIVerbatim;
 import uk.org.ponder.rsf.content.ContentTypeInfoRegistry;
@@ -48,9 +51,12 @@ ContentTypeReporter
         if (blogId != null) {
             BlogWowBlog blog = blogLogic.getBlogById( blogId );
             UIOutput.make(tofill, "channel-title", blog.getTitle());
+            UIOutput.make(tofill, "channel_link", externalLogic.getBlogUrl(blogId));
             entries = entryLogic.getAllVisibleEntries(blogId, currentUserId, null, true, 0, 10);                        
         } else if (locationId != null) {
             UIOutput.make(tofill, "channel-title", externalLogic.getLocationTitle(locationId));
+            // TODO - add in direct linking for site
+            //UIOutput.make(tofill, "channel_link", externalLogic.getBlogUrl(blogId));
             List<BlogWowBlog> blogs = blogLogic.getAllVisibleBlogs(locationId, null, true, 0, 10);
             String[] blogIds = new String[blogs.size()];
             for (int i=0; i<blogs.size(); i++) {
@@ -59,11 +65,19 @@ ContentTypeReporter
             entries = entryLogic.getAllVisibleEntries(blogIds, currentUserId, null, true, 0, 10);                        
         }
 
+        Date publishDate = null;
+        // TODO - format dates
         for (int i = 0; i < entries.size(); i++) {
             BlogWowEntry entry = entries.get(i);
             UIBranchContainer rssitem = UIBranchContainer.make(tofill, "item:", i+"");
             UIOutput.make(rssitem, "item-title", entry.getTitle());
             UIOutput.make(rssitem, "creator", entry.getOwnerId());
+            UIOutput.make(rssitem, "item_link", externalLogic.getBlogEntryUrl(entry.getId()));
+            if (publishDate == null ||
+                    entry.getDateModified().before(publishDate)) {
+                publishDate = entry.getDateModified();
+            }
+            UIOutput.make(rssitem, "item_publish_date", entry.getDateModified().toString());
 
             String desc = "<![CDATA[" 
                 + ( entry.getText().length() < 200 
@@ -74,6 +88,9 @@ ContentTypeReporter
             UIVerbatim.make(rssitem, "description", desc);
             UIVerbatim.make(rssitem, "content" ,content);
         }
+
+        if (publishDate == null) { publishDate = new Date(); }
+        UIOutput.make(tofill, "channel_publish_date", publishDate.toString());
     }
 
     public ViewParameters getViewParameters() {
