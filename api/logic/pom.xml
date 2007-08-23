@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.sakaiproject</groupId>
+    <artifactId>sakai-blogwow-base</artifactId>
+    <version>${sakai.version}</version>
+  </parent>
+  <name>sakai-blogwow-logic-api</name>
+  <groupId>org.sakaiproject</groupId>
+  <artifactId>sakai-blogwow-logic-api</artifactId>
+  <inceptionYear>2007</inceptionYear>
+  <packaging>jar</packaging>
+  <properties>
+    <deploy.target>shared</deploy.target>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.sakaiproject</groupId>
+      <artifactId>sakai-blogwow-model</artifactId>
+      <version>${sakai.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>generic-dao</groupId>
+      <artifactId>generic-dao</artifactId>
+      <version>0.9</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.sakaiproject</groupId>
+      <artifactId>sakai-entitybroker-api</artifactId>
+      <version>${sakai.version}</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+  <build>
+  
+  <resources>
+  </resources>
+    
+  </build>
+</project>
