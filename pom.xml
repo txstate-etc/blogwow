@@ -10,7 +10,7 @@
   <name>Blog Wow!</name>
   <groupId>org.sakaiproject</groupId>
   <artifactId>sakai-blogwow-base</artifactId>
-  <version>${sakai.version}</version>
+  <version>M2</version>
   <packaging>pom</packaging>
   <modules>
     <module>api/model</module>

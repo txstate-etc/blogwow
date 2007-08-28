@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.sakaiproject</groupId>
     <artifactId>sakai-blogwow-base</artifactId>
-    <version>${sakai.version}</version>
+    <version>M2</version>
   </parent>
   <name>sakai-blogwow-logic-api</name>
   <groupId>org.sakaiproject</groupId>
