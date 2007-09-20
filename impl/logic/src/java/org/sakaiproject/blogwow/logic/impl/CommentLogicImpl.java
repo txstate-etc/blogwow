@@ -127,7 +127,7 @@ public class CommentLogicImpl implements CommentLogic {
         String currentUserId = externalLogic.getCurrentUserId();
         String locationId = entry.getBlog().getLocation();
         if (externalLogic.isUserAllowedInLocation(currentUserId, ExternalLogic.BLOG_ENTRY_READ, locationId)
-                || externalLogic.isUserAllowedInLocation(currentUserId, ExternalLogic.BLOG_ENTRY_READ, locationId)) {
+                ||  {
             if (sortProperty == null) {
                 sortProperty = "dateCreated";
                 ascending = false;
