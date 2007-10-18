@@ -21,19 +21,6 @@
     <module>impl/logic</module>
     <module>impl/pack</module>
     <module>tool</module>
-    <!-- 
-    <module>api/logic</module>
-    <module>impl/hbm</module>
-    <module>impl/dao</module>
-    <module>impl/logic</module>
-    <module>impl/pack</module>
-    <module>bundle</module>
-    <module>tool</module>
-    -->
-    <!--
-    <module>api</module>
-    <module>comp</module>
-    <module>impl</module>
-    -->
+		<module>help</module>
   </modules>
 </project>
