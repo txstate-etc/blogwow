@@ -58,11 +58,14 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
 
         // use a date which is related to the current users locale
         DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+        DateFormat tf = DateFormat.getTimeInstance(DateFormat.MEDIUM, locale);
+        DateFormat dtf = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, locale);
         
         List<BlogWowEntry> myentries = entryLogic.getAllVisibleEntries(myblog.getId(), currentUserId, null, true, 0, 1);
         if (myentries.size() > 0) {
             UIMessage.make(tofill, "last-blogged-date", "blogwow.homepage.userlastblogged", 
-                    new Object[] { df.format( myentries.get(0).getDateModified() ) });
+                    new Object[] { df.format( myentries.get(0).getDateModified() ),
+                                   tf.format( myentries.get(0).getDateModified() ) });
         }
 
         UIMessage.make(tofill, "all-blogs-header", "blogwow.homepage.listofblogs");
@@ -83,7 +86,7 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
             List<BlogWowEntry> entries = entryLogic.getAllVisibleEntries(blog.getId(), currentUserId, null, true, 0, 1000);
             UIOutput.make(row, "number-of-entries", entries.size()+"");
             if (entries.size() > 0) {
-                UIOutput.make(row, "time-last-updated", df.format(entries.get(0).getDateModified()) );
+                UIOutput.make(row, "time-last-updated", dtf.format(entries.get(0).getDateModified()) );
             }
             else {
                 // TODO - why is this here? -AZ

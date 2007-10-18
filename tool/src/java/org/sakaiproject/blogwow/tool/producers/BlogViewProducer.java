@@ -14,6 +14,7 @@ import org.sakaiproject.blogwow.logic.ExternalLogic;
 import org.sakaiproject.blogwow.model.BlogWowBlog;
 import org.sakaiproject.blogwow.model.BlogWowComment;
 import org.sakaiproject.blogwow.model.BlogWowEntry;
+import org.sakaiproject.blogwow.model.constants.BlogConstants;
 import org.sakaiproject.blogwow.tool.otp.CommentLocator;
 import org.sakaiproject.blogwow.tool.params.BlogEntryParams;
 import org.sakaiproject.blogwow.tool.params.BlogParams;
@@ -34,6 +35,8 @@ import uk.org.ponder.rsf.components.UIOutput;
 import uk.org.ponder.rsf.components.UIVerbatim;
 import uk.org.ponder.rsf.components.decorators.DecoratorList;
 import uk.org.ponder.rsf.components.decorators.UIFreeAttributeDecorator;
+import uk.org.ponder.rsf.components.decorators.UIAlternativeTextDecorator;
+import uk.org.ponder.rsf.components.decorators.UITooltipDecorator;
 import uk.org.ponder.rsf.view.ComponentChecker;
 import uk.org.ponder.rsf.view.ViewComponentProducer;
 import uk.org.ponder.rsf.viewstate.ViewParameters;
@@ -71,6 +74,7 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
         BlogWowBlog blog = blogLogic.getBlogById(params.blogid);
 
         UIOutput.make(tofill, "blog-title", blog.getTitle());
+        UILink.make(tofill, "blog-url", externalLogic.getBlogUrl(blog.getId()) );
         String profileText = blog.getProfile();
         if (profileText == null || profileText.equals("")) {
             UIMessage.make(tofill, "profile-verbatim-text", "blogwow.blogview.noprofile");
@@ -80,7 +84,7 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
         }
         String profileImageUrl = blog.getImageUrl();
         if (profileImageUrl == null || profileImageUrl.equals("")) {
-            profileImageUrl = "../images/sakaiger-600.png";
+            profileImageUrl = null; //this will use the default in the template
         }
         UILink.make(tofill, "profile-image", profileImageUrl);
 
@@ -103,6 +107,33 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
             UIBranchContainer entrydiv = UIBranchContainer.make(tofill, "blog-entry:", i + "");
             UIOutput.make(entrydiv, "blog-title", entry.getTitle());
             UIOutput.make(entrydiv, "blog-date", df.format(entry.getDateCreated()));
+
+            String privSetting = entry.getPrivacySetting();
+            if (privSetting.equals(BlogConstants.PRIVACY_PRIVATE) || privSetting.equals(BlogConstants.PRIVACY_GROUP_LEADER))
+            {
+                UILink ul = UILink.make(entrydiv, "blog-visibility", "../images/user_gray.png");
+								DecoratorList dl = new DecoratorList();
+								dl.add(new UIAlternativeTextDecorator(UIMessage.make("blogwow.blogview.privviewalt")));
+								dl.add(new UITooltipDecorator(UIMessage.make("blogwow.blogview.privviewtitle")));
+								ul.decorators = dl;
+            }
+            else if (privSetting.equals(BlogConstants.PRIVACY_GROUP))
+            {
+                UILink ul = UILink.make(entrydiv, "blog-visibility", "../images/group.png");
+								DecoratorList dl = new DecoratorList();
+								dl.add(new UIAlternativeTextDecorator(UIMessage.make("blogwow.blogview.siteviewalt")));
+								dl.add(new UITooltipDecorator(UIMessage.make("blogwow.blogview.siteviewtitle")));
+								ul.decorators = dl;
+						}
+            else if (privSetting.equals(BlogConstants.PRIVACY_PUBLIC))
+            {
+                UILink ul = UILink.make(entrydiv, "blog-visibility", "../images/world.png");
+								DecoratorList dl = new DecoratorList();
+								dl.add(new UIAlternativeTextDecorator(UIMessage.make("blogwow.blogview.pubviewalt")));
+								dl.add(new UITooltipDecorator(UIMessage.make("blogwow.blogview.pubviewtitle")));
+								ul.decorators = dl;
+            }
+
             UIVerbatim.make(entrydiv, "verbatim-blog-text", entry.getText());
 
             UIOutput.make(entrydiv, "action-items");

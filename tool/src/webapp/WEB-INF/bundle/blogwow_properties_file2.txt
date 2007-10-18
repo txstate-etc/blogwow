@@ -12,7 +12,7 @@ blogwow.navbar.permissions = Permissions (you what?)
 # Home page
 
 blogwow.homepage.userbloglink = My innermost thoughts 
-blogwow.homepage.userlastblogged = You last poured out your heart at $
+blogwow.homepage.userlastblogged = You last poured out your heart on $ at $
 blogwow.homepage.listofblogs = Your friends' innermost thoughts
 blogwow.homepage.RSStext = Like, obvious.
 blogwow.homepage.nameheader = My gorgeous friend
@@ -42,7 +42,6 @@ blogwow.settings.settingsheader = My blog settings
 blogwow.settings.profile = My blog profile
 blogwow.settings.defaultprofiletext = Hey $! Hurry up and tell us about yourself!
 blogwow.settings.pictureURLtext = URL for my picture 
-blogwow.settings.pictureURL = sakaiger.png
 blogwow.settings.save = Change settings
 blogwow.settings.cancel = Cancel 
 

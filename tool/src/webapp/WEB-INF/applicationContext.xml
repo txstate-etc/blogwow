@@ -49,6 +49,8 @@
 
    <bean class="org.sakaiproject.blogwow.tool.inferrer.BlogGroupRSSInferrer" />
 
+   <bean class="org.sakaiproject.blogwow.tool.inferrer.BlogInferrer" />
+
    <bean class="org.sakaiproject.blogwow.tool.inferrer.BlogEntryInferrer">
       <property name="entryLogic" ref="org.sakaiproject.blogwow.logic.EntryLogic" />
    </bean>

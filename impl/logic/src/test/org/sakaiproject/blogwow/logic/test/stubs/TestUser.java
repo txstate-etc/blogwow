@@ -172,4 +172,7 @@ public class TestUser implements User {
         // TODO Auto-generated method stub
         return null;
     }
+    public String getUrlEmbeddableId(){
+        return this.getDisplayId();
+    }
 }

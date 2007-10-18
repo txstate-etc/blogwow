@@ -85,8 +85,14 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
                 "blogwow.add_edit.sitemembers",
         "blogwow.add_edit.public" };
 
-        UISelect privacyRadios = UISelect.make(form, "privacy-radio-holder", privacyRadioValues, privacyRadioLabelKeys,
-                entryOTP + ".privacySetting", BlogConstants.PRIVACY_PUBLIC).setMessageKeys();
+				UISelect privacyRadios;
+				if (newentry) {
+        	privacyRadios = UISelect.make(form, "privacy-radio-holder", privacyRadioValues, privacyRadioLabelKeys,
+						entryOTP + ".privacySetting", BlogConstants.PRIVACY_PUBLIC).setMessageKeys();
+				} else {
+					privacyRadios = UISelect.make(form, "privacy-radio-holder", privacyRadioValues, privacyRadioLabelKeys,
+						entryOTP + ".privacySetting").setMessageKeys();				
+				}
 
         String selectID = privacyRadios.getFullID();
         UISelectChoice instructorsOnlyRadio = UISelectChoice.make(form, "instructors-only-radio", selectID, 0);
