@@ -109,29 +109,21 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
             UIOutput.make(entrydiv, "blog-date", df.format(entry.getDateCreated()));
 
             String privSetting = entry.getPrivacySetting();
-            if (privSetting.equals(BlogConstants.PRIVACY_PRIVATE) || privSetting.equals(BlogConstants.PRIVACY_GROUP_LEADER))
+            if (privSetting.equals(BlogConstants.PRIVACY_PRIVATE))
+						{
+							fillEntryIcon(entrydiv, "../images/lock.png", "blogwow.blogview.draftviewalt", "blogwow.blogview.draftviewtitle", true);
+						} 
+						else if (privSetting.equals(BlogConstants.PRIVACY_GROUP_LEADER))
             {
-                UILink ul = UILink.make(entrydiv, "blog-visibility", "../images/user_gray.png");
-								DecoratorList dl = new DecoratorList();
-								dl.add(new UIAlternativeTextDecorator(UIMessage.make("blogwow.blogview.privviewalt")));
-								dl.add(new UITooltipDecorator(UIMessage.make("blogwow.blogview.privviewtitle")));
-								ul.decorators = dl;
+							fillEntryIcon(entrydiv, "../images/user_gray.png", "blogwow.blogview.privviewalt", "blogwow.blogview.privviewtitle", false);
             }
             else if (privSetting.equals(BlogConstants.PRIVACY_GROUP))
             {
-                UILink ul = UILink.make(entrydiv, "blog-visibility", "../images/group.png");
-								DecoratorList dl = new DecoratorList();
-								dl.add(new UIAlternativeTextDecorator(UIMessage.make("blogwow.blogview.siteviewalt")));
-								dl.add(new UITooltipDecorator(UIMessage.make("blogwow.blogview.siteviewtitle")));
-								ul.decorators = dl;
+							fillEntryIcon(entrydiv, "../images/group.png", "blogwow.blogview.siteviewalt", "blogwow.blogview.siteviewtitle", false);
 						}
             else if (privSetting.equals(BlogConstants.PRIVACY_PUBLIC))
             {
-                UILink ul = UILink.make(entrydiv, "blog-visibility", "../images/world.png");
-								DecoratorList dl = new DecoratorList();
-								dl.add(new UIAlternativeTextDecorator(UIMessage.make("blogwow.blogview.pubviewalt")));
-								dl.add(new UITooltipDecorator(UIMessage.make("blogwow.blogview.pubviewtitle")));
-								ul.decorators = dl;
+							fillEntryIcon(entrydiv, "../images/world.png", "blogwow.blogview.pubviewalt", "blogwow.blogview.pubviewtitle", false);
             }
 
             UIVerbatim.make(entrydiv, "verbatim-blog-text", entry.getText());
@@ -198,6 +190,24 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
             }
         }
     }
+
+		private void fillEntryIcon(UIBranchContainer entrydiv, String imgUrl, String altKey, String titleKey, Boolean draft)
+		{
+			UILink ul = UILink.make(entrydiv, "blog-visibility", imgUrl);
+			DecoratorList dl = new DecoratorList();
+			dl.add(new UIAlternativeTextDecorator(UIMessage.make(altKey)));
+			dl.add(new UITooltipDecorator(UIMessage.make(titleKey)));
+			ul.decorators = dl;
+
+			if (draft)
+			{
+				UIMessage.make(entrydiv, "blog-draft", "blogwow.blogview.draft");
+			}
+			else
+			{
+				UIOutput.make(entrydiv, "blog-draft", " ");
+			}
+		}
 
     public ViewParameters getViewParameters() {
         return new BlogParams();
