@@ -14,7 +14,6 @@ import org.sakaiproject.blogwow.tool.params.BlogRssViewParams;
 
 import uk.org.ponder.rsf.components.UIBranchContainer;
 import uk.org.ponder.rsf.components.UIContainer;
-import uk.org.ponder.rsf.components.UILink;
 import uk.org.ponder.rsf.components.UIOutput;
 import uk.org.ponder.rsf.components.UIVerbatim;
 import uk.org.ponder.rsf.content.ContentTypeInfoRegistry;
