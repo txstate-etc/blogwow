@@ -99,6 +99,10 @@ public class ExternalLogicImpl implements ExternalLogic {
 
     public String getCurrentLocationId() {
         try {
+						if (toolManager.getCurrentPlacement() == null)
+						{
+							return NO_LOCATION;
+						}
             Site s = siteService.getSite(toolManager.getCurrentPlacement().getContext());
             return s.getReference(); // get the entity reference to the site
         } catch (IdUnusedException e) {

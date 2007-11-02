@@ -16,6 +16,7 @@ import org.sakaiproject.blogwow.logic.entity.BlogEntryEntityProvider;
 import org.sakaiproject.blogwow.tool.params.BlogEntryParams;
 import org.sakaiproject.blogwow.tool.producers.BlogViewProducer;
 import org.sakaiproject.entitybroker.IdEntityReference;
+import org.sakaiproject.blogwow.model.BlogWowEntry;
 
 import uk.ac.cam.caret.sakai.rsf.entitybroker.EntityViewParamsInferrer;
 import uk.org.ponder.rsf.viewstate.ViewParameters;
@@ -40,8 +41,9 @@ public class BlogEntryInferrer implements EntityViewParamsInferrer {
 
     public ViewParameters inferDefaultViewParameters(String reference) {
         IdEntityReference ref = new IdEntityReference(reference);
-        if ( entryLogic.getEntryById(ref.id, null) != null ) {
-            return new BlogEntryParams(BlogViewProducer.VIEW_ID, ref.id);
+				BlogWowEntry bwe = entryLogic.getEntryById(ref.id, null);
+        if ( bwe != null ) {
+            return new BlogEntryParams(BlogViewProducer.VIEW_ID, bwe.getBlog().getId(), ref.id);
         } else {
             throw new SecurityException("User does not have access to this entity: " + reference);
         }
