@@ -155,6 +155,8 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
             UIInternalLink.make(entrydiv, "entry-link:", UIMessage.make("blogwow.blogview.add-comment"), new BlogParams(
                     BlogViewProducer.VIEW_ID, blog.getId(), entry.getId(), true, true));
 
+            UIInternalLink.make(entrydiv, "entry-link:", UIMessage.make("blogwow.permalink.permalinktitle"), externalLogic.getBlogEntryUrl(entry.getId()));
+
             // Render Comments if they are visible
             if (params.showcomments) {
                 for (int j = 0; j < comments.size(); j++) {
@@ -188,6 +190,7 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
                         + "').scrollIntoView(true);");
                 UIVerbatim.make(entrydiv, "scoll-here-script", "document.getElementById('" + commentInput.getFullID() + "').focus();");
             }
+            
         }
     }
 
