@@ -145,6 +145,12 @@
         <version>${sakai.version}</version>
         <scope>provided</scope>
     </dependency>
+    <dependency>
+        <groupId>org.sakaiproject</groupId>
+        <artifactId>sakai-content-api</artifactId>
+        <version>${sakai.version}</version>
+        <scope>provided</scope>
+    </dependency>
 
 
     <!-- Apache commons dependencies -->

@@ -4,10 +4,15 @@
 
 <beans>
 
-   <!-- rich text evolver bean def -->
-   <bean id="richTextEvolver" class="org.springframework.beans.factory.config.BeanReferenceFactoryBean">
-      <property name="targetBeanName" value="sakaiFCKTextEvolver" />
+	<bean id="sakaiFCKTextEvolver"
+     class="uk.ac.cam.caret.sakai.rsf.tmp.evolverimpl.SakaiFCKTextEvolver">
+     <property name="contentHostingService"
+       ref="org.sakaiproject.content.api.ContentHostingService" />
+     <property name="context" ref="sakai-Context" />
    </bean>
+
+   <!-- rich text evolver bean def -->
+   <bean id="richTextEvolver" parent="sakaiFCKTextEvolver" />
 
    <!-- Renderers -->
    <bean id="NavbarRenderer" class="org.sakaiproject.blogwow.tool.producers.NavBarRenderer">
