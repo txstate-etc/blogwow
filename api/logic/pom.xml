@@ -22,10 +22,9 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>generic-dao</groupId>
+      <groupId>org.sakaiproject</groupId>
       <artifactId>generic-dao</artifactId>
-      <version>0.9.1</version>
-      <scope>provided</scope>
+      <version>${sakai.generic-dao.version}</version>
     </dependency>
     <dependency>
       <groupId>org.sakaiproject.entitybroker</groupId>

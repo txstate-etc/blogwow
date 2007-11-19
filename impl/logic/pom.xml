@@ -48,7 +48,7 @@
       <version>${sakai.version}</version>
       <scope>provided</scope>
     </dependency>
-    <dependency>
+		<dependency>
       <groupId>org.sakaiproject.entitybroker</groupId>
       <artifactId>entitybroker-api</artifactId>
       <version>1.2.0</version>
@@ -91,10 +91,9 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>generic-dao</groupId>
+      <groupId>org.sakaiproject</groupId>
       <artifactId>generic-dao</artifactId>
-      <version>0.9.1</version>
-      <scope>provided</scope>
+      <version>${sakai.generic-dao.version}</version>
     </dependency>
     <dependency>
       <groupId>commons-logging</groupId>
