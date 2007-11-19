@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.sakaiproject</groupId>
     <artifactId>sakai-blogwow-base</artifactId>
-    <version>M2</version>
+    <version>SNAPSHOT</version>
   </parent>
   <name>sakai-blogwow-dao-impl</name>
   <groupId>org.sakaiproject</groupId>
