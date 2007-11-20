@@ -37,7 +37,6 @@ ContentTypeReporter
     private EntryLogic entryLogic;
     private ExternalLogic externalLogic;
 
-
     public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
         String currentUserId = externalLogic.getCurrentUserId();
 
@@ -95,7 +94,6 @@ ContentTypeReporter
     public ViewParameters getViewParameters() {
         return new BlogRssViewParams();
     }
-
 
     public String getContentType() {
         return ContentTypeInfoRegistry.RSS_2;

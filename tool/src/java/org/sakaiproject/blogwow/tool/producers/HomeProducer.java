@@ -37,7 +37,6 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
     private MugshotGenerator mugshotGenerator;
     private ExternalLogic externalLogic;
 
-
     public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
 
         String currentUserId = externalLogic.getCurrentUserId();
@@ -97,7 +96,6 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
         }
 
     }
-
 
     public void setBlogLogic(BlogLogic blogLogic) {
         this.blogLogic = blogLogic;

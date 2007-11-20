@@ -55,7 +55,7 @@ public class PermissionsProducer implements ViewComponentProducer, ViewParamsRep
         return new HelperViewParameters();
     }
 
-    public List reportNavigationCases() {
+    public List<NavigationCase> reportNavigationCases() {
         List<NavigationCase> l = new ArrayList<NavigationCase>();
         // default navigation case
         l.add(new NavigationCase(null, new SimpleViewParameters(HomeProducer.VIEW_ID)));

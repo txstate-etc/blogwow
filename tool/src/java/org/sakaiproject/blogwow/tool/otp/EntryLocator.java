@@ -1,8 +1,6 @@
 package org.sakaiproject.blogwow.tool.otp;
 
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.sakaiproject.blogwow.logic.BlogLogic;
@@ -46,8 +44,7 @@ public class EntryLocator implements WriteableBeanLocator {
     }
 
     public String publishAll() {
-        for (Iterator it = delivered.keySet().iterator(); it.hasNext();) {
-            String key = (String) it.next();
+    	for (String key : delivered.keySet()) {
             BlogWowEntry entry = delivered.get(key);
             if (key.startsWith(NEW_PREFIX)) {
                 // could do stuff here
@@ -58,9 +55,7 @@ public class EntryLocator implements WriteableBeanLocator {
     }
 
     public String saveAll() {
-        Collection entries = delivered.values();
-        for (Iterator i = entries.iterator(); i.hasNext();) {
-            BlogWowEntry entry = (BlogWowEntry) i.next();
+        for (BlogWowEntry entry : delivered.values()) {
             entry.setPrivacySetting(BlogConstants.PRIVACY_PRIVATE);
             entryLogic.saveEntry(entry, externalLogic.getCurrentLocationId());
         }
@@ -68,9 +63,7 @@ public class EntryLocator implements WriteableBeanLocator {
     }
 
     public String removeAll() {
-        Collection entries = delivered.values();
-        for (Iterator i = entries.iterator(); i.hasNext();) {
-            BlogWowEntry entry = (BlogWowEntry) i.next();
+    	for (BlogWowEntry entry : delivered.values()) {
             entryLogic.removeEntry(entry.getId(), externalLogic.getCurrentLocationId());
         }
         return "removed";

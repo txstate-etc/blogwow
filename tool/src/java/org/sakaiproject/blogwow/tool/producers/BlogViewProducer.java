@@ -216,7 +216,6 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
         return new BlogParams();
     }
 
-
     public void setBlogLogic(BlogLogic blogLogic) {
         this.blogLogic = blogLogic;
     }

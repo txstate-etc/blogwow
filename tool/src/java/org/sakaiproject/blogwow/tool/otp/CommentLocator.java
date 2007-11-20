@@ -2,7 +2,6 @@ package org.sakaiproject.blogwow.tool.otp;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.sakaiproject.blogwow.logic.CommentLogic;
@@ -36,8 +35,7 @@ public class CommentLocator implements BeanLocator {
     }
 
     public String publishAll() {
-        for (Iterator it = delivered.keySet().iterator(); it.hasNext();) {
-            String key = (String) it.next();
+        for (String key : delivered.keySet()) {
             BlogWowComment comment = delivered.get(key);
             if (key.startsWith(NEW_PREFIX)) {
                 // could do stuff here

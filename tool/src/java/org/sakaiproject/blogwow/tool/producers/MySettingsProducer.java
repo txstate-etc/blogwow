@@ -29,7 +29,6 @@ public class MySettingsProducer implements ViewComponentProducer, ViewParamsRepo
     private NavBarRenderer navBarRenderer;
     private TextInputEvolver richTextEvolver;
 
-
     public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
 
         UIMessage.make(tofill, "page-title", "blogwow.settings.title");
@@ -62,7 +61,7 @@ public class MySettingsProducer implements ViewComponentProducer, ViewParamsRepo
         return new SimpleBlogParams();
     }
 
-    public List reportNavigationCases() {
+    public List<NavigationCase> reportNavigationCases() {
         List<NavigationCase> l = new ArrayList<NavigationCase>();
         // first arg null defines the default navigation case
         l.add(new NavigationCase(null, new SimpleViewParameters(HomeProducer.VIEW_ID)));

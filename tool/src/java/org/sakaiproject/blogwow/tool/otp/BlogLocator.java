@@ -1,7 +1,6 @@
 package org.sakaiproject.blogwow.tool.otp;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.sakaiproject.blogwow.logic.BlogLogic;
@@ -36,8 +35,7 @@ public class BlogLocator implements BeanLocator {
 	}
 
 	public String saveAll() {
-        for (Iterator it = delivered.keySet().iterator(); it.hasNext();) {
-            String key = (String) it.next();
+		for (String key : delivered.keySet()) {
             BlogWowBlog blog = delivered.get(key);
             if (key.startsWith(NEW_PREFIX)) {
                 // could do stuff here

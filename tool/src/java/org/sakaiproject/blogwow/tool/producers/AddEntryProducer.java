@@ -41,7 +41,6 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
     private TextInputEvolver richTextEvolver;
     private MessageLocator messageLocator;
 
-
     public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
 
         UIMessage.make(tofill, "page-title", "blogwow.add_edit.title");
@@ -119,7 +118,7 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
         return new BlogEntryParams();
     }
 
-    public List reportNavigationCases() {
+    public List<NavigationCase> reportNavigationCases() {
         List<NavigationCase> l = new ArrayList<NavigationCase>();
         l.add(new NavigationCase(null, new SimpleViewParameters(HomeProducer.VIEW_ID)));
         return l;
@@ -131,8 +130,6 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
             result.resultingView = new SimpleBlogParams(BlogViewProducer.VIEW_ID, bep.blogid);
         }    
     }
-
-
 
     public void setMessageLocator(MessageLocator messageLocator) {
         this.messageLocator = messageLocator;
