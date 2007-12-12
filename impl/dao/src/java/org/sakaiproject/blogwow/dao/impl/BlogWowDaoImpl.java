@@ -197,6 +197,34 @@ public class BlogWowDaoImpl extends HibernateCompleteGenericDao implements BlogW
         // return getHibernateTemplate().findByCriteria(dc, start, limit);
     }
 
+    public Integer getBlogPermCount(String[] blogIds, String userId,
+    		String[] readLocations, String[] readAnyLocations) {
+    	
+    	Map<String, Object> params = new HashMap<String, Object>();
+    	String hql = "from BlogWowEntry as entry join entry.blog as eblog where eblog.id in (:blogIds) " + 
+        " and (entry.privacySetting = :privacyPublic";
+    	params.put("privacyPublic", BlogConstants.PRIVACY_PUBLIC);
+    	params.put("blogIds", blogIds);
+    	if (userId != null) {
+    		hql += " or entry.blog.ownerId = :userId or entry.ownerId = :userId";
+    		params.put("userId", userId);
+    	}
+    	if (readLocations != null && readLocations.length > 0) {
+    		hql += " or (entry.privacySetting = :privacyGroup and " + "entry.blog.location in (:readLocations))";
+    		params.put("privacyGroup", BlogConstants.PRIVACY_GROUP);
+    		params.put("readLocations", readLocations);
+    	}
+    	if (readAnyLocations != null && readAnyLocations.length > 0) {
+    		hql += " or (entry.privacySetting = :privacyGroupLeader and " + "entry.blog.location in (:readAnyLocations))";
+    		params.put("privacyGroupLeader", BlogConstants.PRIVACY_GROUP_LEADER);
+    		params.put("readAnyLocations", readAnyLocations);
+    	}
+    	hql += ")";
+
+        return count(hql);
+    	
+    }
+    
     /**
      * This is supported natively in Hibernate 3.2.x and up
      * 

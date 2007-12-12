@@ -60,6 +60,8 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
 
         UIMessage.make(tofill, "page-title", "blogwow.blogview.title");
 
+        int entriesPerPage = 10;
+        
         String entryLocator = "EntryLocator";
         String commentLocator = "CommentLocator";
         String currentUserId = externalLogic.getCurrentUserId();
@@ -90,7 +92,12 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
 
         List<BlogWowEntry> entries = new ArrayList<BlogWowEntry>();
         if (params.entryid == null) {
-            entries = entryLogic.getAllVisibleEntries(blog.getId(), currentUserId, null, false, 0, 10);
+        	if (params.skip == null) {
+        		entries = entryLogic.getAllVisibleEntries(blog.getId(), currentUserId, null, false, 0, entriesPerPage);
+        	}
+        	else {
+        		entries = entryLogic.getAllVisibleEntries(blog.getId(), currentUserId, null, false, params.skip, entriesPerPage);
+        	}
         } else {
             entries.add(entryLogic.getEntryById(params.entryid, externalLogic.getCurrentLocationId()));
         }
@@ -190,7 +197,43 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
                         + "').scrollIntoView(true);");
                 UIVerbatim.make(entrydiv, "scoll-here-script", "document.getElementById('" + commentInput.getFullID() + "').focus();");
             }
-            
+
+						// Render forward and back buttons if we have more entries
+						if (params.skip != null) {
+							if (params.skip + entriesPerPage < entryLogic.getVisibleEntryCount(blog.getId(), currentUserId))
+						  {
+						     UIMessage um = UIMessage.make("blogwow.blogview.previous", new Object[] { entriesPerPage });
+						     BlogParams bp = new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(), params.skip+entriesPerPage);
+						     UIInternalLink.make(tofill, "previous-page", um, bp);
+
+                 UILink ul = UILink.make(tofill, "back-img", null);
+                 DecoratorList dl = new DecoratorList();
+                 dl.add(new UIAlternativeTextDecorator(UIMessage.make("blogwow.blogview.previousalt")));
+                 ul.decorators = dl;
+               }
+               if (params.skip > 0)
+               {
+                 UIMessage um = UIMessage.make("blogwow.blogview.next", new Object[] { entriesPerPage });
+                 BlogParams bp = new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(), params.skip-entriesPerPage);
+                 UIInternalLink.make(tofill, "next-page", um, bp);
+ 
+                 UILink ul = UILink.make(tofill, "forward-img", null);
+                 DecoratorList dl = new DecoratorList();
+                 dl.add(new UIAlternativeTextDecorator(UIMessage.make("blogwow.blogview.nextalt")));
+                 ul.decorators = dl;
+               }
+             }
+             else if (entryLogic.getVisibleEntryCount(blog.getId(), currentUserId) > entriesPerPage)
+             {
+               UIMessage um = UIMessage.make("blogwow.blogview.previous", new Object[] { entriesPerPage });
+               BlogParams bp = new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(), entriesPerPage);
+               UIInternalLink.make(tofill, "previous-page", um, bp);
+ 
+               UILink ul = UILink.make(tofill, "back-img", null);
+               DecoratorList dl = new DecoratorList();
+               dl.add(new UIAlternativeTextDecorator(UIMessage.make("blogwow.blogview.previousalt")));
+               ul.decorators = dl;
+             }
         }
     }
 

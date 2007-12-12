@@ -82,13 +82,15 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
             UILink.make(row, "user-icon", mugshotGenerator.getMugshotUrl(blog.getOwnerId()));
             UIInternalLink.make(row, "blog-title-link", blog.getTitle(), 
                     new SimpleBlogParams(BlogViewProducer.VIEW_ID, blog.getId().toString()));
-            List<BlogWowEntry> entries = entryLogic.getAllVisibleEntries(blog.getId(), currentUserId, null, true, 0, 1000);
-            UIOutput.make(row, "number-of-entries", entries.size()+"");
-            if (entries.size() > 0) {
+            Integer entriesCount = entryLogic.getVisibleEntryCount(blog.getId(), currentUserId);
+            UIOutput.make(row, "number-of-entries", entriesCount.toString() +"");
+            if (entriesCount.compareTo(Integer.valueOf(0)) > 0) {
+            	List<BlogWowEntry> entries = entryLogic.getAllVisibleEntries(myblog.getId(), currentUserId, null, true, 0, 1);
                 UIOutput.make(row, "time-last-updated", dtf.format(entries.get(0).getDateModified()) );
             }
             else {
-                // TODO - why is this here? -AZ
+                // This makes the tag render empty, if we don't reference it we won't get the tag, and if
+            	// if it's null we'll get the contents of the template.
                 UIOutput.make(row, "time-last-updated", "");
             }
             // UIInternalLink.make(row, "rss-link", new BlogParams(BlogRSSProducer.VIEWID, blog.getId().toString()));

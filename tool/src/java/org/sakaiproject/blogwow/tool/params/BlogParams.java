@@ -12,6 +12,7 @@ public class BlogParams extends BlogEntryParams {
   
   public boolean showcomments;
   public boolean addcomment;
+  public Integer skip;
   
   public BlogParams() {}
 
@@ -22,6 +23,7 @@ public class BlogParams extends BlogEntryParams {
       this.entryid = entryid;
       this.showcomments = showcomments;
       this.addcomment = false;
+      this.skip = 0;
   }
   
   public BlogParams(String viewid, String blogid, String entryid, boolean showcomments, boolean addcomment) {
@@ -30,5 +32,15 @@ public class BlogParams extends BlogEntryParams {
       this.entryid = entryid;
       this.showcomments = showcomments;
       this.addcomment = addcomment;
+      this.skip = 0;
+  }
+  
+  public BlogParams(String viewid, String blogid, int skip) {
+      this.viewID = viewid;
+      this.blogid = blogid;
+      this.entryid = null;
+      this.showcomments = false;
+      this.addcomment = false;
+      this.skip = skip;
   }
 }

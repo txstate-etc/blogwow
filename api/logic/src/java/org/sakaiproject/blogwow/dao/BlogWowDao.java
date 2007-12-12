@@ -60,4 +60,19 @@ public interface BlogWowDao extends CompleteGenericDao {
     public List getBlogPermEntries(String[] blogIds, String userId, String[] readLocations, String[] readAnyLocations, String sortProperty,
             boolean ascending, int start, int limit);
 
+    /**
+     * 
+     * @param blogIds
+     *            an array of unique ids of {@link BlogWowBlog} which we will count entries from
+     * @param userId
+     *            the internal user id (not username), if null then return public entries
+     * @param readLocations
+     *            an array of locationIds which we will count all privacy {@link BlogConstants#PRIVACY_GROUP} entries for (the user should
+     *            have read permissions in these locations)
+     * @param readAnyLocations
+     *            an array of locationIds which we will count all privacy {@link BlogConstants#PRIVACY_GROUP_LEADER} entries for (the user
+     *            should have read all entries access to these locations)
+     * @return a count of {@link BlogWowEntry} objects
+     */
+    public Integer getBlogPermCount(String[] blogIds, String userId, String[] readLocations, String[] readAnyLocations);
 }

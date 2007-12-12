@@ -81,6 +81,16 @@ public interface EntryLogic {
     public List<BlogWowEntry> getAllVisibleEntries(String blogId, String userId, String sortProperty, boolean ascending, int start, int limit);
 
     /**
+     * Quickly get a count of entries visible to a user
+     * @param blogId
+     * 		unique id of a {@link BlogWowBlog}
+     * @param userId
+     * 		the internal user id (not username), if null then return all entries regardless of visibility
+     * @return
+     */
+    public Integer getVisibleEntryCount(String blogId, String userId);
+
+    /**
      * Efficiency method which gets all blog entries which are visible to a specific user for an array of blogs
      * 
      * @param blogIds

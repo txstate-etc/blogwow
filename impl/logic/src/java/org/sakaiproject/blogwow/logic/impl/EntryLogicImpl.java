@@ -53,6 +53,33 @@ public class EntryLogicImpl implements EntryLogic {
         return getAllVisibleEntries(new String[] { blogId }, userId, sortProperty, ascending, start, limit);
     }
 
+    public Integer getVisibleEntryCount(String blogId, String userId){
+    	Integer count = new Integer(0);
+    	if (externalLogic.isUserAdmin(userId)) {
+            count = dao.countByProperties(BlogWowEntry.class, new String[] { "blog.id" }, new Object[] { blogId });
+        } else {
+            List locations = dao.getLocationsForBlogsIds(new String[] { blogId });
+            // check current user perms on these locations to form lists of locations related to this users access
+            List<String> readLocations = new ArrayList<String>(); // holds the locations where user has read perms
+            List<String> readAnyLocations = new ArrayList<String>(); // holds the locations where user has read any perms
+            for (Iterator iter = locations.iterator(); iter.hasNext();) {
+                String location = (String) iter.next();
+                if (externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_READ_ANY, location)) {
+                    readAnyLocations.add(location);
+                    readLocations.add(location);
+                } else if (externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_READ, location)) {
+                    readLocations.add(location);
+                }
+            }
+            String[] readLocsArray = readLocations.toArray(new String[] {});
+            String[] readAnyLocsArray = readAnyLocations.toArray(new String[] {});
+
+            count = dao.getBlogPermCount(new String[] { blogId }, userId, readLocsArray, readAnyLocsArray);
+        }
+
+        return count;
+    }
+    
     @SuppressWarnings("unchecked")
     public List<BlogWowEntry> getAllVisibleEntries(String[] blogIds, String userId, String sortProperty, boolean ascending, int start,
             int limit) {
