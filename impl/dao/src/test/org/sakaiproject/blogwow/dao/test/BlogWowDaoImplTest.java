@@ -153,6 +153,28 @@ public class BlogWowDaoImplTest extends AbstractTransactionalSpringContextTests 
         assertTrue(entries.contains(tdp.entry2_b1));
 
     }
+    
+    public void testGetBlogPermCount()
+    {
+    	// count all public entries
+    	int count = (dao.getBlogPermCount(new String[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() }, null, null, null));
+    	assertEquals(2, count);
+    	
+    	// count only blog 1 public entries
+        count = dao.getBlogPermCount(new String[] { tdp.blog1.getId() }, null, null, null);
+        assertEquals(1, count);
+        
+        // count all entries for user
+        count = dao.getBlogPermCount(new String[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() }, TestDataPreload.USER_ID,
+                new String[] { TestDataPreload.LOCATION1_ID }, null);
+        assertEquals(5, count);
+        
+        // get all entries for maint user
+        count = dao.getBlogPermCount(new String[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() },
+                TestDataPreload.MAINT_USER_ID, new String[] { TestDataPreload.LOCATION1_ID },
+                new String[] { TestDataPreload.LOCATION1_ID });
+        assertEquals(5, count);
+    }
 
     /**
      * Add anything that supports the unit tests below here

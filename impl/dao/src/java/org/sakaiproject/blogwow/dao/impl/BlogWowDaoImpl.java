@@ -22,6 +22,7 @@ import org.hibernate.Query;
 import org.sakaiproject.blogwow.dao.BlogWowDao;
 import org.sakaiproject.blogwow.model.constants.BlogConstants;
 import org.sakaiproject.genericdao.hibernate.HibernateCompleteGenericDao;
+import org.sakaiproject.util.StringUtil;
 
 /**
  * Implementations of any specialized DAO methods from the specialized DAO that allows the developer to extend the functionality of the
@@ -204,16 +205,32 @@ public class BlogWowDaoImpl extends HibernateCompleteGenericDao implements BlogW
     	
     	if (blogIds != null && blogIds.length > 0)
     	{
-    		StringBuilder hql = new StringBuilder("from BlogWowEntry as entry join entry.blog as eblog where eblog.id in (:blogIds) and (entry.privacySetting = :privacyPublic");
-    	
+    		StringBuilder hql = new StringBuilder("from BlogWowEntry as entry join entry.blog as eblog where eblog.id in ('");
+    		hql.append(StringUtil.unsplit(blogIds, "','"));
+    		hql.append("') and (entry.privacySetting = '");
+    		hql.append(BlogConstants.PRIVACY_PUBLIC);
+    		hql.append("')");
+    		            
     		if (userId != null) {
-    			hql.append(" or entry.blog.ownerId = :userId or entry.ownerId = :userId");
+    			hql.append(" or entry.blog.ownerId = '");
+    			hql.append(userId);
+    			hql.append("' or entry.ownerId = '");
+    			hql.append(userId);
+    			hql.append("'");
     		}
     		if (readLocations != null && readLocations.length > 0) {
-    			hql.append(" or (entry.privacySetting = :privacyGroup and entry.blog.location in (:readLocations))");
+    			hql.append(" or (entry.privacySetting = '");
+    			hql.append(BlogConstants.PRIVACY_GROUP);
+    			hql.append("' and entry.blog.location in ('");
+    			hql.append(StringUtil.unsplit(readLocations,"','"));
+    			hql.append("'))");
     		}
     		if (readAnyLocations != null && readAnyLocations.length > 0) {
-    			hql.append(" or (entry.privacySetting = :privacyGroupLeader and entry.blog.location in (:readAnyLocations))");
+    			hql.append(" or (entry.privacySetting = '");
+    			hql.append(BlogConstants.PRIVACY_GROUP_LEADER);
+    			hql.append("' and entry.blog.location in ('");
+    			hql.append(StringUtil.unsplit(readAnyLocations,"','"));
+    			hql.append("'))");
     		}
     		hql.append(")");
     		
