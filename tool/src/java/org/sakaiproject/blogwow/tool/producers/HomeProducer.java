@@ -83,8 +83,8 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
             UIInternalLink.make(row, "blog-title-link", blog.getTitle(), 
                     new SimpleBlogParams(BlogViewProducer.VIEW_ID, blog.getId().toString()));
             Integer entriesCount = entryLogic.getVisibleEntryCount(blog.getId(), currentUserId);
-            UIOutput.make(row, "number-of-entries", entriesCount.toString() +"");
-            if (entriesCount.compareTo(Integer.valueOf(0)) > 0) {
+            UIOutput.make(row, "number-of-entries", entriesCount +"");
+            if (entriesCount > 0) {
             	List<BlogWowEntry> entries = entryLogic.getAllVisibleEntries(myblog.getId(), currentUserId, null, true, 0, 1);
                 UIOutput.make(row, "time-last-updated", dtf.format(entries.get(0).getDateModified()) );
             }
