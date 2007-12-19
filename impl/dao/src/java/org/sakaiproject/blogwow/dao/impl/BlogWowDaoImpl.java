@@ -209,7 +209,7 @@ public class BlogWowDaoImpl extends HibernateCompleteGenericDao implements BlogW
     		hql.append(StringUtil.unsplit(blogIds, "','"));
     		hql.append("') and (entry.privacySetting = '");
     		hql.append(BlogConstants.PRIVACY_PUBLIC);
-    		hql.append("')");
+    		hql.append("'");
     		            
     		if (userId != null) {
     			hql.append(" or entry.blog.ownerId = '");
