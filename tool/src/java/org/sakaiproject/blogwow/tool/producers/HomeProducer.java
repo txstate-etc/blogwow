@@ -85,8 +85,14 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
             Integer entriesCount = entryLogic.getVisibleEntryCount(blog.getId(), currentUserId);
             UIOutput.make(row, "number-of-entries", entriesCount +"");
             if (entriesCount > 0) {
-            	List<BlogWowEntry> entries = entryLogic.getAllVisibleEntries(myblog.getId(), currentUserId, null, true, 0, 1);
-                UIOutput.make(row, "time-last-updated", dtf.format(entries.get(0).getDateModified()) );
+            	List<BlogWowEntry> entries = entryLogic.getAllVisibleEntries(blog.getId(), currentUserId, null, true, 0, 1);
+								try
+								{
+                	UIOutput.make(row, "time-last-updated", dtf.format(entries.get(0).getDateModified()) );
+								}catch (IndexOutOfBoundsException e) {
+									// This shouldn't happen, our count doesn't agree with the number of entries we get
+									UIOutput.make(row, "time-last-updated", "???" );
+								}
             }
             else {
                 // This makes the tag render empty, if we don't reference it we won't get the tag, and if
