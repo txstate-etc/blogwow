@@ -1,5 +1,5 @@
 /******************************************************************************
- * TestUser.java - created by Sakai App Builder -AZ
+ * TUser.java - created by Sakai App Builder -AZ
  * 
  * Copyright (c) 2006 Sakai Project/Sakai Foundation
  * Licensed under the Educational Community License version 1.0
@@ -25,7 +25,7 @@ import org.w3c.dom.Element;
  * 
  * @author Sakai App Builder -AZ
  */
-public class TestUser implements User {
+public class TUser implements User {
     private String userId;
 
     private String userEid = "fakeEid";
@@ -38,7 +38,7 @@ public class TestUser implements User {
      * @param userId
      *            a id string
      */
-    public TestUser(String userId) {
+    public TUser(String userId) {
         this.userId = userId;
     }
 
@@ -50,7 +50,7 @@ public class TestUser implements User {
      * @param userEid
      *            a username string
      */
-    public TestUser(String userId, String userEid) {
+    public TUser(String userId, String userEid) {
         this.userId = userId;
         this.userEid = userEid;
     }
@@ -65,7 +65,7 @@ public class TestUser implements User {
      * @param displayName
      *            a user display name
      */
-    public TestUser(String userId, String userEid, String displayName) {
+    public TUser(String userId, String userEid, String displayName) {
         this.userId = userId;
         this.userEid = userEid;
         this.displayName = displayName;

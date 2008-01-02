@@ -1,5 +1,5 @@
 /******************************************************************************
- * TestSite.java - created by aaronz@vt.edu on Dec 23, 2006
+ * TSite.java - created by aaronz@vt.edu on Dec 23, 2006
  * 
  * Copyright (c) 2007 Virginia Polytechnic Institute and State University
  * Licensed under the Educational Community License version 1.0
@@ -37,7 +37,7 @@ import org.w3c.dom.Element;
 /**
  * @author Aaron Zeckoski (aaronz@vt.edu)
  */
-public class TestSite implements Site {
+public class TSite implements Site {
 
     private static final long serialVersionUID = 4761288804996964705L;
 
@@ -47,7 +47,7 @@ public class TestSite implements Site {
 
     private String reference = "/site/default";
 
-    public TestSite(String id, String title, String reference) {
+    public TSite(String id, String title, String reference) {
         this.id = id;
         this.title = title;
         this.reference = reference;

@@ -23,6 +23,25 @@
         <filtering>false</filtering>
       </resource>
     </resources>
+		
+		<testResources>
+			<testResource>
+				<directory>${basedir}/../pack/src/webapp/WEB-INF</directory>
+				<includes>
+					<include>spring-hibernate.xml</include>
+				</includes>
+				<filtering>false</filtering>
+			</testResource>
+			<testResource>
+				<directory>${basedir}/src/test</directory>
+				<includes>
+					<include>**/*.xml</include>
+					<include>**/*.properties</include>
+				</includes>
+				<filtering>false</filtering>
+			</testResource>
+		</testResources>
+
   </build>
   <dependencies>
     <dependency>
@@ -78,5 +97,17 @@
       <version>${sakai.spring.mock.version}</version>
       <scope>provided</scope>
     </dependency>
+		<dependency>
+			<groupId>hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>1.8.0.7</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.sakaiproject</groupId>
+			<artifactId>sakai-blogwow-hbm</artifactId>
+			<version>${sakai.version}</version>
+			<scope>test</scope>
+		</dependency>
   </dependencies>
 </project>

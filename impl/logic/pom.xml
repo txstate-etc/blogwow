@@ -22,6 +22,25 @@
         <filtering>false</filtering>
       </resource>
     </resources>
+
+		<testResources>
+			<testResource>
+				<directory>${basedir}/../pack/src/webapp/WEB-INF</directory>
+				<includes>
+					<include>spring-hibernate.xml</include>
+				</includes>
+				<filtering>false</filtering>
+			</testResource>
+			<testResource>
+				<directory>${basedir}/../dao/src/test</directory>
+				<includes>
+					<include>**/*.xml</include>
+					<include>**/*.properties</include>
+				</includes>
+				<filtering>false</filtering>
+			</testResource>
+		</testResources>
+
   </build>
   <dependencies>
     <dependency>
@@ -99,6 +118,42 @@
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
       <version>1.0.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.sakaiproject</groupId>
+			<artifactId>sakai-blogwow-test-impl</artifactId>
+			<version>${sakai.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>${sakai.spring.groupId}</groupId>
+			<artifactId>${sakai.spring.mock.artifactId}</artifactId>
+			<version>${sakai.spring.mock.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.sakaiproject</groupId>
+			<artifactId>sakai-blogwow-test-impl</artifactId>
+			<version>${sakai.version}</version>
+			<scope>provided</scope>
+		</dependency>
+    <dependency>
+      <groupId>hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>1.8.0.7</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.sakaiproject</groupId>
+      <artifactId>sakai-blogwow-hbm</artifactId>
+      <version>${sakai.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.sakaiproject</groupId>
+      <artifactId>sakai-blogwow-dao-impl</artifactId>
+      <version>${sakai.version}</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 </project>

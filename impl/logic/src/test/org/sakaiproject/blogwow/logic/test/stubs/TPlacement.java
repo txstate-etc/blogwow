@@ -1,5 +1,5 @@
 /******************************************************************************
- * TestPlacement.java - created by Sakai App Builder -AZ
+ * TPlacement.java - created by Sakai App Builder -AZ
  * 
  * Copyright (c) 2006 Sakai Project/Sakai Foundation
  * Licensed under the Educational Community License version 1.0
@@ -22,7 +22,7 @@ import org.sakaiproject.tool.api.Tool;
  * 
  * @author Sakai App Builder -AZ
  */
-public class TestPlacement implements Placement {
+public class TPlacement implements Placement {
 
     private String id = "FAKE12345";
 
@@ -40,7 +40,7 @@ public class TestPlacement implements Placement {
      * @param context
      *            a String representing a site context (siteId)
      */
-    public TestPlacement(String context) {
+    public TPlacement(String context) {
         this.context = context;
     }
 
