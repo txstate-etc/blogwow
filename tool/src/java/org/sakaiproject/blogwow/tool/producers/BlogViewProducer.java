@@ -20,7 +20,6 @@ import org.sakaiproject.blogwow.tool.params.BlogEntryParams;
 import org.sakaiproject.blogwow.tool.params.BlogParams;
 
 import uk.org.ponder.rsf.components.ELReference;
-import uk.org.ponder.rsf.components.ParameterList;
 import uk.org.ponder.rsf.components.UIBranchContainer;
 import uk.org.ponder.rsf.components.UICommand;
 import uk.org.ponder.rsf.components.UIContainer;
@@ -45,6 +44,7 @@ import uk.org.ponder.rsf.viewstate.ViewParamsReporter;
 public class BlogViewProducer implements ViewComponentProducer, ViewParamsReporter {
 
     public static final String VIEW_ID = "blog_view";
+
     public String getViewID() {
         return VIEW_ID;
     }
@@ -61,7 +61,7 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
         UIMessage.make(tofill, "page-title", "blogwow.blogview.title");
 
         int entriesPerPage = 10;
-        
+
         String entryLocator = "EntryLocator";
         String commentLocator = "CommentLocator";
         String currentUserId = externalLogic.getCurrentUserId();
@@ -76,28 +76,26 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
         BlogWowBlog blog = blogLogic.getBlogById(params.blogid);
 
         UIOutput.make(tofill, "blog-title", blog.getTitle());
-        UILink.make(tofill, "blog-url", externalLogic.getBlogUrl(blog.getId()) );
+        UILink.make(tofill, "blog-url", externalLogic.getBlogUrl(blog.getId()));
         String profileText = blog.getProfile();
         if (profileText == null || profileText.equals("")) {
             UIMessage.make(tofill, "profile-verbatim-text", "blogwow.blogview.noprofile");
-        }
-        else {
+        } else {
             UIVerbatim.make(tofill, "profile-verbatim-text", profileText);
         }
         String profileImageUrl = blog.getImageUrl();
-        if (profileImageUrl == null || profileImageUrl.equals("")) {
-            profileImageUrl = null; //this will use the default in the template
+        if ("".equals(profileImageUrl)) {
+            profileImageUrl = null; // this will use the default in the template
         }
         UILink.make(tofill, "profile-image", profileImageUrl);
 
         List<BlogWowEntry> entries = new ArrayList<BlogWowEntry>();
         if (params.entryid == null) {
-        	if (params.skip == null) {
-        		entries = entryLogic.getAllVisibleEntries(blog.getId(), currentUserId, null, false, 0, entriesPerPage);
-        	}
-        	else {
-        		entries = entryLogic.getAllVisibleEntries(blog.getId(), currentUserId, null, false, params.skip, entriesPerPage);
-        	}
+            if (params.skip == null) {
+                entries = entryLogic.getAllVisibleEntries(blog.getId(), currentUserId, null, false, 0, entriesPerPage);
+            } else {
+                entries = entryLogic.getAllVisibleEntries(blog.getId(), currentUserId, null, false, params.skip, entriesPerPage);
+            }
         } else {
             entries.add(entryLogic.getEntryById(params.entryid, externalLogic.getCurrentLocationId()));
         }
@@ -111,34 +109,27 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
             BlogWowEntry entry = entries.get(i);
             String entryOTP = entryLocator + "." + entry.getId();
 
-            UIBranchContainer entrydiv = UIBranchContainer.make(tofill, "blog-entry:", i + "");
+            UIBranchContainer entrydiv = UIBranchContainer.make(tofill, "blog-entry:");
             UIOutput.make(entrydiv, "blog-title", entry.getTitle());
             UIOutput.make(entrydiv, "blog-date", df.format(entry.getDateCreated()));
 
             String privSetting = entry.getPrivacySetting();
-            if (privSetting.equals(BlogConstants.PRIVACY_PRIVATE))
-						{
-							fillEntryIcon(entrydiv, "../images/lock.png", "blogwow.blogview.draftviewalt", "blogwow.blogview.draftviewtitle", true);
-						} 
-						else if (privSetting.equals(BlogConstants.PRIVACY_GROUP_LEADER))
-            {
-							fillEntryIcon(entrydiv, "../images/user_gray.png", "blogwow.blogview.privviewalt", "blogwow.blogview.privviewtitle", false);
-            }
-            else if (privSetting.equals(BlogConstants.PRIVACY_GROUP))
-            {
-							fillEntryIcon(entrydiv, "../images/group.png", "blogwow.blogview.siteviewalt", "blogwow.blogview.siteviewtitle", false);
-						}
-            else if (privSetting.equals(BlogConstants.PRIVACY_PUBLIC))
-            {
-							fillEntryIcon(entrydiv, "../images/world.png", "blogwow.blogview.pubviewalt", "blogwow.blogview.pubviewtitle", false);
+            if (privSetting.equals(BlogConstants.PRIVACY_PRIVATE)) {
+                fillEntryIcon(entrydiv, "../images/lock.png", "blogwow.blogview.draftviewalt", "blogwow.blogview.draftviewtitle", true);
+            } else if (privSetting.equals(BlogConstants.PRIVACY_GROUP_LEADER)) {
+                fillEntryIcon(entrydiv, "../images/user_gray.png", "blogwow.blogview.privviewalt", "blogwow.blogview.privviewtitle", false);
+            } else if (privSetting.equals(BlogConstants.PRIVACY_GROUP)) {
+                fillEntryIcon(entrydiv, "../images/group.png", "blogwow.blogview.siteviewalt", "blogwow.blogview.siteviewtitle", false);
+            } else if (privSetting.equals(BlogConstants.PRIVACY_PUBLIC)) {
+                fillEntryIcon(entrydiv, "../images/world.png", "blogwow.blogview.pubviewalt", "blogwow.blogview.pubviewtitle", false);
             }
 
             UIVerbatim.make(entrydiv, "verbatim-blog-text", entry.getText());
 
             UIOutput.make(entrydiv, "action-items");
             if (entryLogic.canWriteEntry(entry.getId(), currentUserId)) {
-                UIInternalLink.make(entrydiv, "entry-link:", UIMessage.make("blogwow.blogview.edit-entry"), 
-                        new BlogEntryParams(AddEntryProducer.VIEW_ID, blog.getId(), entry.getId()));
+                UIInternalLink.make(entrydiv, "entry-link:", UIMessage.make("blogwow.blogview.edit-entry"), new BlogEntryParams(AddEntryProducer.VIEW_ID, blog
+                        .getId(), entry.getId()));
 
                 // remove the entry using a OTP deletion binding
                 UIForm removeform = UIForm.make(entrydiv, "remove-entry-form");
@@ -146,21 +137,19 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
                 removeCommand.parameters.add(new UIDeletionBinding(entryOTP));
 
                 // create a fake link that submits the form
-                UILink removelink = UILink.make(entrydiv, "entry-link:", 
-                        UIMessage.make("blogwow.blogview.remove-entry"), null);
+                UILink removelink = UILink.make(entrydiv, "entry-link:", UIMessage.make("blogwow.blogview.remove-entry"), null);
                 Map<String, String> attr = new HashMap<String, String>();
 
                 // TODO ack! Inline Java Script
                 attr.put("onclick", "document.getElementById('" + removeCommand.getFullID() + "').click();return false;");
-                removelink.decorators = new DecoratorList(new UIFreeAttributeDecorator(attr));
+                removelink.decorate(new UIFreeAttributeDecorator(attr));
             }
 
             List<BlogWowComment> comments = commentLogic.getComments(entry.getId(), null, true, 0, 0);
-            UIInternalLink.make(entrydiv, "entry-link:", UIMessage.make("blogwow.blogview.comments",
-                    new Object[] { (comments.size() + "") }), 
-                    new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(), entry.getId(), true));
-            UIInternalLink.make(entrydiv, "entry-link:", UIMessage.make("blogwow.blogview.add-comment"), new BlogParams(
-                    BlogViewProducer.VIEW_ID, blog.getId(), entry.getId(), true, true));
+            UIInternalLink.make(entrydiv, "entry-link:", UIMessage.make("blogwow.blogview.comments", new Object[] { (comments.size() + "") }), new BlogParams(
+                    BlogViewProducer.VIEW_ID, blog.getId(), entry.getId(), true));
+            UIInternalLink.make(entrydiv, "entry-link:", UIMessage.make("blogwow.blogview.add-comment"), new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(),
+                    entry.getId(), true, true));
 
             UIInternalLink.make(entrydiv, "entry-link:", UIMessage.make("blogwow.permalink.permalinktitle"), externalLogic.getBlogEntryUrl(entry.getId()));
 
@@ -168,10 +157,10 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
             if (params.showcomments) {
                 for (int j = 0; j < comments.size(); j++) {
                     BlogWowComment comment = comments.get(j);
-                    UIBranchContainer commentdiv = UIBranchContainer.make(entrydiv, "comment-div:", j + "");
+                    UIBranchContainer commentdiv = UIBranchContainer.make(entrydiv, "comment-div:");
                     String username = externalLogic.getUserDisplayName(comment.getOwnerId());
 
-                    UIMessage.make(commentdiv, "comment-header", "blogwow.comments.commentstitle", 
+                    UIMessage.make(commentdiv, "comment-header", "blogwow.comments.commentstitle",
                             new Object[] { username, df.format(comment.getDateCreated()) });
                     UIOutput.make(commentdiv, "comment-text", comment.getText());
                 }
@@ -186,74 +175,56 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
                 UIMessage.make(entrydiv, "add-comment-header", "blogwow.comments.addcommenttitle");
                 UIInput commentInput = UIInput.make(addCommentForm, "comment-text", commentOTP + ".text", "");
 
-                UICommand publishButton = UICommand.make(addCommentForm, "publish-button", UIMessage.make("blogwow.comments.submit"),
-                        commentLocator + ".publishAll");
-                publishButton.parameters = new ParameterList(new UIELBinding(commentOTP + ".entry", 
-                        new ELReference(entryLocator + "." + entry.getId())));
+                UICommand publishButton = UICommand.make(addCommentForm, "publish-button", UIMessage.make("blogwow.comments.submit"), commentLocator
+                        + ".publishAll");
+                publishButton.parameters.add(new UIELBinding(commentOTP + ".entry", new ELReference(entryLocator + "." + entry.getId())));
                 UICommand.make(addCommentForm, "cancel-button", UIMessage.make("blogwow.comments.cancel"));
 
-                //TODO ack! Inline Java Script
-                UIVerbatim.make(entrydiv, "scoll-here-script", "document.getElementById('" + commentInput.getFullID()
-                        + "').scrollIntoView(true);");
+                // TODO ack! Inline Java Script
+                UIVerbatim.make(entrydiv, "scoll-here-script", "document.getElementById('" + commentInput.getFullID() + "').scrollIntoView(true);");
                 UIVerbatim.make(entrydiv, "scoll-here-script", "document.getElementById('" + commentInput.getFullID() + "').focus();");
             }
 
-						// Render forward and back buttons if we have more entries
-						if (params.skip != null) {
-							if (params.skip + entriesPerPage < entryLogic.getVisibleEntryCount(blog.getId(), currentUserId))
-						  {
-						     UIMessage um = UIMessage.make("blogwow.blogview.previous", new Object[] { entriesPerPage });
-						     BlogParams bp = new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(), params.skip+entriesPerPage);
-						     UIInternalLink.make(tofill, "previous-page", um, bp);
+            // Render forward and back buttons if we have more entries
+            if (params.skip != null) {
+                if (params.skip + entriesPerPage < entryLogic.getVisibleEntryCount(blog.getId(), currentUserId)) {
+                    UIMessage um = UIMessage.make("blogwow.blogview.previous", new Object[] { entriesPerPage });
+                    BlogParams bp = new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(), params.skip + entriesPerPage);
+                    UIInternalLink.make(tofill, "previous-page", um, bp);
 
-                 UILink ul = UILink.make(tofill, "back-img", null);
-                 DecoratorList dl = new DecoratorList();
-                 dl.add(new UIAlternativeTextDecorator(UIMessage.make("blogwow.blogview.previousalt")));
-                 ul.decorators = dl;
-               }
-               if (params.skip > 0)
-               {
-                 UIMessage um = UIMessage.make("blogwow.blogview.next", new Object[] { entriesPerPage });
-                 BlogParams bp = new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(), params.skip-entriesPerPage);
-                 UIInternalLink.make(tofill, "next-page", um, bp);
- 
-                 UILink ul = UILink.make(tofill, "forward-img", null);
-                 DecoratorList dl = new DecoratorList();
-                 dl.add(new UIAlternativeTextDecorator(UIMessage.make("blogwow.blogview.nextalt")));
-                 ul.decorators = dl;
-               }
-             }
-             else if (entryLogic.getVisibleEntryCount(blog.getId(), currentUserId) > entriesPerPage)
-             {
-               UIMessage um = UIMessage.make("blogwow.blogview.previous", new Object[] { entriesPerPage });
-               BlogParams bp = new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(), entriesPerPage);
-               UIInternalLink.make(tofill, "previous-page", um, bp);
- 
-               UILink ul = UILink.make(tofill, "back-img", null);
-               DecoratorList dl = new DecoratorList();
-               dl.add(new UIAlternativeTextDecorator(UIMessage.make("blogwow.blogview.previousalt")));
-               ul.decorators = dl;
-             }
+                    UILink ul = UILink.make(tofill, "back-img", null);
+                    ul.decorate(new UIAlternativeTextDecorator(UIMessage.make("blogwow.blogview.previousalt")));
+                }
+                if (params.skip > 0) {
+                    UIMessage um = UIMessage.make("blogwow.blogview.next", new Object[] { entriesPerPage });
+                    BlogParams bp = new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(), params.skip - entriesPerPage);
+                    UIInternalLink.make(tofill, "next-page", um, bp);
+
+                    UILink ul = UILink.make(tofill, "forward-img", null);
+                    ul.decorate(new UIAlternativeTextDecorator(UIMessage.make("blogwow.blogview.nextalt")));
+                }
+            } else if (entryLogic.getVisibleEntryCount(blog.getId(), currentUserId) > entriesPerPage) {
+                UIMessage um = UIMessage.make("blogwow.blogview.previous", new Object[] { entriesPerPage });
+                BlogParams bp = new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(), entriesPerPage);
+                UIInternalLink.make(tofill, "previous-page", um, bp);
+
+                UILink ul = UILink.make(tofill, "back-img", null);
+                ul.decorate(new UIAlternativeTextDecorator(UIMessage.make("blogwow.blogview.previousalt")));
+            }
         }
     }
 
-		private void fillEntryIcon(UIBranchContainer entrydiv, String imgUrl, String altKey, String titleKey, Boolean draft)
-		{
-			UILink ul = UILink.make(entrydiv, "blog-visibility", imgUrl);
-			DecoratorList dl = new DecoratorList();
-			dl.add(new UIAlternativeTextDecorator(UIMessage.make(altKey)));
-			dl.add(new UITooltipDecorator(UIMessage.make(titleKey)));
-			ul.decorators = dl;
+    private void fillEntryIcon(UIBranchContainer entrydiv, String imgUrl, String altKey, String titleKey, Boolean draft) {
+        UILink ul = UILink.make(entrydiv, "blog-visibility", imgUrl);
+        ul.decorate(new UIAlternativeTextDecorator(UIMessage.make(altKey)));
+        ul.decorate(new UITooltipDecorator(UIMessage.make(titleKey)));
 
-			if (draft)
-			{
-				UIMessage.make(entrydiv, "blog-draft", "blogwow.blogview.draft");
-			}
-			else
-			{
-				UIOutput.make(entrydiv, "blog-draft", " ");
-			}
-		}
+        if (draft) {
+            UIMessage.make(entrydiv, "blog-draft", "blogwow.blogview.draft");
+        } else {
+            UIOutput.make(entrydiv, "blog-draft", " ");
+        }
+    }
 
     public ViewParameters getViewParameters() {
         return new BlogParams();
