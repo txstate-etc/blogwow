@@ -51,21 +51,23 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
         UIMessage.make(tofill, "last-updated", "blogwow.homepage.lastupdated");
 
         BlogWowBlog myblog = blogLogic.getBlogByLocationAndUser(locationId, currentUserId );
-        UIInternalLink.make(tofill, "my-blog-link", 
+				if (myblog != null && myblog.getId() != null)
+				{
+        	UIInternalLink.make(tofill, "my-blog-link", 
                 UIMessage.make("blogwow.homepage.userbloglink"), 
                 new SimpleBlogParams(BlogViewProducer.VIEW_ID, myblog.getId().toString()));
-
-        // use a date which is related to the current users locale
-        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
-        DateFormat tf = DateFormat.getTimeInstance(DateFormat.MEDIUM, locale);
-        DateFormat dtf = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, locale);
+        	// use a date which is related to the current users locale
+        	DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+        	DateFormat tf = DateFormat.getTimeInstance(DateFormat.MEDIUM, locale);
         
-        List<BlogWowEntry> myentries = entryLogic.getAllVisibleEntries(myblog.getId(), currentUserId, null, true, 0, 1);
-        if (myentries.size() > 0) {
+        	List<BlogWowEntry> myentries = entryLogic.getAllVisibleEntries(myblog.getId(), currentUserId, null, true, 0, 1);
+        	if (myentries.size() > 0) {
             UIMessage.make(tofill, "last-blogged-date", "blogwow.homepage.userlastblogged", 
                     new Object[] { df.format( myentries.get(0).getDateModified() ),
                                    tf.format( myentries.get(0).getDateModified() ) });
-        }
+        	}
+
+				}
 
         UIMessage.make(tofill, "all-blogs-header", "blogwow.homepage.listofblogs");
 
@@ -88,6 +90,7 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
             	List<BlogWowEntry> entries = entryLogic.getAllVisibleEntries(blog.getId(), currentUserId, null, true, 0, 1);
 								try
 								{
+				        	DateFormat dtf = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, locale);
                 	UIOutput.make(row, "time-last-updated", dtf.format(entries.get(0).getDateModified()) );
 								}catch (IndexOutOfBoundsException e) {
 									// This shouldn't happen, our count doesn't agree with the number of entries we get
