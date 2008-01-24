@@ -28,6 +28,12 @@
 	text-align: left;
 }
 
+.commentBox {
+	width: 98.5%;
+	max-width: 60em;
+	height: 20em;
+}
+
 /**
  * Special style to force divs to be able to work right when floating in all browsers
  */
