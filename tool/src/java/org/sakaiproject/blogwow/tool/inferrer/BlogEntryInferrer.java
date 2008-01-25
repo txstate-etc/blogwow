@@ -13,7 +13,7 @@ package org.sakaiproject.blogwow.tool.inferrer;
 
 import org.sakaiproject.blogwow.logic.EntryLogic;
 import org.sakaiproject.blogwow.logic.entity.BlogEntryEntityProvider;
-import org.sakaiproject.blogwow.tool.params.BlogEntryParams;
+import org.sakaiproject.blogwow.tool.params.BlogParams;
 import org.sakaiproject.blogwow.tool.producers.BlogViewProducer;
 import org.sakaiproject.entitybroker.IdEntityReference;
 import org.sakaiproject.blogwow.model.BlogWowEntry;
@@ -43,7 +43,7 @@ public class BlogEntryInferrer implements EntityViewParamsInferrer {
         IdEntityReference ref = new IdEntityReference(reference);
 				BlogWowEntry bwe = entryLogic.getEntryById(ref.id, null);
         if ( bwe != null ) {
-            return new BlogEntryParams(BlogViewProducer.VIEW_ID, bwe.getBlog().getId(), ref.id);
+            return new BlogParams(BlogViewProducer.VIEW_ID, bwe.getBlog().getId(), ref.id, true);
         } else {
             throw new SecurityException("User does not have access to this entity: " + reference);
         }
