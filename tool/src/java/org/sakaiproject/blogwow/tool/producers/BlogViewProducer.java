@@ -32,7 +32,6 @@ import uk.org.ponder.rsf.components.UILink;
 import uk.org.ponder.rsf.components.UIMessage;
 import uk.org.ponder.rsf.components.UIOutput;
 import uk.org.ponder.rsf.components.UIVerbatim;
-import uk.org.ponder.rsf.components.decorators.DecoratorList;
 import uk.org.ponder.rsf.components.decorators.UIFreeAttributeDecorator;
 import uk.org.ponder.rsf.components.decorators.UIAlternativeTextDecorator;
 import uk.org.ponder.rsf.components.decorators.UITooltipDecorator;
@@ -185,8 +184,8 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
                 UIVerbatim.make(entrydiv, "scoll-here-script", "document.getElementById('" + commentInput.getFullID() + "').focus();");
             }
 
-            // Render forward and back buttons if we have more entries
-            if (params.skip != null) {
+            // Render forward and back buttons if we have more entries and we aren't viewing an entry
+            if (params.skip != null && params.entryid == null) {
                 if (params.skip + entriesPerPage < entryLogic.getVisibleEntryCount(blog.getId(), currentUserId)) {
                     UIMessage um = UIMessage.make("blogwow.blogview.previous", new Object[] { entriesPerPage });
                     BlogParams bp = new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(), params.skip + entriesPerPage);
@@ -203,7 +202,7 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
                     UILink ul = UILink.make(tofill, "forward-img", null);
                     ul.decorate(new UIAlternativeTextDecorator(UIMessage.make("blogwow.blogview.nextalt")));
                 }
-            } else if (entryLogic.getVisibleEntryCount(blog.getId(), currentUserId) > entriesPerPage) {
+            } else if (entryLogic.getVisibleEntryCount(blog.getId(), currentUserId) > entriesPerPage && params.entryid == null) {
                 UIMessage um = UIMessage.make("blogwow.blogview.previous", new Object[] { entriesPerPage });
                 BlogParams bp = new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(), entriesPerPage);
                 UIInternalLink.make(tofill, "previous-page", um, bp);
