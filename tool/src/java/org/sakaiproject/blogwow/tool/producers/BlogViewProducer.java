@@ -143,7 +143,7 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
                 Map<String, String> attr = new HashMap<String, String>();
 
                 // TODO ack! Inline Java Script
-                attr.put("onclick", "document.getElementById('" + removeCommand.getFullID() + "').click();return false;");
+                attr.put("onclick", "if (confirm('"+ messageLocator.getMessage("blogwow.blogview.remove-entry-confirm")+"')){document.getElementById('" + removeCommand.getFullID() + "').click();}return false;");
                 removelink.decorate(new UIFreeAttributeDecorator(attr));
             }
 
