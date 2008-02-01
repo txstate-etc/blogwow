@@ -19,6 +19,7 @@ import org.sakaiproject.blogwow.tool.otp.CommentLocator;
 import org.sakaiproject.blogwow.tool.params.BlogEntryParams;
 import org.sakaiproject.blogwow.tool.params.BlogParams;
 
+import uk.org.ponder.messageutil.MessageLocator;
 import uk.org.ponder.rsf.components.ELReference;
 import uk.org.ponder.rsf.components.UIBranchContainer;
 import uk.org.ponder.rsf.components.UICommand;
@@ -35,6 +36,7 @@ import uk.org.ponder.rsf.components.UIVerbatim;
 import uk.org.ponder.rsf.components.decorators.UIFreeAttributeDecorator;
 import uk.org.ponder.rsf.components.decorators.UIAlternativeTextDecorator;
 import uk.org.ponder.rsf.components.decorators.UITooltipDecorator;
+import uk.org.ponder.rsf.renderer.decorator.FreeAttributeDecoratorRenderer;
 import uk.org.ponder.rsf.view.ComponentChecker;
 import uk.org.ponder.rsf.view.ViewComponentProducer;
 import uk.org.ponder.rsf.viewstate.ViewParameters;
@@ -54,7 +56,8 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
     private CommentLogic commentLogic;
     private Locale locale;
     private ExternalLogic externalLogic;
-
+    private MessageLocator messageLocator;
+    
     public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
 
         UIMessage.make(tofill, "page-title", "blogwow.blogview.title");
@@ -162,6 +165,19 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
                     UIMessage.make(commentdiv, "comment-header", "blogwow.comments.commentstitle",
                             new Object[] { username, df.format(comment.getDateCreated()) });
                     UIOutput.make(commentdiv, "comment-text", comment.getText());
+                    if (commentLogic.canRemoveComment(comment.getId(), currentUserId))
+                    {
+                    	String commentOTP = commentLocator + "." + comment.getId();
+                    	UIForm removeform = UIForm.make(commentdiv, "remove-comment-form");
+                        UICommand removeCommand = UICommand.make(removeform, "remove-comment-command");
+                        removeCommand.parameters.add(new UIDeletionBinding(commentOTP));
+                        
+                    	UILink ul = UILink.make(commentdiv, "rm-comment", UIMessage.make("blogwow.blogview.rm-comment"), null);
+                    	// TODO ack! Inline Java Script
+                    	UIFreeAttributeDecorator ufad = new UIFreeAttributeDecorator("onclick",
+                    			"if (confirm('"+ messageLocator.getMessage("blogwow.blogview.confirm-rm-comment")+"')){document.getElementById('" + removeCommand.getFullID() + "').click();}return false;");
+                    	ul.decorate(ufad);
+                    }
                 }
             }
 
@@ -253,4 +269,7 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
         this.externalLogic = externalLogic;
     }
 
+    public void setMessageLocator(MessageLocator messageLocator) {
+    	this.messageLocator = messageLocator;
+    }
 }

@@ -34,6 +34,10 @@
 	height: 20em;
 }
 
+.floatContainer {
+	overflow: hidden;
+}
+
 /**
  * Special style to force divs to be able to work right when floating in all browsers
  */
@@ -54,17 +58,17 @@ DIV.divrow {
 	padding: 0.2em;
 }
 
-DIV.leftcol {
+DIV.leftcol, SPAN.leftcol {
 	float: left;
 	text-align: left;
 }
 
-DIV.centercol {
+DIV.centercol, SPAN.centercol {
 	float: left;
 	text-align: center;
 }
 
-DIV.rightcol {
+DIV.rightcol, SPAN.rightcol {
 	float: right;
 	text-align: right;
 }

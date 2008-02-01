@@ -8,9 +8,9 @@ import org.sakaiproject.blogwow.logic.CommentLogic;
 import org.sakaiproject.blogwow.logic.ExternalLogic;
 import org.sakaiproject.blogwow.model.BlogWowComment;
 
-import uk.org.ponder.beanutil.BeanLocator;
+import uk.org.ponder.beanutil.WriteableBeanLocator;
 
-public class CommentLocator implements BeanLocator {
+public class CommentLocator implements WriteableBeanLocator {
 
     public static final String NEW_PREFIX = "new ";
     public static String NEW_1 = NEW_PREFIX + "1";
@@ -45,7 +45,19 @@ public class CommentLocator implements BeanLocator {
         return "published";
     }
 
+    public boolean remove(String beanname) {
+        commentLogic.removeComment(beanname, externalLogic.getCurrentLocationId());
+        delivered.remove(beanname);
+        return true;
+    }
 
+    public String removeAll() {
+    	for (BlogWowComment comment : delivered.values()) {
+            commentLogic.removeComment(comment.getId(), externalLogic.getCurrentLocationId());
+        }
+        return "removed";
+    }
+    
     public void setCommentLogic(CommentLogic commentLogic) {
         this.commentLogic = commentLogic;
     }
@@ -54,5 +66,7 @@ public class CommentLocator implements BeanLocator {
         this.externalLogic = externalLogic;
     }
 
-
+    public void set(String beanname, Object toset) {
+        throw new UnsupportedOperationException("Not implemented");
+    }
 }

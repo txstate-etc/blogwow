@@ -35,6 +35,7 @@
       <property name="commentLogic" ref="org.sakaiproject.blogwow.logic.CommentLogic" />
       <property name="externalLogic" ref="org.sakaiproject.blogwow.logic.ExternalLogic" />
       <property name="locale" ref="requestLocale" />
+			<property name="messageLocator" ref="messageLocator" />
    </bean>
 
    <bean class="org.sakaiproject.blogwow.tool.producers.HomeProducer">
