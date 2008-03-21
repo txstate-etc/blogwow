@@ -69,7 +69,7 @@ public class BlogWowDaoImplTest extends AbstractTransactionalSpringContextTests 
      * Test method for {@link org.sakaiproject.blogwow.dao.impl.BlogWowDaoImpl#getLocationsForBlogsIds(java.lang.String[])}.
      */
     public void testGetLocationsForBlogsIds() {
-        List locs = null;
+        List<String> locs = null;
 
         locs = dao.getLocationsForBlogsIds(new String[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() });
         assertNotNull(locs);
@@ -97,7 +97,7 @@ public class BlogWowDaoImplTest extends AbstractTransactionalSpringContextTests 
      * {@link org.sakaiproject.blogwow.dao.impl.BlogWowDaoImpl#getBlogPermEntries(String[], String, String[], String[], String, boolean, int, int)}.
      */
     public void testGetBlogPermEntries() {
-        List entries = null;
+        List<BlogWowEntry> entries = null;
 
         // get all public entries
         entries = dao.getBlogPermEntries(new String[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() }, null, null, null, null,

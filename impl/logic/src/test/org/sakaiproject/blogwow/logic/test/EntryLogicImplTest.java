@@ -110,7 +110,7 @@ public class EntryLogicImplTest extends AbstractTransactionalSpringContextTests 
      * {@link org.sakaiproject.blogwow.logic.impl.EntryLogicImpl#getAllVisibleEntries(java.lang.Long, java.lang.String, java.lang.String, boolean, int, int)}.
      */
     public void testGetAllVisibleEntriesLongStringStringBooleanIntInt() {
-        List l = null;
+        List<BlogWowEntry> l = null;
 
         // get all entries
         l = logicImpl.getAllVisibleEntries(tdp.blog1.getId(), TestDataPreload.ADMIN_USER_ID, null, false, 0, 0);
@@ -191,7 +191,7 @@ public class EntryLogicImplTest extends AbstractTransactionalSpringContextTests 
      * {@link org.sakaiproject.blogwow.logic.impl.EntryLogicImpl#getAllVisibleEntries(java.lang.Long[], java.lang.String, java.lang.String, boolean, int, int)}.
      */
     public void testGetAllVisibleEntriesLongArrayStringStringBooleanIntInt() {
-        List l = null;
+        List<BlogWowEntry> l = null;
 
         // get all entries
         l = logicImpl.getAllVisibleEntries(new String[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() },

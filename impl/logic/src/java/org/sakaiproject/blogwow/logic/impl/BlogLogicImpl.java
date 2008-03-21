@@ -54,7 +54,7 @@ public class BlogLogicImpl implements BlogLogic {
      * @see org.sakaiproject.blogwow.logic.BlogLogic#getBlogByLocationAndUser(java.lang.String, java.lang.String)
      */
     public BlogWowBlog getBlogByLocationAndUser(String locationId, String userId) {
-        List l = dao.findByProperties(BlogWowBlog.class, new String[] { "location", "ownerId" }, new Object[] { locationId, userId });
+        List<BlogWowBlog> l = dao.findByProperties(BlogWowBlog.class, new String[] { "location", "ownerId" }, new Object[] { locationId, userId });
 
         if (l.size() <= 0) {
             // no blog found, create a new one

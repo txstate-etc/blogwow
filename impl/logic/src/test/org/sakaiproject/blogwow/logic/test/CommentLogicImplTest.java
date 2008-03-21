@@ -167,7 +167,7 @@ public class CommentLogicImplTest extends AbstractTransactionalSpringContextTest
      * {@link org.sakaiproject.blogwow.logic.impl.CommentLogicImpl#getComments(java.lang.Long, java.lang.String, boolean, int, int)}.
      */
     public void testGetComments() {
-        List l = null;
+        List<BlogWowComment> l = null;
 
         l = logicImpl.getComments(tdp.entry5_b2.getId(), null, false, 0, 0);
         assertNotNull(l);

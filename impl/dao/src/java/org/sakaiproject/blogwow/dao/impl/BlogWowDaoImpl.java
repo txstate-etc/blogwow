@@ -20,6 +20,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Query;
 import org.sakaiproject.blogwow.dao.BlogWowDao;
+import org.sakaiproject.blogwow.model.BlogWowEntry;
 import org.sakaiproject.blogwow.model.constants.BlogConstants;
 import org.sakaiproject.genericdao.hibernate.HibernateCompleteGenericDao;
 import org.sakaiproject.util.StringUtil;
@@ -43,7 +44,7 @@ public class BlogWowDaoImpl extends HibernateCompleteGenericDao implements BlogW
      * 
      * @see org.sakaiproject.blogwow.dao.BlogWowDao#getLocationsForBlogsIds(java.lang.Long[])
      */
-    public List getLocationsForBlogsIds(String[] blogIds) {
+    public List<String> getLocationsForBlogsIds(String[] blogIds) {
         String hql = "select distinct blog.location from BlogWowBlog as blog where blog.id in " + arrayToInString(blogIds)
                 + " order by blog.location";
         return getHibernateTemplate().find(hql);
@@ -63,7 +64,7 @@ public class BlogWowDaoImpl extends HibernateCompleteGenericDao implements BlogW
      * @see org.sakaiproject.blogwow.dao.BlogWowDao#getBlogPermEntries(java.lang.Long[], java.lang.String, java.lang.String[],
      *      java.lang.String[], java.lang.String, boolean, int, int)
      */
-    public List getBlogPermEntries(String[] blogIds, String userId, 
+    public List<BlogWowEntry> getBlogPermEntries(String[] blogIds, String userId, 
             String[] readLocations, String[] readAnyLocations, String sortProperty,
             boolean ascending, int start, int limit) {
 
@@ -113,7 +114,7 @@ public class BlogWowDaoImpl extends HibernateCompleteGenericDao implements BlogW
         // Hibernate in list queries generate invalid SQL for empty lists,
         // Guard this case explicitly.
         if (blogIds == null || blogIds.length == 0) {
-            return new ArrayList();
+            return new ArrayList<BlogWowEntry>();
         }
 
         Map<String, Object> params = new HashMap<String, Object>();

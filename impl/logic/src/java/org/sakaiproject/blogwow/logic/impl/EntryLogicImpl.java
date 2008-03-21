@@ -14,7 +14,6 @@ package org.sakaiproject.blogwow.logic.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -58,12 +57,11 @@ public class EntryLogicImpl implements EntryLogic {
     	if (externalLogic.isUserAdmin(userId)) {
             count = dao.countByProperties(BlogWowEntry.class, new String[] { "blog.id" }, new Object[] { blogId });
         } else {
-            List locations = dao.getLocationsForBlogsIds(new String[] { blogId });
+            List<String> locations = dao.getLocationsForBlogsIds(new String[] { blogId });
             // check current user perms on these locations to form lists of locations related to this users access
             List<String> readLocations = new ArrayList<String>(); // holds the locations where user has read perms
             List<String> readAnyLocations = new ArrayList<String>(); // holds the locations where user has read any perms
-            for (Iterator iter = locations.iterator(); iter.hasNext();) {
-                String location = (String) iter.next();
+            for (String location : locations) {
                 if (externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_READ_ANY, location)) {
                     readAnyLocations.add(location);
                     readLocations.add(location);
@@ -98,12 +96,11 @@ public class EntryLogicImpl implements EntryLogic {
             l = dao.findByProperties(BlogWowEntry.class, new String[] { "blog.id" }, new Object[] { blogIds },
                     new int[] { ByPropsFinder.EQUALS }, new String[] { sortProperty }, start, limit);
         } else {
-            List locations = dao.getLocationsForBlogsIds(blogIds);
+            List<String> locations = dao.getLocationsForBlogsIds(blogIds);
             // check current user perms on these locations to form lists of locations related to this users access
             List<String> readLocations = new ArrayList<String>(); // holds the locations where user has read perms
             List<String> readAnyLocations = new ArrayList<String>(); // holds the locations where user has read any perms
-            for (Iterator iter = locations.iterator(); iter.hasNext();) {
-                String location = (String) iter.next();
+            for (String location : locations) {
                 if (externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_READ_ANY, location)) {
                     readAnyLocations.add(location);
                     readLocations.add(location);
@@ -152,17 +149,16 @@ public class EntryLogicImpl implements EntryLogic {
     /* (non-Javadoc)
      * @see org.sakaiproject.blogwow.logic.EntryLogic#removeEntry(java.lang.String, java.lang.String)
      */
-    public void removeEntry(String entryId, String locationId) {
+	public void removeEntry(String entryId, String locationId) {
         String currentUserId = externalLogic.getCurrentUserId();
         BlogWowEntry entry = getEntryById(entryId, locationId);
         if (canWriteEntry(entryId, currentUserId)) {
-            List l = dao.findByProperties(BlogWowComment.class, new String[] { "entry.id" }, new Object[] { entryId });
+            List<BlogWowComment> l = dao.findByProperties(BlogWowComment.class, new String[] { "entry.id" }, new Object[] { entryId });
             if (l.size() == 0) {
                 dao.delete(entry);
             } else {
                 Set<BlogWowComment> comset = new HashSet<BlogWowComment>();
-                for (Iterator iter = l.iterator(); iter.hasNext();) {
-                    BlogWowComment comment = (BlogWowComment) iter.next();
+                for (BlogWowComment comment : l) {
                     comset.add(comment);
                 }
                 dao.deleteSet(comset); // remove all comments first

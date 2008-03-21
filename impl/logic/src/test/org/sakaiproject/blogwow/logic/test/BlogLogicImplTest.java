@@ -136,7 +136,7 @@ public class BlogLogicImplTest extends AbstractTransactionalSpringContextTests {
      * Test method for {@link org.sakaiproject.blogwow.logic.impl.BlogLogicImpl#getAllVisibleBlogs(java.lang.String)}.
      */
     public void testGetAllVisibleBlogs() {
-        List l = null;
+        List<BlogWowBlog> l = null;
 
         l = logicImpl.getAllVisibleBlogs(TestDataPreload.LOCATION1_ID, null, false, 0, 0);
         assertNotNull(l);

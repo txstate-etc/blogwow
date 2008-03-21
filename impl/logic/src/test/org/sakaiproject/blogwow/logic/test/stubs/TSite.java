@@ -117,7 +117,7 @@ public class TSite implements Site {
      * 
      * @see org.sakaiproject.site.api.Site#getGroups()
      */
-    public Collection getGroups() {
+    public Collection<Object> getGroups() {
         // TODO Auto-generated method stub
         return null;
     }
@@ -127,7 +127,7 @@ public class TSite implements Site {
      * 
      * @see org.sakaiproject.site.api.Site#getGroupsWithMember(java.lang.String)
      */
-    public Collection getGroupsWithMember(String userId) {
+    public Collection<Object> getGroupsWithMember(String userId) {
         // TODO Auto-generated method stub
         return null;
     }
@@ -137,7 +137,7 @@ public class TSite implements Site {
      * 
      * @see org.sakaiproject.site.api.Site#getGroupsWithMemberHasRole(java.lang.String, java.lang.String)
      */
-    public Collection getGroupsWithMemberHasRole(String userId, String role) {
+    public Collection<Object> getGroupsWithMemberHasRole(String userId, String role) {
         // TODO Auto-generated method stub
         return null;
     }
@@ -217,7 +217,7 @@ public class TSite implements Site {
      * 
      * @see org.sakaiproject.site.api.Site#getOrderedPages()
      */
-    public List getOrderedPages() {
+    public List<Object> getOrderedPages() {
         // TODO Auto-generated method stub
         return null;
     }
@@ -237,7 +237,7 @@ public class TSite implements Site {
      * 
      * @see org.sakaiproject.site.api.Site#getPages()
      */
-    public List getPages() {
+    public List<Object> getPages() {
         // TODO Auto-generated method stub
         return null;
     }
@@ -295,7 +295,7 @@ public class TSite implements Site {
      * 
      * @see org.sakaiproject.site.api.Site#getTools(java.lang.String[])
      */
-    public Collection getTools(String[] toolIds) {
+    public Collection<Object> getTools(String[] toolIds) {
         // TODO Auto-generated method stub
         return null;
     }
@@ -305,7 +305,7 @@ public class TSite implements Site {
      * 
      * @see org.sakaiproject.site.api.Site#getTools(java.lang.String)
      */
-    public Collection getTools(String commonToolId) {
+    public Collection<Object> getTools(String commonToolId) {
         // TODO Auto-generated method stub
         return null;
     }
@@ -672,7 +672,7 @@ public class TSite implements Site {
      * 
      * @see org.sakaiproject.authz.api.AuthzGroup#getMembers()
      */
-    public Set getMembers() {
+    public Set<Object> getMembers() {
         // TODO Auto-generated method stub
         return null;
     }
@@ -702,7 +702,7 @@ public class TSite implements Site {
      * 
      * @see org.sakaiproject.authz.api.AuthzGroup#getRoles()
      */
-    public Set getRoles() {
+    public Set<Object> getRoles() {
         // TODO Auto-generated method stub
         return null;
     }
@@ -712,7 +712,7 @@ public class TSite implements Site {
      * 
      * @see org.sakaiproject.authz.api.AuthzGroup#getRolesIsAllowed(java.lang.String)
      */
-    public Set getRolesIsAllowed(String function) {
+    public Set<Object> getRolesIsAllowed(String function) {
         // TODO Auto-generated method stub
         return null;
     }
@@ -732,7 +732,7 @@ public class TSite implements Site {
      * 
      * @see org.sakaiproject.authz.api.AuthzGroup#getUsers()
      */
-    public Set getUsers() {
+    public Set<Object> getUsers() {
         // TODO Auto-generated method stub
         return null;
     }
@@ -742,7 +742,7 @@ public class TSite implements Site {
      * 
      * @see org.sakaiproject.authz.api.AuthzGroup#getUsersHasRole(java.lang.String)
      */
-    public Set getUsersHasRole(String role) {
+    public Set<Object> getUsersHasRole(String role) {
         // TODO Auto-generated method stub
         return null;
     }
@@ -752,7 +752,7 @@ public class TSite implements Site {
      * 
      * @see org.sakaiproject.authz.api.AuthzGroup#getUsersIsAllowed(java.lang.String)
      */
-    public Set getUsersIsAllowed(String function) {
+    public Set<Object> getUsersIsAllowed(String function) {
         // TODO Auto-generated method stub
         return null;
     }
