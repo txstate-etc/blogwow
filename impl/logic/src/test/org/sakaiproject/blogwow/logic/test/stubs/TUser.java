@@ -25,6 +25,7 @@ import org.w3c.dom.Element;
  * 
  * @author Sakai App Builder -AZ
  */
+@SuppressWarnings("unchecked")
 public class TUser implements User {
     private String userId;
 
