@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-	<parent>
-		<artifactId>master</artifactId>
-		<groupId>org.sakaiproject</groupId>
-		<version>SNAPSHOT</version>
-		<relativePath>../../master/pom.xml</relativePath>
-	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.sakaiproject</groupId>
 	<name>BlogWow! Help</name>
 	<artifactId>sakai-blogwow-help</artifactId>
 	<version>${sakai.version}</version>
+
+   <parent>
+      <groupId>org.sakaiproject</groupId>
+      <artifactId>sakai-blogwow-base</artifactId>
+      <version>0.9</version><!--blogwow.version-->
+   </parent>
 
 	<organization>
 		<name>The Sakai Foundation</name>
