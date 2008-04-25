@@ -1,6 +1,7 @@
 package org.sakaiproject.blogwow.tool.producers;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.sakaiproject.blogwow.tool.params.BlogRssViewParams;
 
 import uk.org.ponder.rsf.components.UIBranchContainer;
 import uk.org.ponder.rsf.components.UIContainer;
+import uk.org.ponder.rsf.components.UIInternalLink;
 import uk.org.ponder.rsf.components.UIOutput;
 import uk.org.ponder.rsf.components.UIVerbatim;
 import uk.org.ponder.rsf.content.ContentTypeInfoRegistry;
@@ -33,6 +35,8 @@ ContentTypeReporter
         return VIEW_ID;
     }
 
+    private static final SimpleDateFormat rfc822Format = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
+    
     private BlogLogic blogLogic;
     private EntryLogic entryLogic;
     private ExternalLogic externalLogic;
@@ -53,8 +57,7 @@ ContentTypeReporter
             entries = entryLogic.getAllVisibleEntries(blogId, currentUserId, null, true, 0, 10);                        
         } else if (locationId != null) {
             UIOutput.make(tofill, "channel-title", externalLogic.getLocationTitle(locationId));
-            // TODO - add in direct linking for site
-            //UIOutput.make(tofill, "channel_link", externalLogic.getBlogUrl(blogId));
+            UIOutput.make(tofill, "channel_link", externalLogic.getBlogUrl(blogId));
             List<BlogWowBlog> blogs = blogLogic.getAllVisibleBlogs(locationId, null, true, 0, 10);
             String[] blogIds = new String[blogs.size()];
             for (int i=0; i<blogs.size(); i++) {
@@ -64,7 +67,6 @@ ContentTypeReporter
         }
 
         Date publishDate = null;
-        // TODO - format dates
         for (int i = 0; i < entries.size(); i++) {
             BlogWowEntry entry = entries.get(i);
             UIBranchContainer rssitem = UIBranchContainer.make(tofill, "item:", i+"");
@@ -75,7 +77,7 @@ ContentTypeReporter
                     entry.getDateModified().before(publishDate)) {
                 publishDate = entry.getDateModified();
             }
-            UIOutput.make(rssitem, "item_publish_date", entry.getDateModified().toString());
+            UIOutput.make(rssitem, "item_publish_date", rfc822Format.format(entry.getDateModified()));
 
             String desc = "<![CDATA[" 
                 + ( entry.getText().length() < 200 
@@ -88,7 +90,7 @@ ContentTypeReporter
         }
 
         if (publishDate == null) { publishDate = new Date(); }
-        UIOutput.make(tofill, "channel_publish_date", publishDate.toString());
+        UIOutput.make(tofill, "channel_publish_date", rfc822Format.format(publishDate));
     }
 
     public ViewParameters getViewParameters() {
