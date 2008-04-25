@@ -149,9 +149,10 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
             List<BlogWowComment> comments = commentLogic.getComments(entry.getId(), null, true, 0, 0);
             UIInternalLink.make(entrydiv, "entry-link:", UIMessage.make("blogwow.blogview.comments", new Object[] { (comments.size() + "") }), new BlogParams(
                     BlogViewProducer.VIEW_ID, blog.getId(), entry.getId(), true));
-            UIInternalLink.make(entrydiv, "entry-link:", UIMessage.make("blogwow.blogview.add-comment"), new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(),
+            if (commentLogic.canAddComment(entry.getId(), currentUserId)){
+            	UIInternalLink.make(entrydiv, "entry-link:", UIMessage.make("blogwow.blogview.add-comment"), new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(),
                     entry.getId(), true, true));
-
+            }
             UIInternalLink.make(entrydiv, "entry-link:", UIMessage.make("blogwow.permalink.permalinktitle"), externalLogic.getBlogEntryUrl(entry.getId()));
 
             // Render Comments if they are visible
@@ -181,7 +182,7 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
             }
 
             // Render Leave Comment if comments are visible
-            if (params.addcomment) {
+            if (params.addcomment && commentLogic.canAddComment(entry.getId(), currentUserId)) {
                 String commentOTP = commentLocator + "." + CommentLocator.NEW_1;
 
                 UIOutput.make(entrydiv, "add-comment-div");
