@@ -1,0 +1,41 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <name>BlogWow Shared Deployer</name>
+    <groupId>org.sakaiproject</groupId>
+    <artifactId>sakai-blogwow-deployer</artifactId>
+    <organization>
+        <name>CARET, University of Cambridge</name>
+        <url>http://www.caret.cam.ac.uk/</url>
+    </organization>
+    <description>
+        This is a special project which places the generic dao into shared
+    </description>
+    <inceptionYear>2007</inceptionYear>
+    <packaging>pom</packaging>
+
+    <!-- the base is parent -->
+   <parent>
+      <groupId>org.sakaiproject</groupId>
+      <artifactId>sakai-blogwow-base</artifactId>
+      <version>0.9</version><!--blogwow.version-->
+   </parent>
+
+    <properties>
+        <deploy.target>shared</deploy.target>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.sakaiproject</groupId>
+            <artifactId>generic-dao</artifactId>
+            <version>${sakai.generic-dao.version}</version>
+        </dependency>
+
+    </dependencies>
+
+    <build />
+
+</project>
