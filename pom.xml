@@ -14,6 +14,7 @@
     <artifactId>master</artifactId>
     <groupId>org.sakaiproject</groupId>
     <version>2.5.0</version>
+<!--    <version>SNAPSHOT</version>-->
     <relativePath>../master/pom.xml</relativePath>
   </parent>
 
@@ -22,7 +23,6 @@
     <module>impl</module>
     <module>pack</module>
     <module>tool</module>
-    <module>deployer</module>
     <module>help</module>
   </modules>
 
