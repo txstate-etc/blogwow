@@ -18,13 +18,9 @@
   </parent>
 
   <modules>
-    <module>api/model</module>
-    <module>api/logic</module>
-    <module>impl/hbm</module>
-    <module>impl/test</module>
-    <module>impl/dao</module>
-    <module>impl/logic</module>
-    <module>impl/pack</module>
+    <module>api</module>
+    <module>impl</module>
+    <module>pack</module>
     <module>tool</module>
     <module>deployer</module>
     <module>help</module>
