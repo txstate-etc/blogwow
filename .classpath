@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="api/model/src/java"/>
-	<classpathentry kind="src" path="api/logic/src/java"/>
-	<classpathentry kind="src" path="api/public/src/java"/>
-	<classpathentry kind="src" path="impl/logic/src/java"/>
-	<classpathentry kind="src" path="impl/dao/src/java"/>
-	<classpathentry kind="src" path="impl/hbm/src/java"/>
-	<classpathentry kind="src" path="impl/pack/src/webapp/WEB-INF"/>
+	<classpathentry kind="src" path="pack/src/webapp/WEB-INF"/>
+	<classpathentry kind="src" path="api/src/java"/>
+	<classpathentry kind="src" path="impl/src/java"/>
+	<classpathentry kind="src" path="impl/src/test"/>
+	<classpathentry kind="src" path="tool/src/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring/2.0.6/spring-2.0.6.jar"/>
 	<classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar"/>
@@ -17,9 +15,6 @@
 	<classpathentry kind="var" path="M2_REPO/uk/org/ponder/j-servletutil/1.2.2/j-servletutil-1.2.2.jar"/>
 	<classpathentry kind="var" path="M2_REPO/uk/org/ponder/ponderutilcore/1.2.2/ponderutilcore-1.2.2.jar"/>
 	<classpathentry kind="var" path="M2_REPO/uk/org/ponder/sakairsf/sakairsf/0.7.2-sakai_2.2.x/sakairsf-0.7.2-sakai_2.2.x.jar"/>
-	<classpathentry kind="src" path="impl/test/src/java"/>
-	<classpathentry kind="src" path="impl/logic/src/test"/>
-	<classpathentry kind="src" path="impl/dao/src/test"/>
 	<classpathentry kind="var" path="M2_REPO/junit/junit/3.8.1/junit-3.8.1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-mock/2.0.6/spring-mock-2.0.6.jar"/>
 	<classpathentry kind="var" path="M2_REPO/hsqldb/hsqldb/1.8.0.5/hsqldb-1.8.0.5.jar"/>
@@ -30,7 +25,6 @@
 	<classpathentry kind="var" path="M2_REPO/commons-collections/commons-collections/3.1/commons-collections-3.1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/net/sf/ehcache/ehcache/1.3.0/ehcache-1.3.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/easymock/easymock/1.2_Java1.3/easymock-1.2_Java1.3.jar"/>
-	<classpathentry kind="src" path="tool/src/java"/>
 	<classpathentry kind="src" path="/authz-api"/>
 	<classpathentry kind="src" path="/entity-api"/>
 	<classpathentry kind="src" path="/site-api"/>

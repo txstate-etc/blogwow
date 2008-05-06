@@ -9,7 +9,7 @@
  * 
  *****************************************************************************/
 
-package org.sakaiproject.blogwow.logic.test;
+package org.sakaiproject.blogwow.logic;
 
 import java.util.List;
 
@@ -18,9 +18,8 @@ import junit.framework.Assert;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.blogwow.dao.BlogWowDao;
-import org.sakaiproject.blogwow.logic.impl.CommentLogicImpl;
-import org.sakaiproject.blogwow.logic.impl.EntryLogicImpl;
-import org.sakaiproject.blogwow.logic.test.stubs.ExternalLogicStub;
+import org.sakaiproject.blogwow.logic.stubs.ExternalLogicStub;
+import org.sakaiproject.blogwow.logic.test.TestDataPreload;
 import org.sakaiproject.blogwow.model.BlogWowComment;
 import org.springframework.test.AbstractTransactionalSpringContextTests;
 

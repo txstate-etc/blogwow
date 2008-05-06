@@ -9,7 +9,7 @@
  * 
  *****************************************************************************/
 
-package org.sakaiproject.blogwow.dao.test;
+package org.sakaiproject.blogwow.dao;
 
 import java.util.List;
 

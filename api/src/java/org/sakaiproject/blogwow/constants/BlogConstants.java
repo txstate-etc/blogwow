@@ -9,7 +9,7 @@
  * 
  *****************************************************************************/
 
-package org.sakaiproject.blogwow.model.constants;
+package org.sakaiproject.blogwow.constants;
 
 /**
  * Stores constants for use throughout the blog services, logic layer, and dao layer Render constants should not be stored here

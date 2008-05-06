@@ -12,7 +12,7 @@
  * 
  *****************************************************************************/
 
-package org.sakaiproject.blogwow.logic.test.stubs;
+package org.sakaiproject.blogwow.logic.stubs;
 
 import java.util.Collection;
 import java.util.List;

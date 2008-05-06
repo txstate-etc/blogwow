@@ -13,10 +13,10 @@ package org.sakaiproject.blogwow.logic.test;
 
 import java.util.Date;
 
+import org.sakaiproject.blogwow.constants.BlogConstants;
 import org.sakaiproject.blogwow.model.BlogWowBlog;
 import org.sakaiproject.blogwow.model.BlogWowComment;
 import org.sakaiproject.blogwow.model.BlogWowEntry;
-import org.sakaiproject.blogwow.model.constants.BlogConstants;
 import org.sakaiproject.genericdao.api.GenericDao;
 
 /**

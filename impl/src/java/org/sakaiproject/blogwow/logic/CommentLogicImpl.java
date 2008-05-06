@@ -9,7 +9,7 @@
  * 
  *****************************************************************************/
 
-package org.sakaiproject.blogwow.logic.impl;
+package org.sakaiproject.blogwow.logic;
 
 import java.util.Date;
 import java.util.List;

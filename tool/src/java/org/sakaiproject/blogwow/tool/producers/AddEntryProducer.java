@@ -3,7 +3,7 @@ package org.sakaiproject.blogwow.tool.producers;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.sakaiproject.blogwow.model.constants.BlogConstants;
+import org.sakaiproject.blogwow.constants.BlogConstants;
 import org.sakaiproject.blogwow.tool.otp.EntryLocator;
 import org.sakaiproject.blogwow.tool.params.BlogEntryParams;
 import org.sakaiproject.blogwow.tool.params.SimpleBlogParams;

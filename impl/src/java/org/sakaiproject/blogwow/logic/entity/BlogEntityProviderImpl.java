@@ -12,7 +12,7 @@
  * 
  *****************************************************************************/
 
-package org.sakaiproject.blogwow.logic.impl.entity;
+package org.sakaiproject.blogwow.logic.entity;
 
 import org.sakaiproject.blogwow.logic.BlogLogic;
 import org.sakaiproject.blogwow.logic.entity.BlogEntityProvider;

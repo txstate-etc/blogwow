@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.sakaiproject.blogwow.model.BlogWowBlog;
 import org.sakaiproject.blogwow.model.BlogWowEntry;
-import org.sakaiproject.blogwow.model.constants.BlogConstants;
 import org.sakaiproject.genericdao.api.CompleteGenericDao;
 
 /**

@@ -9,7 +9,7 @@
  * 
  *****************************************************************************/
 
-package org.sakaiproject.blogwow.dao.impl;
+package org.sakaiproject.blogwow.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,9 +19,9 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Query;
+import org.sakaiproject.blogwow.constants.BlogConstants;
 import org.sakaiproject.blogwow.dao.BlogWowDao;
 import org.sakaiproject.blogwow.model.BlogWowEntry;
-import org.sakaiproject.blogwow.model.constants.BlogConstants;
 import org.sakaiproject.genericdao.hibernate.HibernateCompleteGenericDao;
 import org.sakaiproject.util.StringUtil;
 

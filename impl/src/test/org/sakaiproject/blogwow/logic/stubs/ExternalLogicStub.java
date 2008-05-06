@@ -9,7 +9,7 @@
  * 
  *****************************************************************************/
 
-package org.sakaiproject.blogwow.logic.test.stubs;
+package org.sakaiproject.blogwow.logic.stubs;
 
 import org.sakaiproject.blogwow.logic.ExternalLogic;
 import org.sakaiproject.blogwow.logic.test.TestDataPreload;
