@@ -34,13 +34,7 @@
       <!-- internal dependencies -->
       <dependency>
          <groupId>sakaiproject</groupId>
-         <artifactId>sakai-blogwow-model-api</artifactId>
-         <version>${sakai.version}</version>
-      </dependency>
-
-      <dependency>
-         <groupId>sakaiproject</groupId>
-         <artifactId>sakai-blogwow-logic-api</artifactId>
+         <artifactId>sakai-blogwow-api</artifactId>
          <version>${sakai.version}</version>
       </dependency>
 

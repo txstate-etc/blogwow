@@ -4,7 +4,7 @@
    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
-   <name>sakai-blogwow-tool</name>
+   <name>BlogWow Tool</name>
    <groupId>org.sakaiproject</groupId>
    <artifactId>sakai-blogwow-tool</artifactId>
    <description>
@@ -39,14 +39,7 @@
       <!-- internal -->
       <dependency>
          <groupId>org.sakaiproject</groupId>
-         <artifactId>sakai-blogwow-logic-api</artifactId>
-         <version>0.9</version><!--blogwow.version-->
-         <scope>provided</scope>
-      </dependency>
-
-      <dependency>
-         <groupId>org.sakaiproject</groupId>
-         <artifactId>sakai-blogwow-model</artifactId>
+         <artifactId>sakai-blogwow-api</artifactId>
          <version>0.9</version><!--blogwow.version-->
          <scope>provided</scope>
       </dependency>

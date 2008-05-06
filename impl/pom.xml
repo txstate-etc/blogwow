@@ -124,10 +124,10 @@
             <filtering>false</filtering>
          </testResource>
          <testResource>
-            <directory>${basedir}/../dao/src/test</directory>
+            <directory>${basedir}/src/test</directory>
             <includes>
-               <include>**/*.xml</include>
-               <include>**/*.properties</include>
+               <include>hibernate-test.xml</include>
+               <include>hibernate.properties</include>
             </includes>
             <filtering>false</filtering>
          </testResource>
