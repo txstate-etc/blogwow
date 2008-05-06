@@ -15,14 +15,14 @@ import java.util.List;
 
 import org.sakaiproject.blogwow.model.BlogWowBlog;
 import org.sakaiproject.blogwow.model.BlogWowEntry;
-import org.sakaiproject.genericdao.api.CompleteGenericDao;
+import org.sakaiproject.genericdao.api.GeneralGenericDao;
 
 /**
  * This is a specialized DAO that allows the developer to extend the functionality of the generic dao package
  * 
  * @author Sakai App Builder -AZ
  */
-public interface BlogWowDao extends CompleteGenericDao {
+public interface BlogWowDao extends GeneralGenericDao {
 
     /**
      * Get a list of unique locations from an array of blogIds

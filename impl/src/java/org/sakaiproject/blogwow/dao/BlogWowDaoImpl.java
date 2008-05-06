@@ -22,7 +22,7 @@ import org.hibernate.Query;
 import org.sakaiproject.blogwow.constants.BlogConstants;
 import org.sakaiproject.blogwow.dao.BlogWowDao;
 import org.sakaiproject.blogwow.model.BlogWowEntry;
-import org.sakaiproject.genericdao.hibernate.HibernateCompleteGenericDao;
+import org.sakaiproject.genericdao.hibernate.HibernateGeneralGenericDao;
 import org.sakaiproject.util.StringUtil;
 
 /**
@@ -31,7 +31,7 @@ import org.sakaiproject.util.StringUtil;
  * 
  * @author Sakai App Builder -AZ
  */
-public class BlogWowDaoImpl extends HibernateCompleteGenericDao implements BlogWowDao {
+public class BlogWowDaoImpl extends HibernateGeneralGenericDao implements BlogWowDao {
 
    private static Log log = LogFactory.getLog(BlogWowDaoImpl.class);
 

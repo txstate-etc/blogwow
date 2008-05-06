@@ -16,7 +16,7 @@
     </parent>
 
     <properties>
-        <sakai.generic-dao.version>0.9.1</sakai.generic-dao.version>
+        <sakai.generic-dao.version>0.9.5</sakai.generic-dao.version>
         <sakai.entitybroker.version>1.2.0</sakai.entitybroker.version>
     </properties>
 
@@ -94,16 +94,37 @@
 
         <!-- non Sakai -->
         <dependency>
+            <groupId>${sakai.spring.groupId}</groupId>
+            <artifactId>${sakai.spring.artifactId}</artifactId>
+            <version>${sakai.spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${sakai.hibernate.groupId}</groupId>
+            <artifactId>${sakai.hibernate.artifactId}</artifactId>
+            <version>${sakai.hibernate.version}</version>
+        </dependency>
+
+        <!-- Required for hibernate 3 HQL queries -->
+        <dependency>
+            <groupId>antlr</groupId>
+            <artifactId>antlr</artifactId>
+            <version>2.7.6</version>
+        </dependency>
+
+        <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
-            <version>1.0.4</version>
+            <version>1.1</version>
         </dependency>
+
         <dependency>
             <groupId>${sakai.spring.groupId}</groupId>
             <artifactId>${sakai.spring.mock.artifactId}</artifactId>
             <version>${sakai.spring.mock.version}</version>
-            <scope>provided</scope>
+            <scope>test</scope>
         </dependency>
+ 
         <dependency>
             <groupId>hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
@@ -120,7 +141,6 @@
                 <includes>
                     <include>**/*.xml</include>
                 </includes>
-                <filtering>false</filtering>
             </resource>
         </resources>
 

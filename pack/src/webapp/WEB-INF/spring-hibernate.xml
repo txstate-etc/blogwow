@@ -11,12 +11,16 @@
         give this your HBM files so the SessionFactory can use them -->
     <bean id="org.sakaiproject.blogwow.dao.SessionFactory"
         parent="org.sakaiproject.springframework.orm.hibernate.SessionFactoryBase">
-        <property name="mappingResources">
-            <list>
-                <value>org/sakaiproject/blogwow/dao/hbm/BlogWowBlog.hbm.xml</value>
-                <value>org/sakaiproject/blogwow/dao/hbm/BlogWowEntry.hbm.xml</value>
-                <value>org/sakaiproject/blogwow/dao/hbm/BlogWowComment.hbm.xml</value>
-            </list>
+        <property name="mappingLocations">
+            <bean class="org.sakaiproject.blogwow.dao.ResourceFinder" factory-method="getResources">
+                <constructor-arg>
+                    <list>
+                        <value>org/sakaiproject/blogwow/dao/hbm/BlogWowBlog.hbm.xml</value>
+                        <value>org/sakaiproject/blogwow/dao/hbm/BlogWowEntry.hbm.xml</value>
+                        <value>org/sakaiproject/blogwow/dao/hbm/BlogWowComment.hbm.xml</value>
+                    </list>
+                </constructor-arg>
+            </bean>
         </property>
     </bean>
 
@@ -42,7 +46,7 @@
 
     <!-- This wraps our DAO so that the transactions are managed automatically -->
     <bean id="org.sakaiproject.blogwow.dao.BlogWowDao"
-        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        class="org.sakaiproject.genericdao.api.spring.CurrentClassLoaderTxProxyFactoryBean">
         <property name="transactionManager" ref="org.sakaiproject.blogwow.dao.TransactionManager" />
         <property name="target" ref="org.sakaiproject.blogwow.dao.BlogWowDaoTarget" />
         <property name="transactionAttributes">
