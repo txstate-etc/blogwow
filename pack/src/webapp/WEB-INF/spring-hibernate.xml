@@ -20,6 +20,13 @@
         </property>
     </bean>
 
+    <!-- Create a transaction manager -->
+    <bean id="org.sakaiproject.blogwow.dao.TransactionManager" 
+        class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory"
+            ref="org.sakaiproject.blogwow.dao.SessionFactory" />
+    </bean>
+
     <!-- create a DAO bean, use the hibernate implementation -->
     <bean id="org.sakaiproject.blogwow.dao.BlogWowDaoTarget"
         class="org.sakaiproject.blogwow.dao.BlogWowDaoImpl" init-method="init">
@@ -36,12 +43,7 @@
     <!-- This wraps our DAO so that the transactions are managed automatically -->
     <bean id="org.sakaiproject.blogwow.dao.BlogWowDao"
         class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-        <property name="transactionManager">
-            <bean class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-                <property name="sessionFactory"
-                    ref="org.sakaiproject.blogwow.dao.SessionFactory" />
-            </bean>
-        </property>
+        <property name="transactionManager" ref="org.sakaiproject.blogwow.dao.TransactionManager" />
         <property name="target" ref="org.sakaiproject.blogwow.dao.BlogWowDaoTarget" />
         <property name="transactionAttributes">
             <props>
