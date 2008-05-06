@@ -7,7 +7,7 @@
   <name>Blog Wow!</name>
   <groupId>org.sakaiproject</groupId>
   <artifactId>sakai-blogwow-base</artifactId>
-  <version>0.9-SNAPSHOT</version><!--blogwow.version-->
+  <version>0.9.5-SNAPSHOT</version><!--blogwow.version-->
   <packaging>pom</packaging>
 
   <parent>
