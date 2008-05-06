@@ -1,37 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-   <modelVersion>4.0.0</modelVersion>
-   <name>BlogWoW API</name>
-   <groupId>org.sakaiproject</groupId>
-   <artifactId>sakai-blogwow-api</artifactId>
-   <inceptionYear>2007</inceptionYear>
-   <packaging>jar</packaging>
+    <modelVersion>4.0.0</modelVersion>
+    <name>BlogWoW API</name>
+    <groupId>org.sakaiproject</groupId>
+    <artifactId>sakai-blogwow-api</artifactId>
+    <inceptionYear>2007</inceptionYear>
+    <packaging>jar</packaging>
 
-   <parent>
-      <groupId>org.sakaiproject</groupId>
-      <artifactId>sakai-blogwow-base</artifactId>
-      <version>0.9-SNAPSHOT</version><!--blogwow.version-->
-   </parent>
+    <parent>
+        <groupId>org.sakaiproject</groupId>
+        <artifactId>sakai-blogwow-base</artifactId>
+        <version>0.9-SNAPSHOT</version><!--blogwow.version-->
+    </parent>
 
-   <properties>
-      <deploy.target>shared</deploy.target>
-   </properties>
+    <properties>
+        <deploy.target>shared</deploy.target>
+    </properties>
 
-   <dependencies>
+    <dependencies>
 
-      <dependency>
-         <groupId>org.sakaiproject.entitybroker</groupId>
-         <artifactId>entitybroker-api</artifactId>
-         <version>1.2.0</version>
-         <scope>provided</scope>
-      </dependency>
+        <dependency>
+            <groupId>org.sakaiproject.entitybroker</groupId>
+            <artifactId>entitybroker-api</artifactId>
+            <version>1.2.0</version>
+            <scope>provided</scope>
+        </dependency>
 
-   </dependencies>
+    </dependencies>
 
-   <build>
-      <resources></resources>
-   </build>
+    <build>
+        <resources>
+            <!-- include the readme.txt file and the java source files -->
+            <resource>
+                <directory>${basedir}</directory>
+                <includes>
+                    <include>*.txt</include>
+                    <include>src/**/*.java</include>
+                    <include>src/**/*.html</include>
+                    <include>src/**/*.xml</include>
+                    <include>src/**/*.properties</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+    </build>
 </project>
