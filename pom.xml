@@ -1,32 +1,40 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-  <modelVersion>4.0.0</modelVersion>
-  <name>Blog Wow!</name>
-  <groupId>org.sakaiproject</groupId>
-  <artifactId>sakai-blogwow-base</artifactId>
-  <version>0.9.5</version><!--blogwow.version-->
-  <packaging>pom</packaging>
-
-  <parent>
-    <artifactId>master</artifactId>
+    <modelVersion>4.0.0</modelVersion>
+    <name>Blog Wow!</name>
     <groupId>org.sakaiproject</groupId>
-    <version>2.5.0</version>
-<!--    <version>SNAPSHOT</version>-->
-    <relativePath>../master/pom.xml</relativePath>
-  </parent>
+    <artifactId>sakai-blogwow-base</artifactId>
+    <version>0.9.6-SNAPSHOT</version><!--blogwow.version-->
+    <packaging>pom</packaging>
 
-  <modules>
-    <module>api</module>
-    <module>impl</module>
-    <module>pack</module>
-    <module>tool</module>
-    <module>help</module>
-  </modules>
+    <parent>
+        <artifactId>master</artifactId>
+        <groupId>org.sakaiproject</groupId>
+        <version>2.5.0</version>
+        <!--    <version>SNAPSHOT</version>-->
+        <relativePath>../master/pom.xml</relativePath>
+    </parent>
 
+    <modules>
+        <module>api</module>
+        <module>impl</module>
+        <module>pack</module>
+        <module>tool</module>
+        <module>help</module>
+    </modules>
 
-  <scm>
-    <connection>scm:svn:https://source.sakaiproject.org/svn/sakai/sakai-blogwow-base/tags/0.9.5</connection>
-    <developerConnection>scm:svn:https://source.sakaiproject.org/svn/sakai/sakai-blogwow-base/tags/0.9.5</developerConnection>
-    <url>https://source.sakaiproject.org/svn/sakai/sakai-blogwow-base/tags/0.9.5</url>
-  </scm>
+    <scm>
+        <connection>
+            scm:svn:https://source.sakaiproject.org/contrib/programmerscafe/blogwow/trunk/
+        </connection>
+        <developerConnection>
+            scm:svn:https://source.sakaiproject.org/contrib/programmerscafe/blogwow/trunk/
+        </developerConnection>
+        <url>
+            https://source.sakaiproject.org/viewsvn/programmerscafe/blogwow/trunk/?root=contrib
+        </url>
+    </scm>
+
 </project>
