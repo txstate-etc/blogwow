@@ -30,13 +30,6 @@
             id="org.sakaiproject.springframework.orm.hibernate.SessionFactoryBase"
 			class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
 		<property name="dataSource" ref="javax.sql.DataSource" />
-		<property name="mappingResources">
-			<list>
-				<value>org/sakaiproject/blogwow/dao/hbm/BlogWowBlog.hbm.xml</value>
-				<value>org/sakaiproject/blogwow/dao/hbm/BlogWowEntry.hbm.xml</value>
-				<value>org/sakaiproject/blogwow/dao/hbm/BlogWowComment.hbm.xml</value>
-			</list>
-		</property>
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
