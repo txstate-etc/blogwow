@@ -24,8 +24,6 @@
         <dependency>
             <groupId>org.sakaiproject</groupId>
             <artifactId>sakai-blogwow-api</artifactId>
-            <version>0.9.6-SNAPSHOT</version><!--blogwow.version-->
-            <scope>provided</scope>
         </dependency>
 
     </dependencies>
