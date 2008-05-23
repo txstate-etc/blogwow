@@ -13,7 +13,7 @@
     </parent>
 
     <properties>
-        <sakai.generic-dao.version>0.9.6</sakai.generic-dao.version>
+        <sakai.generic-dao.version>[0.9.6,1.0)</sakai.generic-dao.version>
     </properties>
 
     <dependencies>

@@ -245,23 +245,6 @@ public class BlogWowDaoImpl extends HibernateGeneralGenericDao implements BlogWo
    }
 
    /**
-    * This is supported natively in Hibernate 3.2.x and up
-    * 
-    * @param query
-    * @param params
-    */
-   private void setParameters(Query query, Map<String, Object> params) {
-      for (String name : params.keySet()) {
-         Object param = params.get(name);
-         if (param.getClass().isArray()) {
-            query.setParameterList(name, (Object[]) param);
-         } else {
-            query.setParameter(name, param);
-         }
-      }
-   }
-
-   /**
     * Turn an array into a string like "('item1','item2','item3')"
     * 
     * @param array
