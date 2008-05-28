@@ -22,6 +22,7 @@
       <dependency>
          <groupId>org.sakaiproject</groupId>
          <artifactId>sakai-blogwow-impl</artifactId>
+         <scope>runtime</scope>
       </dependency>
 
    </dependencies>

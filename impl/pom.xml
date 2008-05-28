@@ -80,15 +80,13 @@
 
         <!-- non Sakai -->
         <dependency>
-            <groupId>${sakai.spring.groupId}</groupId>
-            <artifactId>${sakai.spring.artifactId}</artifactId>
-            <version>${sakai.spring.version}</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>${sakai.hibernate.groupId}</groupId>
-            <artifactId>${sakai.hibernate.artifactId}</artifactId>
-            <version>${sakai.hibernate.version}</version>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate</artifactId>
         </dependency>
 
         <!-- Required for hibernate 3 HQL queries -->
@@ -101,13 +99,12 @@
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
-            <version>1.1</version>
         </dependency>
 
         <dependency>
-            <groupId>${sakai.spring.groupId}</groupId>
-            <artifactId>${sakai.spring.mock.artifactId}</artifactId>
-            <version>${sakai.spring.mock.version}</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-mock</artifactId>
+            <version>2.0.6</version>
             <scope>test</scope>
         </dependency>
  
