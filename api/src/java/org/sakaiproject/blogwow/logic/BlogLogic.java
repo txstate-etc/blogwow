@@ -40,7 +40,7 @@ public interface BlogLogic {
      *            the internal user id (not username)
      * @return a blog or null if cannot create one and none exists
      */
-    public BlogWowBlog getBlogByLocationAndUser(String locationId, String userId);
+    public BlogWowBlog makeBlogByLocationAndUser(String locationId, String userId);
 
     /**
      * Save (Create or Update) a blog (uses the current site)

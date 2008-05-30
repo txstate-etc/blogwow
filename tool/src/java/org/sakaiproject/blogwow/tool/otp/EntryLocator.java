@@ -30,7 +30,7 @@ public class EntryLocator implements WriteableBeanLocator {
         if (togo == null) {
             if (name.startsWith(NEW_PREFIX)) {
                 // create the new object
-                BlogWowBlog blog = blogLogic.getBlogByLocationAndUser(locationId, currentUserId);
+                BlogWowBlog blog = blogLogic.makeBlogByLocationAndUser(locationId, currentUserId);
                 if (blog == null) {
                     throw new IllegalStateException("Could not get blog for the current user ("+currentUserId+") and location ("+locationId+")");
                 }

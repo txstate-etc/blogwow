@@ -21,7 +21,7 @@ public class NavBarRenderer {
     private BlogLogic blogLogic;
 
     public void makeNavBar(UIContainer tofill, String divID, String currentViewID) {
-        BlogWowBlog blog = blogLogic.getBlogByLocationAndUser(externalLogic.getCurrentLocationId(), externalLogic.getCurrentUserId());
+        BlogWowBlog blog = blogLogic.makeBlogByLocationAndUser(externalLogic.getCurrentLocationId(), externalLogic.getCurrentUserId());
 
         UIJointContainer joint = new UIJointContainer(tofill, divID, "blog-wow-navigation:", ""+1);
 

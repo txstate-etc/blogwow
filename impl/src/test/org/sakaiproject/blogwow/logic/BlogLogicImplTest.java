@@ -97,29 +97,29 @@ public class BlogLogicImplTest extends AbstractTransactionalSpringContextTests {
 
     /**
      * Test method for
-     * {@link org.sakaiproject.blogwow.logic.impl.BlogLogicImpl#getBlogByLocationAndUser(java.lang.String, java.lang.String)}.
+     * {@link org.sakaiproject.blogwow.logic.impl.BlogLogicImpl#makeBlogByLocationAndUser(java.lang.String, java.lang.String)}.
      */
     public void testGetBlogByLocationAndUser() {
         BlogWowBlog blog = null;
 
         // test getting valid items by id
-        blog = logicImpl.getBlogByLocationAndUser(TestDataPreload.LOCATION1_ID, TestDataPreload.USER_ID);
+        blog = logicImpl.makeBlogByLocationAndUser(TestDataPreload.LOCATION1_ID, TestDataPreload.USER_ID);
         Assert.assertNotNull(blog);
         Assert.assertEquals(tdp.blog1, blog);
 
-        blog = logicImpl.getBlogByLocationAndUser(TestDataPreload.LOCATION1_ID, TestDataPreload.MAINT_USER_ID);
+        blog = logicImpl.makeBlogByLocationAndUser(TestDataPreload.LOCATION1_ID, TestDataPreload.MAINT_USER_ID);
         Assert.assertNotNull(blog);
         Assert.assertEquals(tdp.blog2, blog);
 
         // test creating a new blog
-        blog = logicImpl.getBlogByLocationAndUser(TestDataPreload.LOCATION1_ID, TestDataPreload.ADMIN_USER_ID);
+        blog = logicImpl.makeBlogByLocationAndUser(TestDataPreload.LOCATION1_ID, TestDataPreload.ADMIN_USER_ID);
         Assert.assertNotNull(blog);
         Assert.assertNotNull(blog.getId());
         Assert.assertEquals(TestDataPreload.LOCATION1_ID, blog.getLocation());
         Assert.assertEquals(TestDataPreload.ADMIN_USER_ID, blog.getOwnerId());
 
         // test cannot create a new blog in location for user
-        blog = logicImpl.getBlogByLocationAndUser(TestDataPreload.LOCATION2_ID, TestDataPreload.USER_ID);
+        blog = logicImpl.makeBlogByLocationAndUser(TestDataPreload.LOCATION2_ID, TestDataPreload.USER_ID);
         Assert.assertNull(blog);
 
         // test fails to return invalid user or location blog

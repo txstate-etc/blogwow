@@ -54,7 +54,7 @@ public class BlogLogicImpl implements BlogLogic {
     * @see org.sakaiproject.blogwow.logic.BlogLogic#getBlogByLocationAndUser(java.lang.String, java.lang.String)
     */
    @SuppressWarnings("unchecked")
-   public BlogWowBlog getBlogByLocationAndUser(String locationId, String userId) {
+   public BlogWowBlog makeBlogByLocationAndUser(String locationId, String userId) {
       List<BlogWowBlog> l = dao.findByProperties(BlogWowBlog.class, new String[] { "location", "ownerId" }, new Object[] { locationId, userId });
 
       if (l.size() <= 0) {

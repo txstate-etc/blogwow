@@ -50,7 +50,7 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
         UIMessage.make(tofill, "entries", "blogwow.homepage.entryheader");
         UIMessage.make(tofill, "last-updated", "blogwow.homepage.lastupdated");
 
-        BlogWowBlog myblog = blogLogic.getBlogByLocationAndUser(locationId, currentUserId );
+        BlogWowBlog myblog = blogLogic.makeBlogByLocationAndUser(locationId, currentUserId );
 				if (myblog != null && myblog.getId() != null)
 				{
         	UIInternalLink.make(tofill, "my-blog-link", 
