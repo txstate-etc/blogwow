@@ -193,7 +193,9 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
                 UICommand publishButton = UICommand.make(addCommentForm, "publish-button", UIMessage.make("blogwow.comments.submit"), commentLocator
                         + ".publishAll");
                 publishButton.parameters.add(new UIELBinding(commentOTP + ".entry", new ELReference(entryLocator + "." + entry.getId())));
-                UICommand.make(addCommentForm, "cancel-button", UIMessage.make("blogwow.comments.cancel"));
+                UICommand cancelButton = UICommand.make(addCommentForm, "cancel-button", UIMessage.make("blogwow.comments.cancel"));
+								cancelButton.addParameter(new UIELBinding("ARIResult.resultingView.addcomment", Boolean.FALSE));
+								cancelButton.setReturn("cancel");
 
                 // TODO ack! Inline Java Script
                 UIVerbatim.make(entrydiv, "scoll-here-script", "document.getElementById('" + commentInput.getFullID() + "').scrollIntoView(true);");
