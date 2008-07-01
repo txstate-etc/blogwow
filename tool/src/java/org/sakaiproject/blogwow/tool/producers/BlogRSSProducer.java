@@ -15,7 +15,6 @@ import org.sakaiproject.blogwow.tool.params.BlogRssViewParams;
 
 import uk.org.ponder.rsf.components.UIBranchContainer;
 import uk.org.ponder.rsf.components.UIContainer;
-import uk.org.ponder.rsf.components.UIInternalLink;
 import uk.org.ponder.rsf.components.UIOutput;
 import uk.org.ponder.rsf.components.UIVerbatim;
 import uk.org.ponder.rsf.content.ContentTypeInfoRegistry;
@@ -57,7 +56,8 @@ ContentTypeReporter
             entries = entryLogic.getAllVisibleEntries(blogId, currentUserId, null, true, 0, 10);                        
         } else if (locationId != null) {
             UIOutput.make(tofill, "channel-title", externalLogic.getLocationTitle(locationId));
-            UIOutput.make(tofill, "channel_link", externalLogic.getBlogUrl(blogId));
+            // TODO - Add direct linking to site
+            //UIOutput.make(tofill, "channel_link", externalLogic.getBlogUrl(locationId));
             List<BlogWowBlog> blogs = blogLogic.getAllVisibleBlogs(locationId, null, true, 0, 10);
             String[] blogIds = new String[blogs.size()];
             for (int i=0; i<blogs.size(); i++) {
