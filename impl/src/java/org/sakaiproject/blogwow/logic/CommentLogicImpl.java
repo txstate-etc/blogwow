@@ -103,7 +103,7 @@ public class CommentLogicImpl implements CommentLogic {
         if (comment.getId() == null) {
             if (canAddComment(comment.getEntry().getId(), currentUserId)) {
                 dao.save(comment);
-                log.info("Saving comment: " + comment.getId() + ":" + comment.getText());
+                log.debug("Saving comment: " + comment.getId() + ":" + comment.getText());
             } else {
                 throw new SecurityException(currentUserId + " cannot add comment in location: " + locationId);
             }

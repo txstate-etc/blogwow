@@ -190,7 +190,7 @@ public class EntryLogicImpl implements EntryLogic {
       // check if the current user can save or update the existing item
       if (checkWriteEntry(entry, externalLogic.getCurrentUserId())) {
          dao.save(entry);
-         log.info("Saving entry: " + entry.getId() + ":" + entry.getText());
+         log.debug("Saving entry: " + entry.getId() + ":" + entry.getText());
       } else {
          throw new SecurityException("Current user cannot save entry " + entry.getId() + " because they do not have permission");
       }
