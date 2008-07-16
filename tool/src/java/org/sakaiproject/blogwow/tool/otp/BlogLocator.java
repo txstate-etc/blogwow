@@ -37,9 +37,9 @@ public class BlogLocator implements BeanLocator {
 	public String saveAll() {
 		for (String key : delivered.keySet()) {
             BlogWowBlog blog = delivered.get(key);
-            if (key.startsWith(NEW_PREFIX)) {
-                // could do stuff here
-            }
+            //if (key.startsWith(NEW_PREFIX)) {
+            //    // could do stuff here
+            //}
             blogLogic.saveBlog(blog, blog.getLocation());
         }
 		return "saved";

@@ -55,21 +55,22 @@ public class CommentLogicImplTest extends AbstractTransactionalSpringContextTest
         BlogWowDao dao = (BlogWowDao) applicationContext.getBean("org.sakaiproject.blogwow.dao.BlogWowDao");
         if (dao == null) {
             log.error("onSetUpInTransaction: DAO could not be retrieved from spring context");
+        } else {
+
+        	// init the class if needed
+        	EntryLogicImpl entryLogic = new EntryLogicImpl();
+        	entryLogic.setExternalLogic(logicStub);
+        	entryLogic.setDao(dao);
+
+        	// create and setup the object to be tested
+        	logicImpl = new CommentLogicImpl();
+        	logicImpl.setDao(dao);
+        	logicImpl.setExternalLogic(logicStub); // use the stub for testing
+        	logicImpl.setEntryLogic(entryLogic);
+
+        	// preload the DB for testing
+        	tdp.preloadTestData(dao);
         }
-
-        // init the class if needed
-        EntryLogicImpl entryLogic = new EntryLogicImpl();
-        entryLogic.setExternalLogic(logicStub);
-        entryLogic.setDao(dao);
-
-        // create and setup the object to be tested
-        logicImpl = new CommentLogicImpl();
-        logicImpl.setDao(dao);
-        logicImpl.setExternalLogic(logicStub); // use the stub for testing
-        logicImpl.setEntryLogic(entryLogic);
-
-        // preload the DB for testing
-        tdp.preloadTestData(dao);
     }
 
     /**

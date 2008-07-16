@@ -50,14 +50,15 @@ public class BlogWowDaoImplTest extends AbstractTransactionalSpringContextTests 
         dao = (BlogWowDao) applicationContext.getBean("org.sakaiproject.blogwow.dao.BlogWowDao");
         if (dao == null) {
             log.error("onSetUpInTransaction: DAO could not be retrieved from spring context");
+        } else {
+
+        	// init the class if needed
+
+        	// check the preloaded data
+
+        	// preload data if desired
+        	tdp.preloadTestData(dao);
         }
-
-        // init the class if needed
-
-        // check the preloaded data
-
-        // preload data if desired
-        tdp.preloadTestData(dao);
     }
 
     /**

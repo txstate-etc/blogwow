@@ -15,7 +15,7 @@ import uk.org.ponder.beanutil.WriteableBeanLocator;
 public class EntryLocator implements WriteableBeanLocator {
 
     public static final String NEW_PREFIX = "new ";
-    public static String NEW_1 = NEW_PREFIX + "1";
+    public static final String NEW_1 = NEW_PREFIX + "1";
 
     private ExternalLogic externalLogic;
     private EntryLogic entryLogic;
@@ -46,9 +46,9 @@ public class EntryLocator implements WriteableBeanLocator {
     public String publishAll() {
     	for (String key : delivered.keySet()) {
             BlogWowEntry entry = delivered.get(key);
-            if (key.startsWith(NEW_PREFIX)) {
-                // could do stuff here
-            }
+            //if (key.startsWith(NEW_PREFIX)) {
+            //    // could do stuff here
+            //}
             entryLogic.saveEntry(entry, externalLogic.getCurrentLocationId());
         }
         return "published";

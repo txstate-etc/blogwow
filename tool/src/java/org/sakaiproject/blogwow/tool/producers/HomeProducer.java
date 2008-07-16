@@ -55,7 +55,7 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
 				{
         	UIInternalLink.make(tofill, "my-blog-link", 
                 UIMessage.make("blogwow.homepage.userbloglink"), 
-                new SimpleBlogParams(BlogViewProducer.VIEW_ID, myblog.getId().toString()));
+                new SimpleBlogParams(BlogViewProducer.VIEW_ID, myblog.getId()));
         	// use a date which is related to the current users locale
         	DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
         	DateFormat tf = DateFormat.getTimeInstance(DateFormat.MEDIUM, locale);
@@ -83,7 +83,7 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
             BlogWowBlog blog = blogs.get(i);
             UILink.make(row, "user-icon", mugshotGenerator.getMugshotUrl(blog.getOwnerId()));
             UIInternalLink.make(row, "blog-title-link", blog.getTitle(), 
-                    new SimpleBlogParams(BlogViewProducer.VIEW_ID, blog.getId().toString()));
+                    new SimpleBlogParams(BlogViewProducer.VIEW_ID, blog.getId()));
             Integer entriesCount = entryLogic.getVisibleEntryCount(blog.getId(), currentUserId);
             UIOutput.make(row, "number-of-entries", entriesCount +"");
             if (entriesCount > 0) {

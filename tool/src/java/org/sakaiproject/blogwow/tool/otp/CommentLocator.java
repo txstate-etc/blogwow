@@ -13,7 +13,7 @@ import uk.org.ponder.beanutil.WriteableBeanLocator;
 public class CommentLocator implements WriteableBeanLocator {
 
     public static final String NEW_PREFIX = "new ";
-    public static String NEW_1 = NEW_PREFIX + "1";
+    public static final String NEW_1 = NEW_PREFIX + "1";
 
     private ExternalLogic externalLogic;
     private CommentLogic commentLogic;
@@ -37,9 +37,9 @@ public class CommentLocator implements WriteableBeanLocator {
     public String publishAll() {
         for (String key : delivered.keySet()) {
             BlogWowComment comment = delivered.get(key);
-            if (key.startsWith(NEW_PREFIX)) {
-                // could do stuff here
-            }
+            //if (key.startsWith(NEW_PREFIX)) {
+            //    // could do stuff here
+            //}
             commentLogic.saveComment(comment, externalLogic.getCurrentLocationId());
         }
         return "published";

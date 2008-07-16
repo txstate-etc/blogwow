@@ -53,7 +53,7 @@ public class EntryLogicImpl implements EntryLogic {
    }
 
    public Integer getVisibleEntryCount(String blogId, String userId){
-      Integer count = new Integer(0);
+      Integer count = Integer.valueOf(0);
       if (externalLogic.isUserAdmin(userId)) {
          count = dao.countByProperties(BlogWowEntry.class, new String[] { "blog.id" }, new Object[] { blogId });
       } else {

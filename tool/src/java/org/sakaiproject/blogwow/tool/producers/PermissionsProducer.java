@@ -36,7 +36,7 @@ public class PermissionsProducer implements ViewComponentProducer, ViewParamsRep
     private ExternalLogic externalLogic;
     private MessageLocator messageLocator;
 
-    private final String HELPER = "sakai.permissions.helper";
+    private static final String HELPER = "sakai.permissions.helper";
 
     public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
         String locationId = externalLogic.getCurrentLocationId();
