@@ -130,7 +130,7 @@ public class CommentLogicImpl implements CommentLogic {
                 || externalLogic.isUserAllowedInLocation(currentUserId, ExternalLogic.BLOG_ENTRY_READ_ANY, locationId)) {
             if (sortProperty == null) {
                 sortProperty = "dateCreated";
-                ascending = false;
+                //ascending = false;
             }
 
             if (!ascending) {
