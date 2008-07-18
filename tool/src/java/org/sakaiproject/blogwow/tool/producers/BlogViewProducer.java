@@ -78,13 +78,21 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
 
         UIOutput.make(tofill, "blog-title", blog.getTitle());
         UILink.make(tofill, "blog-url", externalLogic.getBlogUrl(blog.getId()));
-        String profileText = blog.getProfile();
+        
+        String profileText = externalLogic.useGlobalProfile() ? 
+        			externalLogic.getProfile(blog.getOwnerId()) : 
+        			blog.getProfile();
+        
         if (profileText == null || profileText.equals("")) {
             UIMessage.make(tofill, "profile-verbatim-text", "blogwow.blogview.noprofile");
         } else {
             UIVerbatim.make(tofill, "profile-verbatim-text", profileText);
         }
-        String profileImageUrl = blog.getImageUrl();
+
+        String profileImageUrl = externalLogic.useGlobalProfile() ? 
+        			externalLogic.getImageUrl(blog.getOwnerId()) : 
+        			blog.getImageUrl();
+                
         if ("".equals(profileImageUrl)) {
             profileImageUrl = null; // this will use the default in the template
         }

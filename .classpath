@@ -35,5 +35,7 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/util-util"/>
 	<classpathentry kind="src" path="/content-api"/>
 	<classpathentry kind="var" path="M2_REPO/org/sakaiproject/generic-dao/0.9.8/generic-dao-0.9.8.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/profile"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/component-api"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

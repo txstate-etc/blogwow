@@ -128,4 +128,29 @@ public interface ExternalLogic {
      */
     public String cleanupUserStrings(String userSubmittedString);
 
+    /**
+     * Use the global profile from PersonManager rather than per-blog profiles 
+     * 
+     * @return true if the global profiles should be used
+     */
+    public boolean useGlobalProfile();
+
+    /**
+     * Get the user's global profile text
+     * 
+     * @param userId
+     *            the internal user id (not username)
+     * @return true if the user has admin access, false otherwise
+     */
+    public String getProfile(String userId);
+
+    /**
+     * Get the user's profile picture URL
+     * 
+     * @param userId
+     *            the internal user id (not username)
+     * @return true if the user has admin access, false otherwise
+     */
+    public String getImageUrl(String userId);
+    
 }

@@ -16,6 +16,8 @@ import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.sakaiproject.api.common.edu.person.SakaiPerson;
+import org.sakaiproject.api.common.edu.person.SakaiPersonManager;
 import org.sakaiproject.authz.api.FunctionManager;
 import org.sakaiproject.authz.api.SecurityService;
 import org.sakaiproject.blogwow.logic.ExternalLogic;
@@ -23,6 +25,7 @@ import org.sakaiproject.blogwow.logic.entity.BlogEntityProvider;
 import org.sakaiproject.blogwow.logic.entity.BlogEntryEntityProvider;
 import org.sakaiproject.blogwow.logic.entity.BlogGroupRssEntityProvider;
 import org.sakaiproject.blogwow.logic.entity.BlogRssEntityProvider;
+import org.sakaiproject.component.api.ServerConfigurationService;
 import org.sakaiproject.entitybroker.EntityBroker;
 import org.sakaiproject.entitybroker.IdEntityReference;
 import org.sakaiproject.exception.IdUnusedException;
@@ -80,7 +83,21 @@ public class ExternalLogicImpl implements ExternalLogic {
       this.entityBroker = entityBroker;
    }
 
+   private SakaiPersonManager sakaiPersonManager;
+   public void setSakaiPersonManager(SakaiPersonManager spm) {
+	   this.sakaiPersonManager = spm;
+   }
+   
+   private ServerConfigurationService serverConfigurationService;
+   public void setServerConfigurationService(
+			ServerConfigurationService serverConfigurationService) {
+		this.serverConfigurationService = serverConfigurationService;
+	}
+   
    private static final String ANON_USER_ATTRIBUTE = "AnonUserAttribute";
+   
+   //sakai.property key to use the global sakai property rather than the local one 
+   private static final String GLOBOAL_PROFILE_SETTING = "blogwow.useglobalprofile";
 
    /**
     * Place any code that should run when this class is initialized by spring here
@@ -205,4 +222,58 @@ public class ExternalLogicImpl implements ExternalLogic {
             new IdEntityReference(BlogEntityProvider.ENTITY_PREFIX, blogId).toString());
    }
 
+   /**
+    * Use the global profile from PersonManager rather than per-blog profiles 
+    * 
+    * @return true if the global profiles should be used
+    */
+   public boolean useGlobalProfile()
+   {
+	   // get from serverconfigurationservice
+	   return serverConfigurationService.getBoolean(GLOBOAL_PROFILE_SETTING, false);
+   }
+
+   /**
+    * Get the user's global profile text
+    * 
+    * @param userId
+    *            the internal user id (not username)
+    * @return Profiletext if set, otherwise null
+    */
+   public String getProfile(String userId)
+   {   
+	   String profileText = null;
+	 
+	   try {
+			SakaiPerson sPerson = sakaiPersonManager.getSakaiPerson(userId, sakaiPersonManager.getUserMutableType());
+			profileText = sPerson.getNotes();
+	   } catch (Exception e) {
+			log.debug("No profile for " + userId + " or user not found: " + e.getMessage());
+	   }
+
+	   return profileText;
+   }
+
+   /**
+    * Get the user's profile picture URL
+    * 
+    * @param userId
+    *            the internal user id (not username)
+    * @return true if the user has admin access, false otherwise
+    */
+   public String getImageUrl(String userId)
+   {
+	   String imageUrl = null;
+		 
+	   try {
+			SakaiPerson sPerson = sakaiPersonManager.getSakaiPerson(userId, sakaiPersonManager.getUserMutableType());
+			imageUrl = sPerson.getPictureUrl();
+	   } catch (Exception e) {
+			log.debug("No profile for " + userId + " or user not found: " + e.getMessage());
+	   }
+
+	   return imageUrl;
+   }
+
+   
 }
