@@ -234,7 +234,9 @@ public class ExternalLogicImpl implements ExternalLogic {
    public boolean useGlobalProfile()
    {
 	   // get from serverconfigurationservice
-	   return serverConfigurationService.getBoolean(GLOBOAL_PROFILE_SETTING, false);
+	   boolean ret = serverConfigurationService.getBoolean(GLOBOAL_PROFILE_SETTING, false);
+	   log.debug("useGlobalProfile is: " + ret);   
+	   return ret;
    }
 
    /**

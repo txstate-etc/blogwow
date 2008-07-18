@@ -100,6 +100,7 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
 
 	            // UIInternalLink.make(row, "rss-link", new BlogParams(BlogRSSProducer.VIEWID, blog.getId().toString()));
 	            UILink.make(row, "rss-link", externalLogic.getBlogRssUrl(blog.getId()));
+	            
             }
         }
 
