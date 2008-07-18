@@ -97,7 +97,7 @@ public class ExternalLogicImpl implements ExternalLogic {
    private static final String ANON_USER_ATTRIBUTE = "AnonUserAttribute";
    
    //sakai.property key to use the global sakai property rather than the local one 
-   private static final String GLOBOAL_PROFILE_SETTING = "blogwow.useglobalprofile";
+   private static final String GLOBAL_PROFILE_SETTING = "blogwow.useglobalprofile";
 
    /**
     * Place any code that should run when this class is initialized by spring here
@@ -234,7 +234,7 @@ public class ExternalLogicImpl implements ExternalLogic {
    public boolean useGlobalProfile()
    {
 	   // get from serverconfigurationservice
-	   boolean ret = serverConfigurationService.getBoolean(GLOBOAL_PROFILE_SETTING, false);
+	   boolean ret = serverConfigurationService.getBoolean(GLOBAL_PROFILE_SETTING, false);
 	   log.debug("useGlobalProfile is: " + ret);   
 	   return ret;
    }
