@@ -79,14 +79,15 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
         UIBranchContainer blogsTable = UIBranchContainer.make(tofill, "blog-list-table:");
 
         for (int i = 0; i < blogs.size(); i++) {
-            UIBranchContainer row = UIBranchContainer.make(blogsTable, "row:", i+"");
             BlogWowBlog blog = blogs.get(i);
-            UILink.make(row, "user-icon", mugshotGenerator.getMugshotUrl(blog.getOwnerId()));
-            UIInternalLink.make(row, "blog-title-link", blog.getTitle(), 
-                    new SimpleBlogParams(BlogViewProducer.VIEW_ID, blog.getId()));
             Integer entriesCount = entryLogic.getVisibleEntryCount(blog.getId(), currentUserId);
-            UIOutput.make(row, "number-of-entries", entriesCount +"");
+
             if (entriesCount > 0) {
+	            UIBranchContainer row = UIBranchContainer.make(blogsTable, "row:", i+"");
+	            UILink.make(row, "user-icon", mugshotGenerator.getMugshotUrl(blog.getOwnerId()));
+	            UIInternalLink.make(row, "blog-title-link", blog.getTitle(), 
+	                    new SimpleBlogParams(BlogViewProducer.VIEW_ID, blog.getId().toString()));
+	            UIOutput.make(row, "number-of-entries", entriesCount +"");
             	List<BlogWowEntry> entries = entryLogic.getAllVisibleEntries(blog.getId(), currentUserId, null, true, 0, 1);
 								try
 								{
@@ -96,14 +97,10 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
 									// This shouldn't happen, our count doesn't agree with the number of entries we get
 									UIOutput.make(row, "time-last-updated", "???" );
 								}
+
+	            // UIInternalLink.make(row, "rss-link", new BlogParams(BlogRSSProducer.VIEWID, blog.getId().toString()));
+	            UILink.make(row, "rss-link", externalLogic.getBlogRssUrl(blog.getId()));
             }
-            else {
-                // This makes the tag render empty, if we don't reference it we won't get the tag, and if
-            	// if it's null we'll get the contents of the template.
-                UIOutput.make(row, "time-last-updated", "");
-            }
-            // UIInternalLink.make(row, "rss-link", new BlogParams(BlogRSSProducer.VIEWID, blog.getId().toString()));
-            UILink.make(row, "rss-link", externalLogic.getBlogRssUrl(blog.getId()));
         }
 
     }

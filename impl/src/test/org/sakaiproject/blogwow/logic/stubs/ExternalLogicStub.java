@@ -182,4 +182,9 @@ public class ExternalLogicStub implements ExternalLogic {
 		return false;
 	}
 
+	public boolean isUserSiteAdmin(String userId, String locationId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
