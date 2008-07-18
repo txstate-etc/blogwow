@@ -171,6 +171,10 @@ public class ExternalLogicImpl implements ExternalLogic {
       return securityService.isSuperUser(userId);
    }
 
+   public boolean isUserSiteAdmin(String userId, String locationId) {
+	      return securityService.unlock(userId, org.sakaiproject.site.api.SiteService.SECURE_UPDATE_SITE, locationId);
+	   }
+   
    public boolean isUserAllowedInLocation(String userId, String permission, String locationId) {
       if (securityService.unlock(userId, permission, locationId)) {
          return true;

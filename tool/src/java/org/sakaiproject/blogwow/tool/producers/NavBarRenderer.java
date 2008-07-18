@@ -56,15 +56,17 @@ public class NavBarRenderer {
                         UIMessage.make("blogwow.navbar.settings"), 
                             new SimpleBlogParams(MySettingsProducer.VIEW_ID, blog.getId()));
             }
-        }
+        }      
         
-        cell = UIBranchContainer.make(joint, "navigation-cell:", "4");
-        UILink.make(cell, "item-icon", "../images/group_gear.png");
-        if (currentViewID.equals(PermissionsProducer.VIEW_ID))
-            UIMessage.make(cell, "item-text", "blogwow.navbar.permissions");
-        else
-            UIInternalLink.make(cell, "item-link", UIMessage.make("blogwow.navbar.permissions"), new SimpleViewParameters(PermissionsProducer.VIEW_ID));  
-
+        if (externalLogic.isUserSiteAdmin(externalLogic.getCurrentUserId(), externalLogic.getCurrentLocationId())) {       
+            UIOutput.make(cell, "item-separator");
+        	cell = UIBranchContainer.make(joint, "navigation-cell:", "4");
+	        UILink.make(cell, "item-icon", "../images/group_gear.png");
+	        if (currentViewID.equals(PermissionsProducer.VIEW_ID))
+	            UIMessage.make(cell, "item-text", "blogwow.navbar.permissions");
+	        else
+	            UIInternalLink.make(cell, "item-link", UIMessage.make("blogwow.navbar.permissions"), new SimpleViewParameters(PermissionsProducer.VIEW_ID));  
+        }
 
  
     }

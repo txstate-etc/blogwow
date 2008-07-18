@@ -76,6 +76,17 @@ public interface ExternalLogic {
     public boolean isUserAdmin(String userId);
 
     /**
+     * Check if this user has site update access
+     * 
+     * @param userId
+     *            the internal user id (not username)
+     * @param locationId
+     *            a unique id which represents the current location of the user (entity reference)
+     * @return true if the user has site update access, false otherwise
+     */
+    public boolean isUserSiteAdmin(String userId, String locationId);
+    
+    /**
      * Check if a user has a specified permission within a context, primarily a convenience method and passthrough
      * 
      * @param userId
