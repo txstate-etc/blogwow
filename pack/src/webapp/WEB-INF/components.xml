@@ -20,7 +20,7 @@
         <property name="userDirectoryService"
             ref="org.sakaiproject.user.api.UserDirectoryService" />
         <property name="entityBroker" ref="org.sakaiproject.entitybroker.EntityBroker" />
-        <property name="sakaiPersonManager" ref="org.sakaiproject.api.common.edu.person.SakaiPersonManager" />
+<!--        <property name="sakaiPersonManager" ref="org.sakaiproject.api.common.edu.person.SakaiPersonManager" />-->
         <property name="serverConfigurationService" ref="org.sakaiproject.component.api.ServerConfigurationService"/>
     </bean>
 
