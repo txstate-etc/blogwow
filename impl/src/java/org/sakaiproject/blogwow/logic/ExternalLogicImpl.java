@@ -16,8 +16,8 @@ import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.sakaiproject.api.common.edu.person.SakaiPerson;
-import org.sakaiproject.api.common.edu.person.SakaiPersonManager;
+//import org.sakaiproject.api.common.edu.person.SakaiPerson;
+//import org.sakaiproject.api.common.edu.person.SakaiPersonManager;
 import org.sakaiproject.authz.api.FunctionManager;
 import org.sakaiproject.authz.api.SecurityService;
 import org.sakaiproject.blogwow.logic.ExternalLogic;
@@ -83,10 +83,10 @@ public class ExternalLogicImpl implements ExternalLogic {
       this.entityBroker = entityBroker;
    }
 
-   private SakaiPersonManager sakaiPersonManager;
-   public void setSakaiPersonManager(SakaiPersonManager spm) {
-	   this.sakaiPersonManager = spm;
-   }
+//   private SakaiPersonManager sakaiPersonManager;
+//   public void setSakaiPersonManager(SakaiPersonManager spm) {
+//	   this.sakaiPersonManager = spm;
+//   }
    
    private ServerConfigurationService serverConfigurationService;
    public void setServerConfigurationService(
@@ -251,8 +251,8 @@ public class ExternalLogicImpl implements ExternalLogic {
 	   String profileText = null;
 	 
 	   try {
-			SakaiPerson sPerson = sakaiPersonManager.getSakaiPerson(userId, sakaiPersonManager.getUserMutableType());
-			profileText = sPerson.getNotes();
+//			SakaiPerson sPerson = sakaiPersonManager.getSakaiPerson(userId, sakaiPersonManager.getUserMutableType());
+//			profileText = sPerson.getNotes();
 	   } catch (Exception e) {
 			log.debug("No profile for " + userId + " or user not found: " + e.getMessage());
 	   }
@@ -272,8 +272,8 @@ public class ExternalLogicImpl implements ExternalLogic {
 	   String imageUrl = null;
 		 
 	   try {
-			SakaiPerson sPerson = sakaiPersonManager.getSakaiPerson(userId, sakaiPersonManager.getUserMutableType());
-			imageUrl = sPerson.getPictureUrl();
+//			SakaiPerson sPerson = sakaiPersonManager.getSakaiPerson(userId, sakaiPersonManager.getUserMutableType());
+//			imageUrl = sPerson.getPictureUrl();
 	   } catch (Exception e) {
 			log.debug("No profile for " + userId + " or user not found: " + e.getMessage());
 	   }
