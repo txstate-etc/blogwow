@@ -123,6 +123,12 @@ public class EntryLogicImpl implements EntryLogic {
     */
    public BlogWowEntry getEntryById(String entryId, String locationId) {
       String currentUserId = externalLogic.getCurrentUserId();
+      if (locationId == null) {
+         locationId = externalLogic.getCurrentLocationId();
+         if (locationId == null) {
+            locationId = ExternalLogic.NO_LOCATION;
+         }
+      }
       BlogWowEntry entry = (BlogWowEntry) dao.findById(BlogWowEntry.class, entryId);
       if (entry == null) {
          // entry not found

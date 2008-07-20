@@ -23,7 +23,9 @@ import org.sakaiproject.blogwow.logic.ExternalLogic;
 import org.sakaiproject.blogwow.model.BlogWowBlog;
 import org.sakaiproject.blogwow.model.BlogWowComment;
 import org.sakaiproject.blogwow.model.BlogWowEntry;
-import org.sakaiproject.genericdao.api.finders.ByPropsFinder;
+import org.sakaiproject.genericdao.api.search.Order;
+import org.sakaiproject.genericdao.api.search.Restriction;
+import org.sakaiproject.genericdao.api.search.Search;
 
 /**
  * Implementation
@@ -119,30 +121,22 @@ public class CommentLogicImpl implements CommentLogic {
      */
     @SuppressWarnings("unchecked")
     public List<BlogWowComment> getComments(String entryId, String sortProperty, boolean ascending, int start, int limit) {
-        BlogWowEntry entry = (BlogWowEntry) dao.findById(BlogWowEntry.class, entryId);
-        if (entry == null) {
-            throw new IllegalArgumentException("entry id is invalid (" + entryId + "), cannot find related entry object");
-        }
+       BlogWowEntry entry = entryLogic.getEntryById(entryId, null);
+       if (entry == null) {
+          throw new IllegalArgumentException("entry id is invalid (" + entryId + "), cannot find related entry object");
+       }
 
-        String currentUserId = externalLogic.getCurrentUserId();
-        String locationId = entry.getBlog().getLocation();
-        if (externalLogic.isUserAllowedInLocation(currentUserId, ExternalLogic.BLOG_ENTRY_READ, locationId)
-                || externalLogic.isUserAllowedInLocation(currentUserId, ExternalLogic.BLOG_ENTRY_READ_ANY, locationId)) {
-            if (sortProperty == null) {
-                sortProperty = "dateCreated";
-                //ascending = false;
-            }
+       if (sortProperty == null) {
+          sortProperty = "dateCreated";
+          //ascending = false;
+       }
 
-            if (!ascending) {
-                sortProperty += ByPropsFinder.DESC;
-            }
-
-            return dao.findByProperties(BlogWowComment.class, new String[] { "entry.id" }, new Object[] { entryId },
-                    new int[] { ByPropsFinder.EQUALS }, new String[] { sortProperty }, start, limit);
-        } else {
-            throw new SecurityException("User (" + currentUserId + ") cannot access this entry (" + entryId + ") in this location ("
-                    + locationId + ")");
-        }
+       List<BlogWowComment> comments = dao.findBySearch(BlogWowComment.class, new Search(
+                new Restriction("entry.id", entryId),
+                new Order(sortProperty, ascending),
+                start, limit
+             ));
+       return comments;
     }
 
     /*
