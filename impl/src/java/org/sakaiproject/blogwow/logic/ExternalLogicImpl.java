@@ -27,8 +27,9 @@ import org.sakaiproject.blogwow.logic.entity.BlogGroupRssEntityProvider;
 import org.sakaiproject.blogwow.logic.entity.BlogRssEntityProvider;
 import org.sakaiproject.component.api.ServerConfigurationService;
 import org.sakaiproject.entitybroker.EntityBroker;
-import org.sakaiproject.entitybroker.IdEntityReference;
+import org.sakaiproject.entitybroker.EntityReference;
 import org.sakaiproject.exception.IdUnusedException;
+import org.sakaiproject.genericdao.util.ReflectUtil;
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SiteService;
 import org.sakaiproject.tool.api.Session;
@@ -83,21 +84,29 @@ public class ExternalLogicImpl implements ExternalLogic {
       this.entityBroker = entityBroker;
    }
 
-//   private SakaiPersonManager sakaiPersonManager;
-//   public void setSakaiPersonManager(SakaiPersonManager spm) {
-//	   this.sakaiPersonManager = spm;
-//   }
-   
+// private SakaiPersonManager sakaiPersonManager;
+// public void setSakaiPersonManager(SakaiPersonManager spm) {
+// this.sakaiPersonManager = spm;
+// }
+
+   private String SAKAIPERSON_PREFIX = "SakaiPerson";
+   public void setSAKAIPERSON_PREFIX(String sakaiperson_prefix) {
+      SAKAIPERSON_PREFIX = sakaiperson_prefix;
+   }
+
    private ServerConfigurationService serverConfigurationService;
    public void setServerConfigurationService(
-			ServerConfigurationService serverConfigurationService) {
-		this.serverConfigurationService = serverConfigurationService;
-	}
-   
+         ServerConfigurationService serverConfigurationService) {
+      this.serverConfigurationService = serverConfigurationService;
+   }
+
    private static final String ANON_USER_ATTRIBUTE = "AnonUserAttribute";
-   
+
    //sakai.property key to use the global sakai property rather than the local one 
    private static final String GLOBAL_PROFILE_SETTING = "blogwow.useglobalprofile";
+
+   // contruct a reflection utility class
+   ReflectUtil reflectUtil = new ReflectUtil();
 
    /**
     * Place any code that should run when this class is initialized by spring here
@@ -172,9 +181,9 @@ public class ExternalLogicImpl implements ExternalLogic {
    }
 
    public boolean isUserSiteAdmin(String userId, String locationId) {
-	      return securityService.unlock(userId, org.sakaiproject.site.api.SiteService.SECURE_UPDATE_SITE, locationId);
-	   }
-   
+      return securityService.unlock(userId, org.sakaiproject.site.api.SiteService.SECURE_UPDATE_SITE, locationId);
+   }
+
    public boolean isUserAllowedInLocation(String userId, String permission, String locationId) {
       if (securityService.unlock(userId, permission, locationId)) {
          return true;
@@ -184,7 +193,7 @@ public class ExternalLogicImpl implements ExternalLogic {
 
    public String getBlogRssUrl(String blogId) {
       return entityBroker.getEntityURL(
-            new IdEntityReference(BlogRssEntityProvider.ENTITY_PREFIX, blogId).toString());
+            new EntityReference(BlogRssEntityProvider.ENTITY_PREFIX, blogId).toString());
    }
 
    public String getBlogLocationRssUrl(String locationId) {
@@ -196,10 +205,11 @@ public class ExternalLogicImpl implements ExternalLogic {
          throw new IllegalArgumentException(e);
       }
       return entityBroker.getEntityURL(
-            new IdEntityReference(BlogGroupRssEntityProvider.ENTITY_PREFIX, 
+            new EntityReference(BlogGroupRssEntityProvider.ENTITY_PREFIX, 
                   encodedlocation).toString());
    }
 
+   @SuppressWarnings("deprecation")
    public String cleanupUserStrings(String userSubmittedString) {
       if (userSubmittedString == null) {
          // nulls are ok
@@ -218,12 +228,12 @@ public class ExternalLogicImpl implements ExternalLogic {
 
    public String getBlogEntryUrl(String entryId) {
       return entityBroker.getEntityURL(
-            new IdEntityReference(BlogEntryEntityProvider.ENTITY_PREFIX, entryId).toString());
+            new EntityReference(BlogEntryEntityProvider.ENTITY_PREFIX, entryId).toString());
    }
 
    public String getBlogUrl(String blogId) {
       return entityBroker.getEntityURL(
-            new IdEntityReference(BlogEntityProvider.ENTITY_PREFIX, blogId).toString());
+            new EntityReference(BlogEntityProvider.ENTITY_PREFIX, blogId).toString());
    }
 
    /**
@@ -233,10 +243,10 @@ public class ExternalLogicImpl implements ExternalLogic {
     */
    public boolean useGlobalProfile()
    {
-	   // get from serverconfigurationservice
-	   boolean ret = serverConfigurationService.getBoolean(GLOBAL_PROFILE_SETTING, false);
-	   log.debug("useGlobalProfile is: " + ret);   
-	   return ret;
+      // get from serverconfigurationservice
+      boolean ret = serverConfigurationService.getBoolean(GLOBAL_PROFILE_SETTING, false);
+      log.debug("useGlobalProfile is: " + ret);   
+      return ret;
    }
 
    /**
@@ -246,18 +256,21 @@ public class ExternalLogicImpl implements ExternalLogic {
     *            the internal user id (not username)
     * @return Profiletext if set, otherwise null
     */
-   public String getProfile(String userId)
+   public String getProfileText(String userId)
    {   
-	   String profileText = null;
-	 
-	   try {
-//			SakaiPerson sPerson = sakaiPersonManager.getSakaiPerson(userId, sakaiPersonManager.getUserMutableType());
-//			profileText = sPerson.getNotes();
-	   } catch (Exception e) {
-			log.debug("No profile for " + userId + " or user not found: " + e.getMessage());
-	   }
-
-	   return profileText;
+      String profileText = null;
+      try {
+//       SakaiPerson sPerson = sakaiPersonManager.getSakaiPerson(userId, sakaiPersonManager.getUserMutableType());
+//       profileText = sPerson.getNotes();
+         Object sakaiPerson = entityBroker.fetchEntity( new EntityReference(SAKAIPERSON_PREFIX, userId).toString() );
+         if (sakaiPerson != null) {
+            profileText = (String) reflectUtil.getFieldValue(sakaiPerson, "notes");
+         }
+      } catch (RuntimeException e) {
+         log.warn("Failed getting profile for " + userId + " or user not found: " + e.getMessage(), e);
+      }
+      if ("".equals(profileText)) { profileText = null; }
+      return profileText;
    }
 
    /**
@@ -267,19 +280,22 @@ public class ExternalLogicImpl implements ExternalLogic {
     *            the internal user id (not username)
     * @return true if the user has admin access, false otherwise
     */
-   public String getImageUrl(String userId)
+   public String getProfileImageUrl(String userId)
    {
-	   String imageUrl = null;
-		 
-	   try {
-//			SakaiPerson sPerson = sakaiPersonManager.getSakaiPerson(userId, sakaiPersonManager.getUserMutableType());
-//			imageUrl = sPerson.getPictureUrl();
-	   } catch (Exception e) {
-			log.debug("No profile for " + userId + " or user not found: " + e.getMessage());
-	   }
-
-	   return imageUrl;
+      String imageUrl = null;
+      try {
+//       SakaiPerson sPerson = sakaiPersonManager.getSakaiPerson(userId, sakaiPersonManager.getUserMutableType());
+//       imageUrl = sPerson.getPictureUrl();
+         Object sakaiPerson = entityBroker.fetchEntity( new EntityReference(SAKAIPERSON_PREFIX, userId).toString() );
+         if (sakaiPerson != null) {
+            imageUrl = (String) reflectUtil.getFieldValue(sakaiPerson, "pictureUrl");
+         }
+      } catch (RuntimeException e) {
+         log.warn("Failed getting profile for " + userId + " or user not found: " + e.getMessage(), e);
+      }
+      if ("".equals(imageUrl)) { imageUrl = null; }
+      return imageUrl;
    }
 
-   
+
 }

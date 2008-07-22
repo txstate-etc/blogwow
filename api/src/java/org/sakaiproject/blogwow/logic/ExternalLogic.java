@@ -140,28 +140,27 @@ public interface ExternalLogic {
     public String cleanupUserStrings(String userSubmittedString);
 
     /**
-     * Use the global profile from PersonManager rather than per-blog profiles 
+     * Use the global profile from PersonManager rather than in-tool, per-blog profiles,
+     * this will only work if the Sakai profile is available and the SakaiPerson entity provider is available
      * 
      * @return true if the global profiles should be used
      */
     public boolean useGlobalProfile();
 
     /**
-     * Get the user's global profile text
+     * Get the users global profile text
      * 
-     * @param userId
-     *            the internal user id (not username)
-     * @return true if the user has admin access, false otherwise
+     * @param userId the internal user id (not username)
+     * @return the text if there is any available OR null if none
      */
-    public String getProfile(String userId);
+    public String getProfileText(String userId);
 
     /**
-     * Get the user's profile picture URL
+     * Get the users profile picture URL
      * 
-     * @param userId
-     *            the internal user id (not username)
-     * @return true if the user has admin access, false otherwise
+     * @param userId the internal user id (not username)
+     * @return the image URL if there is one OR null if none
      */
-    public String getImageUrl(String userId);
+    public String getProfileImageUrl(String userId);
     
 }

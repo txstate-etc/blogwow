@@ -80,7 +80,7 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
         UILink.make(tofill, "blog-url", externalLogic.getBlogUrl(blog.getId()));
         
         String profileText = externalLogic.useGlobalProfile() ? 
-        			externalLogic.getProfile(blog.getOwnerId()) : 
+        			externalLogic.getProfileText(blog.getOwnerId()) : 
         			blog.getProfile();
         
         if (profileText == null || profileText.equals("")) {
@@ -90,7 +90,7 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
         }
 
         String profileImageUrl = externalLogic.useGlobalProfile() ? 
-        			externalLogic.getImageUrl(blog.getOwnerId()) : 
+        			externalLogic.getProfileImageUrl(blog.getOwnerId()) : 
         			blog.getImageUrl();
                 
         if ("".equals(profileImageUrl)) {
