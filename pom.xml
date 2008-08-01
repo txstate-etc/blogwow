@@ -1,12 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <name>Blog Wow!</name>
     <groupId>org.sakaiproject</groupId>
     <artifactId>sakai-blogwow-base</artifactId>
-    <version>0.9.6-SNAPSHOT</version><!--blogwow.version-->
+    <version>0.9.6</version><!--blogwow.version-->
     <packaging>pom</packaging>
 
     <parent>
@@ -52,9 +50,9 @@
     </profiles>
 
     <scm>
-        <connection>scm:svn:https://source.sakaiproject.org/contrib/programmerscafe/blogwow/trunk/</connection>
-        <developerConnection>scm:svn:https://source.sakaiproject.org/contrib/programmerscafe/blogwow/trunk/</developerConnection>
-        <url>https://source.sakaiproject.org/contrib/programmerscafe/blogwow/trunk/</url>
+        <connection>scm:svn:https://source.sakaiproject.org/contrib/programmerscafe/blogwow/tags/2.6.0</connection>
+        <developerConnection>scm:svn:https://source.sakaiproject.org/contrib/programmerscafe/blogwow/tags/2.6.0</developerConnection>
+        <url>https://source.sakaiproject.org/contrib/programmerscafe/blogwow/tags/2.6.0</url>
     </scm>
 
     <!-- handles the management of all related dependencies -->
@@ -63,13 +61,13 @@
             <dependency>
                 <groupId>org.sakaiproject</groupId>
                 <artifactId>sakai-blogwow-api</artifactId>
-                <version>0.9.6-SNAPSHOT</version><!--blogwow.version-->
+                <version>0.9.6</version><!--blogwow.version-->
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.sakaiproject</groupId>
                 <artifactId>sakai-blogwow-impl</artifactId>
-                <version>0.9.6-SNAPSHOT</version><!--blogwow.version-->
+                <version>0.9.6</version><!--blogwow.version-->
             </dependency>
             <!-- needed until EB is in the Sakai master dependency management -->
             <dependency>
