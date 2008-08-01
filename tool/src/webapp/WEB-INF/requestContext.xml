@@ -4,11 +4,9 @@
 
 <beans>
 
-	<bean id="sakaiFCKTextEvolver"
-     class="uk.ac.cam.caret.sakai.rsf.tmp.evolverimpl.SakaiFCKTextEvolver">
-     <property name="contentHostingService"
-       ref="org.sakaiproject.content.api.ContentHostingService" />
-     <property name="context" ref="sakai-Context" />
+   <!-- error prograting bean -->
+   <bean id="allErrorsAllowable" class="org.sakaiproject.blogwow.tool.beans.ErrorHandler">
+       <property name="errorStateManager" ref="errorStateManager" />
    </bean>
 
    <!-- rich text evolver bean def -->
