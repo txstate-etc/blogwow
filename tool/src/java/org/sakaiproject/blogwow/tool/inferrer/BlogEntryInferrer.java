@@ -15,7 +15,7 @@ import org.sakaiproject.blogwow.logic.EntryLogic;
 import org.sakaiproject.blogwow.logic.entity.BlogEntryEntityProvider;
 import org.sakaiproject.blogwow.tool.params.BlogParams;
 import org.sakaiproject.blogwow.tool.producers.BlogViewProducer;
-import org.sakaiproject.entitybroker.IdEntityReference;
+import org.sakaiproject.entitybroker.EntityReference;
 import org.sakaiproject.blogwow.model.BlogWowEntry;
 
 import uk.ac.cam.caret.sakai.rsf.entitybroker.EntityViewParamsInferrer;
@@ -29,24 +29,24 @@ import uk.org.ponder.rsf.viewstate.ViewParameters;
  */
 public class BlogEntryInferrer implements EntityViewParamsInferrer {
 
-    private EntryLogic entryLogic;
-    public void setEntryLogic(EntryLogic entryLogic) {
-        this.entryLogic = entryLogic;
-    }
+   private EntryLogic entryLogic;
+   public void setEntryLogic(EntryLogic entryLogic) {
+      this.entryLogic = entryLogic;
+   }
 
-    
-    public String[] getHandledPrefixes() {
-        return new String[] {BlogEntryEntityProvider.ENTITY_PREFIX};
-    }
 
-    public ViewParameters inferDefaultViewParameters(String reference) {
-        IdEntityReference ref = new IdEntityReference(reference);
-				BlogWowEntry bwe = entryLogic.getEntryById(ref.id, null);
-        if ( bwe != null ) {
-            return new BlogParams(BlogViewProducer.VIEW_ID, bwe.getBlog().getId(), ref.id, true);
-        } else {
-            throw new SecurityException("User does not have access to this entity: " + reference);
-        }
-    }
+   public String[] getHandledPrefixes() {
+      return new String[] {BlogEntryEntityProvider.ENTITY_PREFIX};
+   }
+
+   public ViewParameters inferDefaultViewParameters(String reference) {
+      EntityReference ref = new EntityReference(reference);
+      BlogWowEntry bwe = entryLogic.getEntryById(ref.getId(), null);
+      if ( bwe != null ) {
+         return new BlogParams(BlogViewProducer.VIEW_ID, bwe.getBlog().getId(), ref.getId(), true);
+      } else {
+         throw new SecurityException("User does not have access to this entity: " + reference);
+      }
+   }
 
 }

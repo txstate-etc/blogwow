@@ -20,7 +20,9 @@ import org.sakaiproject.blogwow.dao.BlogWowDao;
 import org.sakaiproject.blogwow.logic.BlogLogic;
 import org.sakaiproject.blogwow.logic.ExternalLogic;
 import org.sakaiproject.blogwow.model.BlogWowBlog;
-import org.sakaiproject.genericdao.api.finders.ByPropsFinder;
+import org.sakaiproject.genericdao.api.search.Order;
+import org.sakaiproject.genericdao.api.search.Restriction;
+import org.sakaiproject.genericdao.api.search.Search;
 
 /**
  * This is the implementation of the blog business logic interface
@@ -55,7 +57,12 @@ public class BlogLogicImpl implements BlogLogic {
     */
    @SuppressWarnings("unchecked")
    public BlogWowBlog makeBlogByLocationAndUser(String locationId, String userId) {
-      List<BlogWowBlog> l = dao.findByProperties(BlogWowBlog.class, new String[] { "location", "ownerId" }, new Object[] { locationId, userId });
+      List<BlogWowBlog> l = dao.findBySearch(BlogWowBlog.class, new Search(
+               new Restriction[] {
+                     new Restriction("location", locationId),
+                     new Restriction("ownerId", userId)
+               }
+            ) );
 
       if (l.size() <= 0) {
          // no blog found, create a new one
@@ -81,17 +88,19 @@ public class BlogLogicImpl implements BlogLogic {
     */
    @SuppressWarnings("unchecked")
    public List<BlogWowBlog> getAllVisibleBlogs(String locationId, String sortProperty, boolean ascending, int start, int limit) {
+      Order order = new Order(sortProperty, ascending);
       if (sortProperty == null) {
-         sortProperty = "title";
-         ascending = true;
+         order = new Order("title", true);
       }
 
-      if (!ascending) {
-         sortProperty += ByPropsFinder.DESC;
+      Search search = new Search();
+      search.addOrder(order);
+      search.setStart(start);
+      search.setLimit(limit);
+      if (locationId != null) {
+         search.addRestriction( new Restriction("location", locationId) );
       }
-
-      List l = dao.findByProperties(BlogWowBlog.class, new String[] { "location" }, new Object[] { locationId },
-            new int[] { ByPropsFinder.EQUALS }, new String[] { sortProperty }, start, limit);
+      List<BlogWowBlog> l = dao.findBySearch(BlogWowBlog.class, search);
       return l;
    }
 

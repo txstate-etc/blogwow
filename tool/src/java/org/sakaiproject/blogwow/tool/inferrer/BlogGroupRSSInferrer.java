@@ -17,7 +17,7 @@ import java.net.URLDecoder;
 import org.sakaiproject.blogwow.logic.entity.BlogGroupRssEntityProvider;
 import org.sakaiproject.blogwow.tool.params.BlogRssViewParams;
 import org.sakaiproject.blogwow.tool.producers.BlogRSSProducer;
-import org.sakaiproject.entitybroker.IdEntityReference;
+import org.sakaiproject.entitybroker.EntityReference;
 
 import uk.ac.cam.caret.sakai.rsf.entitybroker.EntityViewParamsInferrer;
 import uk.org.ponder.rsf.viewstate.ViewParameters;
@@ -30,20 +30,20 @@ import uk.org.ponder.rsf.viewstate.ViewParameters;
  */
 public class BlogGroupRSSInferrer implements EntityViewParamsInferrer {
 
-    public String[] getHandledPrefixes() {
-        return new String[] {BlogGroupRssEntityProvider.ENTITY_PREFIX};
-    }
+   public String[] getHandledPrefixes() {
+      return new String[] {BlogGroupRssEntityProvider.ENTITY_PREFIX};
+   }
 
-    public ViewParameters inferDefaultViewParameters(String reference) {
-        String decoded = null;
-        IdEntityReference ref = new IdEntityReference(reference);
-        try {
-            decoded = URLDecoder.decode(ref.id, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-           throw new IllegalArgumentException(e);
-        }
-        return new BlogRssViewParams(BlogRSSProducer.VIEW_ID, null, 
-                decoded);
-    }
+   public ViewParameters inferDefaultViewParameters(String reference) {
+      String decoded = null;
+      EntityReference ref = new EntityReference(reference);
+      try {
+         decoded = URLDecoder.decode(ref.getId(), "UTF-8");
+      } catch (UnsupportedEncodingException e) {
+         throw new IllegalArgumentException(e);
+      }
+      return new BlogRssViewParams(BlogRSSProducer.VIEW_ID, null, 
+            decoded);
+   }
 
 }

@@ -14,7 +14,7 @@ package org.sakaiproject.blogwow.tool.inferrer;
 import org.sakaiproject.blogwow.logic.entity.BlogEntityProvider;
 import org.sakaiproject.blogwow.tool.params.BlogParams;
 import org.sakaiproject.blogwow.tool.producers.BlogViewProducer;
-import org.sakaiproject.entitybroker.IdEntityReference;
+import org.sakaiproject.entitybroker.EntityReference;
 
 import uk.ac.cam.caret.sakai.rsf.entitybroker.EntityViewParamsInferrer;
 import uk.org.ponder.rsf.viewstate.ViewParameters;
@@ -27,13 +27,13 @@ import uk.org.ponder.rsf.viewstate.ViewParameters;
  */
 public class BlogInferrer implements EntityViewParamsInferrer {
 
-    public String[] getHandledPrefixes() {
-        return new String[] {BlogEntityProvider.ENTITY_PREFIX};
-    }
+   public String[] getHandledPrefixes() {
+      return new String[] {BlogEntityProvider.ENTITY_PREFIX};
+   }
 
-    public ViewParameters inferDefaultViewParameters(String reference) {
-        IdEntityReference ref = new IdEntityReference(reference);
-        return new BlogParams(BlogViewProducer.VIEW_ID, ref.id, null, false);
-    }
+   public ViewParameters inferDefaultViewParameters(String reference) {
+      EntityReference ref = new EntityReference(reference);
+      return new BlogParams(BlogViewProducer.VIEW_ID, ref.getId(), null, false);
+   }
 
 }

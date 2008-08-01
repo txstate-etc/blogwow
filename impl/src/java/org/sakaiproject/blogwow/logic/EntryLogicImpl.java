@@ -27,6 +27,9 @@ import org.sakaiproject.blogwow.model.BlogWowBlog;
 import org.sakaiproject.blogwow.model.BlogWowComment;
 import org.sakaiproject.blogwow.model.BlogWowEntry;
 import org.sakaiproject.genericdao.api.finders.ByPropsFinder;
+import org.sakaiproject.genericdao.api.search.Order;
+import org.sakaiproject.genericdao.api.search.Restriction;
+import org.sakaiproject.genericdao.api.search.Search;
 
 /**
  * Implementation
@@ -81,20 +84,23 @@ public class EntryLogicImpl implements EntryLogic {
    @SuppressWarnings("unchecked")
    public List<BlogWowEntry> getAllVisibleEntries(String[] blogIds, String userId, String sortProperty, boolean ascending, int start,
          int limit) {
-
+      Order order = new Order(sortProperty, ascending);
       if (sortProperty == null) {
-         sortProperty = "dateCreated";
-         ascending = false;
+         order = new Order("dateCreated", true);
+      }
+
+      Search search = new Search();
+      search.addOrder(order);
+      search.setStart(start);
+      search.setLimit(limit);
+      if (blogIds != null && blogIds.length > 0) {
+         search.addRestriction( new Restriction("blog.id", blogIds) );
       }
 
       List l = new ArrayList();
       if (externalLogic.isUserAdmin(userId)) {
-         if (!ascending) {
-            sortProperty += ByPropsFinder.DESC;
-         }
          // get all entries for a set of blogs
-         l = dao.findByProperties(BlogWowEntry.class, new String[] { "blog.id" }, new Object[] { blogIds },
-               new int[] { ByPropsFinder.EQUALS }, new String[] { sortProperty }, start, limit);
+         l = dao.findBySearch(BlogWowEntry.class, search);
       } else {
          List<String> locations = dao.getLocationsForBlogsIds(blogIds);
          // check current user perms on these locations to form lists of locations related to this users access
@@ -111,7 +117,7 @@ public class EntryLogicImpl implements EntryLogic {
          String[] readLocsArray = readLocations.toArray(new String[] {});
          String[] readAnyLocsArray = readAnyLocations.toArray(new String[] {});
 
-         l = dao.getBlogPermEntries(blogIds, userId, readLocsArray, readAnyLocsArray, sortProperty, ascending, start, limit);
+         l = dao.getBlogPermEntries(blogIds, userId, readLocsArray, readAnyLocsArray, order.property, order.ascending, start, limit);
       }
 
       return l;

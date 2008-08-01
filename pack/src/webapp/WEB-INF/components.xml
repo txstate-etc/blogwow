@@ -57,10 +57,13 @@
     <bean
         class="org.sakaiproject.blogwow.logic.entity.BlogEntryEntityProviderImpl">
         <property name="entryLogic" ref="org.sakaiproject.blogwow.logic.EntryLogic" />
+        <property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic" />
+        <property name="developerHelperService" ref="org.sakaiproject.entitybroker.DeveloperHelperService" />
     </bean>
 
     <bean class="org.sakaiproject.blogwow.logic.entity.BlogEntityProviderImpl">
         <property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic" />
+        <property name="developerHelperService" ref="org.sakaiproject.entitybroker.DeveloperHelperService" />
     </bean>
 
 </beans>
