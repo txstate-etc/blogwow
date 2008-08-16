@@ -15,6 +15,7 @@
 package org.sakaiproject.blogwow.logic.entity;
 
 import java.util.List;
+import java.util.Map;
 
 import org.sakaiproject.blogwow.logic.BlogLogic;
 import org.sakaiproject.blogwow.model.BlogWowBlog;
@@ -67,6 +68,15 @@ public class BlogEntityProviderImpl implements BlogEntityProvider, CoreEntityPro
          return true;
       }
       return false;
+   }
+
+   // Added for compatibility
+   public String createEntity(EntityReference ref, Object entity, Map<String, Object> params) {
+       return createEntity(ref, entity);
+   }
+
+   public void updateEntity(EntityReference ref, Object entity, Map<String, Object> params) {
+       updateEntity(ref, entity);
    }
 
    public String createEntity(EntityReference ref, Object entity) {
