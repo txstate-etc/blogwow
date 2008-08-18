@@ -4,7 +4,7 @@
     <name>Blog Wow!</name>
     <groupId>org.sakaiproject</groupId>
     <artifactId>sakai-blogwow-base</artifactId>
-    <version>0.9.8-SNAPSHOT</version><!--blogwow.version-->
+    <version>0.9.8</version><!--blogwow.version-->
     <packaging>pom</packaging>
 
     <parent>
@@ -61,13 +61,13 @@
             <dependency>
                 <groupId>org.sakaiproject</groupId>
                 <artifactId>sakai-blogwow-api</artifactId>
-                <version>0.9.8-SNAPSHOT</version><!--blogwow.version-->
+                <version>0.9.8</version><!--blogwow.version-->
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.sakaiproject</groupId>
                 <artifactId>sakai-blogwow-impl</artifactId>
-                <version>0.9.8-SNAPSHOT</version><!--blogwow.version-->
+                <version>0.9.8</version><!--blogwow.version-->
             </dependency>
             <!-- needed until EB is in the Sakai master dependency management -->
             <dependency>
