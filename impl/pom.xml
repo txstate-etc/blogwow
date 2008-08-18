@@ -12,11 +12,6 @@
         <version>0.9.9-SNAPSHOT</version><!--blogwow.version-->
     </parent>
 
-    <properties>
-<!--        <sakai.generic-dao.version>[0.9.8,1.0)</sakai.generic-dao.version>--><!-- release plugin hates this -->
-        <sakai.generic-dao.version>0.9.8</sakai.generic-dao.version>
-    </properties>
-
     <dependencies>
         <!-- internal -->
         <dependency>
