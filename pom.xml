@@ -10,7 +10,7 @@
     <parent>
         <artifactId>master</artifactId>
         <groupId>org.sakaiproject</groupId>
-        <version>2.5.0</version>
+        <version>2.5.2</version>
         <!--    <version>SNAPSHOT</version>-->
         <relativePath>../master/pom.xml</relativePath>
     </parent>
@@ -50,9 +50,9 @@
     </profiles>
 
     <scm>
-        <connection>scm:svn:https://source.sakaiproject.org/contrib/programmerscafe/blogwow/tags/0.9.7</connection>
-        <developerConnection>scm:svn:https://source.sakaiproject.org/contrib/programmerscafe/blogwow/tags/0.9.7</developerConnection>
-        <url>https://source.sakaiproject.org/contrib/programmerscafe/blogwow/tags/0.9.7</url>
+        <connection>scm:svn:https://source.sakaiproject.org/contrib/programmerscafe/blogwow/tags/0.9.8</connection>
+        <developerConnection>scm:svn:https://source.sakaiproject.org/contrib/programmerscafe/blogwow/tags/0.9.8</developerConnection>
+        <url>https://source.sakaiproject.org/contrib/programmerscafe/blogwow/tags/0.9.8</url>
     </scm>
 
     <!-- handles the management of all related dependencies -->
