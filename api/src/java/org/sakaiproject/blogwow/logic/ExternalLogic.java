@@ -162,5 +162,14 @@ public interface ExternalLogic {
      * @return the image URL if there is one OR null if none
      */
     public String getProfileImageUrl(String userId);
-    
+
+    /**
+     * Register events related to the blog entities
+     * 
+     * @param eventName the name of the event (e.g. blog.create)
+     * @param entityClass the class type of the entity related to the event
+     * @param entityId the id of the entity related to the event
+     */
+    public void registerEntityEvent(String eventName, Class<?> entityClass, String entityId);
+
 }

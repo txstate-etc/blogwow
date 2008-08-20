@@ -81,6 +81,7 @@ public class CommentLogicImpl implements CommentLogic {
         BlogWowComment comment = getCommentById(commentId, locationId);
         if (canRemoveComment(commentId, currentUserId)) {
             dao.delete(comment);
+            externalLogic.registerEntityEvent("blog.comment.removed", BlogWowComment.class, comment.getId());
         } else {
             throw new SecurityException(currentUserId + " cannot remove this comment (" + commentId + ") in location: " + locationId);
         }
@@ -106,6 +107,7 @@ public class CommentLogicImpl implements CommentLogic {
             if (canAddComment(comment.getEntry().getId(), currentUserId)) {
                 dao.save(comment);
                 log.debug("Saving comment: " + comment.getId() + ":" + comment.getText());
+                externalLogic.registerEntityEvent("blog.comment.added", BlogWowComment.class, comment.getId());
             } else {
                 throw new SecurityException(currentUserId + " cannot add comment in location: " + locationId);
             }

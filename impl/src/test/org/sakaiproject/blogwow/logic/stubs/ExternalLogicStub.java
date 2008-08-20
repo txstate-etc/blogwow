@@ -187,4 +187,9 @@ public class ExternalLogicStub implements ExternalLogic {
 		return false;
 	}
 
+    public void registerEntityEvent(String eventName, Class<?> entityClass,
+            String entityId) {
+        // Do nothing
+    }
+
 }

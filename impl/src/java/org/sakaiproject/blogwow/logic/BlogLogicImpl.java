@@ -64,21 +64,22 @@ public class BlogLogicImpl implements BlogLogic {
                }
             ) );
 
+      BlogWowBlog blog = null;
       if (l.size() <= 0) {
          // no blog found, create a new one
          if (canWriteBlog(null, locationId, userId)) {
-            BlogWowBlog blog = new BlogWowBlog(userId, locationId, null, null, null, new Date(), null);
+            blog = new BlogWowBlog(userId, locationId, null, null, null, new Date(), null);
             saveUserBlog(blog, locationId, userId);
-            return blog;
+            externalLogic.registerEntityEvent("blog.blog.created", BlogWowBlog.class, blog.getId());
          }
-         return null;
       } else if (l.size() == 1) {
          // found existing blog
-         return (BlogWowBlog) l.get(0);
+          blog = (BlogWowBlog) l.get(0);
       } else {
          throw new IllegalStateException("Found more than one blog for user (" + userId + ") in location (" + locationId
                + "), only one is allowed");
       }
+      return blog;
    }
 
    /*
@@ -125,6 +126,7 @@ public class BlogLogicImpl implements BlogLogic {
       if (canWriteBlog(blog.getId(), locationId, currentUserId)) {
          saveUserBlog(blog, locationId, currentUserId);
          log.info("Saved blog: " + blog.getId() + ":" + blog.getProfile());
+         externalLogic.registerEntityEvent("blog.blog.saved", BlogWowBlog.class, blog.getId());
       } else {
          throw new SecurityException("Current user cannot save blog " + blog.getId() + ":" + blog.getTitle()
                + " because they do not have permission");

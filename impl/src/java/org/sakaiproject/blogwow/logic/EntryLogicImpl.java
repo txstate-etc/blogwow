@@ -26,7 +26,6 @@ import org.sakaiproject.blogwow.logic.ExternalLogic;
 import org.sakaiproject.blogwow.model.BlogWowBlog;
 import org.sakaiproject.blogwow.model.BlogWowComment;
 import org.sakaiproject.blogwow.model.BlogWowEntry;
-import org.sakaiproject.genericdao.api.finders.ByPropsFinder;
 import org.sakaiproject.genericdao.api.search.Order;
 import org.sakaiproject.genericdao.api.search.Restriction;
 import org.sakaiproject.genericdao.api.search.Search;
@@ -58,7 +57,8 @@ public class EntryLogicImpl implements EntryLogic {
    public Integer getVisibleEntryCount(String blogId, String userId){
       Integer count = Integer.valueOf(0);
       if (externalLogic.isUserAdmin(userId)) {
-         count = dao.countByProperties(BlogWowEntry.class, new String[] { "blog.id" }, new Object[] { blogId });
+         count = (int) dao.countBySearch(BlogWowComment.class, new Search("blog.id",blogId));
+             //dao.countByProperties(BlogWowEntry.class, new String[] { "blog.id" }, new Object[] { blogId });
       } else {
          List<String> locations = dao.getLocationsForBlogsIds(new String[] { blogId });
          // check current user perms on these locations to form lists of locations related to this users access
@@ -166,7 +166,8 @@ public class EntryLogicImpl implements EntryLogic {
       String currentUserId = externalLogic.getCurrentUserId();
       BlogWowEntry entry = getEntryById(entryId, locationId);
       if (canWriteEntry(entryId, currentUserId)) {
-         List<BlogWowComment> l = dao.findByProperties(BlogWowComment.class, new String[] { "entry.id" }, new Object[] { entryId });
+         List<BlogWowComment> l = dao.findBySearch(BlogWowComment.class, new Search("entry.id",entryId));
+             //dao.findByProperties(BlogWowComment.class, new String[] { "entry.id" }, new Object[] { entryId });
          if (l.size() == 0) {
             dao.delete(entry);
          } else {
@@ -180,6 +181,7 @@ public class EntryLogicImpl implements EntryLogic {
       } else {
          throw new SecurityException(currentUserId + " cannot remove this entry (" + entryId + ") in location: " + locationId);
       }
+      externalLogic.registerEntityEvent("blog.entry.removed", BlogWowEntry.class, entry.getId());
    }
 
    /*
@@ -203,6 +205,7 @@ public class EntryLogicImpl implements EntryLogic {
       if (checkWriteEntry(entry, externalLogic.getCurrentUserId())) {
          dao.save(entry);
          log.debug("Saving entry: " + entry.getId() + ":" + entry.getText());
+         externalLogic.registerEntityEvent("blog.entry.saved", BlogWowEntry.class, entry.getId());
       } else {
          throw new SecurityException("Current user cannot save entry " + entry.getId() + " because they do not have permission");
       }

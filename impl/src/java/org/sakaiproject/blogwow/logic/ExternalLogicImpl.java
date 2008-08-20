@@ -16,15 +16,15 @@ import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-//import org.sakaiproject.api.common.edu.person.SakaiPerson;
-//import org.sakaiproject.api.common.edu.person.SakaiPersonManager;
 import org.sakaiproject.authz.api.FunctionManager;
 import org.sakaiproject.authz.api.SecurityService;
-import org.sakaiproject.blogwow.logic.ExternalLogic;
 import org.sakaiproject.blogwow.logic.entity.BlogEntityProvider;
 import org.sakaiproject.blogwow.logic.entity.BlogEntryEntityProvider;
 import org.sakaiproject.blogwow.logic.entity.BlogGroupRssEntityProvider;
 import org.sakaiproject.blogwow.logic.entity.BlogRssEntityProvider;
+import org.sakaiproject.blogwow.model.BlogWowBlog;
+import org.sakaiproject.blogwow.model.BlogWowComment;
+import org.sakaiproject.blogwow.model.BlogWowEntry;
 import org.sakaiproject.component.api.ServerConfigurationService;
 import org.sakaiproject.entitybroker.EntityBroker;
 import org.sakaiproject.entitybroker.EntityReference;
@@ -297,5 +297,28 @@ public class ExternalLogicImpl implements ExternalLogic {
       return imageUrl;
    }
 
+   public void registerEntityEvent(String eventName, Class<?> entityClass, String entityId) {
+       String ref = getEntityReference(entityClass, entityId);
+       if (ref != null) {
+          log.info("Entity event: " + eventName + " for " + ref);
+          entityBroker.fireEvent(eventName, ref);
+       }
+    }
+
+    protected String getEntityReference(Class<?> entityClass, String entityId) {
+       String prefix = null;
+       // make sure this class is supported and get the prefix
+       if (entityClass == BlogWowBlog.class) {
+          prefix = BlogEntityProvider.ENTITY_PREFIX;
+       } else if (entityClass == BlogWowEntry.class) {
+          prefix = BlogEntryEntityProvider.ENTITY_PREFIX;
+       } else if (entityClass == BlogWowComment.class) {
+           prefix = "blog-comment";
+       } else {
+          return "blog:" + entityClass.getSimpleName();
+       }
+
+       return new EntityReference(prefix, entityId).toString();
+    }
 
 }
