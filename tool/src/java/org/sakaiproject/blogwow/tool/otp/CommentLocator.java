@@ -9,6 +9,8 @@ import org.sakaiproject.blogwow.logic.ExternalLogic;
 import org.sakaiproject.blogwow.model.BlogWowComment;
 
 import uk.org.ponder.beanutil.WriteableBeanLocator;
+import uk.org.ponder.messageutil.TargettedMessage;
+import uk.org.ponder.messageutil.TargettedMessageList;
 
 public class CommentLocator implements WriteableBeanLocator {
 
@@ -17,9 +19,15 @@ public class CommentLocator implements WriteableBeanLocator {
 
     private ExternalLogic externalLogic;
     private CommentLogic commentLogic;
-
+    private TargettedMessageList messages;
+    
     private Map<String, BlogWowComment> delivered = new HashMap<String, BlogWowComment>();
 
+
+	public void setMessages(TargettedMessageList messages) {
+		this.messages = messages;
+	}
+    
     public Object locateBean(String name) {
         BlogWowComment togo = delivered.get(name);
         if (togo == null) {
@@ -40,6 +48,10 @@ public class CommentLocator implements WriteableBeanLocator {
             //if (key.startsWith(NEW_PREFIX)) {
             //    // could do stuff here
             //}
+            if (comment.getText() == null || "".equals(comment.getText().trim()) || comment.getText().length() == 0 ) {
+            	messages.addMessage(new TargettedMessage("blogwow.blogview.emptycomment",null,TargettedMessage.SEVERITY_ERROR));
+            	return "error";
+            }
             commentLogic.saveComment(comment, externalLogic.getCurrentLocationId());
         }
         return "published";

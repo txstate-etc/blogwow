@@ -20,6 +20,7 @@ import org.sakaiproject.blogwow.tool.params.BlogEntryParams;
 import org.sakaiproject.blogwow.tool.params.BlogParams;
 
 import uk.org.ponder.messageutil.MessageLocator;
+import uk.org.ponder.messageutil.TargettedMessageList;
 import uk.org.ponder.rsf.components.ELReference;
 import uk.org.ponder.rsf.components.UIBranchContainer;
 import uk.org.ponder.rsf.components.UICommand;
@@ -56,6 +57,11 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
     private Locale locale;
     private ExternalLogic externalLogic;
     private MessageLocator messageLocator;
+    private TargettedMessageList messages;
+    
+	public void setMessages(TargettedMessageList messages) {
+		this.messages = messages;
+	}
     
     public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
 

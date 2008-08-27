@@ -28,13 +28,14 @@
    </bean>
 
    <bean class="org.sakaiproject.blogwow.tool.producers.BlogViewProducer">
-      <property name="navBarRenderer" ref="NavbarRenderer" />
-      <property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic" />
-      <property name="entryLogic" ref="org.sakaiproject.blogwow.logic.EntryLogic" />
-      <property name="commentLogic" ref="org.sakaiproject.blogwow.logic.CommentLogic" />
-      <property name="externalLogic" ref="org.sakaiproject.blogwow.logic.ExternalLogic" />
-      <property name="locale" ref="requestLocale" />
-			<property name="messageLocator" ref="messageLocator" />
+    <property name="navBarRenderer" ref="NavbarRenderer" />
+    <property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic" />
+    <property name="entryLogic" ref="org.sakaiproject.blogwow.logic.EntryLogic" />
+    <property name="commentLogic" ref="org.sakaiproject.blogwow.logic.CommentLogic" />
+    <property name="externalLogic" ref="org.sakaiproject.blogwow.logic.ExternalLogic" />
+    <property name="locale" ref="requestLocale" />
+	<property name="messageLocator" ref="messageLocator" />
+	<property name="messages" ref="targettedMessageList"/>
    </bean>
 
    <bean class="org.sakaiproject.blogwow.tool.producers.HomeProducer">
@@ -80,6 +81,7 @@
    <bean id="CommentLocator" class="org.sakaiproject.blogwow.tool.otp.CommentLocator">
       <property name="externalLogic" ref="org.sakaiproject.blogwow.logic.ExternalLogic" />
       <property name="commentLogic" ref="org.sakaiproject.blogwow.logic.CommentLogic" />
+      <property name="messages" ref="targettedMessageList"/>
    </bean>
 
 </beans>

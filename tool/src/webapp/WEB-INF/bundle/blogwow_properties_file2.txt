@@ -53,6 +53,7 @@ blogwow.blogview.remove = Just forget it
 blogwow.blogview.addcomment = Say how great I am 
 blogwow.blogview.comments = $ admiring replies
 
+
 # Remove entry
 
 blogwow.removeentry.removeheader = Remove a blog entry
@@ -67,7 +68,9 @@ blogwow.comments.commentstitle = Says $ at $
 blogwow.comments.addcommenttitle = Say how great I am
 blogwow.comments.submit = Share with the world
 blogwow.comments.cancel = Nah, I'm off to the pub
+
 # this bit is a repetition of Blog View page
 blogwow.comments.edit = On second thoughts...
 blogwow.comments.remove = Just forget it
 blogwow.comments.addcomment = Say how great I am 
+
