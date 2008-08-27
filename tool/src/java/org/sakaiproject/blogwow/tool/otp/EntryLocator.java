@@ -11,6 +11,8 @@ import org.sakaiproject.blogwow.model.BlogWowBlog;
 import org.sakaiproject.blogwow.model.BlogWowEntry;
 
 import uk.org.ponder.beanutil.WriteableBeanLocator;
+import uk.org.ponder.messageutil.TargettedMessage;
+import uk.org.ponder.messageutil.TargettedMessageList;
 
 public class EntryLocator implements WriteableBeanLocator {
 
@@ -20,9 +22,15 @@ public class EntryLocator implements WriteableBeanLocator {
     private ExternalLogic externalLogic;
     private EntryLogic entryLogic;
     private BlogLogic blogLogic;
-
+    private TargettedMessageList messages;
+    
     private Map<String, BlogWowEntry> delivered = new HashMap<String, BlogWowEntry>();
 
+	public void setMessages(TargettedMessageList messages) {
+		this.messages = messages;
+	}
+    
+    
     public Object locateBean(String name) {
         String locationId = externalLogic.getCurrentLocationId();
         String currentUserId = externalLogic.getCurrentUserId();
@@ -49,6 +57,20 @@ public class EntryLocator implements WriteableBeanLocator {
             //if (key.startsWith(NEW_PREFIX)) {
             //    // could do stuff here
             //}
+            
+            if (entry.getTitle() == null || "".equals(entry.getTitle().trim()) || entry.getTitle().length() == 0 ) {
+            	messages.addMessage(new TargettedMessage("blogwow.nottitle",null,TargettedMessage.SEVERITY_ERROR));
+            	
+            	return "error";
+            }
+            
+            //we need to check that there is some text
+            String check = externalLogic.cleanupUserStrings(entry.getText()); 
+            if (check == null || "".equals(check) || check.length() == 0 ) {
+            	messages.addMessage(new TargettedMessage("blogwow.notext",null,TargettedMessage.SEVERITY_ERROR));
+            	return "error";
+            }
+            
             entryLogic.saveEntry(entry, externalLogic.getCurrentLocationId());
         }
         return "published";

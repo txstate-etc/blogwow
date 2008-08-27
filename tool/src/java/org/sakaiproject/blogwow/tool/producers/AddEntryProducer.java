@@ -9,6 +9,7 @@ import org.sakaiproject.blogwow.tool.params.BlogEntryParams;
 import org.sakaiproject.blogwow.tool.params.SimpleBlogParams;
 
 import uk.org.ponder.messageutil.MessageLocator;
+import uk.org.ponder.messageutil.TargettedMessageList;
 import uk.org.ponder.rsf.components.UICommand;
 import uk.org.ponder.rsf.components.UIContainer;
 import uk.org.ponder.rsf.components.UIForm;
@@ -40,6 +41,12 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
     private NavBarRenderer navBarRenderer;
     private TextInputEvolver richTextEvolver;
     private MessageLocator messageLocator;
+    private TargettedMessageList messages;
+    
+    public void setMessages(TargettedMessageList messages) {
+		this.messages = messages;
+	}
+    
 
     public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
 
@@ -120,13 +127,15 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
 
     public List<NavigationCase> reportNavigationCases() {
         List<NavigationCase> l = new ArrayList<NavigationCase>();
-        l.add(new NavigationCase(null, new SimpleViewParameters(HomeProducer.VIEW_ID)));
+        l.add(new NavigationCase("error", new SimpleViewParameters(VIEW_ID)));
+        l.add(new NavigationCase("published", new SimpleViewParameters(HomeProducer.VIEW_ID)));
         return l;
     }
 
     public void interceptActionResult(ARIResult result, ViewParameters incoming, Object actionReturn) {
         BlogEntryParams bep = (BlogEntryParams) incoming;
-        if (bep.blogid != null) {
+        String ret = (String)actionReturn;
+        if (bep.blogid != null && !(ret.equals("error"))) {
             result.resultingView = new SimpleBlogParams(BlogViewProducer.VIEW_ID, bep.blogid);
         }    
     }
