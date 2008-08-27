@@ -206,7 +206,8 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
 								cancelButton.setReturn("cancel");
 
                 // TODO ack! Inline Java Script
-                UIVerbatim.make(entrydiv, "scoll-here-script", "document.getElementById('" + commentInput.getFullID() + "').scrollIntoView(true);");
+				//you cant have 2 writes to the same rsf id
+               // UIVerbatim.make(entrydiv, "scoll-here-script", "document.getElementById('" + commentInput.getFullID() + "').scrollIntoView(true);");
                 UIVerbatim.make(entrydiv, "scoll-here-script", "document.getElementById('" + commentInput.getFullID() + "').focus();");
             }
 
