@@ -135,7 +135,7 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
     public void interceptActionResult(ARIResult result, ViewParameters incoming, Object actionReturn) {
         BlogEntryParams bep = (BlogEntryParams) incoming;
         String ret = (String)actionReturn;
-        if (bep.blogid != null && !(ret.equals("error"))) {
+        if (bep.blogid != null && (ret == null || !(ret.equals("error")))) {
             result.resultingView = new SimpleBlogParams(BlogViewProducer.VIEW_ID, bep.blogid);
         }    
     }
