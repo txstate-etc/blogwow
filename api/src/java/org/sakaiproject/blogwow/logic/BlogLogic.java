@@ -75,8 +75,8 @@ public interface BlogLogic {
      * Check if a specified user can write this blog in a specified site. If the user
      * is superadmin, this check will always succeed.
      * 
-     * @param blogId
-     *            the id of a {@link BlogWowBlog} object, or <code>null</code> if the check is
+     * @param blog
+     *            the {@link BlogWowBlog} object, or <code>null</code> if the check is
      *            that the user can create a new blog in this site.
      * @param locationId
      *            a unique id which represents the current location of the user (entity reference)
@@ -84,6 +84,6 @@ public interface BlogLogic {
      *            the internal user id (not username)
      * @return true if blog can be modified, false otherwise
      */
-    public boolean canWriteBlog(String blogId, String locationId, String userId);
+    public boolean canWriteBlog(BlogWowBlog blog, String locationId, String userId);
 
 }

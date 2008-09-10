@@ -78,22 +78,22 @@ public class BlogLogicImplTest extends AbstractTransactionalSpringContextTests {
      * {@link org.sakaiproject.blogwow.logic.impl.BlogLogicImpl#canWriteBlog(org.sakaiproject.blogwow.model.BlogWowBlog, java.lang.String, java.lang.String)}.
      */
     public void testCanWriteBlog() {
-        assertTrue(logicImpl.canWriteBlog(tdp.blog1.getId(), TestDataPreload.LOCATION1_ID, TestDataPreload.USER_ID));
-        assertTrue(logicImpl.canWriteBlog(tdp.blog2.getId(), TestDataPreload.LOCATION1_ID, TestDataPreload.MAINT_USER_ID));
-        assertTrue(logicImpl.canWriteBlog(tdp.blog3.getId(), TestDataPreload.LOCATION2_ID, TestDataPreload.ADMIN_USER_ID));
+        assertTrue(logicImpl.canWriteBlog(tdp.blog1, TestDataPreload.LOCATION1_ID, TestDataPreload.USER_ID));
+        assertTrue(logicImpl.canWriteBlog(tdp.blog2, TestDataPreload.LOCATION1_ID, TestDataPreload.MAINT_USER_ID));
+        assertTrue(logicImpl.canWriteBlog(tdp.blog3, TestDataPreload.LOCATION2_ID, TestDataPreload.ADMIN_USER_ID));
 
         // make sure we cannot write in other sites
-        assertFalse(logicImpl.canWriteBlog(tdp.blog1.getId(), TestDataPreload.LOCATION2_ID, TestDataPreload.USER_ID));
-        assertFalse(logicImpl.canWriteBlog(tdp.blog2.getId(), TestDataPreload.LOCATION2_ID, TestDataPreload.MAINT_USER_ID));
+        assertFalse(logicImpl.canWriteBlog(tdp.blog1, TestDataPreload.LOCATION2_ID, TestDataPreload.USER_ID));
+        assertFalse(logicImpl.canWriteBlog(tdp.blog2, TestDataPreload.LOCATION2_ID, TestDataPreload.MAINT_USER_ID));
 
         // make sure we cannot write other blogs
-        assertFalse(logicImpl.canWriteBlog(tdp.blog2.getId(), TestDataPreload.LOCATION1_ID, TestDataPreload.USER_ID));
-        assertFalse(logicImpl.canWriteBlog(tdp.blog3.getId(), TestDataPreload.LOCATION2_ID, TestDataPreload.MAINT_USER_ID));
+        assertFalse(logicImpl.canWriteBlog(tdp.blog2, TestDataPreload.LOCATION1_ID, TestDataPreload.USER_ID));
+        assertFalse(logicImpl.canWriteBlog(tdp.blog3, TestDataPreload.LOCATION2_ID, TestDataPreload.MAINT_USER_ID));
 
         // make sure admin can write all of them
-        assertTrue(logicImpl.canWriteBlog(tdp.blog1.getId(), TestDataPreload.LOCATION1_ID, TestDataPreload.ADMIN_USER_ID));
-        assertTrue(logicImpl.canWriteBlog(tdp.blog2.getId(), TestDataPreload.LOCATION1_ID, TestDataPreload.ADMIN_USER_ID));
-        assertTrue(logicImpl.canWriteBlog(tdp.blog3.getId(), TestDataPreload.LOCATION2_ID, TestDataPreload.ADMIN_USER_ID));
+        assertTrue(logicImpl.canWriteBlog(tdp.blog1, TestDataPreload.LOCATION1_ID, TestDataPreload.ADMIN_USER_ID));
+        assertTrue(logicImpl.canWriteBlog(tdp.blog2, TestDataPreload.LOCATION1_ID, TestDataPreload.ADMIN_USER_ID));
+        assertTrue(logicImpl.canWriteBlog(tdp.blog3, TestDataPreload.LOCATION2_ID, TestDataPreload.ADMIN_USER_ID));
     }
 
     /**
@@ -186,10 +186,11 @@ public class BlogLogicImplTest extends AbstractTransactionalSpringContextTests {
      * Test method for {@link org.sakaiproject.blogwow.logic.impl.BlogLogicImpl#saveBlog(org.sakaiproject.blogwow.model.BlogWowBlog)}.
      */
     public void testSaveBlog() {
-        BlogWowBlog blog = new BlogWowBlog(TestDataPreload.ADMIN_USER_ID, TestDataPreload.LOCATION1_ID, "blog");
+        BlogWowBlog blog = new BlogWowBlog(TestDataPreload.USER_ID, TestDataPreload.LOCATION1_ID, "blog");
         logicImpl.saveBlog(blog, TestDataPreload.LOCATION1_ID);
         assertNotNull(blog.getId());
 
+        // test update
         tdp.blog1.setTitle("my blog");
         tdp.blog1.setProfile("Changed");
         logicImpl.saveBlog(tdp.blog1, TestDataPreload.LOCATION1_ID);
