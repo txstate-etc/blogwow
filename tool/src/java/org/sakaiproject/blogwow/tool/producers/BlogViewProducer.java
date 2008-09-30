@@ -18,6 +18,7 @@ import org.sakaiproject.blogwow.model.BlogWowEntry;
 import org.sakaiproject.blogwow.tool.otp.CommentLocator;
 import org.sakaiproject.blogwow.tool.params.BlogEntryParams;
 import org.sakaiproject.blogwow.tool.params.BlogParams;
+import org.sakaiproject.blogwow.tool.params.SimpleBlogParams;
 
 import uk.org.ponder.messageutil.MessageLocator;
 import uk.org.ponder.messageutil.TargettedMessageList;
@@ -57,8 +58,8 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
     private Locale locale;
     private ExternalLogic externalLogic;
     private MessageLocator messageLocator;
+
     private TargettedMessageList messages;
-    
 	public void setMessages(TargettedMessageList messages) {
 		this.messages = messages;
 	}
@@ -83,22 +84,19 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
         BlogWowBlog blog = blogLogic.getBlogById(params.blogid);
 
         UIOutput.make(tofill, "blog-title", blog.getTitle());
-        UILink.make(tofill, "blog-url", externalLogic.getBlogUrl(blog.getId()));
+        UIInternalLink.make(tofill, "blog-url", new SimpleBlogParams(BlogViewProducer.VIEW_ID, blog.getId()));
+        //UILink.make(tofill, "blog-url", externalLogic.getBlogUrl(blog.getId()));
         
-        String profileText = externalLogic.useGlobalProfile() ? 
-        			externalLogic.getProfileText(blog.getOwnerId()) : 
-        			blog.getProfile();
-        
+        String profileText = externalLogic.useGlobalProfile() ? externalLogic.getProfileText(blog
+                .getOwnerId()) : blog.getProfile();
         if (profileText == null || profileText.equals("")) {
             UIMessage.make(tofill, "profile-verbatim-text", "blogwow.blogview.noprofile");
         } else {
             UIVerbatim.make(tofill, "profile-verbatim-text", profileText);
         }
 
-        String profileImageUrl = externalLogic.useGlobalProfile() ? 
-        			externalLogic.getProfileImageUrl(blog.getOwnerId()) : 
-        			blog.getImageUrl();
-                
+        String profileImageUrl = externalLogic.useGlobalProfile() ? externalLogic
+                .getProfileImageUrl(blog.getOwnerId()) : blog.getImageUrl();
         if ("".equals(profileImageUrl)) {
             profileImageUrl = null; // this will use the default in the template
         }
@@ -164,10 +162,13 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
             UIInternalLink.make(entrydiv, "entry-link:", UIMessage.make("blogwow.blogview.comments", new Object[] { (comments.size() + "") }), new BlogParams(
                     BlogViewProducer.VIEW_ID, blog.getId(), entry.getId(), true));
             if (commentLogic.canAddComment(entry.getId(), currentUserId)){
-            	UIInternalLink.make(entrydiv, "entry-link:", UIMessage.make("blogwow.blogview.add-comment"), new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(),
-                    entry.getId(), true, true));
+                UIInternalLink.make(entrydiv, "entry-link:", UIMessage.make("blogwow.blogview.add-comment"), new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(),
+                        entry.getId(), true, true));
             }
-            UIInternalLink.make(entrydiv, "entry-link:", UIMessage.make("blogwow.permalink.permalinktitle"), externalLogic.getBlogEntryUrl(entry.getId()));
+
+            UILink.make(entrydiv, "entry-link:", UIMessage.make("blogwow.permalink.permalinktitle"), 
+                    externalLogic.getBlogEntryUrl(entry.getId()))
+                    .decorate( new UIFreeAttributeDecorator("target","_NEW"));
 
             // Render Comments if they are visible
             if (params.showcomments) {
@@ -181,16 +182,16 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
                     UIOutput.make(commentdiv, "comment-text", comment.getText());
                     if (commentLogic.canRemoveComment(comment.getId(), currentUserId))
                     {
-                    	String commentOTP = commentLocator + "." + comment.getId();
-                    	UIForm removeform = UIForm.make(commentdiv, "remove-comment-form");
+                        String commentOTP = commentLocator + "." + comment.getId();
+                        UIForm removeform = UIForm.make(commentdiv, "remove-comment-form");
                         UICommand removeCommand = UICommand.make(removeform, "remove-comment-command");
                         removeCommand.parameters.add(new UIDeletionBinding(commentOTP));
-                        
-                    	UILink ul = UILink.make(commentdiv, "rm-comment", UIMessage.make("blogwow.blogview.rm-comment"), null);
-                    	// TODO ack! Inline Java Script
-                    	UIFreeAttributeDecorator ufad = new UIFreeAttributeDecorator("onclick",
-                    			"if (confirm('"+ messageLocator.getMessage("blogwow.blogview.confirm-rm-comment")+"')){document.getElementById('" + removeCommand.getFullID() + "').click();}return false;");
-                    	ul.decorate(ufad);
+
+                        UILink ul = UILink.make(commentdiv, "rm-comment", UIMessage.make("blogwow.blogview.rm-comment"), null);
+                        // TODO ack! Inline Java Script
+                        UIFreeAttributeDecorator ufad = new UIFreeAttributeDecorator("onclick",
+                                "if (confirm('"+ messageLocator.getMessage("blogwow.blogview.confirm-rm-comment")+"')){document.getElementById('" + removeCommand.getFullID() + "').click();}return false;");
+                        ul.decorate(ufad);
                     }
                 }
             }
@@ -208,12 +209,12 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
                         + ".publishAll");
                 publishButton.parameters.add(new UIELBinding(commentOTP + ".entry", new ELReference(entryLocator + "." + entry.getId())));
                 UICommand cancelButton = UICommand.make(addCommentForm, "cancel-button", UIMessage.make("blogwow.comments.cancel"));
-								cancelButton.addParameter(new UIELBinding("ARIResult.resultingView.addcomment", Boolean.FALSE));
-								cancelButton.setReturn("cancel");
+                cancelButton.addParameter(new UIELBinding("ARIResult.resultingView.addcomment", Boolean.FALSE));
+                cancelButton.setReturn("cancel");
 
                 // TODO ack! Inline Java Script
-				UIVerbatim.make(entrydiv, "scoll-here-script",
-						"var scrollHere = document.getElementById('" + commentInput.getFullID() + "'); scrollHere.scrollIntoView(true); scrollHere.focus();");
+                UIVerbatim.make(entrydiv, "scoll-here-script",
+                        "var scrollHere = document.getElementById('" + commentInput.getFullID() + "'); scrollHere.scrollIntoView(true); scrollHere.focus();");
             }
 
             // Render forward and back buttons if we have more entries and we aren't viewing an entry
@@ -286,6 +287,6 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
     }
 
     public void setMessageLocator(MessageLocator messageLocator) {
-    	this.messageLocator = messageLocator;
+        this.messageLocator = messageLocator;
     }
 }

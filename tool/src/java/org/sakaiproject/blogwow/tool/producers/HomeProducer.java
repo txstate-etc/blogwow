@@ -51,23 +51,26 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
         UIMessage.make(tofill, "last-updated", "blogwow.homepage.lastupdated");
 
         BlogWowBlog myblog = blogLogic.makeBlogByLocationAndUser(locationId, currentUserId );
-				if (myblog != null && myblog.getId() != null)
-				{
-        	UIInternalLink.make(tofill, "my-blog-link", 
-                UIMessage.make("blogwow.homepage.userbloglink"), 
-                new SimpleBlogParams(BlogViewProducer.VIEW_ID, myblog.getId()));
-        	// use a date which is related to the current users locale
-        	DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
-        	DateFormat tf = DateFormat.getTimeInstance(DateFormat.MEDIUM, locale);
-        
-        	List<BlogWowEntry> myentries = entryLogic.getAllVisibleEntries(myblog.getId(), currentUserId, null, true, 0, 1);
-        	if (myentries.size() > 0) {
-            UIMessage.make(tofill, "last-blogged-date", "blogwow.homepage.userlastblogged", 
-                    new Object[] { df.format( myentries.get(0).getDateModified() ),
-                                   tf.format( myentries.get(0).getDateModified() ) });
-        	}
+        if (myblog != null && myblog.getId() != null) {
+            UIBranchContainer myBlogInfo = UIBranchContainer.make(tofill, "my-blog-exists:");
+            UIInternalLink.make(myBlogInfo, "my-blog-link", 
+                    UIMessage.make("blogwow.homepage.userbloglink"), 
+                    new SimpleBlogParams(BlogViewProducer.VIEW_ID, myblog.getId()));
+            // use a date which is related to the current users locale
+            DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+            DateFormat tf = DateFormat.getTimeInstance(DateFormat.MEDIUM, locale);
 
-				}
+            List<BlogWowEntry> myentries = entryLogic.getAllVisibleEntries(myblog.getId(), currentUserId, null, true, 0, 1);
+            if (myentries.size() > 0) {
+                UIMessage.make(myBlogInfo, "last-blogged-date", "blogwow.homepage.userlastblogged", 
+                        new Object[] { df.format( myentries.get(0).getDateModified() ),
+                        tf.format( myentries.get(0).getDateModified() ) });
+            }
+
+            UILink.make(myBlogInfo, "my-rss-link", externalLogic.getBlogRssUrl(myblog.getId()));
+        } else {
+            UIMessage.make(tofill, "no-my-blog", "blogwow.homepage.noblog");
+        }
 
         UIMessage.make(tofill, "all-blogs-header", "blogwow.homepage.listofblogs");
 
