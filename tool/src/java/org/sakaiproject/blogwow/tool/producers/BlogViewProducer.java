@@ -216,34 +216,33 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
                 UIVerbatim.make(entrydiv, "scoll-here-script",
                         "var scrollHere = document.getElementById('" + commentInput.getFullID() + "'); scrollHere.scrollIntoView(true); scrollHere.focus();");
             }
-
-            // Render forward and back buttons if we have more entries and we aren't viewing an entry
-            if (params.skip != null && params.entryid == null) {
-                if (params.skip + entriesPerPage < entryLogic.getVisibleEntryCount(blog.getId(), currentUserId)) {
-                    UIMessage um = UIMessage.make("blogwow.blogview.previous", new Object[] { entriesPerPage });
-                    BlogParams bp = new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(), params.skip + entriesPerPage);
-                    UIInternalLink.make(tofill, "previous-page", um, bp);
-
-                    UILink ul = UILink.make(tofill, "back-img", null);
-                    ul.decorate(new UIAlternativeTextDecorator(UIMessage.make("blogwow.blogview.previousalt")));
-                }
-                if (params.skip > 0) {
-                    UIMessage um = UIMessage.make("blogwow.blogview.next", new Object[] { entriesPerPage });
-                    BlogParams bp = new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(), params.skip - entriesPerPage);
-                    UIInternalLink.make(tofill, "next-page", um, bp);
-
-                    UILink ul = UILink.make(tofill, "forward-img", null);
-                    ul.decorate(new UIAlternativeTextDecorator(UIMessage.make("blogwow.blogview.nextalt")));
-                }
-            } else if (entryLogic.getVisibleEntryCount(blog.getId(), currentUserId) > entriesPerPage && params.entryid == null) {
-                UIMessage um = UIMessage.make("blogwow.blogview.previous", new Object[] { entriesPerPage });
-                BlogParams bp = new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(), entriesPerPage);
-                UIInternalLink.make(tofill, "previous-page", um, bp);
-
-                UILink ul = UILink.make(tofill, "back-img", null);
-                ul.decorate(new UIAlternativeTextDecorator(UIMessage.make("blogwow.blogview.previousalt")));
-            }
         }
+				// Render forward and back buttons if we have more entries and we aren't viewing an entry
+				if (params.skip != null && params.entryid == null) {
+						if (params.skip + entriesPerPage < entryLogic.getVisibleEntryCount(blog.getId(), currentUserId)) {
+								UIMessage um = UIMessage.make("blogwow.blogview.previous", new Object[] { entriesPerPage });
+								BlogParams bp = new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(), params.skip + entriesPerPage);
+								UIInternalLink.make(tofill, "previous-page", um, bp);
+
+								UILink ul = UILink.make(tofill, "back-img", null);
+								ul.decorate(new UIAlternativeTextDecorator(UIMessage.make("blogwow.blogview.previousalt")));
+						}
+						if (params.skip > 0) {
+								UIMessage um = UIMessage.make("blogwow.blogview.next", new Object[] { entriesPerPage });
+								BlogParams bp = new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(), params.skip - entriesPerPage);
+								UIInternalLink.make(tofill, "next-page", um, bp);
+
+								UILink ul = UILink.make(tofill, "forward-img", null);
+								ul.decorate(new UIAlternativeTextDecorator(UIMessage.make("blogwow.blogview.nextalt")));
+						}
+				} else if (entryLogic.getVisibleEntryCount(blog.getId(), currentUserId) > entriesPerPage && params.entryid == null) {
+						UIMessage um = UIMessage.make("blogwow.blogview.previous", new Object[] { entriesPerPage });
+						BlogParams bp = new BlogParams(BlogViewProducer.VIEW_ID, blog.getId(), entriesPerPage);
+						UIInternalLink.make(tofill, "previous-page", um, bp);
+
+						UILink ul = UILink.make(tofill, "back-img", null);
+						ul.decorate(new UIAlternativeTextDecorator(UIMessage.make("blogwow.blogview.previousalt")));
+				}
     }
 
     private void fillEntryIcon(UIBranchContainer entrydiv, String imgUrl, String altKey, String titleKey, Boolean draft) {
