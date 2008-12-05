@@ -9,7 +9,7 @@
     <parent>
         <groupId>org.sakaiproject</groupId>
         <artifactId>sakai-blogwow-base</artifactId>
-        <version>0.9.9</version><!--blogwow.version-->
+        <version>0.9.9-SNAPSHOT</version><!--blogwow.version-->
     </parent>
 
     <dependencies>

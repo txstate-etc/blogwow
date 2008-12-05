@@ -4,7 +4,7 @@
     <name>Blog Wow!</name>
     <groupId>org.sakaiproject</groupId>
     <artifactId>sakai-blogwow-base</artifactId>
-    <version>0.9.9</version><!--blogwow.version-->
+    <version>0.9.9-SNAPSHOT</version><!--blogwow.version-->
     <packaging>pom</packaging>
 
     <parent>
@@ -27,13 +27,13 @@
             <dependency>
                 <groupId>org.sakaiproject</groupId>
                 <artifactId>sakai-blogwow-api</artifactId>
-                <version>0.9.9</version><!--blogwow.version-->
+                <version>0.9.9-SNAPSHOT</version><!--blogwow.version-->
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.sakaiproject</groupId>
                 <artifactId>sakai-blogwow-impl</artifactId>
-                <version>0.9.9</version><!--blogwow.version-->
+                <version>0.9.9-SNAPSHOT</version><!--blogwow.version-->
             </dependency>
             <!-- needed until EB is in the Sakai master dependency management -->
             <dependency>
@@ -46,9 +46,9 @@
     </dependencyManagement>
 
     <scm>
-        <connection>scm:svn:https://source.sakaiproject.org/contrib/programmerscafe/blogwow/tags/sakai-blogwow-base-0.9.9</connection>
-        <developerConnection>scm:svn:https://source.sakaiproject.org/contrib/programmerscafe/blogwow/tags/sakai-blogwow-base-0.9.9</developerConnection>
-        <url>https://source.sakaiproject.org/contrib/programmerscafe/blogwow/tags/sakai-blogwow-base-0.9.9</url>
+        <connection>scm:svn:https://source.sakaiproject.org/contrib/programmerscafe/blogwow/tags/0.9.9</connection>
+        <developerConnection>scm:svn:https://source.sakaiproject.org/contrib/programmerscafe/blogwow/tags/0.9.9</developerConnection>
+        <url>https://source.sakaiproject.org/contrib/programmerscafe/blogwow/tags/0.9.9</url>
     </scm>
 
     <profiles>
