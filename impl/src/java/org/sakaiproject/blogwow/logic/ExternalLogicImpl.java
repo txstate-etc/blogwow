@@ -16,6 +16,7 @@ import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.azeckoski.reflectutils.ReflectUtils;
 import org.sakaiproject.authz.api.FunctionManager;
 import org.sakaiproject.authz.api.SecurityService;
 import org.sakaiproject.blogwow.logic.entity.BlogEntityProvider;
@@ -29,7 +30,6 @@ import org.sakaiproject.component.api.ServerConfigurationService;
 import org.sakaiproject.entitybroker.EntityBroker;
 import org.sakaiproject.entitybroker.EntityReference;
 import org.sakaiproject.exception.IdUnusedException;
-import org.sakaiproject.genericdao.util.ReflectUtil;
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SiteService;
 import org.sakaiproject.tool.api.Session;
@@ -106,7 +106,7 @@ public class ExternalLogicImpl implements ExternalLogic {
    private static final String GLOBAL_PROFILE_SETTING = "blogwow.useglobalprofile";
 
    // contruct a reflection utility class
-   ReflectUtil reflectUtil = new ReflectUtil();
+   ReflectUtils reflectUtil = ReflectUtils.getInstance();
 
    /**
     * Place any code that should run when this class is initialized by spring here
