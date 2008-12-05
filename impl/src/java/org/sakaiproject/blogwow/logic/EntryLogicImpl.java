@@ -86,7 +86,7 @@ public class EntryLogicImpl implements EntryLogic {
          int limit) {
       Order order = new Order(sortProperty, ascending);
       if (sortProperty == null) {
-         order = new Order("dateCreated", true);
+         order = new Order("dateCreated", false);
       }
 
       Search search = new Search();
@@ -161,7 +161,6 @@ public class EntryLogicImpl implements EntryLogic {
    /* (non-Javadoc)
     * @see org.sakaiproject.blogwow.logic.EntryLogic#removeEntry(java.lang.String, java.lang.String)
     */
-   @SuppressWarnings("unchecked")
    public void removeEntry(String entryId, String locationId) {
       String currentUserId = externalLogic.getCurrentUserId();
       BlogWowEntry entry = getEntryById(entryId, locationId);

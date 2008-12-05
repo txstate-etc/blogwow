@@ -56,7 +56,6 @@ public class CommentLogicImpl implements CommentLogic {
 
     /*
      * (non-Javadoc)
-     * 
      * @see org.sakaiproject.blogwow.logic.CommentLogic#getCommentById(java.lang.Long, java.lang.String)
      */
     public BlogWowComment getCommentById(String commentId, String locationId) {
@@ -73,7 +72,6 @@ public class CommentLogicImpl implements CommentLogic {
 
     /*
      * (non-Javadoc)
-     * 
      * @see org.sakaiproject.blogwow.logic.CommentLogic#removeComment(java.lang.Long, java.lang.String)
      */
     public void removeComment(String commentId, String locationId) {
@@ -89,7 +87,6 @@ public class CommentLogicImpl implements CommentLogic {
 
     /*
      * (non-Javadoc)
-     * 
      * @see org.sakaiproject.blogwow.logic.CommentLogic#saveComment(org.sakaiproject.blogwow.model.BlogWowComment, java.lang.String)
      */
     public void saveComment(BlogWowComment comment, String locationId) {
@@ -118,10 +115,8 @@ public class CommentLogicImpl implements CommentLogic {
 
     /*
      * (non-Javadoc)
-     * 
      * @see org.sakaiproject.blogwow.logic.CommentLogic#getComments(java.lang.Long, java.lang.String, boolean, int, int)
      */
-    @SuppressWarnings("unchecked")
     public List<BlogWowComment> getComments(String entryId, String sortProperty, boolean ascending, int start, int limit) {
        BlogWowEntry entry = entryLogic.getEntryById(entryId, null);
        if (entry == null) {
@@ -143,7 +138,6 @@ public class CommentLogicImpl implements CommentLogic {
 
     /*
      * (non-Javadoc)
-     * 
      * @see org.sakaiproject.blogwow.logic.CommentLogic#canRemoveComment(java.lang.Long, java.lang.String)
      */
     public boolean canRemoveComment(String commentId, String userId) {
