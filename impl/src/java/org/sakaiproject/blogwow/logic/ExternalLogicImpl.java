@@ -332,6 +332,6 @@ public class ExternalLogicImpl implements ExternalLogic {
     */
    public String getEntryViewableSetting()
    {
-	   return serverConfigurationService.getString(ENTRY_VIEWABLE_SETTING, BlogConstants.PRIVACY_GROUP);
+	   return serverConfigurationService.getString(ENTRY_VIEWABLE_SETTING, BlogConstants.PRIVACY_PUBLIC);
    }
 }
