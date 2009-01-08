@@ -42,7 +42,7 @@ public class EntryLocator implements WriteableBeanLocator {
                 if (blog == null) {
                     throw new IllegalStateException("Could not get blog for the current user ("+currentUserId+") and location ("+locationId+")");
                 }
-                togo = new BlogWowEntry(blog, currentUserId, null, null, BlogConstants.PRIVACY_PUBLIC, null);
+                togo = new BlogWowEntry(blog, currentUserId, null, null, externalLogic.getEntryViewableSetting(), null);
             } else {
                 togo = entryLogic.getEntryById(name, locationId);
             }

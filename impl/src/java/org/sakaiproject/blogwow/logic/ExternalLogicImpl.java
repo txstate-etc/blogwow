@@ -19,6 +19,7 @@ import org.apache.commons.logging.LogFactory;
 import org.azeckoski.reflectutils.ReflectUtils;
 import org.sakaiproject.authz.api.FunctionManager;
 import org.sakaiproject.authz.api.SecurityService;
+import org.sakaiproject.blogwow.constants.BlogConstants;
 import org.sakaiproject.blogwow.logic.entity.BlogEntityProvider;
 import org.sakaiproject.blogwow.logic.entity.BlogEntryEntityProvider;
 import org.sakaiproject.blogwow.logic.entity.BlogGroupRssEntityProvider;
@@ -104,6 +105,9 @@ public class ExternalLogicImpl implements ExternalLogic {
 
    //sakai.property key to use the global sakai property rather than the local one 
    private static final String GLOBAL_PROFILE_SETTING = "blogwow.useglobalprofile";
+
+   //sakai.property key to use the global sakai property rather than the local one 
+   private static final String ENTRY_VIEWABLE_SETTING = "blogwow.entry.viewable";
 
    // contruct a reflection utility class
    ReflectUtils reflectUtil = ReflectUtils.getInstance();
@@ -321,4 +325,13 @@ public class ExternalLogicImpl implements ExternalLogic {
        return new EntityReference(prefix, entityId).toString();
     }
 
+   /**
+    * Get the default blog entry viewable settings from sakai.properties.
+    * 
+    * @return The value of the default setting.
+    */
+   public String getEntryViewableSetting()
+   {
+	   return serverConfigurationService.getString(ENTRY_VIEWABLE_SETTING, BlogConstants.PRIVACY_GROUP);
+   }
 }

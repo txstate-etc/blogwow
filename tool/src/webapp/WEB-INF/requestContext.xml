@@ -25,6 +25,7 @@
       <property name="richTextEvolver" ref="richTextEvolver" />
       <property name="messageLocator" ref="messageLocator" />
       <property name="messages" ref="targettedMessageList"/>
+      <property name="externalLogic" ref="org.sakaiproject.blogwow.logic.ExternalLogic" />
    </bean>
 
    <bean class="org.sakaiproject.blogwow.tool.producers.BlogViewProducer">

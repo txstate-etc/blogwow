@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.sakaiproject.blogwow.constants.BlogConstants;
+import org.sakaiproject.blogwow.logic.ExternalLogic;
 import org.sakaiproject.blogwow.tool.otp.EntryLocator;
 import org.sakaiproject.blogwow.tool.params.BlogEntryParams;
 import org.sakaiproject.blogwow.tool.params.SimpleBlogParams;
@@ -47,6 +48,7 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
 		this.messages = messages;
 	}
     
+    private ExternalLogic externalLogic;
 
     public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
 
@@ -94,7 +96,7 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
 				UISelect privacyRadios;
 				if (newentry) {
         	privacyRadios = UISelect.make(form, "privacy-radio-holder", privacyRadioValues, privacyRadioLabelKeys,
-						entryOTP + ".privacySetting", BlogConstants.PRIVACY_PUBLIC).setMessageKeys();
+        			entryOTP + ".privacySetting", externalLogic.getEntryViewableSetting()).setMessageKeys();
 				} else {
 					privacyRadios = UISelect.make(form, "privacy-radio-holder", privacyRadioValues, privacyRadioLabelKeys,
 						entryOTP + ".privacySetting").setMessageKeys();				
@@ -150,6 +152,10 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
 
     public void setRichTextEvolver(TextInputEvolver richTextEvolver) {
         this.richTextEvolver = richTextEvolver;
+    }
+
+    public void setExternalLogic(ExternalLogic externalLogic) {
+        this.externalLogic = externalLogic;
     }
 
 }

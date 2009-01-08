@@ -192,4 +192,8 @@ public class ExternalLogicStub implements ExternalLogic {
         // Do nothing
     }
 
+	public String getEntryViewableSetting()
+	{
+	    return null;
+	}
 }

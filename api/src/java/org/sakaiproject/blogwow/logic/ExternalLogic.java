@@ -171,5 +171,11 @@ public interface ExternalLogic {
      * @param entityId the id of the entity related to the event
      */
     public void registerEntityEvent(String eventName, Class<?> entityClass, String entityId);
-
+    
+    /**
+     * Get the default blog entry viewable settings from sakai.properties.
+     * 
+     * @return The value of the default setting.
+     */
+    public String getEntryViewableSetting();
 }
