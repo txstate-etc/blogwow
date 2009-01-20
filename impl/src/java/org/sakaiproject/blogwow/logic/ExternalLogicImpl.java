@@ -90,7 +90,7 @@ public class ExternalLogicImpl implements ExternalLogic {
 // this.sakaiPersonManager = spm;
 // }
 
-   private String SAKAIPERSON_PREFIX = "SakaiPerson";
+   private String SAKAIPERSON_PREFIX = "profile";
    public void setSAKAIPERSON_PREFIX(String sakaiperson_prefix) {
       SAKAIPERSON_PREFIX = sakaiperson_prefix;
    }
