@@ -264,8 +264,6 @@ public class ExternalLogicImpl implements ExternalLogic {
    {   
       String profileText = null;
       try {
-//       SakaiPerson sPerson = sakaiPersonManager.getSakaiPerson(userId, sakaiPersonManager.getUserMutableType());
-//       profileText = sPerson.getNotes();
          Object sakaiPerson = entityBroker.fetchEntity( new EntityReference(SAKAIPERSON_PREFIX, userId).toString() );
          if (sakaiPerson != null) {
             profileText = (String) reflectUtil.getFieldValue(sakaiPerson, "notes");
@@ -288,11 +286,14 @@ public class ExternalLogicImpl implements ExternalLogic {
    {
       String imageUrl = null;
       try {
-//       SakaiPerson sPerson = sakaiPersonManager.getSakaiPerson(userId, sakaiPersonManager.getUserMutableType());
-//       imageUrl = sPerson.getPictureUrl();
+
          Object sakaiPerson = entityBroker.fetchEntity( new EntityReference(SAKAIPERSON_PREFIX, userId).toString() );
          if (sakaiPerson != null) {
-            imageUrl = (String) reflectUtil.getFieldValue(sakaiPerson, "pictureUrl");
+        	Boolean useOfficial = (Boolean)reflectUtil.getFieldValue(sakaiPerson, "systemPicturePreferred");
+        	if (useOfficial == null || !useOfficial)
+            	imageUrl = (String) reflectUtil.getFieldValue(sakaiPerson, "pictureUrl");
+        	else
+        		imageUrl = "/direct/official_picture/" + userId;
          }
       } catch (RuntimeException e) {
          log.warn("Failed getting profile for " + userId + " or user not found: " + e.getMessage(), e);
