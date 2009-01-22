@@ -57,15 +57,15 @@ public class EntryLogicImplTest extends AbstractTransactionalSpringContextTests 
             log.error("onSetUpInTransaction: DAO could not be retrieved from spring context");
         } else {
 
-        	// init the class if needed
+            // init the class if needed
 
-        	// create and setup the object to be tested
-        	logicImpl = new EntryLogicImpl();
-        	logicImpl.setDao(dao);
-        	logicImpl.setExternalLogic(logicStub); // use the stub for testing
+            // create and setup the object to be tested
+            logicImpl = new EntryLogicImpl();
+            logicImpl.setDao(dao);
+            logicImpl.setExternalLogic(logicStub); // use the stub for testing
 
-        	// preload the DB for testing
-        	tdp.preloadTestData(dao);
+            // preload the DB for testing
+            tdp.preloadTestData(dao);
         }
     }
 
@@ -261,38 +261,38 @@ public class EntryLogicImplTest extends AbstractTransactionalSpringContextTests 
      * Test method for {@link org.sakaiproject.blogwow.logic.impl.getVisibleEntryCount(java.lang.String, java.lang.String)}.
      */
     public void testGetVisibleEntryCount() {
-    	Integer count = null;
-    	
-    	count = logicImpl.getVisibleEntryCount(tdp.blog1.getId(), TestDataPreload.ADMIN_USER_ID);
-    	assertNotNull(count);
+        Integer count = null;
+
+        count = logicImpl.getVisibleEntryCount(tdp.blog1.getId(), TestDataPreload.ADMIN_USER_ID);
+        assertNotNull(count);
         assertEquals(4, count.intValue());
-        
+
         count = logicImpl.getVisibleEntryCount(tdp.blog2.getId(), TestDataPreload.ADMIN_USER_ID);
-    	assertNotNull(count);
+        assertNotNull(count);
         assertEquals(2, count.intValue());
-        
+
         count = logicImpl.getVisibleEntryCount(tdp.blog3.getId(), TestDataPreload.ADMIN_USER_ID);
-    	assertNotNull(count);
+        assertNotNull(count);
         assertEquals(1, count.intValue());
-        
+
         count = logicImpl.getVisibleEntryCount(tdp.blog1.getId(), TestDataPreload.USER_ID);
-    	assertNotNull(count);
+        assertNotNull(count);
         assertEquals(4, count.intValue());
-        
+
         count = logicImpl.getVisibleEntryCount(tdp.blog2.getId(), TestDataPreload.USER_ID);
-    	assertNotNull(count);
+        assertNotNull(count);
         assertEquals(1, count.intValue());
-        
+
         count = logicImpl.getVisibleEntryCount(tdp.blog1.getId(), TestDataPreload.MAINT_USER_ID);
-    	assertNotNull(count);
+        assertNotNull(count);
         assertEquals(3, count.intValue());
-        
+
         count = logicImpl.getVisibleEntryCount(tdp.blog2.getId(), TestDataPreload.MAINT_USER_ID);
-    	assertNotNull(count);
+        assertNotNull(count);
         assertEquals(2, count.intValue());
-        
+
         count = logicImpl.getVisibleEntryCount(tdp.blog1.getId(), TestDataPreload.INVALID_USER_ID);
-    	assertNotNull(count);
+        assertNotNull(count);
         assertEquals(1, count.intValue());
     }
 
