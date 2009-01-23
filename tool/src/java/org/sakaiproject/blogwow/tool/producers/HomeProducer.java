@@ -89,7 +89,7 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
 	            UIBranchContainer row = UIBranchContainer.make(blogsTable, "row:", i+"");
 	            UILink.make(row, "user-icon", mugshotGenerator.getMugshotUrl(blog.getOwnerId()));
 	            UIInternalLink.make(row, "blog-title-link", blog.getTitle(), 
-	                    new SimpleBlogParams(BlogViewProducer.VIEW_ID, blog.getId().toString()));
+	                    new SimpleBlogParams(BlogViewProducer.VIEW_ID, blog.getId()));
 	            UIOutput.make(row, "number-of-entries", entriesCount +"");
             	List<BlogWowEntry> entries = entryLogic.getAllVisibleEntries(blog.getId(), currentUserId, null, true, 0, 1);
 								try
