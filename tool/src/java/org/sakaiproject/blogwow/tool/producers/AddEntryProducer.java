@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.sakaiproject.blogwow.constants.BlogConstants;
+import org.sakaiproject.blogwow.logic.EntryLogic;
 import org.sakaiproject.blogwow.logic.ExternalLogic;
+import org.sakaiproject.blogwow.model.BlogWowEntry;
 import org.sakaiproject.blogwow.tool.otp.EntryLocator;
 import org.sakaiproject.blogwow.tool.params.BlogEntryParams;
 import org.sakaiproject.blogwow.tool.params.SimpleBlogParams;
@@ -49,6 +51,7 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
 	}
     
     private ExternalLogic externalLogic;
+    private EntryLogic entryLogic;
 
     public void fillComponents(UIContainer tofill, ViewParameters viewparams, ComponentChecker checker) {
 
@@ -91,16 +94,20 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
         String[] privacyRadioLabelKeys = new String[] { 
                 "blogwow.add_edit.private", 
                 "blogwow.add_edit.sitemembers",
-        "blogwow.add_edit.public" };
+                "blogwow.add_edit.public" };
 
-				UISelect privacyRadios;
-				if (newentry) {
-        	privacyRadios = UISelect.make(form, "privacy-radio-holder", privacyRadioValues, privacyRadioLabelKeys,
-        			entryOTP + ".privacySetting", externalLogic.getEntryViewableSetting()).setMessageKeys();
-				} else {
-					privacyRadios = UISelect.make(form, "privacy-radio-holder", privacyRadioValues, privacyRadioLabelKeys,
-						entryOTP + ".privacySetting").setMessageKeys();				
-				}
+        
+        BlogWowEntry entry = entryLogic.getEntryById(params.entryid, externalLogic.getCurrentLocationId());
+        
+		UISelect privacyRadios;
+		// If this is a new entry or draft select default privacy setting
+		if (newentry || entry.getPrivacySetting().equals(BlogConstants.PRIVACY_PRIVATE)) {
+			privacyRadios = UISelect.make(form, "privacy-radio-holder", privacyRadioValues, privacyRadioLabelKeys,
+       			entryOTP + ".privacySetting", externalLogic.getEntryViewableSetting()).setMessageKeys();
+		} else {
+			privacyRadios = UISelect.make(form, "privacy-radio-holder", privacyRadioValues, privacyRadioLabelKeys,
+				entryOTP + ".privacySetting").setMessageKeys();				
+		}
 
         String selectID = privacyRadios.getFullID();
         UISelectChoice instructorsOnlyRadio = UISelectChoice.make(form, "instructors-only-radio", selectID, 0);
@@ -158,4 +165,7 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
         this.externalLogic = externalLogic;
     }
 
+    public void setEntryLogic(EntryLogic entryLogic) {
+        this.entryLogic = entryLogic;
+    }
 }

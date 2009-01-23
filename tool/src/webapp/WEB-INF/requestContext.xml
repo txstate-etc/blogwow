@@ -26,6 +26,7 @@
       <property name="messageLocator" ref="messageLocator" />
       <property name="messages" ref="targettedMessageList"/>
       <property name="externalLogic" ref="org.sakaiproject.blogwow.logic.ExternalLogic" />
+      <property name="entryLogic" ref="org.sakaiproject.blogwow.logic.EntryLogic" />
    </bean>
 
    <bean class="org.sakaiproject.blogwow.tool.producers.BlogViewProducer">
