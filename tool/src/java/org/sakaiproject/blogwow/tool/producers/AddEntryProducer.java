@@ -45,11 +45,11 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
     private TextInputEvolver richTextEvolver;
     private MessageLocator messageLocator;
     private TargettedMessageList messages;
-    
+
     public void setMessages(TargettedMessageList messages) {
-		this.messages = messages;
-	}
-    
+        this.messages = messages;
+    }
+
     private ExternalLogic externalLogic;
     private EntryLogic entryLogic;
 
@@ -87,41 +87,41 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
 
         UIMessage.make(form, "privacy-instructions", "blogwow.add_edit.accesstext");
 
-        String[] privacyRadioValues = new String[] { 
-                BlogConstants.PRIVACY_GROUP_LEADER, 
+        String[] privacyRadioValues = new String[] {
+                BlogConstants.PRIVACY_GROUP_LEADER,
                 BlogConstants.PRIVACY_GROUP,
                 BlogConstants.PRIVACY_PUBLIC };
-        String[] privacyRadioLabelKeys = new String[] { 
-                "blogwow.add_edit.private", 
+        String[] privacyRadioLabelKeys = new String[] {
+                "blogwow.add_edit.private",
                 "blogwow.add_edit.sitemembers",
                 "blogwow.add_edit.public" };
 
-        
+
         BlogWowEntry entry = entryLogic.getEntryById(params.entryid, externalLogic.getCurrentLocationId());
-        
-		UISelect privacyRadios;
-		// If this is a new entry or draft select default privacy setting
-		if (newentry || entry.getPrivacySetting().equals(BlogConstants.PRIVACY_PRIVATE)) {
-			privacyRadios = UISelect.make(form, "privacy-radio-holder", privacyRadioValues, privacyRadioLabelKeys,
-       			entryOTP + ".privacySetting", externalLogic.getEntryViewableSetting()).setMessageKeys();
-		} else {
-			privacyRadios = UISelect.make(form, "privacy-radio-holder", privacyRadioValues, privacyRadioLabelKeys,
-				entryOTP + ".privacySetting").setMessageKeys();				
-		}
+
+        UISelect privacyRadios;
+        // If this is a new entry or draft select default privacy setting
+        if (newentry || entry.getPrivacySetting().equals(BlogConstants.PRIVACY_PRIVATE)) {
+            privacyRadios = UISelect.make(form, "privacy-radio-holder", privacyRadioValues, privacyRadioLabelKeys,
+                   entryOTP + ".privacySetting", externalLogic.getEntryViewableSetting()).setMessageKeys();
+        } else {
+            privacyRadios = UISelect.make(form, "privacy-radio-holder", privacyRadioValues, privacyRadioLabelKeys,
+                entryOTP + ".privacySetting").setMessageKeys();
+        }
 
         String selectID = privacyRadios.getFullID();
         UISelectChoice instructorsOnlyRadio = UISelectChoice.make(form, "instructors-only-radio", selectID, 0);
-        UIVerbatim instructorsOnlyLabel = UIVerbatim.make(form, "instructors-only-label", 
+        UIVerbatim instructorsOnlyLabel = UIVerbatim.make(form, "instructors-only-label",
                 messageLocator.getMessage("blogwow.add_edit.private"));
         instructorsOnlyLabel.decorators = new DecoratorList(new UILabelTargetDecorator(instructorsOnlyRadio));
 
         UISelectChoice allMembersRadio = UISelectChoice.make(form, "all-members-radio", selectID, 1);
-        UIVerbatim allMembersLabel = UIVerbatim.make(form, "all-members-label", 
+        UIVerbatim allMembersLabel = UIVerbatim.make(form, "all-members-label",
                 messageLocator.getMessage("blogwow.add_edit.sitemembers"));
         allMembersLabel.decorators = new DecoratorList(new UILabelTargetDecorator(allMembersRadio));
 
         UISelectChoice publicViewableRadio = UISelectChoice.make(form, "public-viewable-radio", selectID, 2);
-        UIVerbatim publicViewableLabel = UIVerbatim.make(form, "public-viewable-label", 
+        UIVerbatim publicViewableLabel = UIVerbatim.make(form, "public-viewable-label",
                 messageLocator.getMessage("blogwow.add_edit.public"));
         publicViewableLabel.decorators = new DecoratorList(new UILabelTargetDecorator(publicViewableRadio));
 
@@ -146,7 +146,7 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
         String ret = (String)actionReturn;
         if (bep.blogid != null && (ret == null || !(ret.equals("error")))) {
             result.resultingView = new SimpleBlogParams(BlogViewProducer.VIEW_ID, bep.blogid);
-        }    
+        }
     }
 
     public void setMessageLocator(MessageLocator messageLocator) {
