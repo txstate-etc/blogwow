@@ -21,8 +21,6 @@ import uk.org.ponder.rsf.components.UIMessage;
 import uk.org.ponder.rsf.components.UISelect;
 import uk.org.ponder.rsf.components.UISelectChoice;
 import uk.org.ponder.rsf.components.UIVerbatim;
-import uk.org.ponder.rsf.components.decorators.DecoratorList;
-import uk.org.ponder.rsf.components.decorators.UILabelTargetDecorator;
 import uk.org.ponder.rsf.evolvers.TextInputEvolver;
 import uk.org.ponder.rsf.flow.ARIResult;
 import uk.org.ponder.rsf.flow.ActionResultInterceptor;
@@ -110,20 +108,14 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
         }
 
         String selectID = privacyRadios.getFullID();
-        UISelectChoice instructorsOnlyRadio = UISelectChoice.make(form, "instructors-only-radio", selectID, 0);
-        UIVerbatim instructorsOnlyLabel = UIVerbatim.make(form, "instructors-only-label",
-                messageLocator.getMessage("blogwow.add_edit.private"));
-        instructorsOnlyLabel.decorators = new DecoratorList(new UILabelTargetDecorator(instructorsOnlyRadio));
+        UISelectChoice.make(form, "instructors-only-radio", selectID, 0);
+        UIVerbatim.make(form, "instructors-only-label", messageLocator.getMessage("blogwow.add_edit.private"));
 
-        UISelectChoice allMembersRadio = UISelectChoice.make(form, "all-members-radio", selectID, 1);
-        UIVerbatim allMembersLabel = UIVerbatim.make(form, "all-members-label",
-                messageLocator.getMessage("blogwow.add_edit.sitemembers"));
-        allMembersLabel.decorators = new DecoratorList(new UILabelTargetDecorator(allMembersRadio));
+        UISelectChoice.make(form, "all-members-radio", selectID, 1);
+        UIVerbatim.make(form, "all-members-label", messageLocator.getMessage("blogwow.add_edit.sitemembers"));
 
-        UISelectChoice publicViewableRadio = UISelectChoice.make(form, "public-viewable-radio", selectID, 2);
-        UIVerbatim publicViewableLabel = UIVerbatim.make(form, "public-viewable-label",
-                messageLocator.getMessage("blogwow.add_edit.public"));
-        publicViewableLabel.decorators = new DecoratorList(new UILabelTargetDecorator(publicViewableRadio));
+        UISelectChoice.make(form, "public-viewable-radio", selectID, 2);
+        UIVerbatim.make(form, "public-viewable-label", messageLocator.getMessage("blogwow.add_edit.public"));
 
         UICommand.make(form, "publish-button", UIMessage.make("blogwow.add_edit.publish"), entryLocator + ".publishAll");
         UICommand.make(form, "save-button", UIMessage.make("blogwow.add_edit.save"), entryLocator + ".saveAll");
