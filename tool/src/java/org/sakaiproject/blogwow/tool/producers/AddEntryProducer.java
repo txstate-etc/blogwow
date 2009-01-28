@@ -94,12 +94,17 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
                 "blogwow.add_edit.sitemembers",
                 "blogwow.add_edit.public" };
 
-
-        BlogWowEntry entry = entryLogic.getEntryById(params.entryid, externalLogic.getCurrentLocationId());
-
+        boolean isDraft = false;
+        if (params.entryid != null) {
+        	BlogWowEntry entry = entryLogic.getEntryById(params.entryid, externalLogic.getCurrentLocationId());
+        	if (entry.getPrivacySetting().equals(BlogConstants.PRIVACY_PRIVATE)) {
+        		isDraft = true;
+        	}
+        }
+        
         UISelect privacyRadios;
         // If this is a new entry or draft select default privacy setting
-        if (newentry || entry.getPrivacySetting().equals(BlogConstants.PRIVACY_PRIVATE)) {
+        if (newentry || isDraft) {
             privacyRadios = UISelect.make(form, "privacy-radio-holder", privacyRadioValues, privacyRadioLabelKeys,
                    entryOTP + ".privacySetting", externalLogic.getEntryViewableSetting()).setMessageKeys();
         } else {
