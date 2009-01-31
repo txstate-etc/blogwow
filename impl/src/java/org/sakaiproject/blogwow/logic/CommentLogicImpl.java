@@ -61,6 +61,10 @@ public class CommentLogicImpl implements CommentLogic {
     public BlogWowComment getCommentById(String commentId, String locationId) {
         String currentUserId = externalLogic.getCurrentUserId();
         BlogWowComment comment = (BlogWowComment) dao.findById(BlogWowComment.class, commentId);
+        //comment may be null
+        if (comment == null)
+        	return null;
+        
         String entryId = comment.getEntry().getId();
         if (entryLogic.getEntryById(entryId, locationId) != null) {
             return comment;
