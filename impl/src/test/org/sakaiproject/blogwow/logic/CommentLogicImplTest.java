@@ -103,6 +103,9 @@ public class CommentLogicImplTest extends AbstractTransactionalSpringContextTest
             Assert.assertNotNull(e);
         }
 
+        //getting a comment that doesn't exist should return null and not throw an NPE
+        assertNull(logicImpl.getCommentById("no_such_id", TestDataPreload.LOCATION1_ID));
+        
     }
 
     /**
