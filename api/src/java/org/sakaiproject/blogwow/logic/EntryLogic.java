@@ -11,6 +11,7 @@
 
 package org.sakaiproject.blogwow.logic;
 
+import java.util.Date;
 import java.util.List;
 
 import org.sakaiproject.blogwow.model.BlogWowBlog;
@@ -123,4 +124,41 @@ public interface EntryLogic {
      */
     public boolean canWriteEntry(String entryId, String userId);
 
+    /**
+     * Efficiency method which gets all blog entries which are visible to a specific user for an array of blogs
+     *
+     * @param blogIds
+     *            an array of unique ids of {@link BlogWowBlog}
+     * @param userId
+     *            the internal user id (not username), if null then return all entries regardless of visibility
+     * @param sortProperty
+     *            the name of the {@link BlogWowEntry} property to sort on or null to sort by default property (dateCreated desc)
+     * @param ascending
+     *            sort in ascending order, if false then descending (ignored if sortProperty is null)
+     * @param startDate
+     *            all returned entries will have been created after this {@link java.util.Date}
+     * @param limit
+     *            the maximum number of entries to return, 0 returns as many entries as possible
+     * @return a list of {@link BlogWowEntry} objects
+     */
+    public List<BlogWowEntry> getVisibleEntriesCreatedSince (String[] blogIds, String userId, String sortProperty, boolean ascending, Date startDate, int limit);
+
+    /**
+     * Get all blog entries which are visible to a specific user
+     *
+     * @param blogId
+     *            unique id of a {@link BlogWowBlog}
+     * @param userId
+     *            the internal user id (not username), if null then return all entries regardless of visibility
+     * @param sortProperty
+     *            the name of the {@link BlogWowEntry} property to sort on or null to sort by default property (dateCreated desc)
+     * @param ascending
+     *            sort in ascending order, if false then descending (ignored if sortProperty is null)
+     * @param startDate
+     *            all returned entries will have been created after this {@link java.util.Date}
+     * @param limit
+     *            the maximum number of entries to return, 0 returns as many entries as possible
+     * @return a list of {@link BlogWowEntry} objects
+     */
+    public List<BlogWowEntry> getVisibleEntriesCreatedSince(String blogId, String userId, String sortProperty, boolean ascending, Date startDate, int limit);
 }

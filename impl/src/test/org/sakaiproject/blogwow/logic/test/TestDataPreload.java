@@ -65,13 +65,13 @@ public class TestDataPreload {
     public BlogWowBlog blog2 = new BlogWowBlog(MAINT_USER_ID, LOCATION1_ID, "blog2 title", "blog2 profile", null, new Date(), null);
     public BlogWowBlog blog3 = new BlogWowBlog(ADMIN_USER_ID, LOCATION2_ID, "blog3 title", "blog3 profile", null, new Date(), null);
 
-    public BlogWowEntry entry1_b1 = new BlogWowEntry(blog1, USER_ID, "entry 1", "entry text", BlogConstants.PRIVACY_PUBLIC, new Date(), new Date());
-    public BlogWowEntry entry2_b1 = new BlogWowEntry(blog1, USER_ID, "entry 2", "entry text", BlogConstants.PRIVACY_GROUP, new Date(), new Date());
-    public BlogWowEntry entry3_b1 = new BlogWowEntry(blog1, USER_ID, "entry 3", "entry text", BlogConstants.PRIVACY_GROUP_LEADER, new Date(), new Date());
-    public BlogWowEntry entry4_b1 = new BlogWowEntry(blog1, USER_ID, "entry 4", "entry text", BlogConstants.PRIVACY_PRIVATE, new Date(), new Date());
-    public BlogWowEntry entry5_b2 = new BlogWowEntry(blog2, MAINT_USER_ID, "entry 5", "entry text", BlogConstants.PRIVACY_PUBLIC, new Date(), new Date());
-    public BlogWowEntry entry6_b2 = new BlogWowEntry(blog2, MAINT_USER_ID, "entry 6", "entry text", BlogConstants.PRIVACY_PRIVATE, new Date(), new Date());
-    public BlogWowEntry entry7_b3 = new BlogWowEntry(blog3, ADMIN_USER_ID, "entry 7", "entry text", BlogConstants.PRIVACY_PRIVATE, new Date(), new Date());
+    public BlogWowEntry entry1_b1 = new BlogWowEntry(blog1, USER_ID, "entry 1", "entry text", BlogConstants.PRIVACY_PUBLIC, new Date(), new Date(1229749200000L));
+    public BlogWowEntry entry2_b1 = new BlogWowEntry(blog1, USER_ID, "entry 2", "entry text", BlogConstants.PRIVACY_GROUP, new Date(), new Date(1230786000000L));
+    public BlogWowEntry entry3_b1 = new BlogWowEntry(blog1, USER_ID, "entry 3", "entry text", BlogConstants.PRIVACY_GROUP_LEADER, new Date(), new Date(1231995600000L));
+    public BlogWowEntry entry4_b1 = new BlogWowEntry(blog1, USER_ID, "entry 4", "entry text", BlogConstants.PRIVACY_PRIVATE, new Date(), new Date(1233378000000L));
+    public BlogWowEntry entry5_b2 = new BlogWowEntry(blog2, MAINT_USER_ID, "entry 5", "entry text", BlogConstants.PRIVACY_PUBLIC, new Date(), new Date(1233378000000L));
+    public BlogWowEntry entry6_b2 = new BlogWowEntry(blog2, MAINT_USER_ID, "entry 6", "entry text", BlogConstants.PRIVACY_PRIVATE, new Date(), new Date(1233464400000L));
+    public BlogWowEntry entry7_b3 = new BlogWowEntry(blog3, ADMIN_USER_ID, "entry 7", "entry text", BlogConstants.PRIVACY_PRIVATE, new Date(), new Date(1234242000000L));
 
     public BlogWowComment comment1_e5_b2 = new BlogWowComment(entry5_b2, USER_ID, "comment 1", new Date(), new Date());
     public BlogWowComment comment2_e2_b1 = new BlogWowComment(entry2_b1, ACCESS_USER_ID, "comment 2", new Date(), new Date());

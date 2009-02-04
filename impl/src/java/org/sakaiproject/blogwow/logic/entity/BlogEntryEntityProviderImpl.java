@@ -14,6 +14,8 @@
 
 package org.sakaiproject.blogwow.logic.entity;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -146,18 +148,31 @@ public class BlogEntryEntityProviderImpl implements BlogEntryEntityProvider, Cor
          throw new IllegalArgumentException("Must specify at least one blog id in the 'blogIds' param to get entries from");
       }
       String[] blogIds = null;
-      Restriction restriction = search.getRestrictionByProperty("blogIds");
-      if (restriction == null || restriction.getArrayValue() == null) {
-         restriction = search.getRestrictionByProperty("blogId");
-         if (restriction == null || restriction.getSingleValue() == null) {
+      Restriction idRestriction = search.getRestrictionByProperty("blogIds");
+      if (idRestriction == null || idRestriction.getArrayValue() == null) {
+         idRestriction = search.getRestrictionByProperty("blogId");
+         if (idRestriction == null || idRestriction.getSingleValue() == null) {
             throw new IllegalArgumentException("Must specify at least one blog id in the 'blogIds' param to get entries from");
          }
-         blogIds = new String[] { (String) restriction.getSingleValue() };
+         blogIds = new String[] { (String) idRestriction.getSingleValue() };
       } else {
-         blogIds = (String[]) restriction.getArrayValue();
+         blogIds = (String[]) idRestriction.getArrayValue();
       }
+
+      List<BlogWowEntry> entries = null;
       String userId = developerHelperService.getUserIdFromRef(developerHelperService.getCurrentUserReference());
-      List<BlogWowEntry> entries = entryLogic.getAllVisibleEntries(blogIds, userId, null, true, 0, 25);
+
+      Restriction dateRestriction = search.getRestrictionByProperty("date");
+      if (dateRestriction != null) {
+        try {
+          Date startDate = new Date(Long.parseLong(dateRestriction.getStringValue()));
+          entries = entryLogic.getVisibleEntriesCreatedSince(blogIds, userId, null, true, startDate, 0);
+        } catch(NumberFormatException e){
+          throw new IllegalArgumentException("Date should be a number of seconds since the epoch", e);
+        }
+      } else {
+        entries = entryLogic.getAllVisibleEntries(blogIds, userId, null, true, 0, 0);
+      }
       return entries;
    }
 

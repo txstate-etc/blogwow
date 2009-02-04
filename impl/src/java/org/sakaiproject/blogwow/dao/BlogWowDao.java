@@ -11,6 +11,7 @@
 
 package org.sakaiproject.blogwow.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.sakaiproject.blogwow.model.BlogWowBlog;
@@ -74,4 +75,18 @@ public interface BlogWowDao extends GeneralGenericDao {
      * @return a count of {@link BlogWowEntry} objects
      */
     public Integer getBlogPermCount(String[] blogIds, String userId, String[] readLocations, String[] readAnyLocations);
+
+    /**
+     *
+     * @param blogIds an array of unique ids of {@link BlogWowBlog} which we will count entries from
+     * @param userId the internal user id (not username), if null then return public entries
+     * @param readLocations an array of locationIds which we will count all privacy {@link BlogConstants#PRIVACY_GROUP} entries for (the user should have read permissions in these locations)
+     * @param readAnyLocations an array of locationIds which we will count all privacy {@link BlogConstants#PRIVACY_GROUP_LEADER} entries for (the user should have read all entries access to these locations)
+     * @param sortProperty the name of the {@link BlogWowEntry} property to sort on or null to sort by default property (dateCreated desc)
+     * @param ascending sort in ascending order, if false then descending (ignored if sortProperty is null)
+     * @param start the {@link Date} to start on
+     * @param limit the maximum number of entries to return, 0 returns as many entries as possible
+     * @return a list of {@link BlogWowEntry} objects
+     */
+    public List<BlogWowEntry> getBlogPermEntries(String[] blogIds, String userId, String[] readLocations, String[] readAnyLocations, String sortProperty, boolean ascending, Date start, int limit);
 }

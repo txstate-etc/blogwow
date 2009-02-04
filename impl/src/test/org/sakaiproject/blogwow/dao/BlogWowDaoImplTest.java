@@ -11,6 +11,7 @@
 
 package org.sakaiproject.blogwow.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -153,8 +154,35 @@ public class BlogWowDaoImplTest extends AbstractTransactionalSpringContextTests 
         assertTrue(entries.contains(tdp.entry3_b1));
         assertTrue(entries.contains(tdp.entry2_b1));
 
+        // get all entries for maint user with Date limit
+        entries = dao.getBlogPermEntries(new String[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() },
+                TestDataPreload.MAINT_USER_ID, new String[] { TestDataPreload.LOCATION1_ID },
+                new String[] { TestDataPreload.LOCATION1_ID }, null, false, new Date(1230786000000L), 0);
+        assertNotNull(entries);
+        assertEquals(4, entries.size());
+        assertTrue(entries.contains(tdp.entry2_b1));
+        assertTrue(entries.contains(tdp.entry3_b1));
+        assertTrue(entries.contains(tdp.entry5_b2));
+        assertTrue(entries.contains(tdp.entry6_b2));
+
+        // get all entries for user with Date limit
+        entries = dao.getBlogPermEntries(new String[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() }, TestDataPreload.USER_ID,
+                new String[] { TestDataPreload.LOCATION1_ID }, null, null, false, new Date(1230786000000L), 0);
+        assertNotNull(entries);
+        assertEquals(4, entries.size());
+        assertTrue(entries.contains(tdp.entry2_b1));
+        assertTrue(entries.contains(tdp.entry3_b1));
+        assertTrue(entries.contains(tdp.entry4_b1));
+        assertTrue(entries.contains(tdp.entry5_b2));
+
+        entries = dao.getBlogPermEntries(new String[] { tdp.blog1.getId(), tdp.blog2.getId(), tdp.blog3.getId() }, TestDataPreload.USER_ID,
+                new String[] { TestDataPreload.LOCATION1_ID }, null, "dateCreated", true, new Date(1230786000000L), 2);
+        assertNotNull(entries);
+        assertEquals(2, entries.size());
+        assertTrue(entries.contains(tdp.entry2_b1));
+        assertTrue(entries.contains(tdp.entry3_b1));
     }
-    
+
     public void testGetBlogPermCount()
     {
     	// count all public entries

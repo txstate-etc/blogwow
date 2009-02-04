@@ -12,6 +12,7 @@
 package org.sakaiproject.blogwow.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,7 +66,6 @@ public class BlogWowDaoImpl extends HibernateGeneralGenericDao implements BlogWo
     * @see org.sakaiproject.blogwow.dao.BlogWowDao#getBlogPermEntries(java.lang.Long[], java.lang.String, java.lang.String[],
     *      java.lang.String[], java.lang.String, boolean, int, int)
     */
-   @SuppressWarnings("unchecked")
    public List<BlogWowEntry> getBlogPermEntries(String[] blogIds, String userId, 
          String[] readLocations, String[] readAnyLocations, String sortProperty,
          boolean ascending, int start, int limit) {
@@ -156,7 +156,9 @@ public class BlogWowDaoImpl extends HibernateGeneralGenericDao implements BlogWo
       }
       setParameters(query, params);
 
-      return query.list();
+      @SuppressWarnings("unchecked")
+      List<BlogWowEntry> result = query.list();
+      return result;
 
       // DetachedCriteria entry = DetachedCriteria.forClass(BlogWowEntry.class).
       // createAlias("blog", "ownerblog");
@@ -262,4 +264,74 @@ public class BlogWowDaoImpl extends HibernateGeneralGenericDao implements BlogWo
       return arrayString;
    }
 
+   /*
+    * (non-Javadoc)
+    *
+    * @see org.sakaiproject.blogwow.dao.BlogWowDao#getBlogPermEntries(java.lang.Long[], java.lang.String, java.lang.String[],
+    *      java.lang.String[], java.lang.String, boolean, Date, int)
+    */
+   public List<BlogWowEntry> getBlogPermEntries(String[] blogIds, String userId, 
+         String[] readLocations, String[] readAnyLocations, String sortProperty,
+         boolean ascending, Date start, int limit) {
+
+      // * rules to determine which entries to get
+      // * 1) entry.blog.id is in blogIds AND
+      // * 2) (entry.privacy is public OR
+      // * 3) entry.blog.owner is userId OR
+      // * 4) entry.owner is userId OR
+      // * 5) (entry.privacy is group AND entry.blog.location is in readLocations))
+      // * 6) (entry.privacy is leader AND entry.blog.location is in readAnyLocations))
+
+      if (sortProperty == null) {
+         sortProperty = "dateCreated";
+         ascending = false;
+      }
+
+      if (blogIds == null || blogIds.length == 0) {
+         return new ArrayList<BlogWowEntry>();
+      }
+
+      Map<String, Object> params = new HashMap<String, Object>();
+
+      String hql = "select entry from BlogWowEntry as entry join entry.blog as eblog where eblog.id in (:blogIds) " + 
+      " and (entry.privacySetting = :privacyPublic";
+      params.put("privacyPublic", BlogConstants.PRIVACY_PUBLIC);
+      params.put("blogIds", blogIds);
+      if (userId != null) {
+         hql += " or entry.blog.ownerId = :userId or entry.ownerId = :userId";
+         params.put("userId", userId);
+      }
+      if (readLocations != null && readLocations.length > 0) {
+         hql += " or (entry.privacySetting = :privacyGroup and " + "entry.blog.location in (:readLocations))";
+         params.put("privacyGroup", BlogConstants.PRIVACY_GROUP);
+         params.put("readLocations", readLocations);
+      }
+      if (readAnyLocations != null && readAnyLocations.length > 0) {
+         hql += " or (entry.privacySetting = :privacyGroupLeader and " + "entry.blog.location in (:readAnyLocations))";
+         params.put("privacyGroupLeader", BlogConstants.PRIVACY_GROUP_LEADER);
+         params.put("readAnyLocations", readAnyLocations);
+      }
+      hql += ")";
+      if (start != null) {
+        hql += " and entry.dateCreated >= (:start)";
+        params.put("start", start);
+      }
+      if (sortProperty != null && !sortProperty.equals("")) {
+         if (ascending) {
+            hql += " order by entry." + sortProperty + " asc";
+         } else {
+            hql += " order by entry." + sortProperty + " desc";
+         }
+      }
+      Query query = getSession().createQuery(hql);
+
+      if (limit > 0) {
+         query.setMaxResults(limit);
+      }
+      setParameters(query, params);
+
+      @SuppressWarnings("unchecked")
+      List<BlogWowEntry> result = query.list();
+      return result;
+   }
 }

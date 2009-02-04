@@ -266,4 +266,58 @@ public class EntryLogicImpl implements EntryLogic {
    }
 
 
+public List<BlogWowEntry> getVisibleEntriesCreatedSince(String[] blogIds, String userId,
+		String sortProperty, boolean ascending, Date startDate, int limit)
+{
+    Order order = new Order(sortProperty, ascending);
+    if (sortProperty == null) {
+       order = new Order("dateCreated", false);
+    }
+
+    Search search = new Search();
+    search.addOrder(order);
+    search.setLimit(limit);
+    search.setConjunction(true);
+    if (blogIds != null && blogIds.length > 0) {
+       search.addRestriction( new Restriction("blog.id", blogIds) );
+    }
+
+    if (startDate != null) {
+       search.addRestriction(new Restriction("dateCreated", startDate, Restriction.GREATER));
+    }
+
+    List<BlogWowEntry> l = new ArrayList<BlogWowEntry>();
+    if (externalLogic.isUserAdmin(userId)) {
+       // get all entries for a set of blogs
+       l = dao.findBySearch(BlogWowEntry.class, search);
+    } else {
+       List<String> locations = dao.getLocationsForBlogsIds(blogIds);
+       // check current user perms on these locations to form lists of locations related to this users access
+       List<String> readLocations = new ArrayList<String>(); // holds the locations where user has read perms
+       List<String> readAnyLocations = new ArrayList<String>(); // holds the locations where user has read any perms
+       for (String location : locations) {
+          if (externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_READ_ANY, location)) {
+             readAnyLocations.add(location);
+             readLocations.add(location);
+          } else if (externalLogic.isUserAllowedInLocation(userId, ExternalLogic.BLOG_ENTRY_READ, location)) {
+             readLocations.add(location);
+          }
+       }
+       String[] readLocsArray = readLocations.toArray(new String[] {});
+       String[] readAnyLocsArray = readAnyLocations.toArray(new String[] {});
+
+       l = dao.getBlogPermEntries(blogIds, userId, readLocsArray, readAnyLocsArray, order.property, order.ascending, startDate, limit);
+    }
+
+    return l;
+}
+
+public List<BlogWowEntry> getVisibleEntriesCreatedSince(String blogId, String userId,
+		String sortProperty, boolean ascending, Date startDate, int limit)
+{
+	String[] blogIds = {blogId};
+	return getVisibleEntriesCreatedSince(blogIds, userId, sortProperty, ascending, startDate, limit);
+}
+
+
 }
