@@ -283,7 +283,8 @@ public List<BlogWowEntry> getVisibleEntriesCreatedSince(String[] blogIds, String
     }
 
     if (startDate != null) {
-       search.addRestriction(new Restriction("dateCreated", startDate, Restriction.GREATER));
+        //Restriction doesn't do '>=' so we'll subtract a millisecond
+        search.addRestriction(new Restriction("dateCreated", new Date(startDate.getTime()-1), Restriction.GREATER));
     }
 
     List<BlogWowEntry> l = new ArrayList<BlogWowEntry>();

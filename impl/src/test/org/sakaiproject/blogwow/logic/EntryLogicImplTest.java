@@ -11,6 +11,7 @@
 
 package org.sakaiproject.blogwow.logic;
 
+import java.util.Date;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -257,6 +258,86 @@ public class EntryLogicImplTest extends AbstractTransactionalSpringContextTests 
 
     }
 
+    /**
+     * Test method for
+     * {@link org.sakaiproject.blogwow.logic.impl.EntryLogicImpl#getAllVisibleEntries(java.lang.Long, java.lang.String, java.lang.String, boolean, int, int)}.
+     */
+    public void testGetAllVisibleEntriesCreatedSinceLongStringStringBooleanDateInt() {
+        List<BlogWowEntry> l = null;
+
+        // get all entries
+        l = logicImpl.getVisibleEntriesCreatedSince(tdp.blog1.getId(), TestDataPreload.ADMIN_USER_ID, null, false, new Date(1230786000000L), 0);
+        assertNotNull(l);
+        assertEquals(3, l.size());
+        assertTrue(!l.contains(tdp.entry1_b1));
+        assertTrue(l.contains(tdp.entry2_b1));
+        assertTrue(l.contains(tdp.entry3_b1));
+        assertTrue(l.contains(tdp.entry4_b1));
+        assertTrue(!l.contains(tdp.entry5_b2));
+        assertTrue(!l.contains(tdp.entry6_b2));
+        assertTrue(!l.contains(tdp.entry7_b3));
+
+        l = logicImpl.getVisibleEntriesCreatedSince(tdp.blog2.getId(), TestDataPreload.ADMIN_USER_ID, null, false, new Date(1230786000000L), 0);
+        assertNotNull(l);
+        assertEquals(2, l.size());
+        assertTrue(!l.contains(tdp.entry1_b1));
+        assertTrue(!l.contains(tdp.entry2_b1));
+        assertTrue(!l.contains(tdp.entry3_b1));
+        assertTrue(!l.contains(tdp.entry4_b1));
+        assertTrue(l.contains(tdp.entry5_b2));
+        assertTrue(l.contains(tdp.entry6_b2));
+        assertTrue(!l.contains(tdp.entry7_b3));
+
+        l = logicImpl.getVisibleEntriesCreatedSince(tdp.blog3.getId(), TestDataPreload.ADMIN_USER_ID, null, false, new Date(1230786000000L), 0);
+        assertNotNull(l);
+        assertEquals(1, l.size());
+        assertTrue(!l.contains(tdp.entry1_b1));
+        assertTrue(!l.contains(tdp.entry2_b1));
+        assertTrue(!l.contains(tdp.entry3_b1));
+        assertTrue(!l.contains(tdp.entry4_b1));
+        assertTrue(!l.contains(tdp.entry5_b2));
+        assertTrue(!l.contains(tdp.entry6_b2));
+        assertTrue(l.contains(tdp.entry7_b3));
+
+        // get all entries for user
+        l = logicImpl.getVisibleEntriesCreatedSince(tdp.blog1.getId(), TestDataPreload.USER_ID, null, false, new Date(1230786000000L), 0);
+        assertNotNull(l);
+        assertEquals(3, l.size());
+        assertTrue(!l.contains(tdp.entry1_b1));
+        assertTrue(l.contains(tdp.entry2_b1));
+        assertTrue(l.contains(tdp.entry3_b1));
+        assertTrue(l.contains(tdp.entry4_b1));
+
+        l = logicImpl.getVisibleEntriesCreatedSince(tdp.blog2.getId(), TestDataPreload.USER_ID, null, false, new Date(1230786000000L), 0);
+        assertNotNull(l);
+        assertEquals(1, l.size());
+        assertTrue(l.contains(tdp.entry5_b2));
+        assertTrue(!l.contains(tdp.entry6_b2));
+
+        l = logicImpl.getVisibleEntriesCreatedSince(tdp.blog1.getId(), TestDataPreload.MAINT_USER_ID, null, false, new Date(1230786000000L), 0);
+        assertNotNull(l);
+        assertEquals(2, l.size());
+        assertTrue(!l.contains(tdp.entry1_b1));
+        assertTrue(l.contains(tdp.entry2_b1));
+        assertTrue(l.contains(tdp.entry3_b1));
+        assertTrue(!l.contains(tdp.entry4_b1));
+
+        l = logicImpl.getVisibleEntriesCreatedSince(tdp.blog2.getId(), TestDataPreload.MAINT_USER_ID, null, false, new Date(1230786000000L), 0);
+        assertNotNull(l);
+        assertEquals(2, l.size());
+        assertTrue(l.contains(tdp.entry5_b2));
+        assertTrue(l.contains(tdp.entry6_b2));
+
+        // get all entries for anonymous
+        l = logicImpl.getVisibleEntriesCreatedSince(tdp.blog1.getId(), TestDataPreload.INVALID_USER_ID, null, false, new Date(1230786000000L), 0);
+        assertNotNull(l);
+        assertEquals(0, l.size());
+        assertTrue(!l.contains(tdp.entry1_b1));
+        assertTrue(!l.contains(tdp.entry2_b1));
+        assertTrue(!l.contains(tdp.entry3_b1));
+        assertTrue(!l.contains(tdp.entry4_b1));
+
+    }
     /**
      * Test method for {@link org.sakaiproject.blogwow.logic.impl.getVisibleEntryCount(java.lang.String, java.lang.String)}.
      */
