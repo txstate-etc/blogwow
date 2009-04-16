@@ -214,7 +214,7 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
 
                 // TODO ack! Inline Java Script
                 UIVerbatim.make(entrydiv, "scoll-here-script",
-                        "var scrollHere = document.getElementById('" + commentInput.getFullID() + "'); scrollHere.scrollIntoView(true); scrollHere.focus();");
+                        "window.onload=function(){var scrollHere = document.getElementById('" + commentInput.getFullID() + "'); scrollHere.scrollIntoView(true); scrollHere.focus();};");
             }
         }
 				// Render forward and back buttons if we have more entries and we aren't viewing an entry
