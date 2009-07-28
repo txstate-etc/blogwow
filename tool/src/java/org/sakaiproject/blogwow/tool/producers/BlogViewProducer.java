@@ -114,7 +114,7 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
         }
 
         if (entries.size() <= 0) {
-            UIOutput.make(tofill, "blog-entry:empty");
+            UIMessage.make(tofill, "blog-entry:empty", "blogwow.blogview.empty");
             return;
         }
 
