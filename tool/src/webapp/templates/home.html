@@ -8,6 +8,8 @@
    <link href="/library/skin/default/tool.css" rsf:id="scr=portal-matter" type="text/css" rel="stylesheet" media="all" />
    <script type="text/javascript" rsf:id="scr=portal-matter" language="JavaScript" src="/library/js/headscripts.js"></script>
    <link href="../css/BlogWow.css" type="text/css" rel="stylesheet" media="all" />
+   <script type="text/javascript" src="../content/js/jquery-1.2.6.js"></script>
+   <script type="text/javascript" src="../content/js/jquery.tablesorter.min.js"></script>
 </head>
 
 <body>
@@ -42,9 +44,9 @@
       <img src="../images/rss.gif" /> RSS for all bloggers</a>
   </div>
 <div align="center">
-<table rsf:id="blog-list-table:" width="80%" class="listHier lines" cellspacing="0" border="0"
+<table rsf:id="blog-list-table:" id="blog-list-table" width="80%" class="listHier lines" cellspacing="0" border="0"
 	summary="Tabled list of bloggers in the site. Table headers have links to sort their column. Column 1 is an icon; column 2 lists the names of the bloggers; column 3 is the number of entries in each blog; column 4 is the time that the blog was last updated; column 5 offers an RSS feed for that particular blog.">
-	<tr>
+	<thead>
 		<th id="icon" style="border:none" width="30"></th>
 		<th id="blogger" style="border:none" rsf:id="blogger">Blogger
         </th>
@@ -52,7 +54,7 @@
 		<th id="last_updated" style="border:none" rsf:id="last-updated">Last Updated
         </th>
 		<th id="rss" style="border:none" width="30"></th>
-	</tr>
+	</thead>
 	<tr rsf:id="row:">
 		<td><img rsf:id="user-icon" src="../images/user_red.png" /></td>
 		<td><a rsf:id="blog-title-link" href="blog_view.htm">Andy Apple's blog</a></td>
@@ -89,5 +91,11 @@
 <!--img src="../images/tea.gif" align="right" /-->
 </div>
 <br/><br/><br/>
+<script type="text/javascript">
+  $(document).ready(function()
+  {
+    $('[id=blog-list-table::]').tablesorter({headers: {0:{sorter:false}, 4:{sorter:false}}}); 
+  });
+</script>
 </body>
 </html>

@@ -72,3 +72,25 @@ DIV.rightcol, SPAN.rightcol {
 	float: right;
 	text-align: right;
 }
+
+/**
+ * Styles for jquery tablesorter
+ */
+th.headerSortDown {
+  background-image: url(../images/down_arrow.gif);
+  background-color: #999999;
+}
+
+th.headerSortUp {
+  background-image: url(../images/up_arrow.gif);
+  background-color: #999999;
+}
+
+th.header {
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center right;
+  padding-left: 20px;
+  border-right: 1px solid #FFFFFF;
+  margin-left: -1px;
+}
