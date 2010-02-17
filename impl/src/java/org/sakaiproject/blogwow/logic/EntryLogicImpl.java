@@ -144,6 +144,9 @@ public class EntryLogicImpl implements EntryLogic {
          return entry;
       } else if (BlogConstants.PRIVACY_PUBLIC.equals(entry.getPrivacySetting())) {
          return entry;
+      } else if (externalLogic.isUserAdmin(currentUserId)) {
+         // the system super user can read anything
+         return entry;
       } else if (locationId.equals(entry.getBlog().getLocation())) {
          if (BlogConstants.PRIVACY_GROUP.equals(entry.getPrivacySetting())
                && externalLogic.isUserAllowedInLocation(currentUserId, ExternalLogic.BLOG_ENTRY_READ, locationId)) {
