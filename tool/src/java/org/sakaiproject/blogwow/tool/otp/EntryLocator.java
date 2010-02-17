@@ -23,14 +23,14 @@ public class EntryLocator implements WriteableBeanLocator {
     private EntryLogic entryLogic;
     private BlogLogic blogLogic;
     private TargettedMessageList messages;
-    
+
     private Map<String, BlogWowEntry> delivered = new HashMap<String, BlogWowEntry>();
 
 	public void setMessages(TargettedMessageList messages) {
 		this.messages = messages;
 	}
-    
-    
+
+
     public Object locateBean(String name) {
         String locationId = externalLogic.getCurrentLocationId();
         String currentUserId = externalLogic.getCurrentUserId();
@@ -57,20 +57,24 @@ public class EntryLocator implements WriteableBeanLocator {
             //if (key.startsWith(NEW_PREFIX)) {
             //    // could do stuff here
             //}
-            
+			if (entry.getPrivacySetting() == null) {
+				messages.addMessage(new TargettedMessage("blogwow.noprivacy",null,TargettedMessage.SEVERITY_ERROR));
+				return "error";
+			}
+
             if (entry.getTitle() == null || "".equals(entry.getTitle().trim()) || entry.getTitle().length() == 0 ) {
             	messages.addMessage(new TargettedMessage("blogwow.nottitle",null,TargettedMessage.SEVERITY_ERROR));
-            	
+
             	return "error";
             }
-            
+
             //we need to check that there is some text
-            String check = externalLogic.cleanupUserStrings(entry.getText()); 
+            String check = externalLogic.cleanupUserStrings(entry.getText());
             if (check == null || "".equals(check) || check.length() == 0 ) {
-            	messages.addMessage(new TargettedMessage("blogwow.notext",null,TargettedMessage.SEVERITY_ERROR));
-            	return "error";
+              messages.addMessage(new TargettedMessage("blogwow.notext",null,TargettedMessage.SEVERITY_ERROR));
+              return "error";
             }
-            
+
             entryLogic.saveEntry(entry, externalLogic.getCurrentLocationId());
         }
         return "published";
@@ -78,6 +82,18 @@ public class EntryLocator implements WriteableBeanLocator {
 
     public String saveAll() {
         for (BlogWowEntry entry : delivered.values()) {
+	    if (entry.getTitle() == null || "".equals(entry.getTitle().trim()) || entry.getTitle().length() == 0 ) {
+              messages.addMessage(new TargettedMessage("blogwow.nottitle",null,TargettedMessage.SEVERITY_ERROR));
+
+              return "error";
+            }
+
+            //we need to check that there is some text
+            String check = externalLogic.cleanupUserStrings(entry.getText());
+            if (check == null || "".equals(check) || check.length() == 0 ) {
+              messages.addMessage(new TargettedMessage("blogwow.notext",null,TargettedMessage.SEVERITY_ERROR));
+              return "error";
+            }
             entry.setPrivacySetting(BlogConstants.PRIVACY_PRIVATE);
             entryLogic.saveEntry(entry, externalLogic.getCurrentLocationId());
         }
