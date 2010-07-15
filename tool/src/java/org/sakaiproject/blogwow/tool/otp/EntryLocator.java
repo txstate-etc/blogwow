@@ -61,7 +61,10 @@ public class EntryLocator implements WriteableBeanLocator {
 				messages.addMessage(new TargettedMessage("blogwow.noprivacy",null,TargettedMessage.SEVERITY_ERROR));
 				return "error";
 			}
-
+			// fix BW-104 - if an entry is still set to "private" set it to the default view instead
+			if (entry.getPrivacySetting().equals(BlogConstants.PRIVACY_PRIVATE)) {
+				entry.setPrivacySetting(externalLogic.getEntryViewableSetting());
+			}
             if (entry.getTitle() == null || "".equals(entry.getTitle().trim()) || entry.getTitle().length() == 0 ) {
             	messages.addMessage(new TargettedMessage("blogwow.nottitle",null,TargettedMessage.SEVERITY_ERROR));
 
