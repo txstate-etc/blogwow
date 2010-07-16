@@ -1,10 +1,7 @@
 package org.sakaiproject.blogwow.tool.producers;
 
 import java.text.DateFormat;
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -54,9 +51,6 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
         return VIEW_ID;
     }
 
-    private static final long DAY = 10*0 * 60 * 60 * 24;
-    private static final long WEEK = DAY * 7;
-    
     private NavBarRenderer navBarRenderer;
     private BlogLogic blogLogic;
     private EntryLogic entryLogic;
@@ -66,7 +60,6 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
     private MessageLocator messageLocator;
 
     private TargettedMessageList messages;
-    
 	public void setMessages(TargettedMessageList messages) {
 		this.messages = messages;
 	}
@@ -82,12 +75,7 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
         String currentUserId = externalLogic.getCurrentUserId();
 
         // use a date which is related to the current users locale
-        DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, locale);
-        DateFormat dfTime = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
-        
-        // use a simple day of week for recent dates
-        String justDayOfWeekFormat = "E";
-        SimpleDateFormat dayOfWeek = new SimpleDateFormat(justDayOfWeekFormat);
+        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
 
         BlogParams params = (BlogParams) viewparams;
 
@@ -136,19 +124,7 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
 
             UIBranchContainer entrydiv = UIBranchContainer.make(tofill, "blog-entry:");
             UIOutput.make(entrydiv, "blog-title", entry.getTitle());
-            
-            Date date = entry.getDateCreated();
-            Date dateNow = new Date();
-            long dateNowMillis = dateNow.getTime();
-            Date dateYesterday = new Date(dateNowMillis - DAY);
-            Date dateLastWeek = new Date(dateNowMillis - WEEK);
-            
-            if (date.after(dateLastWeek)) {
-            	UIOutput.make(entrydiv, "blog-date", dayOfWeek.format(date) + ", " + dfTime.format(date));
-            }
-            else {
-            	UIOutput.make(entrydiv, "blog-date", df.format(date));
-            }
+            UIOutput.make(entrydiv, "blog-date", df.format(entry.getDateCreated()));
 
             String privSetting = entry.getPrivacySetting();
             if (privSetting.equals(BlogConstants.PRIVACY_PRIVATE)) {

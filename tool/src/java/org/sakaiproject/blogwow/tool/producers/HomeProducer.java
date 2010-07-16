@@ -1,9 +1,6 @@
 package org.sakaiproject.blogwow.tool.producers;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -33,8 +30,6 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
         return VIEW_ID;
     }
 
-    private static final long DAY = 1000 * 60 * 60 * 24;
-    
     private NavBarRenderer navBarRenderer;
     private BlogLogic blogLogic;
     private EntryLogic entryLogic;
@@ -85,14 +80,6 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
 
         List<BlogWowBlog> blogs = blogLogic.getAllVisibleBlogs(locationId, null, true, 0, 0);
         UIBranchContainer blogsTable = UIBranchContainer.make(tofill, "blog-list-table:");
-        
-        // use a date which is related to the current users locale
-        DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, locale);
-        DateFormat dfTime = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
-        
-        // use a simple day of week for recent dates
-        String justDayOfWeekFormat = "EEEE";
-        SimpleDateFormat dayOfWeek = new SimpleDateFormat(justDayOfWeekFormat);
 
         for (int i = 0; i < blogs.size(); i++) {
             BlogWowBlog blog = blogs.get(i);
@@ -107,31 +94,8 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
             	List<BlogWowEntry> entries = entryLogic.getAllVisibleEntries(blog.getId(), currentUserId, null, true, 0, 1);
 								try
 								{
-									Date date = entries.get(0).getDateModified();
-									Date dateNow = new Date();
-									long dateNowMillis = dateNow.getTime();
-									Date dateYesterday = new Date(dateNowMillis - DAY);
-									Date dateLastWeek = new Date(dateNowMillis - (DAY*5));
-									
-									// get start of today; midnight
-									Calendar cal = Calendar.getInstance();
-									cal.setTime(dateNow);
-									cal.set(Calendar.SECOND, 0);
-									cal.set(Calendar.MINUTE, 0);
-									cal.set(Calendar.HOUR_OF_DAY, 0);
-									long midnightMillis = cal.getTimeInMillis();
-									Date dateMidnight = new Date(midnightMillis);
-									
-									if (date.after(dateMidnight)) {
-										UIOutput.make(row, "time-last-updated", dfTime.format(date));
-									}
-									else if (date.after(dateLastWeek)) {
-										UIOutput.make(row, "time-last-updated", dayOfWeek.format(date) + ", " + dfTime.format(date));
-									}
-									else {
-										UIOutput.make(row, "time-last-updated", df.format(date));
-									}        
-                	
+				        	DateFormat dtf = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, locale);
+                	UIOutput.make(row, "time-last-updated", dtf.format(entries.get(0).getDateModified()) );
 								}catch (IndexOutOfBoundsException e) {
 									// This shouldn't happen, our count doesn't agree with the number of entries we get
 									UIOutput.make(row, "time-last-updated", "???" );
