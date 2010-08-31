@@ -75,7 +75,7 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
         String currentUserId = externalLogic.getCurrentUserId();
 
         // use a date which is related to the current users locale
-        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+        DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, locale);
 
         BlogParams params = (BlogParams) viewparams;
 
