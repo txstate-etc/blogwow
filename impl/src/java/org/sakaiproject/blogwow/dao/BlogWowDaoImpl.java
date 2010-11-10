@@ -11,6 +11,7 @@
 
 package org.sakaiproject.blogwow.dao;
 
+import java.lang.StringBuffer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -253,15 +254,15 @@ public class BlogWowDaoImpl extends HibernateGeneralGenericDao implements BlogWo
     * @return
     */
    private String arrayToInString(Object[] array) {
-      String arrayString = "('";
+      StringBuffer arrayString = new StringBuffer("('");
       for (int i = 0; i < array.length; i++) {
          if (i > 0)
-            arrayString += "','" + array[i];
+            arrayString.append("','" + array[i]);
          else
-            arrayString += array[i];
+            arrayString.append(array[i]);
       }
-      arrayString += "')";
-      return arrayString;
+      arrayString.append("')");
+      return arrayString.toString();
    }
 
    /*
