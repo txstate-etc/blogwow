@@ -8,17 +8,15 @@
     <packaging>pom</packaging>
 
     <parent>
-        <artifactId>master</artifactId>
-        <groupId>org.sakaiproject</groupId>
-        <version>2.5.2</version>
+        <artifactId>sakai-standard-tool</artifactId>
+        <groupId>org.sakaiproject.purepoms</groupId>
+        <version>2.7.1</version>
         <!--    <version>M2</version>-->
         <!--    <version>SNAPSHOT</version>-->
         <relativePath>../master/pom.xml</relativePath>
     </parent>
 
-    <properties>
-        <sakai.generic-dao.version>0.9.11</sakai.generic-dao.version>
-    </properties>
+
 
     <!-- handles the management of all related dependencies -->
     <dependencyManagement>
