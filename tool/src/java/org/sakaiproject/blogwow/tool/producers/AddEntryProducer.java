@@ -94,6 +94,8 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
                 "blogwow.add_edit.sitemembers",
                 "blogwow.add_edit.public" };
 
+        /*
+         * Commenting this out for BW-95
         boolean isDraft = false;
         if (params.entryid != null) {
         	BlogWowEntry entry = entryLogic.getEntryById(params.entryid, externalLogic.getCurrentLocationId());
@@ -101,10 +103,11 @@ public class AddEntryProducer implements ViewComponentProducer, ViewParamsReport
         		isDraft = true;
         	}
         }
+        */
         
         UISelect privacyRadios;
         // If this is a new entry or draft select default privacy setting
-        if (newentry || isDraft) {
+        if (newentry) {
             privacyRadios = UISelect.make(form, "privacy-radio-holder", privacyRadioValues, privacyRadioLabelKeys,
                    entryOTP + ".privacySetting", externalLogic.getEntryViewableSetting()).setMessageKeys();
         } else {
