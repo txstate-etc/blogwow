@@ -94,3 +94,12 @@ th.header {
   border-right: 1px solid #FFFFFF;
   margin-left: -1px;
 }
+
+.blogwowTitleEntry {
+  font-weight: bold;
+  padding-left: 5px;
+  margin-bottom: 0.6em;
+}
+.blogwowEditorSmall {
+  width: 50em;
+}
