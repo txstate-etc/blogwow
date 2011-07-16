@@ -9,6 +9,15 @@
        <property name="errorStateManager" ref="errorStateManager" />
    </bean>
 
+        <bean id="sakaiFCKTextEvolver" class="org.sakaiproject.blogwow.tool.evolvers.SakaiFCKTextEvolver">
+                <property name="contentHostingService" ref="org.sakaiproject.content.api.ContentHostingService" />
+                <property name="serverConfigurationService" ref="org.sakaiproject.component.api.ServerConfigurationService"/>
+                <property name="context" ref="sakai-Context" />
+                <!-- sets the default editor size for this context -->
+                <property name="width" value="400" />
+                <property name="height" value="400" />
+        </bean>
+
    <!-- rich text evolver bean def -->
    <bean id="richTextEvolver" parent="sakaiFCKTextEvolver" />
 
