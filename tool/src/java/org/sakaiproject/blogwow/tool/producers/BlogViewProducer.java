@@ -172,14 +172,19 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
 
             // Render Comments if they are visible
             if (params.showcomments) {
+            	String lineSeparator = System.getProperty("line.separator");
+            	
                 for (int j = 0; j < comments.size(); j++) {
                     BlogWowComment comment = comments.get(j);
+                    String commentText = externalLogic.cleanupUserStrings(comment.getText());
+                    commentText = commentText.replaceAll(lineSeparator, "<br/>");
+                    
                     UIBranchContainer commentdiv = UIBranchContainer.make(entrydiv, "comment-div:");
                     String username = externalLogic.getUserDisplayName(comment.getOwnerId());
 
                     UIMessage.make(commentdiv, "comment-header", "blogwow.comments.commentstitle",
                             new Object[] { username, df.format(comment.getDateCreated()) });
-                    UIOutput.make(commentdiv, "comment-text", comment.getText());
+                    UIVerbatim.make(commentdiv, "comment-text", commentText);
                     if (commentLogic.canRemoveComment(comment.getId(), currentUserId))
                     {
                         String commentOTP = commentLocator + "." + comment.getId();
