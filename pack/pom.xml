@@ -2,14 +2,14 @@
 
    <modelVersion>4.0.0</modelVersion>
    <name>BlogWoW Pack</name>
-   <groupId>org.sakaiproject</groupId>
+   <groupId>org.sakaiproject.blogwow</groupId>
    <artifactId>sakai-blogwow-pack</artifactId>
    <packaging>sakai-component</packaging>
 
    <parent>
-      <groupId>org.sakaiproject</groupId>
+      <groupId>org.sakaiproject.blogwow</groupId>
       <artifactId>sakai-blogwow-base</artifactId>
-      <version>0.9.9-SNAPSHOT</version><!--blogwow.version-->
+      <version>1.0.0</version><!--blogwow.version-->
    </parent>
 
    <properties>
@@ -20,8 +20,9 @@
 
       <!-- internal -->
       <dependency>
-         <groupId>org.sakaiproject</groupId>
+         <groupId>org.sakaiproject.blogwow</groupId>
          <artifactId>sakai-blogwow-impl</artifactId>
+         <version>${project.version}</version>
          <scope>runtime</scope>
       </dependency>
 

@@ -2,21 +2,22 @@
 
     <modelVersion>4.0.0</modelVersion>
     <name>BlogWow IMPL</name>
-    <groupId>org.sakaiproject</groupId>
+    <groupId>org.sakaiproject.blogwow</groupId>
     <artifactId>sakai-blogwow-impl</artifactId>
     <packaging>jar</packaging>
 
     <parent>
-        <groupId>org.sakaiproject</groupId>
+        <groupId>org.sakaiproject.blogwow</groupId>
         <artifactId>sakai-blogwow-base</artifactId>
-        <version>0.9.9-SNAPSHOT</version><!--blogwow.version-->
+		<version>1.0.0</version><!--blogwow.version-->
     </parent>
 
     <dependencies>
         <!-- internal -->
         <dependency>
-            <groupId>org.sakaiproject</groupId>
+            <groupId>org.sakaiproject.blogwow</groupId>
             <artifactId>sakai-blogwow-api</artifactId>
+			<version>${project.version}</version>
         </dependency>
 
         <!-- generic-dao -->
