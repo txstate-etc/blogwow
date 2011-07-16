@@ -120,3 +120,7 @@ th.header {
   text-align:right; 
   float:right;
 }
+.blogwowAddCommentContainer {
+  border-top: 1px solid #cccccc; 
+  margin-top: 50px;
+}

@@ -218,8 +218,8 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
                 cancelButton.setReturn("cancel");
 
                 // TODO ack! Inline Java Script
-                UIVerbatim.make(entrydiv, "scoll-here-script",
-                        "window.onload=function(){var scrollHere = document.getElementById('" + commentInput.getFullID() + "'); scrollHere.scrollIntoView(true); scrollHere.focus();};");
+                UIVerbatim.make(entrydiv, "scroll-here-script",
+                        "window.onload=function(){var scrollHere = document.getElementById('" + publishButton.getFullID() + "'); scrollHere.scrollIntoView(false); scrollHere.focus();};");
             }
         }
 				// Render forward and back buttons if we have more entries and we aren't viewing an entry
