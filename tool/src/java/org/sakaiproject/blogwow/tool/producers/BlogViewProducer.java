@@ -79,7 +79,10 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
 
         BlogParams params = (BlogParams) viewparams;
 
-        navBarRenderer.makeNavBar(tofill, "navIntraTool:", VIEW_ID);
+        // BW-66
+        if (!ExternalLogic.NO_LOCATION.equals(externalLogic.getCurrentLocationId())) {
+        	navBarRenderer.makeNavBar(tofill, "navIntraTool:", VIEW_ID);
+        }
 
         BlogWowBlog blog = blogLogic.getBlogById(params.blogid);
 
@@ -139,7 +142,11 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
 
             UIVerbatim.make(entrydiv, "verbatim-blog-text", entry.getText());
 
-            UIOutput.make(entrydiv, "action-items");
+            // BW-66
+            if (!ExternalLogic.NO_LOCATION.equals(externalLogic.getCurrentLocationId())) {
+            	UIOutput.make(entrydiv, "action-items");
+            }
+            
             if (entryLogic.canWriteEntry(entry.getId(), currentUserId)) {
                 UIInternalLink.make(entrydiv, "entry-link:", UIMessage.make("blogwow.blogview.edit-entry"), new BlogEntryParams(AddEntryProducer.VIEW_ID, blog
                         .getId(), entry.getId()));
@@ -192,11 +199,17 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
                         UICommand removeCommand = UICommand.make(removeform, "remove-comment-command");
                         removeCommand.parameters.add(new UIDeletionBinding(commentOTP));
 
-                        UILink ul = UILink.make(commentdiv, "rm-comment", UIMessage.make("blogwow.blogview.rm-comment"), null);
-                        // TODO ack! Inline Java Script
-                        UIFreeAttributeDecorator ufad = new UIFreeAttributeDecorator("onclick",
+                        // BW-66
+                        if (!ExternalLogic.NO_LOCATION.equals(externalLogic.getCurrentLocationId())) {
+                        	UILink ul = UILink.make(commentdiv, "rm-comment", UIMessage.make("blogwow.blogview.rm-comment"), null);
+                        	
+                        	// TODO ack! Inline Java Script
+                        	UIFreeAttributeDecorator ufad = new UIFreeAttributeDecorator("onclick",
                                 "if (confirm('"+ messageLocator.getMessage("blogwow.blogview.confirm-rm-comment")+"')){document.getElementById('" + removeCommand.getFullID() + "').click();}return false;");
-                        ul.decorate(ufad);
+                        	ul.decorate(ufad);
+                        }
+                        
+
                     }
                 }
             }
