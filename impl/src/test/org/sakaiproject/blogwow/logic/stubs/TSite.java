@@ -15,6 +15,7 @@
 package org.sakaiproject.blogwow.logic.stubs;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
@@ -867,5 +868,30 @@ public class TSite implements Site {
         // TODO Auto-generated method stub
 
     }
+
+	public Date getCreatedDate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Date getModifiedDate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean isSoftlyDeleted() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public Date getSoftlyDeletedDate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setSoftlyDeleted(boolean flag) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
