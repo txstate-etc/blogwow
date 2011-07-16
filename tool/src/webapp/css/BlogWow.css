@@ -31,7 +31,7 @@
 .commentBox {
 	width: 98.5%;
 	max-width: 60em;
-	height: 20em;
+	height: 14em;
 }
 
 .floatContainer {
@@ -102,4 +102,21 @@ th.header {
 }
 .blogwowEditorSmall {
   width: 50em;
+}
+.blogwowCommentContainer {
+  width:100%;
+  min-height:60em;
+}
+.blogwowUserProfile {
+  width:200px; 
+  float:right;
+}
+.blogwowEntryContainer {
+  margin-right:220px; 
+  border:1px solid #cccccc; 
+  padding:10px;
+}
+.blogwowDate {
+  text-align:right; 
+  float:right;
 }
