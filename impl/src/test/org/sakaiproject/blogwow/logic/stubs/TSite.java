@@ -894,4 +894,9 @@ public class TSite implements Site {
 		
 	}
 
+	public Collection<String> getMembersInGroups(Set<String> groupIds) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
