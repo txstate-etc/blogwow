@@ -41,14 +41,12 @@
       </property>
    </bean>
 
-    <!-- Transaction manager from the SessionFactory --> 
+   <!-- Create a transaction manager from the SessionFactory,
+      name it the same as the Sakai one so we can reuse our other spring config files -->
    <bean id="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager"
-        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="javax.sql.DataSource"/>
-    </bean>
-    <bean abstract="true" id="sstTxTemplate"
-        class="org.springframework.orm.hibernate3.support.HibernateDaoSupport">
-        <property name="sessionFactory" ref="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory" />
+      class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+      <property name="sessionFactory"
+         ref="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory" />
    </bean>
 
 </beans>
