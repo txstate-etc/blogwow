@@ -254,28 +254,6 @@ public class ExternalLogicImpl implements ExternalLogic {
    }
 
    /**
-    * Get the user's global profile text
-    * 
-    * @param userId
-    *            the internal user id (not username)
-    * @return Profiletext if set, otherwise null
-    */
-   public String getProfileText(String userId)
-   {   
-      String profileText = null;
-      try {
-         Object sakaiPerson = entityBroker.fetchEntity( new EntityReference(SAKAIPERSON_PREFIX, userId).toString() );
-         if (sakaiPerson != null) {
-            profileText = (String) reflectUtil.getFieldValue(sakaiPerson, "notes");
-         }
-      } catch (RuntimeException e) {
-         log.warn("Failed getting profile for " + userId + " or user not found: " + e.getMessage(), e);
-      }
-      if ("".equals(profileText)) { profileText = null; }
-      return profileText;
-   }
-
-   /**
     * Get the user's profile picture URL
     * 
     * @param userId
@@ -289,11 +267,7 @@ public class ExternalLogicImpl implements ExternalLogic {
 
          Object sakaiPerson = entityBroker.fetchEntity( new EntityReference(SAKAIPERSON_PREFIX, userId).toString() );
          if (sakaiPerson != null) {
-        	Boolean useOfficial = (Boolean)reflectUtil.getFieldValue(sakaiPerson, "systemPicturePreferred");
-        	if (useOfficial == null || !useOfficial)
-            	imageUrl = (String) reflectUtil.getFieldValue(sakaiPerson, "pictureUrl");
-        	else
-        		imageUrl = "/direct/official_picture/" + userId;
+           	imageUrl = (String) reflectUtil.getFieldValue(sakaiPerson, "imageUrl");
          }
       } catch (RuntimeException e) {
          log.warn("Failed getting profile for " + userId + " or user not found: " + e.getMessage(), e);

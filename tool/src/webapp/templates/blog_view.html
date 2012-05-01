@@ -7,7 +7,29 @@
    <link href="/library/skin/tool_base.css" rsf:id="scr=portal-matter" type="text/css" rel="stylesheet" media="all" />
    <link href="/library/skin/default/tool.css" rsf:id="scr=portal-matter" type="text/css" rel="stylesheet" media="all" />
    <script type="text/javascript" rsf:id="scr=portal-matter" language="JavaScript" src="/library/js/headscripts.js"></script>
+   <script type="text/javascript" language="JavaScript" src="/library/js/jquery-ui-latest/js/jquery.min.js"></script>
+   <script type="text/javascript" language="JavaScript" src="../content/js/jquery.qtip.min.js"></script>
    <link href="../css/BlogWow.css" type="text/css" rel="stylesheet" media="all" />
+
+<script type="text/javascript">
+	//Profile tooltips
+	$(document).ready(function() {
+		$('.blogwowUserProfile a').each(function() {
+			var href = $(this).attr('href');
+			if(href == "" || href.indexOf("javascript") != -1){
+				return;
+			}
+			$(this).qtip({ 
+				content: {text: '',	url: $(this).attr('href'), title: {	text: '',button: '[ X ]' } },
+				position: {	corner: {target: 'center', tooltip: 'rightMiddle'} },
+				show: { when: 'mouseover', solo: true, effect: {length:0} },
+				hide: { when:'mouseout', fixed:true, delay: 300,  effect: {length:0} },
+				style: { tip: true, border: {color:'#687E9C'}, name: 'light', width: 570 }
+			});
+			$(this).attr('href', 'javascript:;');
+		});
+	});
+</script>
 </head>
 
 <body>
@@ -22,7 +44,9 @@
   </div>
 <div class="blogwowCommentContainer">
 <div class="blogwowUserProfile">
-  <img rsf:id="profile-image" src="../images/default-profile.png" width="100" alt="Default profile image" />
+  <a rsf:id="profile-formatted">
+  	<img rsf:id="profile-image" src="../images/default-profile.png" width="100" alt="Default profile image" />
+  </a>
   <br />
   <br />
   <div rsf:id="profile-verbatim-text">

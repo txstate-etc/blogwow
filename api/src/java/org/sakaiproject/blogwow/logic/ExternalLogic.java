@@ -148,14 +148,6 @@ public interface ExternalLogic {
     public boolean useGlobalProfile();
 
     /**
-     * Get the users global profile text
-     * 
-     * @param userId the internal user id (not username)
-     * @return the text if there is any available OR null if none
-     */
-    public String getProfileText(String userId);
-
-    /**
      * Get the users profile picture URL
      * 
      * @param userId the internal user id (not username)

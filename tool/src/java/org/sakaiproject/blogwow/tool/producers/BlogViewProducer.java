@@ -90,13 +90,13 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
         UIInternalLink.make(tofill, "blog-url", new SimpleBlogParams(BlogViewProducer.VIEW_ID, blog.getId()));
         //UILink.make(tofill, "blog-url", externalLogic.getBlogUrl(blog.getId()));
         
-        String profileText = externalLogic.useGlobalProfile() ? externalLogic.getProfileText(blog
-                .getOwnerId()) : blog.getProfile();
-        if (profileText == null || profileText.equals("")) {
-            UIMessage.make(tofill, "profile-verbatim-text", "blogwow.blogview.noprofile");
-        } else {
-            UIVerbatim.make(tofill, "profile-verbatim-text", profileText);
+        String profileText = externalLogic.useGlobalProfile() ? "" : blog.getProfile();
+        if(profileText == null){
+        	profileText = "";
         }
+        UIVerbatim.make(tofill, "profile-verbatim-text", profileText);
+        
+        
 
         String profileImageUrl = externalLogic.useGlobalProfile() ? externalLogic
                 .getProfileImageUrl(blog.getOwnerId()) : blog.getImageUrl();
@@ -105,6 +105,12 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
         }
         UILink.make(tofill, "profile-image", profileImageUrl);
 
+        String profileFormattedUrl = "javascript:;";
+        if(externalLogic.useGlobalProfile()){
+        	profileFormattedUrl = "/direct/profile/" + blog.getOwnerId() + "/formatted";
+        }
+        UILink.make(tofill, "profile-formatted", profileFormattedUrl);
+        
         List<BlogWowEntry> entries = new ArrayList<BlogWowEntry>();
         if (params.entryid == null) {
             if (params.skip == null) {
