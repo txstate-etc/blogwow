@@ -75,8 +75,9 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
         UIMessage.make(tofill, "all-blogs-header", "blogwow.homepage.listofblogs");
 
         // This needs more work due to URL-encoding of path segments
-//        UILink.make(tofill, "all-blog-rss", UIMessage.make("blogwow.homepage.RSStext"), 
-//                externalLogic.getBlogLocationRssUrl(locationId));
+        String siteId = locationId.replace("/site/", "");
+        UILink.make(tofill, "all-blog-rss", UIMessage.make("blogwow.homepage.RSStext"), 
+                externalLogic.getBlogLocationRssUrl(siteId));
 
         List<BlogWowBlog> blogs = blogLogic.getAllVisibleBlogs(locationId, null, true, 0, 0);
         UIBranchContainer blogsTable = UIBranchContainer.make(tofill, "blog-list-table:");

@@ -43,7 +43,7 @@ public class BlogGroupRSSInferrer implements EntityViewParamsInferrer {
          throw new IllegalArgumentException(e);
       }
       return new BlogRssViewParams(BlogRSSProducer.VIEW_ID, null, 
-            decoded);
+            "/site/" + decoded);
    }
 
 }

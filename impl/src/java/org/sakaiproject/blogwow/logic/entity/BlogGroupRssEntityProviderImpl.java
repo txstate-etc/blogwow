@@ -49,7 +49,7 @@ public class BlogGroupRssEntityProviderImpl implements BlogGroupRssEntityProvide
      */
     public boolean entityExists(String id) {
         // entity is real if there are any blogs in this location (id should be an entity ref)
-        String locationId = id;
+        String locationId = "/site/" + id;
         if (entityBroker.entityExists(locationId)) {
             // entity container is real, check for number of blogs
             if (blogLogic.getAllVisibleBlogs(locationId, null, false, 0, 1).size() > 0) {
