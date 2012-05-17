@@ -170,4 +170,10 @@ public interface ExternalLogic {
      * @return The value of the default setting.
      */
     public String getEntryViewableSetting();
+    
+    /**
+     * returns the display name for the user
+     * @return
+     */
+    public String getCurrentUserDisplayName();
 }

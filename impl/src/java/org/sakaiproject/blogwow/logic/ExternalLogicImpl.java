@@ -309,4 +309,13 @@ public class ExternalLogicImpl implements ExternalLogic {
    {
 	   return serverConfigurationService.getString(ENTRY_VIEWABLE_SETTING, BlogConstants.PRIVACY_PUBLIC);
    }
+   
+   public String getCurrentUserDisplayName(){
+	   User user = userDirectoryService.getCurrentUser();
+	   if(user != null){
+		   return user.getDisplayName();
+	   }
+
+	   return "";
+   	}
 }

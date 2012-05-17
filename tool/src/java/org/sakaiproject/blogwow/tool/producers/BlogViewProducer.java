@@ -110,6 +110,7 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
         	profileFormattedUrl = "/direct/profile/" + blog.getOwnerId() + "/formatted";
         }
         UILink.make(tofill, "profile-formatted", profileFormattedUrl);
+        UIOutput.make(tofill, "profile-name", externalLogic.getCurrentUserDisplayName());
         
         List<BlogWowEntry> entries = new ArrayList<BlogWowEntry>();
         if (params.entryid == null) {
