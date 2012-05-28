@@ -196,4 +196,10 @@ public class ExternalLogicStub implements ExternalLogic {
 	{
 	    return null;
 	}
+
+	@Override
+	public String getCurrentUserDisplayName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
