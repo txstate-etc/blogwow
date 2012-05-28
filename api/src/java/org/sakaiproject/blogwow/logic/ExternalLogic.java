@@ -176,4 +176,12 @@ public interface ExternalLogic {
      * @return
      */
     public String getCurrentUserDisplayName();
+    
+    /**
+     * Get the entity prefix for profile information
+     * can be configured using blogwow.entityPrefix - default is 
+     * profile
+     * @return 
+     */
+    public String getProfileEntityPrefix();
 }

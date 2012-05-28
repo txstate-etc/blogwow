@@ -17,6 +17,7 @@ import java.util.Date;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.azeckoski.reflectutils.ReflectUtils;
+import org.azeckoski.reflectutils.exceptions.FieldnameNotFoundException;
 import org.sakaiproject.authz.api.FunctionManager;
 import org.sakaiproject.authz.api.SecurityService;
 import org.sakaiproject.blogwow.constants.BlogConstants;
@@ -265,9 +266,20 @@ public class ExternalLogicImpl implements ExternalLogic {
       String imageUrl = null;
       try {
 
-         Object sakaiPerson = entityBroker.fetchEntity( new EntityReference(SAKAIPERSON_PREFIX, userId).toString() );
+         Object sakaiPerson = entityBroker.fetchEntity( new EntityReference(getProfileEntityPrefix(), userId).toString() );
          if (sakaiPerson != null) {
-           	imageUrl = (String) reflectUtil.getFieldValue(sakaiPerson, "imageUrl");
+           	try {
+           		//By default we assume this is a Profile2 profile
+        	 imageUrl = (String) reflectUtil.getFieldValue(sakaiPerson, "imageUrl");
+           	} catch (FieldnameNotFoundException e) {
+           		//is this a old profile?
+           		try {
+           			imageUrl = (String) reflectUtil.getFieldValue(sakaiPerson, "pictureUrl");
+           		} catch (FieldnameNotFoundException fne) {
+           			//nothing to do
+           		}
+           	}
+           	
          }
       } catch (RuntimeException e) {
          log.warn("Failed getting profile for " + userId + " or user not found: " + e.getMessage(), e);
@@ -318,4 +330,9 @@ public class ExternalLogicImpl implements ExternalLogic {
 
 	   return "";
    	}
+
+
+public String getProfileEntityPrefix() {
+	return serverConfigurationService.getString("blogwow.entityPrefix", "profile");
+}
 }

@@ -202,4 +202,10 @@ public class ExternalLogicStub implements ExternalLogic {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String getProfileEntityPrefix() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -107,7 +107,7 @@ public class BlogViewProducer implements ViewComponentProducer, ViewParamsReport
 
         String profileFormattedUrl = "javascript:;";
         if(externalLogic.useGlobalProfile()){
-        	profileFormattedUrl = "/direct/profile/" + blog.getOwnerId() + "/formatted";
+        	profileFormattedUrl = "/direct/" +  externalLogic.getProfileEntityPrefix()+ "/" + blog.getOwnerId() + "/formatted";
         }
         UILink.make(tofill, "profile-formatted", profileFormattedUrl);
         UIOutput.make(tofill, "profile-name", externalLogic.getCurrentUserDisplayName());
