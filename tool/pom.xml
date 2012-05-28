@@ -16,8 +16,7 @@
    </parent>
 
    <properties>
-      <sakairsf.sakai.version>2.2.x</sakairsf.sakai.version>
-      <rsfutil.version>0.7.4</rsfutil.version>
+      <rsfutil.version>0.7.5</rsfutil.version>
    </properties>
 
    <dependencies>
@@ -33,19 +32,19 @@
       <dependency>
          <groupId>uk.org.ponder.sakairsf</groupId>
          <artifactId>SakaiRSFComponents-templates</artifactId>
-         <version>${rsfutil.version}-sakai_${sakairsf.sakai.version}</version>
+         <version>${rsfutil.version}</version>
          <type>war</type>
       </dependency>
       <dependency>
          <groupId>uk.org.ponder.sakairsf</groupId>
          <artifactId>SakaiRSFComponents-evolvers</artifactId>
-         <version>${rsfutil.version}-sakai_${sakairsf.sakai.version}</version>
+         <version>${rsfutil.version}</version>
          <type>jar</type>
       </dependency>
       <dependency>
          <groupId>uk.org.ponder.sakairsf</groupId>
          <artifactId>sakairsf</artifactId>
-         <version>${rsfutil.version}-sakai_${sakairsf.sakai.version}</version>
+         <version>${rsfutil.version}</version>
          <type>jar</type>
       </dependency>
 
@@ -83,7 +82,7 @@
       <dependency>
          <groupId>org.springframework</groupId>
          <artifactId>spring-test</artifactId>
-         <version>2.5.6.SEC02</version>
+         <version>2.5.6.SEC03</version>
          <scope>test</scope>
       </dependency>
 
