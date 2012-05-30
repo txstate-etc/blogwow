@@ -23,6 +23,7 @@ import org.sakaiproject.authz.api.SecurityService;
 import org.sakaiproject.blogwow.constants.BlogConstants;
 import org.sakaiproject.blogwow.logic.entity.BlogEntityProvider;
 import org.sakaiproject.blogwow.logic.entity.BlogEntryEntityProvider;
+import org.sakaiproject.blogwow.logic.entity.BlogGroupEntityProvider;
 import org.sakaiproject.blogwow.logic.entity.BlogGroupRssEntityProvider;
 import org.sakaiproject.blogwow.logic.entity.BlogRssEntityProvider;
 import org.sakaiproject.blogwow.model.BlogWowBlog;
@@ -213,6 +214,19 @@ public class ExternalLogicImpl implements ExternalLogic {
             new EntityReference(BlogGroupRssEntityProvider.ENTITY_PREFIX, 
                   encodedlocation).toString());
    }
+   
+   public String getBlogLocationUrl(String locationId) {
+	      String encodedlocation;
+	      try {
+	         encodedlocation = URLEncoder.encode(locationId, "UTF-8");
+	      }
+	      catch (Exception e) {
+	         throw new IllegalArgumentException(e);
+	      }
+	      return entityBroker.getEntityURL(
+	            new EntityReference(BlogGroupEntityProvider.ENTITY_PREFIX, 
+	                  encodedlocation).toString());
+	   }
 
    @SuppressWarnings("deprecation")
    public String cleanupUserStrings(String userSubmittedString) {

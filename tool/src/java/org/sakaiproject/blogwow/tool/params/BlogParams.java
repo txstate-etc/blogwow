@@ -13,10 +13,16 @@ public class BlogParams extends BlogEntryParams {
   public boolean showcomments;
   public boolean addcomment;
   public Integer skip;
+  public String locationId;
   
   public BlogParams() {}
 
- 
+ public BlogParams(String viewid, boolean showcomments, String locationId){
+	 this.viewID = viewid;
+	 this.showcomments = showcomments;
+	 this.locationId = locationId;
+ }
+  
   public BlogParams(String viewid, String blogid, String entryid, boolean showcomments) {
       this.viewID = viewid;
       this.blogid = blogid;

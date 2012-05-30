@@ -53,6 +53,12 @@
         <property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic" />
         <property name="entityBroker" ref="org.sakaiproject.entitybroker.EntityBroker" />
     </bean>
+    
+    <bean
+        class="org.sakaiproject.blogwow.logic.entity.BlogGroupEntityProviderImpl">
+        <property name="blogLogic" ref="org.sakaiproject.blogwow.logic.BlogLogic" />
+        <property name="entityBroker" ref="org.sakaiproject.entitybroker.EntityBroker" />
+    </bean>
 
     <bean
         class="org.sakaiproject.blogwow.logic.entity.BlogEntryEntityProviderImpl">

@@ -116,6 +116,13 @@ public interface ExternalLogic {
      * @return the full url for the rss feed
      */
     public String getBlogLocationRssUrl(String locationId);
+    
+    /**
+     * get the full URL to all blogs for blogview
+     * @param locationId
+     * @return
+     */
+    public String getBlogLocationUrl(String locationId);
 
     /**
      * Get the Full URL to an entry

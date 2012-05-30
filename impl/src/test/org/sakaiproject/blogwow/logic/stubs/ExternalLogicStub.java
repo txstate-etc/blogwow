@@ -208,4 +208,10 @@ public class ExternalLogicStub implements ExternalLogic {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String getBlogLocationUrl(String locationId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

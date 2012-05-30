@@ -10,6 +10,7 @@ import org.sakaiproject.blogwow.logic.ExternalLogic;
 import org.sakaiproject.blogwow.model.BlogWowBlog;
 import org.sakaiproject.blogwow.model.BlogWowEntry;
 import org.sakaiproject.blogwow.tool.beans.MugshotGenerator;
+import org.sakaiproject.blogwow.tool.params.BlogParams;
 import org.sakaiproject.blogwow.tool.params.SimpleBlogParams;
 
 import uk.org.ponder.rsf.components.UIBranchContainer;
@@ -76,6 +77,8 @@ public class HomeProducer implements ViewComponentProducer, DefaultView {
 
         // This needs more work due to URL-encoding of path segments
         String siteId = locationId.replace("/site/", "");
+        UIInternalLink.make(tofill, "all-blogs", UIMessage.make("blogwow.homepage.allblogs"), 
+                new BlogParams(BlogViewProducer.VIEW_ID, true, locationId));
         UILink.make(tofill, "all-blog-rss", UIMessage.make("blogwow.homepage.RSStext"), 
                 externalLogic.getBlogLocationRssUrl(siteId));
 

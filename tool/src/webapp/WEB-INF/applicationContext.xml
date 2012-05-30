@@ -48,6 +48,8 @@
    <bean class="org.sakaiproject.blogwow.tool.inferrer.BlogRSSInferrer" />
 
    <bean class="org.sakaiproject.blogwow.tool.inferrer.BlogGroupRSSInferrer" />
+   
+   <bean class="org.sakaiproject.blogwow.tool.inferrer.BlogGroupInferrer" />
 
    <bean class="org.sakaiproject.blogwow.tool.inferrer.BlogInferrer" />
 
