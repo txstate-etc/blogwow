@@ -74,6 +74,16 @@ public class BlogLogicImpl implements BlogLogic {
         } else if (l.size() == 1) {
             // found existing blog
             blog = (BlogWowBlog) l.get(0);
+            
+            // check to see if user display name has changed
+            String currentTitle = blog.getTitle();
+            String currentUserDisplayName = externalLogic.getUserDisplayName(userId);
+            
+            if (currentTitle != null && currentUserDisplayName != null && !currentTitle.equals(currentUserDisplayName)) {
+            	blog.setTitle(currentUserDisplayName);
+            	saveUserBlog(blog, locationId, userId);
+            	externalLogic.registerEntityEvent("blog.blog.updated", BlogWowBlog.class, blog.getId());
+            }
         } else {
             throw new IllegalStateException("Found more than one blog for user (" + userId + ") in location (" + locationId
                     + "), only one is allowed");
