@@ -602,16 +602,6 @@ public class TSite implements Site {
     /*
      * (non-Javadoc)
      * 
-     * @see org.sakaiproject.entity.api.Entity#toXml(org.w3c.dom.Document, java.util.Stack)
-     */
-    public Element toXml(Document doc, Stack stack) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     public int compareTo(Object arg0) {
@@ -895,6 +885,24 @@ public class TSite implements Site {
 	}
 
 	public Collection<String> getMembersInGroups(Set<String> groupIds) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Element toXml(Document doc, Stack<Element> stack) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getHtmlShortDescription() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getHtmlDescription() {
 		// TODO Auto-generated method stub
 		return null;
 	}
