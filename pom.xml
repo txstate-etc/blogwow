@@ -34,9 +34,9 @@
     </dependencyManagement>
 
     <scm>
-        <connection>scm:svn:https://source.sakaiproject.org/contrib/programmerscafe/blogwow/trunk</connection>
-	<developerConnection>scm:svn:https://source.sakaiproject.org/contrib/programmerscafe/blogwow/trunk</developerConnection>
-        <url>https://source.sakaiproject.org/contrib/programmerscafe/blogwow/trunk</url>
+        <connection>scm:svn:https://source.sakaiproject.org/contrib/programmerscafe/blogwow/branches/blogwow-1.0.x</connection>
+	<developerConnection>scm:svn:https://source.sakaiproject.org/contrib/programmerscafe/blogwow/branches/blogwow-1.0.x</developerConnection>
+        <url>https://source.sakaiproject.org/contrib/programmerscafe/blogwow/branches/blogwow-1.0.x</url>
     </scm>
 
     <profiles>
