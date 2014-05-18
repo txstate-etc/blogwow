@@ -5,13 +5,13 @@
     <parent>
         <groupId>org.sakaiproject</groupId>
         <artifactId>master</artifactId>
-        <version>2.10-SNAPSHOT</version>
+        <version>2.9-SNAPSHOT</version>
     </parent>
 
     <name>Blog Wow!</name>
     <groupId>org.sakaiproject.blogwow</groupId>
     <artifactId>sakai-blogwow-base</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <!-- handles the management of all related dependencies -->
@@ -20,23 +20,23 @@
             <dependency>
                 <groupId>org.sakaiproject.blogwow</groupId>
                 <artifactId>sakai-blogwow-api</artifactId>
-                <version>1.0.0</version>
+                <version>1.0.0-SNAPSHOT</version>
                 <scope>provided</scope>
                 <type>jar</type>
             </dependency>
             <dependency>
                 <groupId>org.sakaiproject.blogwow</groupId>
                 <artifactId>sakai-blogwow-impl</artifactId>
-                <version>1.0.0</version>
+                <version>1.0.0-SNAPSHOT</version>
                 <type>jar</type>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
     <scm>
-        <connection>scm:svn:https://source.sakaiproject.org/contrib/programmerscafe/blogwow/tags/0.9.9</connection>
-        <developerConnection>scm:svn:https://source.sakaiproject.org/contrib/programmerscafe/blogwow/tags/0.9.9</developerConnection>
-        <url>https://source.sakaiproject.org/contrib/programmerscafe/blogwow/tags/0.9.9</url>
+        <connection>scm:svn:https://source.sakaiproject.org/contrib/programmerscafe/blogwow/trunk</connection>
+	<developerConnection>scm:svn:https://source.sakaiproject.org/contrib/programmerscafe/blogwow/trunk</developerConnection>
+        <url>https://source.sakaiproject.org/contrib/programmerscafe/blogwow/trunk</url>
     </scm>
 
     <profiles>
