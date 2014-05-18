@@ -16,7 +16,7 @@
    </parent>
 
    <properties>
-      <rsfutil.version>0.7.5</rsfutil.version>
+      <rsfutil.version>0.8.0-SNAPSHOT</rsfutil.version>
    </properties>
 
    <dependencies>
@@ -44,7 +44,7 @@
       <dependency>
          <groupId>uk.org.ponder.sakairsf</groupId>
          <artifactId>sakairsf</artifactId>
-         <version>0.7.7</version>
+         <version>${rsfutil.version}</version>
          <type>jar</type>
       </dependency>
 
@@ -79,12 +79,7 @@
       </dependency>
 
       <!-- Spring dependency -->
-      <dependency>
-         <groupId>org.springframework</groupId>
-         <artifactId>spring-test</artifactId>
-         <version>2.5.6.SEC03</version>
-         <scope>test</scope>
-      </dependency>
+  
 
       <dependency>
          <groupId>org.springframework</groupId>
