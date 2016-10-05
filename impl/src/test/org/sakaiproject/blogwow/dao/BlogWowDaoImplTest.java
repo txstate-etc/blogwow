@@ -73,6 +73,7 @@ public class BlogWowDaoImplTest extends  AbstractJUnit4SpringContextTests {
     /**
      * Test method for {@link org.sakaiproject.blogwow.dao.impl.BlogWowDaoImpl#getLocationsForBlogsIds(java.lang.String[])}.
      */
+    @Test
     public void testGetLocationsForBlogsIds() {
         List<String> locs = null;
 
@@ -101,6 +102,7 @@ public class BlogWowDaoImplTest extends  AbstractJUnit4SpringContextTests {
      * Test method for
      * {@link org.sakaiproject.blogwow.dao.impl.BlogWowDaoImpl#getBlogPermEntries(String[], String, String[], String[], String, boolean, int, int)}.
      */
+    @Test
     public void testGetBlogPermEntries() {
         List<BlogWowEntry> entries = null;
 
@@ -186,6 +188,7 @@ public class BlogWowDaoImplTest extends  AbstractJUnit4SpringContextTests {
         Assert.assertTrue(entries.contains(tdp.entry3_b1));
     }
 
+    @Test
     public void testGetBlogPermCount()
     {
     	// count all public entries
