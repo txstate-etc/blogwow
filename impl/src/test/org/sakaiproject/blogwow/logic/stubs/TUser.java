@@ -13,6 +13,7 @@ package org.sakaiproject.blogwow.logic.stubs;
 
 import java.util.Date;
 import java.util.Stack;
+import java.util.Date;
 
 import org.sakaiproject.entity.api.ResourceProperties;
 import org.sakaiproject.time.api.Time;
@@ -31,6 +32,7 @@ public class TUser implements User {
     private String userId;
 
     private String userEid = "fakeEid";
+    private String userPlid = "fakePlid";
 
     private String displayName = "Fake DisplayName";
 
@@ -187,4 +189,8 @@ public class TUser implements User {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public String getPlid() {
+		return userPlid;
+}
 }
