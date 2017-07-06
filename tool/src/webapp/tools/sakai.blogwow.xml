@@ -3,7 +3,7 @@
 <registration>
 	<tool id="sakai.blogwow"
 		title="Blogs"
-		description="Blog entries for site participants.">
+		description="A site journal where people may post, view, and respond to messages.">
 		<category name="course" />
 		<category name="project" />
 		<!-- <category name="myworkspace" /> -->
