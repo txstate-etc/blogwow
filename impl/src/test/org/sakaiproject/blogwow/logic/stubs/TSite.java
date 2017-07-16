@@ -913,4 +913,7 @@ public class TSite implements Site {
 		return null;
 	}
 
+  public Set getAllUsersHasRole(String role) {
+    return null;
+  }
 }
