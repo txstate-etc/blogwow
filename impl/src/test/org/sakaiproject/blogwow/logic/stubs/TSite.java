@@ -752,6 +752,16 @@ public class TSite implements Site {
     /*
      * (non-Javadoc)
      * 
+     * @see org.sakaiproject.authz.api.AuthzGroup#getAllUsersIsAllowed(java.lang.String)
+     */
+    public Set<String> getAllUsersIsAllowed(String function) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.sakaiproject.authz.api.AuthzGroup#hasRole(java.lang.String, java.lang.String)
      */
     public boolean hasRole(String userId, String role) {
