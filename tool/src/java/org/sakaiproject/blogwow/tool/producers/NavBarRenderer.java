@@ -13,6 +13,7 @@ import uk.org.ponder.rsf.components.UIJointContainer;
 import uk.org.ponder.rsf.components.UILink;
 import uk.org.ponder.rsf.components.UIMessage;
 import uk.org.ponder.rsf.components.UIOutput;
+import uk.org.ponder.rsf.components.decorators.UIFreeAttributeDecorator;
 import uk.org.ponder.rsf.viewstate.SimpleViewParameters;
 
 public class NavBarRenderer {
@@ -65,7 +66,7 @@ public class NavBarRenderer {
 	        if (currentViewID.equals(PermissionsProducer.VIEW_ID))
 	            UIMessage.make(cell, "item-text", "blogwow.navbar.permissions");
 	        else
-	            UIInternalLink.make(cell, "item-link", UIMessage.make("blogwow.navbar.permissions"), new SimpleViewParameters(PermissionsProducer.VIEW_ID));  
+	            UIInternalLink.make(cell, "item-link", UIMessage.make("blogwow.navbar.permissions"), new SimpleViewParameters(PermissionsProducer.VIEW_ID)).decorate(new UIFreeAttributeDecorator("title", "Permissions"));
         }
 
  
